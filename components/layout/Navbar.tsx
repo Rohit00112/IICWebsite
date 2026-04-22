@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import TopBar from './TopBar';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,19 +43,8 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Bar - Static and at the absolute top */}
-      <div className="w-full bg-white border-b border-gray-100 py-2 hidden md:block z-[110] relative">
-        <div className="max-w-7xl mx-auto px-4 flex justify-center gap-8 text-[13px] text-gray-600 font-medium">
-          <div className="flex items-center gap-2">
-            <span>📞</span>
-            <a href="tel:+977123456789">+977 123 456789</a>
-          </div>
-          <div className="flex items-center gap-2">
-            <span>📧</span>
-            <a href="mailto:admissions@iic.edu.np">admissions@iic.edu.np</a>
-          </div>
-        </div>
-      </div>
+      {/* Reusable Top Contact Bar */}
+      <TopBar />
 
       {/* Main Header / Navigation Area */}
       <div className="w-full relative">
