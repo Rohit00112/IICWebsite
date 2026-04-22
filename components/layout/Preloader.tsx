@@ -43,6 +43,7 @@ const Preloader = () => {
             src="/images/iic_logo.png"
             alt="Itahari International College Branding"
             fill
+            sizes="(max-width: 768px) 256px, 384px"
             className="object-contain"
             priority
           />

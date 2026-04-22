@@ -8,14 +8,14 @@ const StatsStrip = () => {
   ];
 
   return (
-    <div className="bg-[#008080] py-12 md:py-16 relative z-10 w-full overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/40">
+    <div className="bg-[#007a5e] py-10 md:py-14 relative z-10 w-full overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/20">
         {stats.map((stat, index) => (
           <div key={index} className="flex flex-col items-center justify-center text-white py-6 md:py-0 px-4">
-            <span className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-2">
+            <span className="text-5xl md:text-6xl font-extrabold tracking-tighter mb-1 font-sora">
               {stat.value}
             </span>
-            <span className="text-lg md:text-2xl font-medium opacity-90 text-center">
+            <span className="text-base md:text-lg font-medium opacity-80 text-center uppercase tracking-widest">
               {stat.label}
             </span>
           </div>

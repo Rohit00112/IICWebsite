@@ -55,6 +55,7 @@ const Navbar = () => {
               src="/images/iic_logo.png"
               alt="Itahari International College Logo"
               fill
+              sizes="(max-width: 768px) 256px, 450px"
               className="object-contain"
               priority
             />
@@ -105,6 +106,7 @@ const Navbar = () => {
                   src="/images/iic_logo.png"
                   alt="IIC Branding"
                   fill
+                  sizes="(max-width: 768px) 300px, 450px"
                   className="object-contain object-left"
                 />
               </div>
