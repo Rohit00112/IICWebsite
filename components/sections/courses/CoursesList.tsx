@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 const CourseCard = ({ course, index }: { course: any, index: number }) => {
@@ -47,6 +48,7 @@ const CourseCard = ({ course, index }: { course: any, index: number }) => {
             alt={course.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
+            priority={index < 2}
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
         </motion.div>
@@ -98,14 +100,17 @@ const CourseCard = ({ course, index }: { course: any, index: number }) => {
                 </span>
               ))}
             </div>
-            <button className="flex items-center gap-4 text-[13px] font-black uppercase tracking-widest group/btn hover:text-[#74C044] transition-colors">
+            <Link 
+              href={`/courses/${course.slug}`}
+              className="flex items-center gap-4 text-[13px] font-black uppercase tracking-widest group/btn hover:text-[#74C044] transition-colors"
+            >
               Explore
               <div className="w-10 h-10 rounded-full border-2 border-white/10 flex items-center justify-center group-hover/btn:border-[#74C044] group-hover/btn:bg-[#74C044] group-hover/btn:text-white transition-all duration-500 transform group-hover/btn:rotate-[360deg]">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </div>
-            </button>
+            </Link>
           </div>
         </motion.div>
       </div>
@@ -124,6 +129,7 @@ const CoursesList = () => {
       credits: "360 Credits",
       modules: "17 Modules",
       image: "/images/courses/bit.png",
+      slug: "bsc-hons-computing",
       features: ["SOFTWARE ENGINEERING", "AI"],
     },
     {
@@ -135,6 +141,7 @@ const CoursesList = () => {
       credits: "360 Credits",
       modules: "17 Modules",
       image: "/images/courses/bba2.png",
+      slug: "digital-business-management",
       features: ["SOFTWARE ENGINEERING", "AI"],
     },
     {
@@ -146,6 +153,7 @@ const CoursesList = () => {
       credits: "360 Credits",
       modules: "17 Modules",
       image: "/images/courses/bba1.png",
+      slug: "international-business",
       features: ["SOFTWARE ENGINEERING", "AI"],
     },
     {
@@ -157,6 +165,7 @@ const CoursesList = () => {
       credits: "360 Credits",
       modules: "17 Modules",
       image: "/images/courses/bba3.png",
+      slug: "advertising-marketing",
       features: ["SOFTWARE ENGINEERING", "AI"],
     }
   ];
