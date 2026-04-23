@@ -1,10 +1,7 @@
-import CoursesHero from "@/components/sections/CoursesHero";
-import CoursesList from "@/components/sections/CoursesList";
-import ProspectusSection from "@/components/sections/ProspectusSection";
-import Preloader from "@/components/layout/Preloader";
-import StatsStrip from "@/components/sections/StatsStrip";
+import CoursesHero from "@/components/sections/courses/CoursesHero";
+import CoursesList from "@/components/sections/courses/CoursesList";
 
-import ScholarshipsSection from "@/components/sections/ScholarshipsSection";
+import ScholarshipsSection from "@/components/sections/courses/ScholarshipsSection";
 
 export const metadata = {
   title: 'Programmes | Itahari International College',

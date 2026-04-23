@@ -8,7 +8,7 @@ const Footer = () => {
       {/* Background Image with Dark Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/footer-bg.png"
+          src="/images/common/footer-bg.png"
           alt="Graduation Celebration"
           fill
           className="object-cover"
@@ -25,7 +25,7 @@ const Footer = () => {
             <div className="flex items-center gap-6">
               <div className="relative w-72 h-20">
                 <Image
-                  src="/images/iic_logo.png"
+                  src="/images/common/iic_logo.png"
                   alt="IIC Logo"
                   fill
                   sizes="(max-width: 768px) 300px, 300px"

@@ -76,9 +76,10 @@ const InnovationLab = () => {
           >
             <motion.div style={{ y: y1 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
               <Image
-                src="/images/ivlab1.png"
+                src="/images/home/ivlab1.png"
                 alt="Clubs & Societies"
                 fill
+                sizes="(max-width: 768px) 100vw, 66vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </motion.div>
@@ -104,9 +105,10 @@ const InnovationLab = () => {
               >
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
-                    src="/images/ivlab2.png"
+                    src="/images/home/ivlab2.png"
                     alt="State-of-art Library"
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </motion.div>
@@ -126,9 +128,10 @@ const InnovationLab = () => {
               >
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
-                    src="/images/ivlab3.png"
+                    src="/images/home/ivlab3.png"
                     alt="Tech Events"
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </motion.div>
@@ -150,9 +153,10 @@ const InnovationLab = () => {
             >
               <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
                 <Image
-                  src="/images/ivlab4.png"
+                  src="/images/home/ivlab4.png"
                   alt="Cafeteria & Social Hub"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </motion.div>

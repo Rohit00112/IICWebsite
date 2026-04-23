@@ -17,11 +17,11 @@ const PartnerSection = () => {
   const yBadge = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
 
   const rankingCards = [
-    '/images/lmu rank 1.png',
-    '/images/lmu rank 2.png',
-    '/images/lmu rank 3.png',
-    '/images/lmu rank 4.png',
-    '/images/lmu rank 5.png',
+    '/images/home/lmu rank 1.png',
+    '/images/home/lmu rank 2.png',
+    '/images/home/lmu rank 3.png',
+    '/images/home/lmu rank 4.png',
+    '/images/home/lmu rank 5.png',
   ];
 
   const words = "UNIVERSITY".split("");
@@ -57,9 +57,10 @@ const PartnerSection = () => {
             className="relative h-10 md:h-12 w-64 md:w-[280px]"
           >
             <Image
-              src="/images/lmu brand 2.png"
+              src="/images/home/lmu brand 2.png"
               alt="Ranking"
               fill
+              sizes="(max-width: 768px) 256px, 280px"
               className="object-contain"
             />
           </motion.div>
@@ -71,9 +72,10 @@ const PartnerSection = () => {
             className="relative h-14 md:h-16 w-80 md:w-[380px]"
           >
             <Image
-              src="/images/lmu brand 1.png"
+              src="/images/home/lmu brand 1.png"
               alt="LMU"
               fill
+              sizes="(max-width: 768px) 320px, 380px"
               className="object-contain"
             />
           </motion.div>
@@ -83,9 +85,12 @@ const PartnerSection = () => {
           <div className="relative w-full aspect-[16/9] md:aspect-[21/6] overflow-hidden">
             <motion.div style={{ y: yBuilding }} className="absolute inset-0 w-full h-[130%] -top-[15%]">
               <Image
-                src="/images/lmu building.png"
+                src="/images/home/lmu building.png"
                 alt="LMU Building"
                 fill
+                sizes="100vw"
+                priority
+                loading="eager"
                 className="object-cover"
               />
             </motion.div>
@@ -101,9 +106,10 @@ const PartnerSection = () => {
                 className="absolute bottom-0 right-10 md:right-20 w-36 md:w-[240px] h-36 md:h-[240px] drop-shadow-3xl z-30"
               >
                 <Image
-                  src="/images/lmu student favourate.png"
+                  src="/images/home/lmu student favourate.png"
                   alt="Student Favourite"
                   fill
+                  sizes="(max-width: 768px) 144px, 240px"
                   className="object-contain object-bottom"
                 />
               </motion.div>
@@ -125,6 +131,7 @@ const PartnerSection = () => {
                 src={card}
                 alt={`LMU Rank ${index + 1}`}
                 fill
+                sizes="(max-width: 768px) 50vw, 20vw"
                 className="object-contain"
               />
             </motion.div>

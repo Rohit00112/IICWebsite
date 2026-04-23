@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
-import StatsStrip from '@/components/sections/StatsStrip';
+import StatsStrip from './StatsStrip';
 
 const HeroSection = () => {
   const containerRef = useRef(null);
@@ -41,7 +41,7 @@ const HeroSection = () => {
         <div className="w-full pt-16 md:pt-28 pb-6 flex items-center justify-center relative z-40">
           <div className="relative h-14 md:h-20 w-64 md:w-[450px]">
             <Image
-              src="/images/iic_logo.png"
+              src="/images/common/iic_logo.png"
               alt="Itahari International College Logo"
               fill
               sizes="(max-width: 768px) 256px, 450px"
@@ -92,9 +92,10 @@ const HeroSection = () => {
           className="absolute inset-0 w-full h-[120%] -top-[5%]"
         >
           <Image
-            src="/images/hero.png"
+            src="/images/home/hero.png"
             alt="IIC ING Block Building"
             fill
+            sizes="100vw"
             className="object-cover object-center"
             priority
           />

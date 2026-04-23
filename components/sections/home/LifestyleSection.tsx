@@ -40,7 +40,7 @@ const LifestyleSection = () => {
           <div className="md:col-span-2 relative aspect-[4/3] md:aspect-auto group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-2xl">
             <motion.div style={{ y: y1 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
               <Image
-                src="/images/iic-lifestyle 3.png"
+                src="/images/home/iic-lifestyle 3.png"
                 alt="Lifestyle at IIC"
                 fill
                 sizes="(max-width: 768px) 100vw, 66vw"
@@ -63,7 +63,7 @@ const LifestyleSection = () => {
             <div className="flex-1 relative aspect-[4/3] md:aspect-auto group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl">
               <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
                 <Image
-                  src="/images/iic-lifestyle 1.png"
+                  src="/images/home/iic-lifestyle 1.png"
                   alt="Lecture Theater"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
@@ -82,7 +82,7 @@ const LifestyleSection = () => {
             <div className="flex-1 relative aspect-[4/3] md:aspect-auto group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl">
               <motion.div style={{ y: y3 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
                 <Image
-                  src="/images/iic-lifestyle 2.png"
+                  src="/images/home/iic-lifestyle 2.png"
                   alt="Advanced Labs"
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
