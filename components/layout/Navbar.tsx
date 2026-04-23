@@ -118,7 +118,7 @@ const Navbar = () => {
             <div className="flex items-center mb-6 border-b border-white/10 pb-6 pr-12">
               <div className="relative h-10 md:h-12 w-full">
                 <Image
-                  src="/images/iic_logo.png"
+                  src="/images/common/iic_logo.png"
                   alt="IIC Branding"
                   fill
                   sizes="(max-width: 768px) 300px, 450px"

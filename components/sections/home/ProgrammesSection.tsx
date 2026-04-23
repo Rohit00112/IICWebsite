@@ -24,7 +24,7 @@ const ProgrammesSection = () => {
       subtitle: 'Information Technology',
       modules: '17 Modules',
       credits: '360 Credits',
-      image: '/images/course1.png',
+      image: '/images/home/course1.png',
       bgColor: 'bg-[#2a4d1b]', // Darker version of brand green
       tagColor: 'bg-[#74C044]',
       parallax: y1
@@ -37,7 +37,7 @@ const ProgrammesSection = () => {
       list: ['International Business', 'Digital Business Management', 'Advertising And Marketing'],
       modules: '17 Modules',
       credits: '360 Credits',
-      image: '/images/course2.png',
+      image: '/images/home/course2.png',
       bgColor: 'bg-[#21409A]',
       tagColor: 'bg-[#1a337e]',
       parallax: y2
@@ -131,6 +131,7 @@ const ProgrammesSection = () => {
                   src={prog.image}
                   alt={prog.subtitle}
                   fill
+                  sizes="(max-width: 768px) 50vw, 30vw"
                   className="object-contain object-bottom transition-transform duration-1000 group-hover:scale-105"
                   priority
                 />

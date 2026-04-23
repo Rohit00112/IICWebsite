@@ -35,7 +35,7 @@ const IngSection = () => {
           <div className="w-full md:w-1/2 flex justify-center md:justify-end">
             <div className="relative w-full max-w-[320px] md:max-w-[380px] aspect-[1.6/1]">
               <Image
-                src="/images/ing.png"
+                src="/images/home/ing.png"
                 alt="ING Group Logo"
                 fill
                 sizes="(max-width: 768px) 100vw, 30vw"

@@ -59,7 +59,7 @@ const AboutSection = () => {
       <div className="w-full mt-20 md:mt-32 relative h-[400px] md:h-[700px] overflow-hidden">
         <motion.div style={{ y: yImage }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
           <Image
-            src="/images/tower_block.png"
+            src="/images/home/tower_block.png"
             alt="Tower Block"
             fill
             className="object-cover object-center"
