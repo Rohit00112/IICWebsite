@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import TopBar from './TopBar';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -36,6 +37,7 @@ const Navbar = () => {
   };
 
   const navLinks = [
+    { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Courses', href: '/courses' },
     { name: 'Admission', href: '/admission' },
@@ -51,76 +53,63 @@ const Navbar = () => {
 
       {/* Main Header / Navigation Area */}
       <div className="w-full relative">
-        {/* Background Logos - Lower Z-index to stay BEHIND the overlay */}
-        <div className="w-full px-6 pt-16 md:pt-28 pb-6 flex items-center justify-center relative z-40">
-          <div className="relative h-14 md:h-20 w-64 md:w-[450px]">
-            <Image
-              src="/images/iic_logo.png"
-              alt="Itahari International College Logo"
-              fill
-              sizes="(max-width: 768px) 256px, 450px"
-              className="object-contain"
-              priority
-            />
-          </div>
-        </div>
-
-        {/* Unified Morphing Toggle Button with Magnetic Effect */}
-        <motion.button
-          onClick={toggleMenu}
-          onMouseMove={(e) => {
-            const { clientX, clientY } = e;
-            const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-            const centerX = left + width / 2;
-            const centerY = top + height / 2;
-            const distanceX = clientX - centerX;
-            const distanceY = clientY - centerY;
-
-            // Subtler pull (0.15 multiplier)
-            setButtonPos({ x: distanceX * 0.15, y: distanceY * 0.15 });
-          }}
-          onMouseLeave={() => setButtonPos({ x: 0, y: 0 })}
-          animate={{ x: buttonPos.x, y: buttonPos.y }}
-          transition={{
-            type: "spring",
-            stiffness: 250,
-            damping: 15,
-            mass: 0.1,
-            restDelta: 0.001
-          }}
-          className={`absolute right-6 md:right-12 top-[76px] md:top-[125px] -translate-y-1/2 z-[120] transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) p-2 rounded-md text-white active:scale-95 ${isMenuOpen
-            ? 'rotate-180 bg-transparent shadow-none'
-            : 'rotate-0 bg-[#1a1a1a]/95 shadow-xl hover:bg-black backdrop-blur-xl'
-            }`}
-          aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-        >
-          <div className="w-8 h-8 flex flex-col justify-center items-center relative">
-            <span
-              className={`block w-7 h-[2.5px] bg-white rounded-full transition-all duration-500 absolute ${isMenuOpen ? 'rotate-45' : '-translate-y-2'
-                }`}
-            />
-            <span
-              className={`block w-7 h-[2.5px] bg-white rounded-full transition-all duration-500 absolute ${isMenuOpen ? 'opacity-0' : 'opacity-100'
-                }`}
-            />
-            <span
-              className={`block w-7 h-[2.5px] bg-white rounded-full transition-all duration-500 absolute ${isMenuOpen ? '-rotate-45' : 'translate-y-2'
-                }`}
-            />
-          </div>
-        </motion.button>
+        {/* The button is now fixed and global, outside this relative container */}
       </div>
+
+      <motion.button
+        onClick={toggleMenu}
+        onMouseMove={(e) => {
+          const { clientX, clientY } = e;
+          const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+          const centerX = left + width / 2;
+          const centerY = top + height / 2;
+          const distanceX = clientX - centerX;
+          const distanceY = clientY - centerY;
+
+          // Subtler pull (0.15 multiplier)
+          setButtonPos({ x: distanceX * 0.15, y: distanceY * 0.15 });
+        }}
+        onMouseLeave={() => setButtonPos({ x: 0, y: 0 })}
+        animate={{ x: buttonPos.x, y: buttonPos.y }}
+        transition={{
+          type: "spring",
+          stiffness: 250,
+          damping: 15,
+          mass: 0.1,
+          restDelta: 0.001
+        }}
+        className={`fixed right-6 md:right-12 top-28 md:top-36 z-[200] transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) p-2 rounded-md text-white active:scale-95 ${isMenuOpen
+          ? 'rotate-180 bg-transparent shadow-none'
+          : 'rotate-0 bg-[#1a1a1a]/95 shadow-xl hover:bg-black backdrop-blur-xl'
+          }`}
+        aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
+      >
+        <div className="w-8 h-8 flex flex-col justify-center items-center relative">
+          <span
+            className={`block w-7 h-[2.5px] bg-white rounded-full transition-all duration-500 absolute ${isMenuOpen ? 'rotate-45' : '-translate-y-2'
+              }`}
+          />
+          <span
+            className={`block w-7 h-[2.5px] bg-white rounded-full transition-all duration-500 absolute ${isMenuOpen ? 'opacity-0' : 'opacity-100'
+              }`}
+          />
+          <span
+            className={`block w-7 h-[2.5px] bg-white rounded-full transition-all duration-500 absolute ${isMenuOpen ? '-rotate-45' : 'translate-y-2'
+              }`}
+          />
+        </div>
+      </motion.button>
 
       {/* Floating Menu Overlay - Refined for layer consistency */}
       <div
-        className={`fixed inset-0 z-[90] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-[150] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={toggleMenu}
       >
-        {/* Backdrop (separate sibling to avoid dimming the panel) */}
-        <div className="absolute inset-0 bg-black/20" />
+        {/* Backdrop */}
+        <div className="absolute inset-0 bg-black/60" />
 
         <div
-          className={`absolute top-[52px] md:top-[129px] right-6 md:right-12 w-[90%] md:w-[450px] bg-[#2a2d34]/95 backdrop-blur-3xl rounded-2xl shadow-2xl transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) transform ${isMenuOpen ? 'translate-y-0 scale-100 opacity-100' : '-translate-y-4 scale-95 opacity-0'}`}
+          className={`fixed top-28 md:top-36 right-6 md:right-12 w-[90%] md:w-[450px] bg-[#2a2d34]/95 rounded-2xl shadow-2xl transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) ${isMenuOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 -translate-y-4'}`}
           style={{ transformOrigin: 'top right' }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -152,9 +141,9 @@ const Navbar = () => {
                     onMouseEnter={() => setHoveredIndex(index)}
                     className="relative w-full py-1"
                   >
-                    <a
+                    <Link
                       href={link.href}
-                      className="block relative h-[32px] md:h-[48px] overflow-hidden"
+                      className="block relative h-[28px] md:h-[36px] overflow-hidden"
                       onClick={toggleMenu}
                     >
                       <motion.div
@@ -163,15 +152,15 @@ const Navbar = () => {
                         className="flex flex-col h-[200%]"
                       >
                         {/* Copy 1: Initial (Gray out others on hover) */}
-                        <span className={`h-1/2 flex items-center text-2xl md:text-4xl font-medium tracking-tight transition-colors duration-500 ${(hoveredIndex !== null && hoveredIndex !== index) ? 'text-white/20' : 'text-white'}`}>
+                        <span className={`h-1/2 flex items-center text-xl md:text-2xl font-medium tracking-tight transition-colors duration-500 ${(hoveredIndex !== null && hoveredIndex !== index) ? 'text-white/20' : 'text-white'}`}>
                           {link.name}
                         </span>
                         {/* Copy 2: Hovered (Always White) */}
-                        <span className="h-1/2 flex items-center text-2xl md:text-4xl font-medium tracking-tight text-white">
+                        <span className="h-1/2 flex items-center text-xl md:text-2xl font-medium tracking-tight text-white">
                           {link.name}
                         </span>
                       </motion.div>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

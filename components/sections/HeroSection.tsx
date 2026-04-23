@@ -37,11 +37,25 @@ const HeroSection = () => {
 
       {/* Hero Content Layer */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 flex flex-col items-center">
+        {/* Centered Logo - Specifically for Home Page Hero */}
+        <div className="w-full pt-16 md:pt-28 pb-6 flex items-center justify-center relative z-40">
+          <div className="relative h-14 md:h-20 w-64 md:w-[450px]">
+            <Image
+              src="/images/iic_logo.png"
+              alt="Itahari International College Logo"
+              fill
+              sizes="(max-width: 768px) 256px, 450px"
+              className="object-contain"
+              priority
+            />
+          </div>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="pt-24 md:pt-40 text-center flex flex-col items-center"
+          className="pt-4 md:pt-8 text-center flex flex-col items-center"
         >
           <p className="text-xl md:text-[28px] font-medium text-[#1a1a1a] leading-[1.6] mb-12 max-w-4xl px-4 font-sora">
             UK-Affiliated Degrees In IT & Business. Partnered With London Metropolitan
@@ -73,8 +87,8 @@ const HeroSection = () => {
 
       {/* Building Image Layer — Pinned to bottom, separate from content flow */}
       <div className="w-full relative h-[400px] md:h-[650px] mt-auto overflow-hidden z-0">
-        <motion.div 
-          style={{ y, opacity, scale }} 
+        <motion.div
+          style={{ y, opacity, scale }}
           className="absolute inset-0 w-full h-[120%] -top-[5%]"
         >
           <Image
@@ -88,7 +102,7 @@ const HeroSection = () => {
       </div>
 
       {/* Stats Bar — Naturally follows the building */}
-      <div className="relative z-20 w-full bg-white">
+      <div className="relative z-20 w-full bg-white mt-6 md:-mt-16">
         <StatsStrip />
       </div>
     </section >
