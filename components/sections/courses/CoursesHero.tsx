@@ -64,6 +64,7 @@ const CoursesHero = () => {
             src="/images/courses/course-hero.png"
             alt="IIC Campus Life"
             fill
+            sizes="100vw"
             className="object-cover object-center grayscale-[20%] brightness-105"
             priority
           />
