@@ -1,7 +1,21 @@
-import React from 'react';
+'use client';
+
+import React, { useRef } from 'react';
 import Image from 'next/image';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 const ProgrammesSection = () => {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);
+
   const programmes = [
     {
       type: 'BSc (Hons) Computing',
@@ -11,8 +25,9 @@ const ProgrammesSection = () => {
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/course1.png',
-      bgColor: 'bg-[#004033]',
-      tagColor: 'bg-[#005a49]',
+      bgColor: 'bg-[#2a4d1b]', // Darker version of brand green
+      tagColor: 'bg-[#74C044]',
+      parallax: y1
     },
     {
       type: 'BA (Hons) Business Administration',
@@ -23,34 +38,49 @@ const ProgrammesSection = () => {
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/course2.png',
-      bgColor: 'bg-[#002a78]',
-      tagColor: 'bg-[#0038a1]',
+      bgColor: 'bg-[#21409A]',
+      tagColor: 'bg-[#1a337e]',
+      parallax: y2
     },
   ];
 
-  return (
-    <section className="relative w-full py-24 md:py-32 bg-[#f4f7fa] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
-        {/* Top Tag */}
-        <span className="text-[#007a5e] text-[12px] md:text-[14px] font-bold tracking-[0.3em] uppercase mb-6 font-sora">
-          Our Programmes
-        </span>
+  const words = "ITAHARI".split("");
 
-        {/* Headings */}
+  return (
+    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
+        <motion.span 
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          className="text-[#74C044] text-[12px] md:text-[14px] font-bold tracking-[0.3em] uppercase mb-6 font-sora"
+        >
+          Our Programmes
+        </motion.span>
+
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] mb-2 font-sora">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-sora">
             Nepal's First Direct UK Degree At
           </h2>
-          <h2 className="text-7xl md:text-[140px] font-black text-[#007a5e] tracking-tighter leading-none font-sora">
-            ITAHARI
-          </h2>
+          <div className="overflow-hidden py-2">
+            <motion.h1
+              initial={{ y: "100%" }}
+              animate={isInView ? { y: 0 } : {}}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-4xl md:text-7xl font-black text-[#74C044] tracking-tight leading-none font-sora"
+            >
+              ITAHARI
+            </motion.h1>
+          </div>
         </div>
 
-        {/* Programme Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full mb-20 max-w-[1440px]">
           {programmes.map((prog, index) => (
-            <div
+            <motion.div
               key={index}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.2, duration: 1 }}
               className={`${prog.bgColor} rounded-[32px] md:rounded-[40px] p-8 md:p-10 relative overflow-hidden flex flex-col justify-between min-h-[400px] md:h-[440px] shadow-2xl group transition-all duration-500 hover:scale-[1.01]`}
             >
               <div className="relative z-10">
@@ -93,30 +123,35 @@ const ProgrammesSection = () => {
                 </span>
               </div>
 
-              {/* Character Image - Positioned with more gap from text */}
-              <div className="absolute right-0 bottom-0 w-[50%] h-[95%] pointer-events-none">
+              <motion.div 
+                style={{ y: prog.parallax }}
+                className="absolute right-0 bottom-0 w-[50%] h-[110%] pointer-events-none"
+              >
                 <Image
                   src={prog.image}
                   alt={prog.subtitle}
                   fill
-                  sizes="(max-width: 768px) 50vw, 30vw"
                   className="object-contain object-bottom transition-transform duration-1000 group-hover:scale-105"
                   priority
                 />
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ))}
         </div>
 
-        {/* Bottom Text and CTA */}
-        <div className="max-w-3xl text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-3xl text-center"
+        >
           <p className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-10 px-4">
             Beginning Your College Journey Is A Very Personal And Sacred Experience That Encompasses A Wide Range Of Events Compounding Your Growth.
           </p>
-          <button className="bg-[#1e3a8a] text-white px-12 py-4 rounded-lg font-bold text-lg shadow-2xl hover:bg-[#1a337e] hover:shadow-blue-500/20 transition-all active:scale-95">
+          <button className="bg-[#21409A] text-white px-12 py-4 rounded-lg font-bold text-lg shadow-2xl hover:opacity-90 transition-all active:scale-95">
             Enroll Now
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

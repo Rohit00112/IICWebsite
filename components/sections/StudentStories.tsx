@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const testimonials = [
   {
@@ -39,20 +40,31 @@ const testimonials = [
 ];
 
 const StudentStories = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const xStudents = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
+
   return (
-    <section className="relative w-full py-24 md:py-32 bg-[#f8fafc] overflow-hidden">
+    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-[#f8fafc] overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6">
         {/* Header Section */}
-        <div className="flex flex-col items-center text-center mb-20">
+        <div className="flex flex-col items-center text-center mb-16">
           <span className="text-[#007a5e] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 font-sora">
             Insights
           </span>
-          <h2 className="text-4xl md:text-[64px] font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
             Stories From The
           </h2>
-          <h2 className="text-[100px] md:text-[160px] font-black text-[#007a5e] leading-[0.8] tracking-[-0.05em] mb-10 font-sora">
+          <motion.h2 
+            style={{ x: xStudents }}
+            className="text-5xl md:text-7xl font-black text-[#007a5e] leading-[0.8] tracking-tight mb-10 font-sora"
+          >
             STUDENTS
-          </h2>
+          </motion.h2>
           <p className="max-w-2xl text-gray-500 text-base md:text-lg font-medium leading-relaxed">
             Hear Directly From Our Students About How The IIC Campus Environment Shaped Their Academic And Social Lives.
           </p>
@@ -62,8 +74,12 @@ const StudentStories = () => {
         <div className="relative">
           <div className="flex gap-6 overflow-x-auto pb-12 pt-4 px-2 no-scrollbar snap-x snap-mandatory scroll-smooth">
             {testimonials.map((item, index) => (
-              <div 
+              <motion.div 
                 key={index}
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 className={`flex-none w-[320px] md:w-[450px] p-8 md:p-12 rounded-[24px] md:rounded-[32px] snap-center transition-all duration-300 ${
                   item.featured 
                     ? 'bg-[#0a3285] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]' 
@@ -113,7 +129,7 @@ const StudentStories = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

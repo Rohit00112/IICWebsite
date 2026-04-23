@@ -3,9 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import TopBar from './TopBar';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [buttonPos, setButtonPos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
@@ -33,12 +36,12 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'HOME', href: '/' },
-    { name: 'ABOUT', href: '/about' },
-    { name: 'COURSES', href: '/courses' },
-    { name: 'ADMISSION', href: '/admission' },
-    { name: 'LIFESTYLE', href: '/lifestyle' },
-    { name: 'CONTACT', href: '/contact' },
+    { name: 'About', href: '/about' },
+    { name: 'Courses', href: '/courses' },
+    { name: 'Admission', href: '/admission' },
+    { name: 'Innovation Lab', href: '/innovation-lab' },
+    { name: 'News & Events', href: '/news' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -62,12 +65,32 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Unified Morphing Toggle Button - High Z-index to stay ABOVE the overlay */}
-        <button
+        {/* Unified Morphing Toggle Button with Magnetic Effect */}
+        <motion.button
           onClick={toggleMenu}
+          onMouseMove={(e) => {
+            const { clientX, clientY } = e;
+            const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+            const centerX = left + width / 2;
+            const centerY = top + height / 2;
+            const distanceX = clientX - centerX;
+            const distanceY = clientY - centerY;
+
+            // Subtler pull (0.15 multiplier)
+            setButtonPos({ x: distanceX * 0.15, y: distanceY * 0.15 });
+          }}
+          onMouseLeave={() => setButtonPos({ x: 0, y: 0 })}
+          animate={{ x: buttonPos.x, y: buttonPos.y }}
+          transition={{
+            type: "spring",
+            stiffness: 250,
+            damping: 15,
+            mass: 0.1,
+            restDelta: 0.001
+          }}
           className={`absolute right-6 md:right-12 top-[76px] md:top-[125px] -translate-y-1/2 z-[120] transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) p-2 rounded-md text-white active:scale-95 ${isMenuOpen
-            ? 'rotate-180 bg-[#2a2d34] shadow-none'
-            : 'rotate-0 bg-[#1a1a1a] shadow-xl hover:bg-black'
+            ? 'rotate-180 bg-transparent shadow-none'
+            : 'rotate-0 bg-[#1a1a1a]/95 shadow-xl hover:bg-black backdrop-blur-xl'
             }`}
           aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
         >
@@ -85,16 +108,19 @@ const Navbar = () => {
                 }`}
             />
           </div>
-        </button>
+        </motion.button>
       </div>
 
-      {/* Floating Menu Overlay - Middle Z-index (90) */}
+      {/* Floating Menu Overlay - Refined for layer consistency */}
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-[2px] z-[90] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-[90] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={toggleMenu}
       >
+        {/* Backdrop (separate sibling to avoid dimming the panel) */}
+        <div className="absolute inset-0 bg-black/20" />
+
         <div
-          className={`absolute top-[52px] md:top-[129px] right-6 md:right-12 w-[90%] md:w-[450px] bg-[#2a2d34] rounded-lg shadow-2xl transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) transform ${isMenuOpen ? 'translate-y-0 scale-100 opacity-100' : '-translate-y-4 scale-95 opacity-0'}`}
+          className={`absolute top-[52px] md:top-[129px] right-6 md:right-12 w-[90%] md:w-[450px] bg-[#2a2d34]/95 backdrop-blur-3xl rounded-2xl shadow-2xl transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) transform ${isMenuOpen ? 'translate-y-0 scale-100 opacity-100' : '-translate-y-4 scale-95 opacity-0'}`}
           style={{ transformOrigin: 'top right' }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -114,20 +140,42 @@ const Navbar = () => {
 
             <div className="text-gray-400 text-[10px] font-bold tracking-[0.3em] mb-4 uppercase">Menu</div>
 
-            {/* Nav Links */}
-            <ul className="flex flex-col gap-3 mb-6">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-white text-3xl md:text-4xl font-black hover:text-[#3b82f6] transition-colors tracking-tighter uppercase block"
-                    onClick={toggleMenu}
+            {/* Nav Links with Roll-up Scroll Effect */}
+            <div className="relative mb-8 flex flex-col items-start px-4">
+              <ul
+                className="flex flex-col w-full"
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                {navLinks.map((link, index) => (
+                  <li
+                    key={link.name}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    className="relative w-full py-1"
                   >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+                    <a
+                      href={link.href}
+                      className="block relative h-[32px] md:h-[48px] overflow-hidden"
+                      onClick={toggleMenu}
+                    >
+                      <motion.div
+                        animate={{ y: hoveredIndex === index ? "-50%" : "0%" }}
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                        className="flex flex-col h-[200%]"
+                      >
+                        {/* Copy 1: Initial (Gray out others on hover) */}
+                        <span className={`h-1/2 flex items-center text-2xl md:text-4xl font-medium tracking-tight transition-colors duration-500 ${(hoveredIndex !== null && hoveredIndex !== index) ? 'text-white/20' : 'text-white'}`}>
+                          {link.name}
+                        </span>
+                        {/* Copy 2: Hovered (Always White) */}
+                        <span className="h-1/2 flex items-center text-2xl md:text-4xl font-medium tracking-tight text-white">
+                          {link.name}
+                        </span>
+                      </motion.div>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             {/* Contact Details */}
             <div className="border-t border-white/10 pt-6 pb-4">
@@ -147,7 +195,7 @@ const Navbar = () => {
               {/* CTA Button */}
               <a
                 href="#"
-                className="flex items-center justify-between bg-[#2a69ac] hover:bg-[#23588f] text-white px-6 py-4 rounded-md font-bold transition-all shadow-lg group w-full text-sm"
+                className="flex items-center justify-between bg-[#21409A] hover:opacity-90 text-white px-6 py-4 rounded-md font-bold transition-all shadow-lg group w-full text-sm"
               >
                 <span>Schedule a Campus Tour</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>

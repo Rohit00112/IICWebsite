@@ -1,53 +1,94 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
 import StatsStrip from '@/components/sections/StatsStrip';
 
 const HeroSection = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+
+  // Floating elements parallax
+  const yBlob1 = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const yBlob2 = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
+
   return (
-    <section className="relative w-full flex flex-col items-center bg-[#f4f7fa]">
+    <section ref={containerRef} className="relative w-full flex flex-col items-center bg-white overflow-hidden min-h-screen">
+      {/* Decorative Floating Blobs */}
+      <motion.div
+        style={{ y: yBlob1 }}
+        className="absolute top-20 -left-20 w-64 h-64 bg-[#21409A]/10 rounded-full blur-3xl z-0"
+      />
+      <motion.div
+        style={{ y: yBlob2 }}
+        className="absolute bottom-40 -right-20 w-96 h-96 bg-[#007a5e]/10 rounded-full blur-3xl z-0"
+      />
+
       <Navbar />
 
-      {/* Hero Text + Buttons */}
-      <div className="w-full max-w-[1440px] mx-auto px-6 pt-12 md:pt-20 text-center flex flex-col items-center z-10">
-        <h1 className="text-xl md:text-[26px] font-medium text-gray-700 leading-[1.6] mb-8 max-w-3xl px-4 font-sora">
-          UK-Affiliated Degrees In IT & Business. Partnered With London Metropolitan
-          University To Bring World-Class Education To Eastern Nepal.
-        </h1>
+      {/* Hero Content Layer */}
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="pt-24 md:pt-40 text-center flex flex-col items-center"
+        >
+          <p className="text-xl md:text-[28px] font-medium text-[#1a1a1a] leading-[1.6] mb-12 max-w-4xl px-4 font-sora">
+            UK-Affiliated Degrees In IT & Business. Partnered With London Metropolitan
+            University To Bring World-Class Education To Eastern Nepal.
+          </p>
 
-        <div className="flex flex-col sm:flex-row gap-5 mb-10">
+          <div className="flex flex-col sm:flex-row gap-5 mb-24 md:mb-44">
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="#"
+              className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:opacity-90 transition-all"
+            >
+              <span>Schedule A Visit</span>
+              <span className="text-xl">📞</span>
+            </motion.a>
 
-          <a href="#"
-            className="px-10 py-4 bg-[#243c8b] text-white rounded-lg font-bold text-[15px] flex items-center justify-center gap-2 hover:bg-[#1e3274] transition-all shadow-xl active:scale-95"
-          >
-            <span>Schedule A Visit</span>
-            <span className="text-lg text-white/90">📞</span>
-          </a>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="#"
+              className="px-10 py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all"
+            >
+              Explore Programmes
+            </motion.a>
+          </div>
+        </motion.div>
+      </div>
 
-          <a href="#"
-            className="px-10 py-4 bg-white text-[#243c8b] border-2 border-[#dbeafe] rounded-lg font-bold text-[15px] flex items-center justify-center hover:bg-[#f8fbff] transition-all active:scale-95 shadow-md"
-          >
-            Explore Programmes
-          </a>
-        </div>
-      </div >
+      {/* Building Image Layer — Pinned to bottom, separate from content flow */}
+      <div className="w-full relative h-[400px] md:h-[650px] mt-auto overflow-hidden z-0">
+        <motion.div 
+          style={{ y, opacity, scale }} 
+          className="absolute inset-0 w-full h-[120%] -top-[5%]"
+        >
+          <Image
+            src="/images/hero.png"
+            alt="IIC ING Block Building"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </motion.div>
+      </div>
 
-      {/* Building Image — natural aspect ratio, no crop, no extra whitespace */}
-      < div className="w-full overflow-hidden leading-[0]" >
-        <Image
-          src="/images/hero.png"
-          alt="IIC ING Block Building"
-          width={1440}
-          height={700}
-          className="w-full h-auto object-cover object-center block"
-          priority
-        />
-      </div >
-
-      {/* Stats Bar — pushed up to touch the ground of the building */}
-      <div className="relative z-20 w-full -mt-16 md:-mt-24">
+      {/* Stats Bar — Naturally follows the building */}
+      <div className="relative z-20 w-full bg-white">
         <StatsStrip />
       </div>
     </section >

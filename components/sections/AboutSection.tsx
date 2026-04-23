@@ -1,49 +1,72 @@
-import React from 'react';
+'use client';
+
+import React, { useRef } from 'react';
 import Image from 'next/image';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 const AboutSection = () => {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const yImage = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
+  const words = "FUTURE".split("");
+
   return (
-    <section className="relative w-full py-24 md:py-32 bg-[#f4f7fa] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
-        {/* Top Tag */}
-        <span className="text-[#007a5e] text-[12px] md:text-[14px] font-bold tracking-[0.3em] uppercase mb-6">
+    <section ref={containerRef} className="relative w-full py-24 md:py-40 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+        <motion.span 
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="inline-block px-4 py-1.5 rounded-full bg-[#74C044]/10 text-[#74C044] text-[12px] font-bold tracking-widest uppercase mb-8"
+        >
           Who We Are
-        </span>
-
-        {/* Main Headings */}
-        <div className="flex flex-col items-center gap-2 mb-8 relative">
-          <h2 className="text-4xl md:text-6xl font-black text-[#1a1a1a] tracking-tighter">
-            Shape Your
-          </h2>
-          <div className="relative">
-            <h2 className="text-7xl md:text-9xl font-black text-[#007a5e] tracking-tighter leading-none">
+        </motion.span>
+        
+        <h2 className="text-4xl md:text-7xl lg:text-8xl font-bold text-[#1a1a1a] tracking-tight leading-[1.1] mb-12">
+          Shape Your <br />
+          <div className="overflow-hidden inline-block align-bottom">
+            <motion.span
+              initial={{ y: "100%" }}
+              animate={isInView ? { y: 0 } : {}}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[#74C044] block"
+            >
               FUTURE
-            </h2>
+            </motion.span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-black text-[#1a1a1a] tracking-tighter">
-            In Nepal
-          </h2>
-        </div>
+          <br /> In Nepal
+        </h2>
 
-        {/* Description Paragraph */}
-        <p className="max-w-3xl text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-16 px-4">
-          IIC Is A Flagship Institution Of Innovate Nepal Group. We Offer BSc (Hons) Computing And BA (Hons) Business Administration Directly Delivered In Partnership With London Metropolitan University — Right Here In Itahari.
-        </p>
-
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="max-w-3xl"
+        >
+          <p className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed">
+            IIC is a flagship institution of Innovate Nepal Group. We offer BSc (Hons) Computing and BA (Hons) Business Administration directly delivered in partnership with London Metropolitan University — right here in Itahari.
+          </p>
+          <div className="mt-12 mx-auto w-24 h-[3px] bg-[#74C044]/30 rounded-full" />
+        </motion.div>
       </div>
 
-      {/* Full-Width Building Image - Wide-angle landscape to cover whole width */}
-      <div className="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden shadow-2xl mt-16">
-        <Image
-          src="/images/tower_block.png"
-          alt="Itahari International College Tower Block"
-          fill
-          sizes="100vw"
-          className="object-cover hover:scale-105 transition-transform duration-1000"
-          priority
-        />
-        {/* Subtle Overlay for Premium Feel */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+      <div className="w-full mt-20 md:mt-32 relative h-[400px] md:h-[700px] overflow-hidden">
+        <motion.div style={{ y: yImage }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+          <Image
+            src="/images/tower_block.png"
+            alt="Tower Block"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </motion.div>
+        <div className="absolute inset-0 bg-black/5"></div>
       </div>
     </section>
   );
