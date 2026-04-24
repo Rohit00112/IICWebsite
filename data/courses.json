@@ -1,186 +1,62 @@
-{
-  "bsc-hons-computing": {
+[
+  {
     "title": "BSc (Hons) Computing",
-    "subtitle": "IT & Software Engineering",
-    "description": "Transform your passion for technology into a professional career with our world-class computing degree.",
-    "overview": "This program provides a comprehensive foundation in modern computing, from software development to artificial intelligence. Students will gain practical skills in coding, systems analysis, and project management while working on real-world projects.",
+    "subtitle": "Develop the skills to build the future of technology.",
+    "slug": "bsc-hons-computing",
+    "category": "Technology",
+    "duration": "3 Years",
+    "description": "Gain a deep understanding of software development, networks, and database systems with our London Met awarded degree.",
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+    "level": "Undergraduate",
+    "featured": true,
+    "overview": "The BSc (Hons) Computing program is designed to provide you with a comprehensive understanding of computer science principles and practical software development skills. You will learn to design, develop, and maintain complex software systems that solve real-world problems.",
     "details": {
-      "level": "Undergraduate (Level 6)",
-      "duration": "3 Years Full-Time",
-      "intake": "Feb / Sept 2024",
+      "level": "L6 Undergraduate",
+      "duration": "3 Years (Full-Time)",
+      "intake": "Jan / June / Sept",
       "awardingBody": "London Metropolitan University"
     },
     "curriculum": [
       {
-        "title": "Year 1 (Level 4)",
+        "title": "Year 1: Foundations",
         "modules": [
-          { "name": "Logic and Problem Solving", "credits": "30", "description": "Foundations of computational thinking and algorithms." },
-          { "name": "Fundamentals of Computing", "credits": "15", "description": "Core principles of computer hardware and software." },
-          { "name": "Introduction to Programming", "credits": "15", "description": "Building the base for software development with modern languages." },
-          { "name": "Digital Information Systems", "credits": "30", "description": "Understanding data and how it moves in the digital age." }
+          { "name": "Programming Fundamentals", "description": "Introduction to logic and core programming concepts.", "credits": "30" },
+          { "name": "Computer Systems", "description": "Understanding architecture and hardware foundations.", "credits": "30" }
         ]
       },
       {
-        "title": "Year 2 (Level 5)",
+        "title": "Year 2: Specialization",
         "modules": [
-          { "name": "Software Engineering", "credits": "30", "description": "Advanced development methodologies and teamwork." },
-          { "name": "Databases & Web Apps", "credits": "30", "description": "Building and managing data-driven web solutions." }
-        ]
-      },
-      {
-        "title": "Year 3 (Level 6)",
-        "modules": [
-          { "name": "Artificial Intelligence", "credits": "30", "description": "Introduction to machine learning and neural networks." },
-          { "name": "Honours Project", "credits": "30", "description": "Deep dive into a specialized topic of your choice." }
+          { "name": "Data Structures & Algorithms", "description": "Optimizing data management and processing.", "credits": "30" },
+          { "name": "Web Application Development", "description": "Building modern, responsive web experiences.", "credits": "30" }
         ]
       }
     ],
     "entryRequirements": {
-      "academic": "Minimum 50% in 10+2 (or equivalent) in any stream. Mathematics background preferred but not mandatory.",
-      "language": "Minimum IELTS score of 6.0 (with no band less than 5.5) or equivalent English proficiency test."
+      "academic": "Completion of 10+2 with a minimum of 50%",
+      "language": "IELTS 6.0 or equivalent"
     },
     "learningOutcomes": [
-      "Analyze and solve complex computational problems using systematic approaches.",
-      "Design, implement, and evaluate software systems to meet specified requirements.",
-      "Demonstrate proficiency in multiple programming languages and development frameworks.",
-      "Understand and apply principles of data security and ethical computing.",
-      "Collaborate effectively in professional software development teams."
+      "Design and implement complex software solutions",
+      "Apply agile methodologies in team environments",
+      "Analyze and secure network infrastructures"
     ],
     "careerOpportunities": [
-      { "title": "Software Engineer", "description": "Design and build complex software systems.", "color": "bg-[#007a5e]" },
-      { "title": "Data Analyst", "description": "Turn data into actionable business insights.", "color": "bg-[#21409A]" },
-      { "title": "UX Designer", "description": "Craft intuitive and beautiful digital experiences.", "color": "bg-[#5c1616]" },
-      { "title": "AI Developer", "description": "Build the next generation of intelligent systems.", "color": "bg-[#2b3b16]" }
+      { "title": "Software Engineer", "description": "Build high-scale applications", "color": "#21409A" },
+      { "title": "Cloud Architect", "description": "Design modern infrastructure", "color": "#74C044" }
     ],
     "faculty": [
-      { "name": "Mr. Nishesh Bishwas", "role": "Program Leader", "description": "15+ years in AI & ML", "image": "/images/profiles/david.png" },
-      { "name": "Mr. Ajayraj Bhattarai", "role": "Personal Academic Tutor", "description": "Module Leader", "image": "/images/profiles/emily.png" },
-      { "name": "Mr. Binaya Koirala", "role": "Lecturer (Programming)", "description": "Module Leader", "image": "/images/profiles/david.png" },
-      { "name": "Mr. Sunil Khadka", "role": "Lecturer (Cybersecurity)", "description": "Certified Ethical Hacker", "image": "/images/profiles/david.png" }
+      { "name": "Dr. Sameer Rai", "role": "Head of Computing", "description": "15+ years of industry experience in AI.", "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop" }
     ],
     "quote": {
-      "text": "You can't learn to swim by reading the book.",
-      "author": "Albert Einstein"
+      "text": "The computing program at IIC transformed my perspective on technology.",
+      "author": "Anjali Sharma, Alumna"
     },
     "projects": [
-      { "title": "AI-Driven Healthcare App", "cohort": "By 2023 Cohort", "image": "/images/home/course1.png" },
-      { "title": "Smart City Traffic Simulator", "cohort": "Final Year Thesis Project", "image": "/images/home/course2.png" },
-      { "title": "Smart City Traffic Simulator", "cohort": "Final Year Thesis Project", "image": "/images/home/course1.png" }
+      { "title": "Smart City IoT", "cohort": "2023", "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" }
     ],
     "faqs": [
-      { "question": "Is the degree globally recognized?", "answer": "Yes, our degrees are awarded by London Metropolitan University and are recognized worldwide for their quality and academic rigor." },
-      { "question": "Are there scholarship opportunities?", "answer": "We offer merit-based scholarships for high-achieving students. Please contact our admissions office for specific eligibility criteria." },
-      { "question": "Do you provide placement assistance?", "answer": "Yes, our career services cell works closely with industry partners to provide internship and placement opportunities for all eligible students." }
+      { "question": "Is this degree internationally recognized?", "answer": "Yes, it is awarded by London Metropolitan University." }
     ]
-  },
-  "digital-business-management": {
-    "title": "Digital Business Management",
-    "subtitle": "Business & Leadership",
-    "description": "Master the art of managing businesses in the digital era with a focus on innovation and strategy.",
-    "overview": "This program explores the intersection of business management and digital technology. Students learn how to leverage digital tools for marketing, operations, and strategic decision-making in a global context.",
-    "details": {
-      "level": "Undergraduate (Level 6)",
-      "duration": "3 Years Full-Time",
-      "intake": "Feb / Sept 2024",
-      "awardingBody": "London Metropolitan University"
-    },
-    "curriculum": [
-      {
-        "title": "Year 1",
-        "modules": [
-          { "name": "Business Foundations", "description": "Understanding the core of modern business.", "credits": "30" },
-          { "name": "Digital Marketing Essentials", "description": "Introduction to online brand building.", "credits": "30" }
-        ]
-      }
-    ],
-    "entryRequirements": {
-      "academic": "10+2 / A-Levels or equivalent.",
-      "language": "English proficiency required."
-    },
-    "careerOpportunities": [
-      { "title": "Digital Strategist", "description": "Build online success for brands.", "color": "bg-[#06332d]" },
-      { "title": "Business Analyst", "description": "Analyze market trends.", "color": "bg-[#21409A]" }
-    ],
-    "faculty": [
-      { "name": "Ms. Anu Shah", "role": "Program Leader", "description": "Digital Transformation Expert", "image": "/images/profiles/emily.png" }
-    ],
-    "quote": {
-      "text": "Innovation distinguishes between a leader and a follower.",
-      "author": "Steve Jobs"
-    },
-    "projects": [],
-    "faqs": []
-  },
-  "international-business": {
-    "title": "International Business",
-    "subtitle": "Global Commerce",
-    "description": "Prepare for a career in the global marketplace with a deep understanding of international trade and culture.",
-    "overview": "International Business focuses on the challenges and opportunities of operating across borders. Students study global economics, international law, and cross-cultural management.",
-    "details": {
-      "level": "Undergraduate (Level 6)",
-      "duration": "3 Years Full-Time",
-      "intake": "Feb / Sept 2024",
-      "awardingBody": "London Metropolitan University"
-    },
-    "curriculum": [
-      {
-        "title": "Year 1",
-        "modules": [
-          { "name": "Global Economics", "description": "The world economy explained.", "credits": "30" }
-        ]
-      }
-    ],
-    "entryRequirements": {
-      "academic": "10+2 / A-Levels or equivalent.",
-      "language": "English proficiency required."
-    },
-    "careerOpportunities": [
-      { "title": "Export Manager", "description": "Manage cross-border trade.", "color": "bg-[#5c1616]" }
-    ],
-    "faculty": [
-      { "name": "Mr. Binod Gupta", "role": "Senior Lecturer", "description": "Global Trade Specialist", "image": "/images/profiles/david.png" }
-    ],
-    "quote": {
-      "text": "The world is a book and those who do not travel read only one page.",
-      "author": "Augustine of Hippo"
-    },
-    "projects": [],
-    "faqs": []
-  },
-  "advertising-marketing": {
-    "title": "Advertising & Marketing",
-    "subtitle": "Creative Media",
-    "description": "Harness your creativity to build powerful brands and connect with audiences worldwide.",
-    "overview": "This course combines creative thinking with strategic marketing. Students learn consumer behavior, digital advertising, and brand management.",
-    "details": {
-      "level": "Undergraduate (Level 6)",
-      "duration": "3 Years Full-Time",
-      "intake": "Feb / Sept 2024",
-      "awardingBody": "London Metropolitan University"
-    },
-    "curriculum": [
-      {
-        "title": "Year 1",
-        "modules": [
-          { "name": "Creative Writing", "description": "Crafting compelling messages.", "credits": "30" }
-        ]
-      }
-    ],
-    "entryRequirements": {
-      "academic": "10+2 / A-Levels or equivalent.",
-      "language": "English proficiency required."
-    },
-    "careerOpportunities": [
-      { "title": "Creative Director", "description": "Lead creative teams and campaigns.", "color": "bg-[#2b3b16]" }
-    ],
-    "faculty": [
-      { "name": "Ms. Sarita Rai", "role": "Creative Expert", "description": "Award-winning Marketer", "image": "/images/profiles/sarah.png" }
-    ],
-    "quote": {
-      "text": "Content is king.",
-      "author": "Bill Gates"
-    },
-    "projects": [],
-    "faqs": []
   }
-}
+]
