@@ -56,8 +56,8 @@ const WhyChooseIIC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}
-                className={`w-full lg:w-[60%] bg-white/10 rounded-[3rem] shadow-[0_30px_70px_rgba(0,0,0,0.08)] border border-white/40 relative z-20 overflow-hidden ${idx % 2 === 0 ? 'lg:-mr-56' : 'lg:-ml-56'}`}
+                style={{ backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
+                className={`w-full lg:w-[60%] bg-white/10 rounded-[3rem] shadow-[0_30px_70px_rgba(0,0,0,0.08)] border border-white/40 relative z-20 overflow-hidden ${idx % 2 === 0 ? 'lg:-mr-48' : 'lg:-ml-48'}`}
               >
                 <div className={`flex flex-col md:flex-row ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
                   {/* Content Section (Takes up most of the card) */}

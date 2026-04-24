@@ -15,8 +15,8 @@ const ProgrammesSection = () => {
     offset: ["start end", "end start"]
   });
 
-  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);
+  const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   const programmes = [
     {
@@ -42,7 +42,7 @@ const ProgrammesSection = () => {
       image: '/images/home/course2.png',
       bgColor: 'bg-[#21409A]',
       tagColor: 'bg-[#1a337e]',
-      parallax: y2
+      parallax: y1
     },
   ];
 
@@ -127,7 +127,7 @@ const ProgrammesSection = () => {
 
               <motion.div 
                 style={{ y: prog.parallax }}
-                className="absolute right-0 bottom-0 w-[50%] h-[110%] pointer-events-none"
+                className="absolute right-0 bottom-0 w-[50%] h-full pointer-events-none"
               >
                 <Image
                   src={prog.image}

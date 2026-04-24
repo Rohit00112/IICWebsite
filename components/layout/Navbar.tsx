@@ -145,11 +145,11 @@ const Navbar = () => {
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               animate={{
-                width: isMenuOpen ? '56px' : '340px',
-                height: '56px',
-                borderRadius: isMenuOpen ? '8px' : '28px'
+                width: isMenuOpen ? '64px' : '360px',
+                height: '64px',
+                borderRadius: isMenuOpen ? '12px' : '32px'
               }}
-              className="bg-[#141414]/70 backdrop-blur-[24px] border border-white/10 shadow-2xl flex items-center justify-center relative overflow-hidden"
+              className="bg-[#141414]/80 backdrop-blur-[24px] border border-white/15 shadow-2xl flex items-center justify-center relative overflow-hidden"
             >
               <AnimatePresence mode="wait">
                 {isMenuOpen ? (
@@ -158,10 +158,10 @@ const Navbar = () => {
                     initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
                     animate={{ opacity: 1, rotate: 0, scale: 1 }}
                     exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                    className="relative w-8 h-8 flex items-center justify-center"
+                    className="relative w-10 h-10 flex items-center justify-center"
                   >
-                    <span className="absolute w-3.5 h-[1px] bg-white rotate-45" />
-                    <span className="absolute w-3.5 h-[1px] bg-white -rotate-45" />
+                    <span className="absolute w-5 h-[1.5px] bg-white rotate-45" />
+                    <span className="absolute w-5 h-[1.5px] bg-white -rotate-45" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -169,15 +169,18 @@ const Navbar = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="w-full h-full flex items-center justify-between px-6"
+                    className="w-full h-full flex items-center justify-between px-8"
                   >
-                    <div className="relative h-3.5 w-16">
-                      <Image
-                        src="/images/common/iic_logo.png"
-                        alt="IIC"
-                        fill
-                        className="object-contain"
-                      />
+                    <div className="flex items-center gap-4">
+                      <div className="relative h-7 w-28">
+                        <Image
+                          src="/images/common/iic_logo.png"
+                          alt="IIC"
+                          fill
+                          className="object-contain brightness-110 contrast-125"
+                        />
+                      </div>
+
                     </div>
 
                     <div className="flex items-center gap-5">

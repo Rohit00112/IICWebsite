@@ -16,11 +16,11 @@ const Leadership = () => {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <span className="text-[#21409A] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
+            <span className="text-[#74C044] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
               Message from the
             </span>
             <h2 className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-sora leading-tight">
-              Our <span className="text-[#21409A]">Chairman</span>
+              Our <span className="text-[#74C044]">Chairman</span>
             </h2>
             <div className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora">
               <p>
@@ -32,7 +32,7 @@ const Leadership = () => {
             </div>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Sulav Budhathoki</p>
-              <p className="text-[#21409A] font-bold uppercase tracking-widest text-sm mt-1">Chairman, ING Group</p>
+              <p className="text-[#74C044] font-bold uppercase tracking-widest text-sm mt-1">Chairman, ING Group</p>
             </div>
           </motion.div>
 
@@ -43,7 +43,7 @@ const Leadership = () => {
             className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group"
           >
             {/* Background Shape */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[55%] bg-[#0A1629] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] h-[45%] bg-[#0A1629] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
 
             <Image
               src="/images/about/ing-ceo.png"
@@ -63,11 +63,11 @@ const Leadership = () => {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <span className="text-[#74C044] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
+            <span className="text-[#21409A] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
               Message from the
             </span>
             <h2 className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-sora leading-tight">
-              What our <span className="text-[#74C044]">CEO</span> has to say
+              What our <span className="text-[#21409A]">CEO</span> has to say
             </h2>
             <div className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora">
               <p>
@@ -79,7 +79,7 @@ const Leadership = () => {
             </div>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Satyabrat Koirala</p>
-              <p className="text-[#74C044] font-bold uppercase tracking-widest text-sm mt-1">CEO, Itahari International College</p>
+              <p className="text-[#21409A] font-bold uppercase tracking-widest text-sm mt-1">CEO, Itahari International College</p>
             </div>
           </motion.div>
 
@@ -90,7 +90,7 @@ const Leadership = () => {
             className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group"
           >
             {/* Background Shape */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[55%] bg-[#0A1629] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] h-[45%] bg-[#0A1629] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
 
             <Image
               src="/images/about/iic-ceo.png"
