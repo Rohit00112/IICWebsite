@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '@/components/layout/Navbar';
 import LifeHero from '@/components/sections/life-at-iic/LifeHero';
 import LifeIntro from '@/components/sections/life-at-iic/LifeIntro';
 import CampusGallery from '@/components/sections/life-at-iic/CampusGallery';
@@ -13,8 +12,7 @@ export const metadata = {
 
 export default function LifeAtIicPage() {
   return (
-    <main className="min-h-screen bg-[#FAFAFA]">
-      <Navbar />
+    <main className="min-h-screen bg-black">
       <LifeHero />
       <LifeIntro />
       <CampusGallery />

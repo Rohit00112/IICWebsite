@@ -3,6 +3,8 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import RevealText from '../../effects/RevealText';
+import Magnetic from '../../effects/Magnetic';
 
 const LifestyleSection = () => {
   const containerRef = useRef(null);
@@ -23,15 +25,20 @@ const LifestyleSection = () => {
           <span className="text-[#74C044] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 font-sora">
             Discover
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
-            Lifestyle At
-          </h2>
-          <h2 className="text-6xl md:text-8xl font-black text-[#74C044] leading-[0.8] tracking-tight mb-10 font-sora">
-            IIC
-          </h2>
-          <p className="max-w-3xl text-gray-500 text-base md:text-lg font-medium leading-relaxed">
-            Beyond Academics. A Vibrant Campus, Diverse Student Community, And State-Of-The-Art Facilities Designed For Holistic Growth.
-          </p>
+          <Magnetic strength={0.1}>
+            <h2 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
+              Lifestyle At
+            </h2>
+          </Magnetic>
+          <Magnetic strength={0.2}>
+            <h2 className="text-6xl md:text-8xl font-black text-[#74C044] leading-[0.8] tracking-tight mb-10 font-sora">
+              IIC
+            </h2>
+          </Magnetic>
+          <RevealText 
+            text="Beyond Academics. A Vibrant Campus, Diverse Student Community, And State-Of-The-Art Facilities Designed For Holistic Growth."
+            className="max-w-3xl text-gray-500 text-base md:text-lg font-medium leading-relaxed justify-center"
+          />
         </div>
 
         {/* Lifestyle Grid */}
@@ -104,3 +111,4 @@ const LifestyleSection = () => {
 };
 
 export default LifestyleSection;
+

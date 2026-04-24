@@ -3,23 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import TopBar from './TopBar';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import Magnetic from '../effects/Magnetic';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [buttonPos, setButtonPos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsMenuOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, []);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -27,14 +18,7 @@ const Navbar = () => {
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isMenuOpen]);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -47,155 +31,177 @@ const Navbar = () => {
     { name: 'Contact', href: '/contact' },
   ];
 
+  const getActivePageName = () => {
+    const activeLink = navLinks.find(link => link.href === pathname);
+    return activeLink ? activeLink.name : 'Home';
+  };
+
   return (
     <>
-      {/* Reusable Top Contact Bar */}
-      <TopBar />
-
-      {/* Main Header / Navigation Area */}
-      <div className="w-full relative">
-        {/* The button is now fixed and global, outside this relative container */}
-      </div>
-
-      <motion.button
-        onClick={toggleMenu}
-        onMouseMove={(e) => {
-          const { clientX, clientY } = e;
-          const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-          const centerX = left + width / 2;
-          const centerY = top + height / 2;
-          const distanceX = clientX - centerX;
-          const distanceY = clientY - centerY;
-
-          // Subtler pull (0.15 multiplier)
-          setButtonPos({ x: distanceX * 0.15, y: distanceY * 0.15 });
-        }}
-        onMouseLeave={() => setButtonPos({ x: 0, y: 0 })}
-        animate={{ x: buttonPos.x, y: buttonPos.y }}
-        transition={{
-          type: "spring",
-          stiffness: 250,
-          damping: 15,
-          mass: 0.1,
-          restDelta: 0.001
-        }}
-        className={`fixed right-6 md:right-12 top-28 md:top-36 z-[200] transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) p-2 rounded-md text-white active:scale-95 ${isMenuOpen
-          ? 'rotate-180 bg-transparent shadow-none'
-          : 'rotate-0 bg-[#1a1a1a]/95 shadow-xl hover:bg-black backdrop-blur-xl'
-          }`}
-        aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-      >
-        <div className="w-8 h-8 flex flex-col justify-center items-center relative">
-          <span
-            className={`block w-7 h-[2.5px] bg-white rounded-full transition-all duration-500 absolute ${isMenuOpen ? 'rotate-45' : '-translate-y-2'
-              }`}
+      {/* Background Dimmer */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMenuOpen(false)}
+            className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-[140]"
           />
-          <span
-            className={`block w-7 h-[2.5px] bg-white rounded-full transition-all duration-500 absolute ${isMenuOpen ? 'opacity-0' : 'opacity-100'
-              }`}
-          />
-          <span
-            className={`block w-7 h-[2.5px] bg-white rounded-full transition-all duration-500 absolute ${isMenuOpen ? '-rotate-45' : 'translate-y-2'
-              }`}
-          />
-        </div>
-      </motion.button>
+        )}
+      </AnimatePresence>
 
-      {/* Floating Menu Overlay - Refined for layer consistency */}
-      <div
-        className={`fixed inset-0 z-[150] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-        onClick={toggleMenu}
-      >
-        {/* Backdrop */}
-        <div className="absolute inset-0 bg-black/60" />
+      <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] flex flex-col items-center w-full pointer-events-none">
 
-        <div
-          className={`fixed top-28 md:top-36 right-6 md:right-12 w-[90%] md:w-[450px] bg-[#2a2d34]/95 rounded-2xl shadow-2xl transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1) ${isMenuOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 -translate-y-4'}`}
-          style={{ transformOrigin: 'top right' }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex flex-col px-8 md:px-12 pt-4 md:pt-6 pb-6 md:pb-8">
-            {/* Branding Section inside Overlay */}
-            <div className="flex items-center mb-6 border-b border-white/10 pb-6 pr-12">
-              <div className="relative h-10 md:h-12 w-full">
-                <Image
-                  src="/images/common/iic_logo.png"
-                  alt="IIC Branding"
-                  fill
-                  sizes="(max-width: 768px) 300px, 450px"
-                  className="object-contain object-left"
-                />
-              </div>
-            </div>
+        {/* Independent Expanded Menu Rectangle */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0, y: 20 }}
+              animate={{ height: 'auto', opacity: 1, y: 0 }}
+              exit={{ height: 0, opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+              className="pointer-events-auto bg-[#141414]/70 backdrop-blur-[32px] border border-white/10 shadow-2xl w-[380px] max-h-[75vh] rounded-[32px] overflow-hidden flex flex-col mb-4"
+            >
+              <div className="px-9 pt-10 pb-8 flex flex-col h-full">
+                {/* Header Label */}
+                <div className="text-white/30 text-[8px] font-bold uppercase tracking-[0.4em] mb-8">
+                  Menu
+                </div>
 
-            <div className="text-gray-400 text-[10px] font-bold tracking-[0.3em] mb-4 uppercase">Menu</div>
-
-            {/* Nav Links with Roll-up Scroll Effect */}
-            <div className="relative mb-8 flex flex-col items-start px-4">
-              <ul
-                className="flex flex-col w-full"
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                {navLinks.map((link, index) => (
-                  <li
-                    key={link.name}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    className="relative w-full py-1"
-                  >
-                    <Link
-                      href={link.href}
-                      className="block relative h-[28px] md:h-[36px] overflow-hidden"
-                      onClick={toggleMenu}
+                <ul className="flex flex-col gap-0 items-start mb-10">
+                  {navLinks.map((link, index) => (
+                    <motion.li
+                      key={link.name}
+                      onMouseEnter={() => setHoveredIndex(index)}
+                      onMouseLeave={() => setHoveredIndex(null)}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + index * 0.03 }}
                     >
-                      <motion.div
-                        animate={{ y: hoveredIndex === index ? "-50%" : "0%" }}
-                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                        className="flex flex-col h-[200%]"
+                      <Link
+                        href={link.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="group relative block py-1 overflow-hidden"
                       >
-                        {/* Copy 1: Initial (Gray out others on hover) */}
-                        <span className={`h-1/2 flex items-center text-xl md:text-2xl font-medium tracking-tight transition-colors duration-500 ${(hoveredIndex !== null && hoveredIndex !== index) ? 'text-white/20' : 'text-white'}`}>
-                          {link.name}
-                        </span>
-                        {/* Copy 2: Hovered (Always White) */}
-                        <span className="h-1/2 flex items-center text-xl md:text-2xl font-medium tracking-tight text-white">
-                          {link.name}
-                        </span>
-                      </motion.div>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                        <div className="relative h-[40px] overflow-hidden">
+                          <motion.div
+                            animate={{
+                              y: hoveredIndex === index ? '-40px' : '0px'
+                            }}
+                            transition={{
+                              duration: 0.4,
+                              ease: [0.76, 0, 0.24, 1]
+                            }}
+                            className="flex flex-col h-[80px]"
+                          >
+                            <span className={`text-[28px] font-medium tracking-tight h-[40px] flex items-center transition-all duration-300 ${hoveredIndex !== null && hoveredIndex !== index ? 'text-white/20' : 'text-white'
+                              }`}>
+                              {link.name}
+                            </span>
+                            <span className="text-[28px] font-medium tracking-tight h-[40px] flex items-center text-white">
+                              {link.name}
+                            </span>
+                          </motion.div>
+                        </div>
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
 
-            {/* Contact Details */}
-            <div className="border-t border-white/10 pt-6 pb-4">
-              <div className="mb-3">
-                <div className="text-gray-400 text-[10px] font-bold mb-1 uppercase tracking-widest">Phone</div>
-                <div className="text-white text-sm font-semibold opacity-90">+977 9869258083, +977 9801003030</div>
-              </div>
-              <div className="mb-3">
-                <div className="text-gray-400 text-[10px] font-bold mb-1 uppercase tracking-widest">Email</div>
-                <div className="text-white text-sm font-semibold opacity-90 underline decoration-white/20">info@iic.edu.np</div>
-              </div>
-              <div className="mb-4">
-                <div className="text-gray-400 text-[10px] font-bold mb-1 uppercase tracking-widest">Location</div>
-                <div className="text-white text-sm font-semibold opacity-90 leading-relaxed">Sundarharaicha-4, Dulari, Morang</div>
-              </div>
+                {/* Footer Info Section */}
+                <div className="flex flex-col gap-1.5 mb-10">
+                  <div className="flex justify-between items-center">
+                    <span className="text-white/30 text-[11px] font-medium">News</span>
+                    <span className="text-white/80 text-[11px] font-medium">Events & Updates</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-white/30 text-[11px] font-medium">Email</span>
+                    <span className="text-white/80 text-[11px] font-medium">info@iic.edu.np</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-white/30 text-[11px] font-medium">Phone</span>
+                    <span className="text-white/80 text-[11px] font-medium">+977 123 456789</span>
+                  </div>
+                </div>
 
-              {/* CTA Button */}
-              <a
-                href="#"
-                className="flex items-center justify-between bg-[#21409A] hover:opacity-90 text-white px-6 py-4 rounded-md font-bold transition-all shadow-lg group w-full text-sm"
-              >
-                <span>Schedule a Campus Tour</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </a>
-            </div>
-          </div>
-        </div>
+                {/* CTA Button */}
+                <button className="w-full py-3.5 bg-[#21409A] border border-white/5 rounded-lg text-white text-[10px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
+                  <span>Schedule a Campus tour</span>
+                  <span className="text-base opacity-40">→</span>
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Independent Toggle/Close Button */}
+        <motion.div
+          layout
+          className="pointer-events-auto"
+          transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+        >
+          <Magnetic strength={0.2}>
+            <motion.button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              animate={{
+                width: isMenuOpen ? '56px' : '340px',
+                height: '56px',
+                borderRadius: isMenuOpen ? '8px' : '28px'
+              }}
+              className="bg-[#141414]/70 backdrop-blur-[24px] border border-white/10 shadow-2xl flex items-center justify-center relative overflow-hidden"
+            >
+              <AnimatePresence mode="wait">
+                {isMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                    className="relative w-8 h-8 flex items-center justify-center"
+                  >
+                    <span className="absolute w-3.5 h-[1px] bg-white rotate-45" />
+                    <span className="absolute w-3.5 h-[1px] bg-white -rotate-45" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="pill"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full h-full flex items-center justify-between px-6"
+                  >
+                    <div className="relative h-3.5 w-16">
+                      <Image
+                        src="/images/common/iic_logo.png"
+                        alt="IIC"
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-5">
+                      <div className="h-5 w-[1px] bg-white/20" />
+                      <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-white/70 min-w-[60px] text-right">
+                        {getActivePageName()}
+                      </span>
+                      <div className="w-8 h-8 rounded-full bg-white/5 flex flex-col gap-1 items-center justify-center">
+                        <span className="w-3.5 h-[1px] bg-white" />
+                        <span className="w-3.5 h-[1px] bg-white" />
+                        <span className="w-3.5 h-[1px] bg-white" />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          </Magnetic>
+        </motion.div>
       </div>
     </>
   );
 };
 
 export default Navbar;
+
+
