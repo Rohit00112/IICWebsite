@@ -1,12 +1,14 @@
 import CourseTemplate from '@/components/sections/course-detail/CourseTemplate';
 import { notFound } from 'next/navigation';
-import courses from '@/data/courses.json';
+import { getCourseBySlug } from '@/lib/courses';
 
-const courseData: Record<string, any> = courses;
-
-export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CoursePage({ 
+  params 
+}: { 
+  params: Promise<{ slug: string }> 
+}) {
   const { slug } = await params;
-  const course = courseData[slug];
+  const course = await getCourseBySlug(slug);
 
   if (!course) {
     notFound();

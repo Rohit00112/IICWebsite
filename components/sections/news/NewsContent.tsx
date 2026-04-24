@@ -8,55 +8,17 @@ import Magnetic from '../../effects/Magnetic';
 
 const categories = ['All', 'News', 'Events', 'Announcements'];
 
-const NewsContent = () => {
+interface NewsContentProps {
+  initialNews: any[];
+  initialFeatured: any;
+}
+
+const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured }) => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Mock data with guaranteed online imagery
-  const featuredPost = {
-    category: 'Event',
-    date: 'October 15, 2024',
-    time: '09:00 AM - 05:00 PM',
-    location: 'Main Auditorium, IIC Campus',
-    title: 'Global Tech & Innovation Summit 2024',
-    description: 'Join industry leaders and leading academics for a full day of keynotes, workshops, and networking focused on the latest trends in technology and innovation.',
-    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop'
-  };
-
-  const newsItems = [
-    {
-      id: 1,
-      category: 'News',
-      date: 'September 28, 2024',
-      title: 'IIC Partners with Microsoft for Cloud Computing Initiative',
-      description: 'We are thrilled to announce a strategic partnership with Microsoft to provide our students with cutting-edge resources and certifications in Azure cloud computing.',
-      image: 'https://images.unsplash.com/photo-1553028826-f4804a6dba3b?q=80&w=2000&auto=format&fit=crop'
-    },
-    {
-      id: 2,
-      category: 'Event',
-      date: 'November 05, 2024',
-      title: 'Alumni Networking Mixer: Business & Finance',
-      description: 'Connect with successful IIC alumni working in the business and finance sectors. A great opportunity for current students to find mentors and explore career paths.',
-      image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=2000&auto=format&fit=crop'
-    },
-    {
-      id: 3,
-      category: 'Announcement',
-      date: 'September 15, 2024',
-      title: 'Spring 2025 Intake Application Deadline',
-      description: 'Prospective students are reminded that the final deadline for the Spring 2025 intake is fast approaching. Ensure all documents are submitted early.',
-      image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2000&auto=format&fit=crop'
-    },
-    {
-      id: 4,
-      category: 'News',
-      date: 'September 10, 2024',
-      title: 'Student Project Wins National Innovation Award',
-      description: 'A team of final-year BSc (Hons) Computing students has won first place at the National Tech Innovation Awards for their smart agriculture project.',
-      image: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=2000&auto=format&fit=crop'
-    }
-  ];
+  const featuredPost = initialFeatured;
+  const newsItems = initialNews.filter(item => !item.featured);
 
   // Filtering Logic
   const filteredItems = newsItems.filter(item => {
