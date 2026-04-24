@@ -9,6 +9,7 @@ import Navbar from "@/components/layout/Navbar";
 import SmoothScroll from "@/components/effects/SmoothScroll";
 import FluidBackground from "@/components/effects/FluidBackground";
 import PageTransition from "@/components/layout/PageTransition";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isAdminPage = mounted && (pathname?.startsWith('/admin') || pathname === '/login');
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -70,48 +80,58 @@ export default function RootLayout({
     restDelta: 0.001
   });
 
+  const dotX = useSpring(mouseX, springConfig);
+  const dotY = useSpring(mouseY, springConfig);
+
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden font-sora cursor-none">
-        <motion.div
-          className="fixed top-0 left-0 right-0 h-1 bg-[#74C044] origin-left z-[10000]"
-          style={{ scaleX }}
-        />
+      <body className={`min-h-full flex flex-col overflow-x-hidden font-sora ${isAdminPage ? 'cursor-default' : 'cursor-none'}`}>
+        {mounted && !isAdminPage && (
+          <>
+            <motion.div
+              className="fixed top-0 left-0 right-0 h-1 bg-[#74C044] origin-left z-[10000]"
+              style={{ scaleX }}
+            />
 
-        <motion.div
-          className="fixed top-0 left-0 w-8 h-8 bg-[#21409A]/20 border border-[#21409A]/40 rounded-full pointer-events-none z-[9999] hidden md:block"
-          style={{
-            x: cursorX,
-            y: cursorY,
-            scale: isHovered ? 1.5 : 1,
-          }}
-        />
+            <motion.div
+              className="fixed top-0 left-0 w-8 h-8 bg-[#21409A]/20 border border-[#21409A]/40 rounded-full pointer-events-none z-[9999] hidden md:block"
+              style={{
+                x: cursorX,
+                y: cursorY,
+                scale: isHovered ? 1.5 : 1,
+              }}
+            />
 
-        <motion.div
-          className="fixed top-0 left-0 w-2 h-2 bg-[#74C044] rounded-full pointer-events-none z-[9999] hidden md:block"
-          style={{
-            x: useSpring(useMotionValue(0), springConfig),
-            y: useSpring(useMotionValue(0), springConfig),
-            left: mouseX,
-            top: mouseY,
-            marginLeft: 12,
-            marginTop: 12,
-          }}
-        />
+            <motion.div
+              className="fixed top-0 left-0 w-2 h-2 bg-[#74C044] rounded-full pointer-events-none z-[9999] hidden md:block"
+              style={{
+                x: dotX,
+                y: dotY,
+                marginLeft: 12,
+                marginTop: 12,
+              }}
+            />
+            <FluidBackground />
+          </>
+        )}
 
-        <FluidBackground />
-
-        <SmoothScroll>
-          <Navbar />
-          <PageTransition>
+        {!isAdminPage ? (
+          <SmoothScroll>
+            <Navbar />
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </SmoothScroll>
+        ) : (
+          <div className="flex-grow">
             {children}
-          </PageTransition>
-        </SmoothScroll>
-        <Footer />
+          </div>
+        )}
+        {mounted && !isAdminPage && <Footer />}
       </body>
     </html>
   );
