@@ -3,8 +3,9 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import Navbar from '@/components/layout/Navbar';
 import StatsStrip from './StatsStrip';
+import RevealText from '../../effects/RevealText';
+import Magnetic from '../../effects/Magnetic';
 
 const HeroSection = () => {
   const containerRef = useRef(null);
@@ -33,13 +34,16 @@ const HeroSection = () => {
         className="absolute bottom-40 -right-20 w-96 h-96 bg-[#007a5e]/10 rounded-full blur-3xl z-0"
       />
 
-      <Navbar />
-
       {/* Hero Content Layer */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 flex flex-col items-center">
         {/* Centered Logo - Specifically for Home Page Hero */}
         <div className="w-full pt-16 md:pt-28 pb-6 flex items-center justify-center relative z-40">
-          <div className="relative h-14 md:h-20 w-64 md:w-[450px]">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="relative h-14 md:h-20 w-64 md:w-[450px]"
+          >
             <Image
               src="/images/common/iic_logo.png"
               alt="Itahari International College Logo"
@@ -48,41 +52,47 @@ const HeroSection = () => {
               className="object-contain"
               priority
             />
-          </div>
+          </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="pt-4 md:pt-8 text-center flex flex-col items-center"
-        >
-          <p className="text-xl md:text-[28px] font-medium text-[#1a1a1a] leading-[1.6] mb-12 max-w-4xl px-4 font-sora">
-            UK-Affiliated Degrees In IT & Business. Partnered With London Metropolitan
-            University To Bring World-Class Education To Eastern Nepal.
-          </p>
+        <div className="pt-4 md:pt-8 text-center flex flex-col items-center">
+          <RevealText 
+            text="UK-Affiliated Degrees In IT & Business. Partnered With London Metropolitan University To Bring World-Class Education To Eastern Nepal."
+            className="text-xl md:text-[28px] font-medium text-[#1a1a1a] leading-[1.6] mb-12 max-w-4xl px-4 font-sora justify-center"
+            delay={0.5}
+          />
 
           <div className="flex flex-col sm:flex-row gap-5 mb-24 md:mb-44">
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="#"
-              className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:opacity-90 transition-all"
-            >
-              <span>Schedule A Visit</span>
-              <span className="text-xl">📞</span>
-            </motion.a>
+            <Magnetic strength={0.3}>
+              <motion.a
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="#"
+                className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:opacity-90 transition-all"
+              >
+                <span>Schedule A Visit</span>
+                <span className="text-xl">📞</span>
+              </motion.a>
+            </Magnetic>
 
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="#"
-              className="px-10 py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all"
-            >
-              Explore Programmes
-            </motion.a>
+            <Magnetic strength={0.3}>
+              <motion.a
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.4 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="#"
+                className="px-10 py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all"
+              >
+                Explore Programmes
+              </motion.a>
+            </Magnetic>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Building Image Layer — Pinned to bottom, separate from content flow */}

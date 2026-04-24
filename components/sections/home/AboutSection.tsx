@@ -3,6 +3,8 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import RevealText from '../../effects/RevealText';
+import Magnetic from '../../effects/Magnetic';
 
 const AboutSection = () => {
   const containerRef = useRef(null);
@@ -14,7 +16,6 @@ const AboutSection = () => {
   });
 
   const yImage = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
-  const words = "FUTURE".split("");
 
   return (
     <section ref={containerRef} className="relative w-full py-24 md:py-40 bg-white overflow-hidden">
@@ -28,32 +29,36 @@ const AboutSection = () => {
           Who We Are
         </motion.span>
         
-        <h2 className="text-4xl md:text-7xl lg:text-8xl font-bold text-[#1a1a1a] tracking-tight leading-[1.1] mb-12">
-          Shape Your <br />
-          <div className="overflow-hidden inline-block align-bottom">
-            <motion.span
-              initial={{ y: "100%" }}
-              animate={isInView ? { y: 0 } : {}}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[#74C044] block"
-            >
-              FUTURE
-            </motion.span>
-          </div>
-          <br /> In Nepal
-        </h2>
+        <Magnetic strength={0.2}>
+          <h2 className="text-4xl md:text-7xl lg:text-8xl font-bold text-[#1a1a1a] tracking-tight leading-[1.1] mb-12">
+            Shape Your <br />
+            <div className="overflow-hidden inline-block align-bottom">
+              <motion.span
+                initial={{ y: "100%" }}
+                animate={isInView ? { y: 0 } : {}}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="text-[#74C044] block"
+              >
+                FUTURE
+              </motion.span>
+            </div>
+            <br /> In Nepal
+          </h2>
+        </Magnetic>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="max-w-3xl"
-        >
-          <p className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed">
-            IIC is a flagship institution of Innovate Nepal Group. We offer BSc (Hons) Computing and BA (Hons) Business Administration directly delivered in partnership with London Metropolitan University — right here in Itahari.
-          </p>
-          <div className="mt-12 mx-auto w-24 h-[3px] bg-[#74C044]/30 rounded-full" />
-        </motion.div>
+        <div className="max-w-3xl">
+          <RevealText 
+            text="IIC is a flagship institution of Innovate Nepal Group. We offer BSc (Hons) Computing and BA (Hons) Business Administration directly delivered in partnership with London Metropolitan University — right here in Itahari."
+            className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed justify-center"
+            delay={0.3}
+          />
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1, delay: 1 }}
+            className="mt-12 mx-auto w-24 h-[3px] bg-[#74C044]/30 rounded-full origin-center" 
+          />
+        </div>
       </div>
 
       <div className="w-full mt-20 md:mt-32 relative h-[400px] md:h-[700px] overflow-hidden">
@@ -73,3 +78,4 @@ const AboutSection = () => {
 };
 
 export default AboutSection;
+

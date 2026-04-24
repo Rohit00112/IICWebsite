@@ -3,8 +3,6 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import RevealText from '../../effects/RevealText';
-import Magnetic from '../../effects/Magnetic';
 
 const PartnerSection = () => {
   const containerRef = useRef(null);
@@ -16,14 +14,17 @@ const PartnerSection = () => {
   });
 
   const yBuilding = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
+  const yBadge = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
 
   const rankingCards = [
-    '/images/home/lmu rank 1.png',
-    '/images/home/lmu rank 2.png',
-    '/images/home/lmu rank 3.png',
-    '/images/home/lmu rank 4.png',
-    '/images/home/lmu rank 5.png',
+    '/images/lmu rank 1.png',
+    '/images/lmu rank 2.png',
+    '/images/lmu rank 3.png',
+    '/images/lmu rank 4.png',
+    '/images/lmu rank 5.png',
   ];
+
+  const words = "UNIVERSITY".split("");
 
   return (
     <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-hidden">
@@ -37,16 +38,14 @@ const PartnerSection = () => {
             Partner
           </motion.span>
           <div className="overflow-hidden py-2">
-            <Magnetic strength={0.1}>
-              <motion.h1
-                initial={{ y: "100%" }}
-                animate={isInView ? { y: 0 } : {}}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora"
-              >
-                UNIVERSITY
-              </motion.h1>
-            </Magnetic>
+            <motion.h1
+              initial={{ y: "100%" }}
+              animate={isInView ? { y: 0 } : {}}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora"
+            >
+              UNIVERSITY
+            </motion.h1>
           </div>
         </div>
 
@@ -58,10 +57,9 @@ const PartnerSection = () => {
             className="relative h-10 md:h-12 w-64 md:w-[280px]"
           >
             <Image
-              src="/images/home/lmu brand 2.png"
+              src="/images/lmu brand 2.png"
               alt="Ranking"
               fill
-              sizes="(max-width: 768px) 256px, 280px"
               className="object-contain"
             />
           </motion.div>
@@ -73,10 +71,9 @@ const PartnerSection = () => {
             className="relative h-14 md:h-16 w-80 md:w-[380px]"
           >
             <Image
-              src="/images/home/lmu brand 1.png"
+              src="/images/lmu brand 1.png"
               alt="LMU"
               fill
-              sizes="(max-width: 768px) 320px, 380px"
               className="object-contain"
             />
           </motion.div>
@@ -86,12 +83,9 @@ const PartnerSection = () => {
           <div className="relative w-full aspect-[16/9] md:aspect-[21/6] overflow-hidden">
             <motion.div style={{ y: yBuilding }} className="absolute inset-0 w-full h-[130%] -top-[15%]">
               <Image
-                src="/images/home/lmu building.png"
+                src="/images/lmu building.png"
                 alt="LMU Building"
                 fill
-                sizes="100vw"
-                priority
-                loading="eager"
                 className="object-cover"
               />
             </motion.div>
@@ -107,10 +101,9 @@ const PartnerSection = () => {
                 className="absolute bottom-0 right-10 md:right-20 w-36 md:w-[240px] h-36 md:h-[240px] drop-shadow-3xl z-30"
               >
                 <Image
-                  src="/images/home/lmu student favourate.png"
+                  src="/images/lmu student favourate.png"
                   alt="Student Favourite"
                   fill
-                  sizes="(max-width: 768px) 144px, 240px"
                   className="object-contain object-bottom"
                 />
               </motion.div>
@@ -132,31 +125,31 @@ const PartnerSection = () => {
                 src={card}
                 alt={`LMU Rank ${index + 1}`}
                 fill
-                sizes="(max-width: 768px) 50vw, 20vw"
                 className="object-contain"
               />
             </motion.div>
           ))}
         </div>
 
-        <div className="max-w-4xl text-center px-6 flex flex-col items-center">
-          <RevealText 
-            text="London Metropolitan University's Mission Is To Transform Lives Through The Power Of Education – And It Does That By Welcoming Students From All Kinds Of Backgrounds And Supporting Them To Achieve Success. Each And Every One Of Them Belongs There And Uniquely Contributes To The University And The City Around Them."
-            className="text-gray-500 text-sm md:text-[16px] font-medium leading-relaxed mb-6 justify-center"
-          />
-          <Magnetic strength={0.2}>
-            <a
-              href="#"
-              className="text-[#74C044] font-bold text-base md:text-lg underline underline-offset-8 decoration-2 hover:opacity-80 transition-colors inline-block"
-            >
-              Learn More
-            </a>
-          </Magnetic>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-4xl text-center px-6"
+        >
+          <p className="text-gray-500 text-sm md:text-[16px] font-medium leading-relaxed mb-4">
+            London Metropolitan University's Mission Is To Transform Lives Through The Power Of Education – And It Does That By Welcoming Students From All Kinds Of Backgrounds And Supporting Them To Achieve Success. Each And Every One Of Them Belongs There And Uniquely Contributes To The University And The City Around Them.
+          </p>
+          <a
+            href="#"
+            className="text-[#74C044] font-bold text-base md:text-lg underline underline-offset-8 decoration-2 hover:opacity-80 transition-colors"
+          >
+            Learn More
+          </a>
+        </motion.div>
       </div>
     </section>
   );
 };
 
 export default PartnerSection;
-
