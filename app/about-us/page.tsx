@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import AboutHero from '@/components/sections/about-us/AboutHero';
 import MissionVision from '@/components/sections/about-us/MissionVision';
@@ -17,8 +16,7 @@ export const metadata = {
 
 export default function AboutUsPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <Navbar />
+    <main className="relative bg-[#0a0a0a]">
       <AboutHero />
       <MissionVision />
       <IngSection />

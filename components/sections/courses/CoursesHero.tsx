@@ -3,7 +3,7 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import Navbar from '@/components/layout/Navbar';
+import RevealText from '../../effects/RevealText';
 
 const CoursesHero = () => {
   const containerRef = useRef(null);
@@ -30,28 +30,29 @@ const CoursesHero = () => {
         />
       </div>
 
-      <Navbar />
-
       {/* Hero Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-center pt-20 md:pt-32 pb-4">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center"
-        >
-          <span className="text-[#333333] text-2xl md:text-[42px] font-bold mb-2 block tracking-tight">
-            Discover Our
-          </span>
+        <div className="text-center flex flex-col items-center">
+          <RevealText 
+            text="Discover Our"
+            className="text-[#333333] text-2xl md:text-[42px] font-bold mb-2 block tracking-tight justify-center"
+          />
 
-          <h1 className="text-4xl md:text-[96px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight uppercase">
-            Academic Programs
-          </h1>
+          <RevealText 
+            text="Academic Programs"
+            className="text-4xl md:text-[96px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight uppercase justify-center"
+            delay={0.3}
+          />
 
-          <p className="text-[13px] md:text-[16px] text-[#444444] max-w-2xl mx-auto leading-relaxed font-medium">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="text-[13px] md:text-[16px] text-[#444444] max-w-2xl mx-auto leading-relaxed font-medium"
+          >
             Expand your horizons with our diverse educational options designed to meet industry demands.
-          </p>
-        </motion.div>
+          </motion.p>
+        </div>
       </div>
 
       {/* Hero Image Section - Bleed to edges */}

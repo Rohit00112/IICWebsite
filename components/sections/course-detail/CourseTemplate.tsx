@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import RevealText from '../../effects/RevealText';
+import Magnetic from '../../effects/Magnetic';
 
 interface Module {
   name: string;
@@ -76,8 +77,6 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
 
   return (
     <main className="bg-white">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="relative w-full min-h-[70vh] flex flex-col items-center justify-center pt-24 pb-20 overflow-hidden bg-[#1a1a1a]">
         <div className="absolute inset-0 z-0">
@@ -92,8 +91,7 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
           <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a]/80 via-transparent to-[#1a1a1a]" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          {/* Refined Badge Design from 2nd Screenshot */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex flex-col items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -108,39 +106,33 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
             </span>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-6xl md:text-[100px] font-bold text-white mb-10 leading-[1] tracking-tight max-w-[900px] mx-auto"
-          >
-            {course.title.split(' ').map((word, i) => (
-              <React.Fragment key={i}>
-                {word} {i === 1 ? <br /> : ''}
-              </React.Fragment>
-            ))}
-          </motion.h1>
+          <RevealText 
+            text={course.title}
+            className="text-6xl md:text-[100px] font-bold text-white mb-10 leading-[1] tracking-tight max-w-[900px] mx-auto justify-center"
+          />
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.5 }}
             className="text-white/80 text-[14px] md:text-[16px] max-w-2xl mx-auto mb-12 leading-relaxed font-normal"
           >
             {course.description}
           </motion.p>
 
-          <motion.button
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#21409A] text-white font-bold rounded-xl shadow-2xl hover:bg-[#1a337e] transition-all transform hover:scale-105"
-          >
-            <span className="text-sm">Apply Now</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </motion.button>
+          <Magnetic strength={0.25}>
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8 }}
+              className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#21409A] text-white font-bold rounded-xl shadow-2xl hover:bg-[#1a337e] transition-all"
+            >
+              <span className="text-sm">Apply Now</span>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </motion.button>
+          </Magnetic>
         </div>
       </section>
 
@@ -320,117 +312,19 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
               </div>
 
               <div className="space-y-4">
-                <button className="w-full py-4 bg-[#21409A] text-white font-bold rounded-2xl shadow-xl hover:bg-[#1a337e] transition-all transform hover:-y-1">
-                  Apply for this Program
-                </button>
+                <Magnetic strength={0.2}>
+                  <button className="w-full py-4 bg-[#21409A] text-white font-bold rounded-2xl shadow-xl hover:bg-[#1a337e] transition-all transform hover:-y-1">
+                    Apply for this Program
+                  </button>
+                </Magnetic>
                 <button className="w-full py-4 bg-white text-[#1a1a1a] font-bold rounded-2xl shadow-md border border-gray-100 flex items-center justify-center gap-3 hover:bg-gray-50 transition-all">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M7 10l5 5m0 0l5-5m-5 5V3" />
                   </svg>
                   Download Brochure
                 </button>
-                <p className="text-center text-sm text-gray-400">
-                  Have questions? <span className="text-[#21409A] font-bold cursor-pointer">Contact Admissions</span>
-                </p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Entry Requirements Section */}
-      <section className="py-24 bg-[#f3f6fb]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-white rounded-[48px] shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-white/50 relative min-h-[450px] flex items-center">
-            {/* Content side */}
-            <div className="w-full lg:w-2/3 p-12 md:p-20 relative z-10">
-              <h2 className="text-4xl font-bold text-[#1a1a1a] relative inline-block mb-12">
-                Entry Requirements
-                <div className="absolute -bottom-2 left-0 w-12 h-1.5 bg-[#21409A] rounded-full" />
-              </h2>
-
-              <div className="space-y-12 max-w-xl">
-                <div className="flex gap-6 items-start">
-                  <div className="w-12 h-12 rounded-full bg-[#f0f4f8] flex items-center justify-center flex-shrink-0 text-[#21409A]">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold text-[#1a1a1a] mb-3">Academic Requirements</h4>
-                    <p className="text-gray-500 font-medium leading-relaxed">
-                      Minimum 50% in 10+2 (or equivalent) in any stream. Mathematics background preferred but not mandatory.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-6 items-start">
-                  <div className="w-12 h-12 rounded-full bg-[#f0f4f8] flex items-center justify-center flex-shrink-0 text-[#21409A]">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-bold text-[#1a1a1a] mb-3">English Language</h4>
-                    <p className="text-gray-500 font-medium leading-relaxed">
-                      Minimum IELTS score of 6.0 (with no band less than 5.5) or equivalent English proficiency test.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Image side */}
-            <div className="hidden lg:block absolute right-0 bottom-0 w-[45%] h-[115%] pointer-events-none">
-              <Image
-                src="/images/course-details/entry-image.png"
-                alt="Graduate"
-                fill
-                className="object-contain object-bottom scale-100 origin-bottom translate-x-4"
-                sizes="(max-width: 1024px) 100vw, 45vw"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Career Paths Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <h2 className="text-4xl font-bold text-[#1a1a1a] relative inline-block mb-4">
-              Career Opportunities
-              <div className="absolute -bottom-2 left-0 w-16 h-1.5 bg-[#21409A] rounded-full" />
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {course.careerOpportunities.map((path, i) => {
-              const isWhite = i === 1 || i === 3 || i === 4 || i === 6;
-              return (
-                <motion.div
-                  key={i}
-                  whileHover={{ y: -10 }}
-                  className={`${isWhite ? 'bg-white border border-gray-100' : path.color} p-10 rounded-[32px] shadow-[0_15px_40px_rgba(0,0,0,0.03)] flex flex-col items-center text-center transition-all`}
-                >
-                  <div className="relative w-20 h-20 rounded-full overflow-hidden mb-8 border-4 border-white/20 shadow-lg">
-                    <Image
-                      src={course.faculty[i % course.faculty.length].image}
-                      alt={path.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <h4 className={`text-xl font-bold mb-4 ${isWhite ? 'text-[#1a1a1a]' : 'text-white'}`}>
-                    {path.title}
-                  </h4>
-                  <p className={`text-sm leading-relaxed ${isWhite ? 'text-gray-500' : 'text-white/80'}`}>
-                    {path.description}
-                  </p>
-                </motion.div>
-              );
-            })}
           </div>
         </div>
       </section>
@@ -474,95 +368,6 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-      {/* Quote Section */}
-      <section className="bg-[#0a1d37] overflow-hidden">
-        <div className="flex flex-col lg:flex-row min-h-[600px]">
-          {/* Left: Quote Text */}
-          <div className="lg:w-1/2 p-16 md:p-24 flex flex-col justify-center relative">
-            <div className="absolute top-16 left-16 opacity-20">
-              <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21L14.017 18C14.017 14.691 16.708 12 20.017 12L20.017 12L20.017 12C20.017 12 20.017 12 20.017 12L20.017 21L14.017 21ZM5.017 21L5.017 18C5.017 14.691 7.708 12 11.017 12L11.017 12L11.017 12C11.017 12 11.017 12 11.017 12L11.017 21L5.017 21Z" transform="rotate(180 12 12)" />
-              </svg>
-            </div>
-            
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight tracking-tight">
-                "{course.quote.text}"
-              </h2>
-              <p className="text-white/60 text-lg">
-                - {course.quote.author}
-              </p>
-            </div>
-
-            <div className="absolute bottom-16 right-16 opacity-10">
-              <svg className="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21L14.017 18C14.017 14.691 16.708 12 20.017 12L20.017 12L20.017 12C20.017 12 20.017 12 20.017 12L20.017 21L14.017 21ZM5.017 21L5.017 18C5.017 14.691 7.708 12 11.017 12L11.017 12L11.017 12C11.017 12 11.017 12 11.017 12L11.017 21L5.017 21Z" />
-              </svg>
-            </div>
-          </div>
-
-          {/* Right: Image */}
-          <div className="lg:w-1/2 relative min-h-[400px] lg:min-h-auto">
-            <Image
-              src="/images/course-details/quote-image.png"
-              alt="Course Quote"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
-        </div>
-      </section>
-      {/* Student Project Highlights */}
-      <section className="py-24 bg-[#f3f6fb]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-            <div>
-              <h2 className="text-4xl font-bold text-[#1a1a1a] relative inline-block mb-4">
-                Student Project Highlights
-                <div className="absolute -bottom-2 left-0 w-16 h-1.5 bg-[#21409A] rounded-full" />
-              </h2>
-              <p className="text-gray-400 font-medium">See what our students are building.</p>
-            </div>
-            <button className="flex items-center gap-2 text-[#21409A] font-bold group">
-              View all projects
-              <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {course.projects.map((project, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ y: -10 }}
-                className="relative aspect-[4/3] rounded-[32px] overflow-hidden group shadow-xl"
-              >
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6 p-6 backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 flex items-center justify-between">
-                  <div>
-                    <h4 className="text-white font-bold text-lg mb-1">{project.title}</h4>
-                    <p className="text-white/60 text-xs font-medium">{project.cohort}</p>
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm group-hover:bg-white group-hover:text-[#21409A] transition-all">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
@@ -617,6 +422,7 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
           </div>
         </div>
       </section>
+      <Footer />
     </main>
   );
 };

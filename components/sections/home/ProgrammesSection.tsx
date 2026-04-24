@@ -3,6 +3,8 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import RevealText from '../../effects/RevealText';
+import Magnetic from '../../effects/Magnetic';
 
 const ProgrammesSection = () => {
   const containerRef = useRef(null);
@@ -44,8 +46,6 @@ const ProgrammesSection = () => {
     },
   ];
 
-  const words = "ITAHARI".split("");
-
   return (
     <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
@@ -62,14 +62,16 @@ const ProgrammesSection = () => {
             Nepal's First Direct UK Degree At
           </h2>
           <div className="overflow-hidden py-2">
-            <motion.h1
-              initial={{ y: "100%" }}
-              animate={isInView ? { y: 0 } : {}}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-7xl font-black text-[#74C044] tracking-tight leading-none font-sora"
-            >
-              ITAHARI
-            </motion.h1>
+            <Magnetic strength={0.1}>
+              <motion.h1
+                initial={{ y: "100%" }}
+                animate={isInView ? { y: 0 } : {}}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl md:text-7xl font-black text-[#74C044] tracking-tight leading-none font-sora"
+              >
+                ITAHARI
+              </motion.h1>
+            </Magnetic>
           </div>
         </div>
 
@@ -140,22 +142,21 @@ const ProgrammesSection = () => {
           ))}
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-3xl text-center"
-        >
-          <p className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-10 px-4">
-            Beginning Your College Journey Is A Very Personal And Sacred Experience That Encompasses A Wide Range Of Events Compounding Your Growth.
-          </p>
-          <button className="bg-[#21409A] text-white px-12 py-4 rounded-lg font-bold text-lg shadow-2xl hover:opacity-90 transition-all active:scale-95">
-            Enroll Now
-          </button>
-        </motion.div>
+        <div className="max-w-3xl text-center flex flex-col items-center">
+          <RevealText 
+            text="Beginning Your College Journey Is A Very Personal And Sacred Experience That Encompasses A Wide Range Of Events Compounding Your Growth."
+            className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-10 px-4 justify-center"
+          />
+          <Magnetic strength={0.3}>
+            <button className="bg-[#21409A] text-white px-12 py-4 rounded-lg font-bold text-lg shadow-2xl hover:opacity-90 transition-all active:scale-95">
+              Enroll Now
+            </button>
+          </Magnetic>
+        </div>
       </div>
     </section>
   );
 };
 
 export default ProgrammesSection;
+

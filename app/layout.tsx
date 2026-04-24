@@ -4,6 +4,11 @@ import React, { useEffect, useState } from "react";
 import { Geist, Geist_Mono, Sora } from "next/font/google";
 import "./globals.css";
 import { motion, useSpring, useMotionValue, useScroll } from "framer-motion";
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
+import SmoothScroll from "@/components/effects/SmoothScroll";
+import FluidBackground from "@/components/effects/FluidBackground";
+import PageTransition from "@/components/layout/PageTransition";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,10 +25,6 @@ const sora = Sora({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
 });
-
-import Footer from "@/components/layout/Footer";
-import SmoothScroll from "@/components/effects/SmoothScroll";
-import FluidBackground from "@/components/effects/FluidBackground";
 
 export default function RootLayout({
   children,
@@ -76,13 +77,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col overflow-x-hidden font-sora cursor-none">
-        {/* Scroll Progress Bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-[#74C044] origin-left z-[10000]"
           style={{ scaleX }}
         />
 
-        {/* Custom Cursor */}
         <motion.div
           className="fixed top-0 left-0 w-8 h-8 bg-[#21409A]/20 border border-[#21409A]/40 rounded-full pointer-events-none z-[9999] hidden md:block"
           style={{
@@ -92,7 +91,6 @@ export default function RootLayout({
           }}
         />
 
-        {/* Cursor Dot */}
         <motion.div
           className="fixed top-0 left-0 w-2 h-2 bg-[#74C044] rounded-full pointer-events-none z-[9999] hidden md:block"
           style={{
@@ -108,7 +106,10 @@ export default function RootLayout({
         <FluidBackground />
 
         <SmoothScroll>
-          {children}
+          <Navbar />
+          <PageTransition>
+            {children}
+          </PageTransition>
         </SmoothScroll>
         <Footer />
       </body>
