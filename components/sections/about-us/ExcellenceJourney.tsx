@@ -44,7 +44,7 @@ const ExcellenceJourney = () => {
   });
 
   return (
-    <section ref={containerRef} className="py-24 bg-[#FAFAFA] overflow-hidden">
+    <section ref={containerRef} className="py-24 bg-[#FAFAFA]">
       <div className="max-w-[1440px] mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -62,7 +62,7 @@ const ExcellenceJourney = () => {
 
         <div className="relative max-w-5xl mx-auto">
           {/* Animated Vertical Line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gray-200/50 hidden md:block -translate-x-1/2 rounded-full overflow-hidden">
+          <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gray-200/50 hidden md:block -translate-x-1/2 rounded-full overflow-hidden pointer-events-none">
             <motion.div 
               style={{ scaleY, originY: 0 }}
               className="absolute inset-0 bg-gradient-to-b from-[#00A69C] via-[#21409A] to-[#C04444] rounded-full"

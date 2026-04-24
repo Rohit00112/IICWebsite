@@ -11,7 +11,7 @@ interface RevealTextProps {
 
 const RevealText = ({ text, className = '', delay = 0 }: RevealTextProps) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
+  const isInView = useInView(ref, { once: true, margin: "0%" });
 
   const words = text.split(' ');
 
@@ -23,9 +23,9 @@ const RevealText = ({ text, className = '', delay = 0 }: RevealTextProps) => {
             initial={{ y: "100%" }}
             animate={isInView ? { y: 0 } : { y: "100%" }}
             transition={{
-              duration: 0.8,
-              delay: delay + i * 0.05,
-              ease: [0.215, 0.61, 0.355, 1],
+              duration: 0.6,
+              delay: delay + i * 0.03,
+              ease: [0.16, 1, 0.3, 1],
             }}
             className="inline-block"
           >
