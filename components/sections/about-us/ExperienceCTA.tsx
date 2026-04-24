@@ -17,7 +17,7 @@ const ExperienceCTA = () => {
             Experience it yourself.
           </h2>
           <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed font-sora">
-            Experience the IIC difference firsthand. Whether you're ready to 
+            Experience the IIC difference firsthand. Whether you're ready to
             apply or just want to explore our campus, we're here to guide you.
           </p>
 
