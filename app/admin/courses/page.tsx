@@ -23,7 +23,7 @@ const AdminCoursesPage = async () => {
       </div>
 
       {/* Course Listing Table */}
-      <CourseTable initialCourses={courses} />
+      <CourseTable initialCourses={JSON.parse(JSON.stringify(courses))} />
     </div>
   );
 };
