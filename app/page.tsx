@@ -8,6 +8,12 @@ import InnovationLab from "@/components/sections/home/InnovationLab";
 import IngSection from "@/components/sections/home/IngSection";
 import ProspectusSection from "@/components/sections/home/ProspectusSection";
 import Preloader from "@/components/layout/Preloader";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Itahari International College | Excellence in IT & Business",
+  description: "Welcome to Itahari International College. Explore our world-class BIT and BBA programs, state-of-the-art facilities, and vibrant campus life.",
+};
 
 export default function Home() {
   return (

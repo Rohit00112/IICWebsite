@@ -57,6 +57,7 @@ const HeroSection = () => {
 
         <div className="pt-4 md:pt-8 text-center flex flex-col items-center">
           <RevealText 
+            as="h1"
             text="UK-Affiliated Degrees In IT & Business. Partnered With London Metropolitan University To Bring World-Class Education To Eastern Nepal."
             className="text-xl md:text-[28px] font-medium text-[#1a1a1a] leading-[1.6] mb-12 max-w-4xl px-4 font-sora justify-center"
             delay={0.5}
