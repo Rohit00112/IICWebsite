@@ -45,10 +45,19 @@ export default async function CoursePage({
     provider: {
       '@type': 'CollegeOrUniversity',
       name: 'Itahari International College',
-      sameAs: 'https://iic.edu.np',
+      url: 'https://iic.edu.np',
+    },
+    educationalCredentialAwarded: course.details.level,
+    occupationalCredentialAwarded: course.details.awardingBody,
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'Full-time',
+      duration: course.duration === '3 Years' ? 'P3Y' : 'P1Y', // ISO 8601 duration
+      courseWorkload: 'Full-time',
     },
     image: course.image,
   };
+
 
   return (
     <>

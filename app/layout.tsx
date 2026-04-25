@@ -92,9 +92,57 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <ClientLayoutWrapper>
-        {children}
-      </ClientLayoutWrapper>
+      <body className="h-full bg-white">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "CollegeOrUniversity",
+                  "@id": "https://iic.edu.np/#college",
+                  "name": "Itahari International College",
+                  "url": "https://iic.edu.np",
+                  "logo": "https://iic.edu.np/images/common/iic_logo.png",
+                  "sameAs": [
+                    "https://www.facebook.com/iic.nepal",
+                    "https://www.instagram.com/iic_nepal",
+                    "https://www.linkedin.com/school/itahari-international-college/"
+                  ],
+                  "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Itahari",
+                    "addressLocality": "Itahari",
+                    "addressRegion": "Sunsari",
+                    "postalCode": "56700",
+                    "addressCountry": "NP"
+                  },
+                  "telephone": "+977-25-581111"
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://iic.edu.np/#website",
+                  "url": "https://iic.edu.np",
+                  "name": "Itahari International College",
+                  "publisher": { "@id": "https://iic.edu.np/#college" },
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://iic.edu.np/courses?search={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                }
+              ]
+            })
+          }}
+        />
+        <ClientLayoutWrapper>
+          {children}
+        </ClientLayoutWrapper>
+      </body>
+
     </html>
   );
 }
+
+
