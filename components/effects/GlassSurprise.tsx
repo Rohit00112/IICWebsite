@@ -36,7 +36,7 @@ const GlassSurprise: React.FC<GlassSurpriseProps> = ({ children }) => {
   };
 
   const handleMouseEnter = () => setIsHovered(true);
-  
+
   const handleMouseLeave = () => {
     setIsHovered(false);
     x.set(0);
@@ -44,7 +44,7 @@ const GlassSurprise: React.FC<GlassSurpriseProps> = ({ children }) => {
   };
 
   return (
-    <div 
+    <div
       className="relative w-full flex justify-center py-12"
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
@@ -62,7 +62,7 @@ const GlassSurprise: React.FC<GlassSurpriseProps> = ({ children }) => {
       >
         {/* The Glass Card */}
         <motion.div
-          className="relative z-10 bg-white/10 backdrop-blur-[60px] border border-white/30 rounded-[48px] md:rounded-[64px] p-8 md:p-16 shadow-[0_50px_100px_rgba(0,0,0,0.3)] flex flex-col items-center text-center overflow-hidden"
+          className="relative z-10 bg-white/10 backdrop-blur-[60px] border border-white/50 rounded-[48px] md:rounded-[64px] p-8 md:p-16 shadow-[0_40px_80px_rgba(0,0,0,0.4)] flex flex-col items-center text-center overflow-hidden"
           style={{
             transformStyle: 'preserve-3d',
           }}
@@ -78,7 +78,7 @@ const GlassSurprise: React.FC<GlassSurpriseProps> = ({ children }) => {
           />
 
           {/* Animated Light Streak */}
-          <motion.div 
+          <motion.div
             style={{ x: streakX }}
             className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 pointer-events-none"
           />
