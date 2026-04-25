@@ -27,6 +27,7 @@ const AboutHero = () => {
           
           <RevealText 
             text="GLOBAL EDUCATION"
+            as="h1"
             className="text-6xl md:text-8xl lg:text-[110px] font-black text-[#21409A] leading-none mb-6 font-sora tracking-tighter justify-center uppercase"
             delay={0.2}
           />
@@ -68,7 +69,7 @@ const AboutHero = () => {
             fill
             priority
             className="object-contain object-bottom scale-110"
-            sizes="100vw"
+            sizes="(max-width: 1200px) 100vw, 1200px"
           />
         </motion.div>
       </div>

@@ -135,7 +135,6 @@ const ProgrammesSection = () => {
                   fill
                   sizes="(max-width: 768px) 50vw, 30vw"
                   className="object-contain object-bottom transition-transform duration-1000 group-hover:scale-105"
-                  priority
                 />
               </motion.div>
             </motion.div>

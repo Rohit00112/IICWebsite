@@ -47,8 +47,8 @@ export default async function CoursePage({
       name: 'Itahari International College',
       url: 'https://iic.edu.np',
     },
-    educationalCredentialAwarded: course.details.level,
-    occupationalCredentialAwarded: course.details.awardingBody,
+    educationalCredentialAwarded: course.details?.level,
+    occupationalCredentialAwarded: course.details?.awardingBody,
     hasCourseInstance: {
       '@type': 'CourseInstance',
       courseMode: 'Full-time',

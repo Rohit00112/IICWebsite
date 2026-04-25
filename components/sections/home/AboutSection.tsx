@@ -67,9 +67,8 @@ const AboutSection = () => {
             src="/images/home/tower_block.png"
             alt="Tower Block"
             fill
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, 100vw"
             className="object-cover object-center"
-            priority
           />
         </motion.div>
         <div className="absolute inset-0 bg-black/5"></div>
@@ -78,5 +77,6 @@ const AboutSection = () => {
   );
 };
 
-export default AboutSection;
 
+
+export default AboutSection;

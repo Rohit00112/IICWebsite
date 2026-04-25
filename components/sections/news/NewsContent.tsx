@@ -118,6 +118,8 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
                       src={featuredPost.image}
                       alt={featuredPost.title}
                       fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 40vw, 600px"
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   </div>
@@ -178,6 +180,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
                           src={item.image}
                           alt={item.title}
                           fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
                           className="object-cover group-hover:scale-105 transition-transform duration-700"
                         />
                       </div>
