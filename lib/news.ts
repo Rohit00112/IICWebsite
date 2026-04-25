@@ -110,3 +110,16 @@ export async function filterNews(category: string, search: string): Promise<News
   const news = await News.find(query).sort({ createdAt: -1 });
   return news.map(mapNewsItem);
 }
+
+export async function getRelatedNews(category: string, currentId: string, limit = 3): Promise<NewsItem[]> {
+  await dbConnect();
+  const news = await News.find({
+    category,
+    _id: { $ne: currentId }
+  })
+  .sort({ createdAt: -1 })
+  .limit(limit);
+  
+  return news.map(mapNewsItem);
+}
+

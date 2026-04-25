@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import Magnetic from '../../effects/Magnetic';
 
 interface NewsDetailContentProps {
@@ -29,10 +30,10 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
               <div className="flex items-center gap-4">
                 <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Share this story</span>
                 <div className="flex items-center gap-3">
-                  {['fb', 'tw', 'ln', 'wa'].map((social) => (
+                  {['facebook', 'twitter', 'linkedin'].map((social) => (
                     <Magnetic key={social} strength={0.3}>
                       <button className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-[#21409A] hover:text-white transition-all shadow-sm">
-                        <span className="text-[10px] font-bold uppercase">{social}</span>
+                        <span className="text-[10px] font-bold uppercase">{social.slice(0, 2)}</span>
                       </button>
                     </Magnetic>
                   ))}
@@ -49,32 +50,47 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
           {/* Sidebar */}
           <div className="lg:col-span-4 space-y-12">
             
-            {/* Related Information Card */}
+            {/* Quick Facts Card */}
             <div className="bg-[#f8fcfb] p-10 rounded-[40px] border border-[#74C044]/20 shadow-sm relative overflow-hidden">
-              <h5 className="text-xl font-bold text-[#1a1a1a] font-sora mb-6">Quick Facts</h5>
+              <h5 className="text-xl font-bold text-[#1a1a1a] font-sora mb-6">Article Details</h5>
               <div className="space-y-6">
                 <div className="flex gap-4">
                   <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#21409A]">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m4 0h1m-5 10h5m-5-4h5m2-4h2m7 10v12m-9-12v12" /></svg>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Partner</p>
-                    <p className="text-sm font-bold text-[#1a1a1a]">Microsoft Corporation</p>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Category</p>
+                    <p className="text-sm font-bold text-[#1a1a1a]">{item.category}</p>
                   </div>
                 </div>
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#21409A]">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                
+                {item.location && (
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#21409A]">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Location</p>
+                      <p className="text-sm font-bold text-[#1a1a1a]">{item.location}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Target</p>
-                    <p className="text-sm font-bold text-[#1a1a1a]">Computing & IT Students</p>
+                )}
+
+                {item.time && (
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#21409A]">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Time</p>
+                      <p className="text-sm font-bold text-[#1a1a1a]">{item.time}</p>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 
-            {/* Newsletter Signup (Consistent with Listing) */}
+            {/* Newsletter Signup */}
             <div className="bg-[#DDE5F0] p-10 rounded-[40px] shadow-sm">
               <h5 className="text-xl font-bold font-sora mb-4 text-[#1a1a1a]">Stay Updated</h5>
               <p className="text-gray-600 text-[14px] mb-8 leading-relaxed font-medium">Never miss an update. Join our newsletter to get the latest IIC news.</p>
@@ -98,5 +114,5 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
   );
 };
 
-import Link from 'next/link';
 export default NewsDetailContent;
+
