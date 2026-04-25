@@ -66,7 +66,7 @@ export default function ClientLayoutWrapper({
   const dotY = useSpring(mouseY, springConfig);
 
   return (
-    <body className={`min-h-full flex flex-col overflow-x-hidden font-sora ${isAdminPage ? 'cursor-default' : 'cursor-none'}`}>
+    <div className={`relative min-h-full flex flex-col overflow-x-hidden font-sora ${isAdminPage ? 'cursor-default' : 'cursor-none'}`}>
       {mounted && !isAdminPage && (
         <>
           <motion.div
@@ -109,6 +109,7 @@ export default function ClientLayoutWrapper({
         </div>
       )}
       {mounted && !isAdminPage && <Footer />}
-    </body>
+    </div>
+
   );
 }
