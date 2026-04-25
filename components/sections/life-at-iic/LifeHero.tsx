@@ -11,13 +11,14 @@ const LifeHero = () => {
   const containerRef = useRef(null);
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, 200]);
-  const opacityProgress = useTransform(scrollY, [0, 500], [1, 0.5]);
+  const opacityProgress = useTransform(scrollY, [0, 200, 400], [1, 1, 0]);
+  const yTranslate = useTransform(scrollY, [0, 500], [0, -150]);
 
   return (
     <section ref={containerRef} className="relative min-h-[85svh] w-full overflow-hidden bg-white flex items-center justify-center pt-24 pb-12 px-4 md:px-8">
       {/* Background Image with Parallax */}
-      <motion.div 
-        style={{ y }} 
+      <motion.div
+        style={{ y }}
         className="absolute inset-0 w-full h-[110%] -top-[5%]"
       >
         <Image
@@ -35,10 +36,10 @@ const LifeHero = () => {
 
       {/* Glassmorphism Card with Surprise Effect */}
       <motion.div 
-        style={{ opacity: opacityProgress }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        style={{ 
+          opacity: opacityProgress,
+          y: yTranslate
+        }}
         className="relative z-10 w-full max-w-[1100px] mt-12 md:mt-0"
       >
         <GlassSurprise>
@@ -48,36 +49,36 @@ const LifeHero = () => {
               Experience IIC
             </span>
           </div>
-          
+
           {/* Main Title */}
           <div className="flex flex-wrap items-center justify-center gap-x-4 mb-8">
-            <RevealText 
+            <RevealText
               text="Life At"
               className="text-4xl md:text-6xl lg:text-[80px] font-black leading-[1.1] tracking-tight font-sora text-[#1a1a1a]"
             />
             <div className="text-[#21409A] relative inline-block">
-              <RevealText 
+              <RevealText
                 text="IIC"
                 className="text-4xl md:text-6xl lg:text-[80px] font-black leading-[1.1] tracking-tight font-sora"
                 delay={0.4}
               />
               {/* Green SVG Underline */}
-              <motion.svg 
+              <motion.svg
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 1, ease: "easeOut" }}
-                className="absolute -bottom-1 md:-bottom-2 left-0 w-full origin-left" 
-                viewBox="0 0 200 30" 
-                fill="none" 
+                className="absolute -bottom-1 md:-bottom-2 left-0 w-full origin-left"
+                viewBox="0 0 200 30"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M 5 10 Q 100 25 195 10" stroke="#74C044" strokeWidth="10" strokeLinecap="round" />
               </motion.svg>
             </div>
           </div>
-          
+
           {/* Paragraph text */}
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.2 }}
@@ -97,7 +98,7 @@ const LifeHero = () => {
                 </svg>
               </button>
             </Magnetic>
-            
+
             <Magnetic strength={0.2}>
               <button className="w-full sm:w-auto px-8 py-4 bg-white/60 backdrop-blur-md border border-white/70 text-[#21409A] rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-white/80 transition-all shadow-sm">
                 Watch Campus Video

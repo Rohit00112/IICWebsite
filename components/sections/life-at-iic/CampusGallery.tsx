@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import Image from 'next/image';
 
 const sections = [
@@ -56,19 +56,28 @@ const Slide = ({ section, index, scrollYProgress }: { section: typeof sections[0
   // Slide 1 comes in from 100% to 0% between progress 0.2 and 0.5.
   // Slide 2 comes in from 100% to 0% between progress 0.6 and 0.9.
 
-  const start = index === 1 ? 0.15 : 0.55;
-  const end = index === 1 ? 0.45 : 0.85;
+  // Slide 0: Visible alone from 0% to 25%
+  // Slide 1: Slides in from 25% to 50%, then stays alone until 75%
+  // Slide 2: Slides in from 75% to 100%
+  const start = index === 0 ? 0 : index === 1 ? 0.25 : 0.75;
+  const end = index === 0 ? 0.25 : index === 1 ? 0.50 : 0.95;
 
-  const y = useTransform(scrollYProgress, [start, end], ["100%", "0%"]);
+  // Slide 0 stays fixed at y: 0. Slides 1 and 2 slide over it.
+  const rawY = useTransform(scrollYProgress, [start, end], ['100%', '0%'], { clamp: true });
+  const y = useSpring(rawY, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  // Apply transform only if index > 0
-  const style = index > 0 ? { y } : {};
+  const scale = useTransform(scrollYProgress, [start - 0.1, end + 0.1], [1.2, 1], { clamp: true });
+  const style = index > 0 ? { y } : { y: 0 };
 
   return (
     <motion.div
-      className="absolute top-0 left-0 w-full h-full flex flex-col md:flex-row overflow-hidden shadow-[0_-20px_50px_rgba(0,0,0,0.3)]"
-      initial={index > 0 ? { y: "100%" } : { y: "0%" }}
-      style={{ zIndex: index * 10, ...style }}
+      className="absolute top-0 left-0 w-full flex flex-col md:flex-row overflow-hidden shadow-[0_-20px_50px_rgba(0,0,0,0.3)] bg-[#1a1a1a]"
+      initial={index > 0 ? { y: '100%' } : { y: '0%' }}
+      style={{ height: '100vh', zIndex: index * 10 + 10, ...style }}
     >
       {/* Content Block */}
       <div
@@ -88,13 +97,15 @@ const Slide = ({ section, index, scrollYProgress }: { section: typeof sections[0
 
       {/* Image Block */}
       <div className={`w-full md:w-1/2 h-1/2 md:h-full relative ${section.reverse ? 'md:order-2' : 'md:order-1'}`}>
-        <Image
-          src={section.image}
-          alt={section.title}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
+        <motion.div style={{ scale }} className="w-full h-full">
+          <Image
+            src={section.image}
+            alt={section.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -108,9 +119,21 @@ const CampusGallery = () => {
   });
 
   return (
-    <section ref={containerRef} className="relative w-full h-[300vh] bg-[#1a1a1a]">
-      {/* Sticky container that stays in view */}
-      <div className="sticky top-0 left-0 w-full h-screen overflow-hidden">
+    <section 
+      ref={containerRef} 
+      className="relative w-full h-[300vh] bg-[#1a1a1a]"
+      style={{ isolation: 'isolate' }}
+    >
+      {/* Sticky container — forced to top-0 with high priority and explicit relative parent context */}
+      <div 
+        className="sticky top-0 left-0 w-full overflow-hidden z-10"
+        style={{ 
+          height: '100vh', 
+          position: 'sticky', 
+          top: 0,
+          zIndex: 50 
+        }}
+      >
         {sections.map((section, index) => (
           <Slide
             key={section.id}
