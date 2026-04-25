@@ -9,65 +9,65 @@ import Magnetic from '../../effects/Magnetic';
 
 interface Module {
   name: string;
-  description: string;
-  credits: string;
+  description?: string;
+  credits?: string;
 }
 
 interface Year {
-  title: string;
-  modules: Module[];
+  title?: string;
+  modules?: Module[];
 }
 
 interface FacultyMember {
-  name: string;
-  role: string;
-  description: string;
-  image: string;
+  name?: string;
+  role?: string;
+  description?: string;
+  image?: string;
   color?: string;
 }
 
 interface CareerPath {
-  title: string;
-  description: string;
-  color: string;
+  title?: string;
+  description?: string;
+  color?: string;
 }
 
 interface Project {
-  title: string;
-  cohort: string;
-  image: string;
+  title?: string;
+  cohort?: string;
+  image?: string;
 }
 
 interface FAQ {
-  question: string;
-  answer: string;
+  question?: string;
+  answer?: string;
 }
 
 interface CourseData {
   title: string;
-  subtitle: string;
-  description: string;
-  overview: string;
-  details: {
-    level: string;
-    duration: string;
-    intake: string;
-    awardingBody: string;
+  subtitle?: string;
+  description?: string;
+  overview?: string;
+  details?: {
+    level?: string;
+    duration?: string;
+    intake?: string;
+    awardingBody?: string;
   };
-  curriculum: Year[];
-  entryRequirements: {
-    academic: string;
-    language: string;
+  curriculum?: Year[];
+  entryRequirements?: {
+    academic?: string;
+    language?: string;
   };
-  learningOutcomes: string[];
-  careerOpportunities: CareerPath[];
-  faculty: FacultyMember[];
-  quote: {
-    text: string;
-    author: string;
+  learningOutcomes?: string[];
+  careerOpportunities?: CareerPath[];
+  faculty?: FacultyMember[];
+  quote?: {
+    text?: string;
+    author?: string;
   };
-  projects: Project[];
-  faqs: FAQ[];
+  projects?: Project[];
+  faqs?: FAQ[];
 }
 
 const CourseDetailPage = ({ course }: { course: CourseData }) => {
@@ -102,7 +102,7 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
               <path d="M12 21.945l-10-5.445 1.97-1.073 8.03 4.373 8.03-4.373 1.97 1.073-10 5.445z" />
             </svg>
             <span className="text-white text-[13px] font-medium tracking-[0.05em]">
-              {course.details.awardingBody}
+              {course.details?.awardingBody}
             </span>
           </motion.div>
 
@@ -204,7 +204,7 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
             
             <div className="space-y-8">
               {[
-                { label: 'Duration', value: course.details.duration, icon: (
+                { label: 'Duration', value: course.details?.duration, icon: (
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -215,7 +215,7 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 )},
-                { label: 'Intake', value: course.details.intake, icon: (
+                { label: 'Intake', value: course.details?.intake, icon: (
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z" />
                   </svg>
@@ -254,7 +254,7 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left side: Accordions */}
             <div className="lg:col-span-8 space-y-6">
-              {course.curriculum.map((year, i) => (
+              {course.curriculum?.map((year, i) => (
                 <div key={i} className="bg-white rounded-[24px] overflow-hidden shadow-sm border border-gray-100">
                   <button
                     onClick={() => setActiveYear(activeYear === i ? -1 : i)}
@@ -276,10 +276,10 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
                         className="overflow-hidden"
                       >
                         <div className="px-8 pb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                          {year.modules.map((mod, j) => (
+                          {year.modules?.map((mod, j) => (
                             <div key={j} className="p-8 bg-[#f8fafc] rounded-2xl border border-gray-100 group hover:border-[#21409A]/20 transition-all">
                               <h4 className="font-bold text-[#1a1a1a] mb-3 text-lg leading-tight">
-                                {mod.name} ({mod.credits} Credits)
+                                {mod.name} {mod.credits && `(${mod.credits} Credits)`}
                               </h4>
                               <p className="text-sm text-gray-500 leading-relaxed">{mod.description}</p>
                             </div>
@@ -340,7 +340,7 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {course.faculty.map((member, i) => {
+            {course.faculty?.map((member, i) => {
               const isFirst = i === 0;
               return (
                 <div 
@@ -350,17 +350,17 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
                   <div className={`relative w-28 h-28 rounded-full mb-8 flex items-center justify-center ${isFirst ? 'bg-[#f8d7da]/20' : 'bg-[#f0f4f8]'}`}>
                     <div className="relative w-24 h-24 rounded-full overflow-hidden shadow-inner">
                       <Image 
-                        src={member.image} 
-                        alt={member.name} 
+                        src={member.image || '/images/common/avatar-placeholder.png'} 
+                        alt={member.name || 'Faculty Member'} 
                         fill 
                         className="object-cover scale-110" 
                         sizes="(max-width: 768px) 96px, 96px"
                       />
                     </div>
                   </div>
-                  <h4 className="text-xl font-bold mb-3">{member.name}</h4>
+                  <h4 className="text-xl font-bold mb-3">{member.name || 'Staff Member'}</h4>
                   <p className={`text-sm font-bold mb-1 ${isFirst ? 'text-white/80' : 'text-[#21409A]'}`}>
-                    {member.role}
+                    {member.role || 'Faculty'}
                   </p>
                   <p className={`text-[13px] leading-relaxed ${isFirst ? 'text-white/60' : 'text-gray-400'}`}>
                     {member.description}
@@ -383,7 +383,7 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
           </div>
 
           <div className="space-y-4">
-            {course.faqs.map((faq, i) => (
+            {course.faqs?.map((faq, i) => (
               <div key={i} className="overflow-hidden">
                 <button
                   onClick={() => setActiveFAQ(activeFAQ === i ? -1 : i)}
