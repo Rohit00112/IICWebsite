@@ -53,10 +53,10 @@ export const metadata: Metadata = {
     siteName: "Itahari International College",
     images: [
       {
-        url: "/images/common/og-image.jpg",
+        url: "/api/og?title=Itahari International College&subtitle=World-Class Education in Nepal&section=IIC Nepal",
         width: 1200,
         height: 630,
-        alt: "Itahari International College Campus",
+        alt: "Itahari International College",
       },
     ],
     locale: "en_US",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Itahari International College",
     description: "World-class undergraduate programs in IT and Business in Nepal.",
-    images: ["/images/common/og-image.jpg"],
+    images: ["/api/og?title=Itahari International College&subtitle=World-Class Education in Nepal&section=IIC Nepal"],
   },
   robots: {
     index: true,
