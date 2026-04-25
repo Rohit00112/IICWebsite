@@ -63,14 +63,14 @@ const ProgrammesSection = () => {
           </h2>
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
-              <motion.h1
+              <motion.h2
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: 0 } : {}}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="text-4xl md:text-7xl font-black text-[#74C044] tracking-tight leading-none font-sora"
               >
                 ITAHARI
-              </motion.h1>
+              </motion.h2>
             </Magnetic>
           </div>
         </div>
