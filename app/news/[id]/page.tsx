@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import NewsDetailHero from '../../../components/sections/news/NewsDetailHero';
 import NewsDetailContent from '../../../components/sections/news/NewsDetailContent';
 import PageTransition from '../../../components/layout/PageTransition';
-import { getNewsById } from '../../../lib/news';
+import { getNewsById, getRelatedNews } from '../../../lib/news';
 import { notFound } from 'next/navigation';
+import RelatedNews from '../../../components/sections/news/RelatedNews';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -37,6 +38,8 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ id: string }> }) =
     notFound();
   }
 
+  const relatedNews = await getRelatedNews(item.category, id);
+
   // Structured Data (JSON-LD) for SEO
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -60,6 +63,7 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ id: string }> }) =
       <main className="bg-white min-h-screen">
         <NewsDetailHero item={item} />
         <NewsDetailContent item={item} />
+        <RelatedNews items={relatedNews} />
       </main>
     </PageTransition>
   );
