@@ -19,6 +19,8 @@ const NewNewsPage = () => {
     title: '',
     category: 'News',
     date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+    time: '',
+    location: '',
     image: '',
     description: '',
     content: '',
@@ -131,21 +133,58 @@ const NewNewsPage = () => {
                     required
                     value={formData.date}
                     onChange={(e) => setFormData({...formData, date: e.target.value})}
+                    placeholder="October 15, 2024"
                     className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56]"
                   />
                 </div>
               </div>
 
+              {/* Conditional Fields for Events */}
+              {(formData.category === 'Event' || formData.category === 'Announcement') && (
+                <div className="grid grid-cols-2 gap-8 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 ml-1">Time (Optional)</label>
+                    <input 
+                      type="text" 
+                      value={formData.time}
+                      onChange={(e) => setFormData({...formData, time: e.target.value})}
+                      placeholder="09:00 AM - 05:00 PM"
+                      className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56] placeholder:text-gray-300"
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 ml-1">Location (Optional)</label>
+                    <input 
+                      type="text" 
+                      value={formData.location}
+                      onChange={(e) => setFormData({...formData, location: e.target.value})}
+                      placeholder="Main Hall, IIC"
+                      className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56] placeholder:text-gray-300"
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-3">
                 <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 ml-1">Featured Image URL</label>
-                <input 
-                  type="url" 
-                  required
-                  value={formData.image}
-                  onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56] placeholder:text-gray-300 placeholder:font-medium"
-                />
+                <div className="space-y-4">
+                  <input 
+                    type="url" 
+                    required
+                    value={formData.image}
+                    onChange={(e) => setFormData({...formData, image: e.target.value})}
+                    placeholder="https://images.unsplash.com/..."
+                    className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56] placeholder:text-gray-300"
+                  />
+                  {formData.image && (
+                    <div className="relative h-40 rounded-3xl overflow-hidden border border-gray-100 shadow-inner">
+                      <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <span className="text-[10px] font-bold text-white uppercase tracking-widest bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm">Image Preview</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="space-y-3">
@@ -156,7 +195,7 @@ const NewNewsPage = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
                   placeholder="Summarize the article for the grid view..."
-                  className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56] placeholder:text-gray-300 placeholder:font-medium resize-none leading-relaxed"
+                  className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56] placeholder:text-gray-300 resize-none leading-relaxed"
                 />
               </div>
 
@@ -228,15 +267,9 @@ const NewNewsPage = () => {
                 line-height: 1.8;
                 font-weight: 500;
               }
-              .ql-editor.ql-blank::before {
-                color: #9ca3af;
-                font-style: normal;
-                left: 60px !important;
-              }
             `}</style>
           </div>
         </div>
-
       </form>
     </div>
   );
