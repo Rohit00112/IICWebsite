@@ -4,7 +4,7 @@ import News from '../models/News';
 export interface NewsAuthor {
   name: string;
   role: string;
-  avatar: string;
+  avatar?: string;
 }
 
 export interface NewsItem {
@@ -18,7 +18,7 @@ export interface NewsItem {
   content: string;
   image: string;
   featured: boolean;
-  author: NewsAuthor;
+  author?: NewsAuthor;
 }
 
 // Helper to convert Mongo document to clean plain object
