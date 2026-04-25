@@ -4,56 +4,56 @@ import Course from '../models/Course';
 export interface CourseItem {
   id: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   slug: string;
   category: string;
   duration: string;
   description: string;
   image: string;
-  level: string;
+  level?: string;
   featured: boolean;
-  overview: string;
-  details: {
-    level: string;
-    duration: string;
-    intake: string;
-    awardingBody: string;
+  overview?: string;
+  details?: {
+    level?: string;
+    duration?: string;
+    intake?: string;
+    awardingBody?: string;
   };
-  curriculum: {
-    title: string;
-    modules: {
+  curriculum?: {
+    title?: string;
+    modules?: {
       name: string;
-      description: string;
-      credits: string;
+      description?: string;
+      credits?: string;
     }[];
   }[];
-  entryRequirements: {
-    academic: string;
-    language: string;
+  entryRequirements?: {
+    academic?: string;
+    language?: string;
   };
-  learningOutcomes: string[];
-  careerOpportunities: {
+  learningOutcomes?: string[];
+  careerOpportunities?: {
     title: string;
-    description: string;
-    color: string;
-  }[];
-  faculty: {
-    name: string;
-    role: string;
-    description: string;
-    image: string;
+    description?: string;
     color?: string;
   }[];
-  quote: {
-    text: string;
-    author: string;
-  };
-  projects: {
-    title: string;
-    cohort: string;
-    image: string;
+  faculty?: {
+    name: string;
+    role: string;
+    description?: string;
+    image?: string;
+    color?: string;
   }[];
-  faqs: {
+  quote?: {
+    text?: string;
+    author?: string;
+  };
+  projects?: {
+    title: string;
+    cohort?: string;
+    image?: string;
+  }[];
+  faqs?: {
     question: string;
     answer: string;
   }[];
