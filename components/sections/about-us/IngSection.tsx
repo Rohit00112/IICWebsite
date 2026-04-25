@@ -13,7 +13,7 @@ const IngSection = () => {
         <div className="flex flex-col items-center justify-center mb-16 text-center">
 
           <div className="relative w-72 h-32">
-            <Image src="/images/about/ing.png" alt="ING Logo" fill className="object-contain" />
+            <Image src="/images/about/ing.png" alt="ING Logo" fill sizes="288px" className="object-contain" />
           </div>
         </div>
 

@@ -38,14 +38,14 @@ const PartnerSection = () => {
             Partner
           </motion.span>
           <div className="overflow-hidden py-2">
-            <motion.h1
+            <motion.h2
               initial={{ y: "100%" }}
               animate={isInView ? { y: 0 } : {}}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora"
             >
               UNIVERSITY
-            </motion.h1>
+            </motion.h2>
           </div>
         </div>
 
@@ -60,6 +60,7 @@ const PartnerSection = () => {
               src="/images/lmu brand 2.png"
               alt="Ranking"
               fill
+              sizes="(max-width: 768px) 256px, 280px"
               className="object-contain"
             />
           </motion.div>
@@ -74,6 +75,7 @@ const PartnerSection = () => {
               src="/images/lmu brand 1.png"
               alt="LMU"
               fill
+              sizes="(max-width: 768px) 320px, 380px"
               className="object-contain"
             />
           </motion.div>
@@ -86,6 +88,7 @@ const PartnerSection = () => {
                 src="/images/lmu building.png"
                 alt="LMU Building"
                 fill
+                sizes="100vw"
                 className="object-cover"
               />
             </motion.div>
@@ -104,6 +107,7 @@ const PartnerSection = () => {
                   src="/images/lmu student favourate.png"
                   alt="Student Favourite"
                   fill
+                  sizes="(max-width: 768px) 144px, 240px"
                   className="object-contain object-bottom"
                 />
               </motion.div>
@@ -125,6 +129,7 @@ const PartnerSection = () => {
                 src={card}
                 alt={`LMU Rank ${index + 1}`}
                 fill
+                sizes="(max-width: 768px) 50vw, 20vw"
                 className="object-contain"
               />
             </motion.div>

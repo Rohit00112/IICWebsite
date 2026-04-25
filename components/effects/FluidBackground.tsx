@@ -58,8 +58,8 @@ function FluidPlane() {
   }), [size]);
 
   useFrame((state) => {
-    const { clock, mouse: stateMouse } = state;
-    uniforms.uTime.value = clock.getElapsedTime();
+    const { mouse: stateMouse } = state;
+    uniforms.uTime.value = performance.now() * 0.001;
     uniforms.uMouse.value.x += (stateMouse.x * 0.5 + 0.5 - uniforms.uMouse.value.x) * 0.02;
     uniforms.uMouse.value.y += (stateMouse.y * 0.5 + 0.5 - uniforms.uMouse.value.y) * 0.02;
   });
