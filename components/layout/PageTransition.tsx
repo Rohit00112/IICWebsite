@@ -30,7 +30,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
           duration: 1.2, 
           ease: [0.76, 0, 0.24, 1] 
         }}
-        className="min-h-screen bg-black"
+        className="relative min-h-screen bg-black"
       >
         <FrozenRoute>{children}</FrozenRoute>
       </motion.div>

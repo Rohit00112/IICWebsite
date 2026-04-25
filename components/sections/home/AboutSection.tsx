@@ -67,6 +67,7 @@ const AboutSection = () => {
             src="/images/home/tower_block.png"
             alt="Tower Block"
             fill
+            sizes="100vw"
             className="object-cover object-center"
             priority
           />
