@@ -51,7 +51,10 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] flex flex-col items-center w-full pointer-events-none">
+      <nav 
+        className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] flex flex-col items-center w-full pointer-events-none"
+        aria-label="Main Navigation"
+      >
 
         {/* Independent Expanded Menu Rectangle */}
         <AnimatePresence>
@@ -200,7 +203,7 @@ const Navbar = () => {
             </motion.button>
           </Magnetic>
         </motion.div>
-      </div>
+      </nav>
     </>
   );
 };

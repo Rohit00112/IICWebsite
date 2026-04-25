@@ -5,8 +5,9 @@ import PageTransition from '../../../components/layout/PageTransition';
 import { getNewsById } from '../../../lib/news';
 import { notFound } from 'next/navigation';
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const item = await getNewsById(params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const item = await getNewsById(id);
   
   if (!item) return { title: 'Not Found' };
 
@@ -28,8 +29,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-const NewsDetailPage = async ({ params }: { params: { id: string } }) => {
-  const item = await getNewsById(params.id);
+const NewsDetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
+  const item = await getNewsById(id);
 
   if (!item) {
     notFound();
