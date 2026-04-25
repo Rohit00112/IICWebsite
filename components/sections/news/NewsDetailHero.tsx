@@ -23,6 +23,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
           src={item.image}
           alt={item.title}
           fill
+          sizes="100vw"
           className="object-cover"
           priority
         />
@@ -72,7 +73,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
           >
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/20">
-                <Image src={item.author.avatar} alt={item.author.name} fill className="object-cover" />
+                <Image src={item.author.avatar} alt={item.author.name} fill sizes="40px" className="object-cover" />
               </div>
               <div>
                 <p className="text-xs font-bold">{item.author.name}</p>

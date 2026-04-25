@@ -180,6 +180,7 @@ const Navbar = () => {
                           src="/images/common/iic_logo.png"
                           alt="IIC"
                           fill
+                          sizes="112px"
                           className="object-contain brightness-110 contrast-125"
                         />
                       </div>
