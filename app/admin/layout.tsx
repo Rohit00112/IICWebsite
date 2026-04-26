@@ -89,7 +89,7 @@ export default function AdminLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-grow ml-64 p-12">
+      <main className="flex-grow ml-64 p-12 overflow-x-hidden">
         {children}
       </main>
     </div>

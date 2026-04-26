@@ -167,12 +167,12 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   exit={{ opacity: 0, x: 20 }}
                   className="space-y-6"
                 >
-                  <p className="text-gray-500 leading-relaxed font-medium">
-                    The {course.title} degree at Itahari International College, awarded by London Metropolitan University, is designed to provide you with a comprehensive understanding of computer science principles and practical software development skills. You will learn to design, develop, and maintain complex software systems that solve real-world problems.
-                  </p>
-                  <p className="text-gray-500 leading-relaxed font-medium">
-                    Our industry-aligned curriculum ensures you are exposed to the latest technologies, including cloud computing, artificial intelligence, and agile methodologies, preparing you for a seamless transition into the global tech workforce.
-                  </p>
+                  <div className="prose prose-lg text-gray-500 max-w-none font-medium leading-relaxed" 
+                    dangerouslySetInnerHTML={{ __html: course.overview || `
+                      <p>The ${course.title} degree at Itahari International College, awarded by London Metropolitan University, is designed to provide you with a comprehensive understanding of core principles and practical skills in your chosen field.</p>
+                      <p>Our industry-aligned curriculum ensures you are exposed to the latest technologies and methodologies, preparing you for a seamless transition into the global workforce.</p>
+                    ` }} 
+                  />
                 </motion.div>
               ) : (
                 <motion.div
@@ -205,6 +205,11 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
             
             <div className="space-y-8">
               {[
+                { label: 'Level', value: course.details?.level || 'Undergraduate', icon: (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                )},
                 { label: 'Duration', value: course.details?.duration, icon: (
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -329,6 +334,148 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           </div>
         </div>
       </section>
+
+      {/* Entry Requirements Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Eligibility</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] font-sora tracking-tight leading-tight mb-8">
+                Entry <span className="text-[#21409A]">Requirements</span>
+              </h2>
+              <div className="space-y-8">
+                <div className="bg-[#f8fafc] p-8 rounded-3xl border border-gray-100">
+                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#21409A]/10 flex items-center justify-center text-[#21409A]">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
+                    Academic Criteria
+                  </h4>
+                  <p className="text-gray-500 font-medium leading-relaxed">
+                    {course.entryRequirements?.academic || "Please contact the admissions office for specific academic requirements for this program."}
+                  </p>
+                </div>
+                <div className="bg-[#f8fafc] p-8 rounded-3xl border border-gray-100">
+                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#21409A]/10 flex items-center justify-center text-[#21409A]">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                      </svg>
+                    </div>
+                    Language Proficiency
+                  </h4>
+                  <p className="text-gray-500 font-medium leading-relaxed">
+                    {course.entryRequirements?.language || "Proficiency in English is required. Equivalent qualifications like IELTS or TOEFL are accepted."}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#21409A]/5 blur-[100px] rounded-full" />
+              <div className="relative bg-[#1a1a1a] p-12 rounded-[48px] border border-white/10 shadow-2xl">
+                <div className="mb-8">
+                  <h3 className="text-2xl font-bold text-white mb-2">Ready to Start?</h3>
+                  <p className="text-gray-400">Our admissions team is here to guide you through every step of the process.</p>
+                </div>
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4 text-white">
+                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-[#21409A]">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Next Intake</p>
+                      <p className="text-lg font-bold">{course.details?.intake || "Spring 2026"}</p>
+                    </div>
+                  </div>
+                  <Link href="/contact" className="block w-full py-4 bg-[#21409A] text-white text-center font-bold rounded-2xl hover:bg-[#1a337e] transition-all">
+                    Inquire for Details
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Career Opportunities Section */}
+      {course.careerOpportunities && course.careerOpportunities.length > 0 && (
+        <section className="py-24 bg-[#0a0a0a] relative overflow-hidden">
+          <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-[#21409A]/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/4" />
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
+            <div className="text-center mb-20">
+              <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Future Prospects</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-white font-sora tracking-tight">
+                Your <span className="text-[#21409A]">Career</span> Path
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {course.careerOpportunities.map((path, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-white/5 border border-white/10 p-8 rounded-[32px] hover:bg-white/10 transition-all"
+                >
+                  <div className="w-12 h-12 rounded-2xl mb-6 flex items-center justify-center bg-[#21409A]/20 text-[#21409A]">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-xl font-bold text-white mb-3">{path.title}</h4>
+                  <p className="text-gray-400 text-sm leading-relaxed">{path.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Student Innovation Gallery (Projects) */}
+      {course.projects && course.projects.length > 0 && (
+        <section className="py-24 bg-white overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+              <div>
+                <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Hands-on Learning</span>
+                <h2 className="text-4xl font-bold text-[#1a1a1a] font-sora tracking-tight">
+                  Innovation <span className="text-[#21409A]">Gallery</span>
+                </h2>
+              </div>
+              <p className="text-gray-500 font-medium max-w-sm">
+                Explore a selection of capstone projects and research work developed by our students.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {course.projects.map((project, i) => (
+                <motion.div 
+                  key={i}
+                  whileHover={{ y: -10 }}
+                  className="group relative aspect-[16/9] rounded-[40px] overflow-hidden shadow-2xl bg-gray-100"
+                >
+                  <Image 
+                    src={project.image || '/images/common/project-placeholder.png'} 
+                    alt={project.title || "Student Project"} 
+                    fill 
+                    className="object-cover transition-transform duration-700 group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute bottom-0 left-0 p-10 translate-y-10 group-hover:translate-y-0 transition-transform duration-500">
+                    <span className="text-[#21409A] font-bold text-xs uppercase tracking-widest mb-3 block">{project.cohort}</span>
+                    <h4 className="text-2xl font-bold text-white">{project.title}</h4>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Meet the Faculty Section */}
       <section className="py-24 bg-[#f3f6fb]">

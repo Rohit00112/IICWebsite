@@ -3,13 +3,13 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import NewsDetailHero from '../../../components/sections/news/NewsDetailHero';
 import NewsDetailContent from '../../../components/sections/news/NewsDetailContent';
 import PageTransition from '../../../components/layout/PageTransition';
-import { getNewsById, getRelatedNews } from '../../../lib/news';
+import { getNewsBySlug, getRelatedNews } from '../../../lib/news';
 import { notFound } from 'next/navigation';
 import RelatedNews from '../../../components/sections/news/RelatedNews';
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params;
-  const item = await getNewsById(id);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const item = await getNewsBySlug(slug);
   
   if (!item) return { title: 'Not Found' };
 
@@ -31,15 +31,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-const NewsDetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
-  const item = await getNewsById(id);
+const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
+  const item = await getNewsBySlug(slug);
 
   if (!item) {
     notFound();
   }
 
-  const relatedNews = await getRelatedNews(item.category, id);
+  const relatedNews = await getRelatedNews(item.category, item.id);
 
   // Structured Data (JSON-LD) for SEO
   const jsonLd = {
@@ -58,7 +58,7 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ id: string }> }) =
   const breadcrumbs = [
     { name: 'Home', item: '/' },
     { name: 'News & Events', item: '/news' },
-    { name: item.title, item: `/news/${id}` },
+    { name: item.title, item: `/news/${slug}` },
   ];
 
   return (

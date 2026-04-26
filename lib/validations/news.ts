@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const newsSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters").max(150),
+  slug: z.string().optional(),
   category: z.enum(['News', 'Event', 'Announcement']),
   date: z.string().min(1, "Date is required"),
   time: z.string().optional(),

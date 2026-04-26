@@ -37,13 +37,13 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="flex items-center gap-2 text-white/60 text-xs font-bold uppercase tracking-widest mb-6"
+            className="flex items-center gap-2 text-white/90 text-xs font-bold uppercase tracking-widest mb-6"
           >
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>/</span>
             <Link href="/news" className="hover:text-white transition-colors">News & Events</Link>
             <span>/</span>
-            <span className="text-[#74C044]">{item.category}</span>
+            <span className="text-[#74C044] font-black">{item.category}</span>
           </motion.div>
 
           {/* Category Badge */}
@@ -69,7 +69,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="flex flex-wrap items-center gap-8 text-white/80"
+            className="flex flex-wrap items-center gap-8 text-white"
           >
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/20">
@@ -77,7 +77,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
               </div>
               <div>
                 <p className="text-xs font-bold">{item.author.name}</p>
-                <p className="text-[10px] text-white/50">{item.author.role}</p>
+                <p className="text-[10px] text-white/80">{item.author.role}</p>
               </div>
             </div>
             
