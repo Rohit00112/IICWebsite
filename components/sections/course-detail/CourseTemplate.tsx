@@ -423,6 +423,78 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           </div>
         </div>
       </section>
+
+      {/* Student Success Stories Section */}
+      <section className="py-24 bg-[#0a0a0a] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-[#21409A]/5 blur-[120px] rounded-full -translate-y-1/2" />
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-20">
+            <div className="max-w-2xl">
+              <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Student Outcomes</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-white font-sora tracking-tight leading-[1.1]">
+                Where Our <span className="text-[#21409A]">Graduates</span> Shine
+              </h2>
+            </div>
+            <p className="text-gray-400 font-medium max-w-md lg:text-right">
+              Join a global network of alumni working at top-tier tech firms and multinational corporations.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Anish Shrestha",
+                role: "Software Engineer at Google",
+                quote: "The hands-on curriculum at IIC gave me the technical foundation I needed to excel in my career at a global scale.",
+                img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop"
+              },
+              {
+                name: "Priya Sharma",
+                role: "Data Analyst at Microsoft",
+                quote: "IIC's partnership with London Met provided me with a world-class degree while staying close to my roots in Itahari.",
+                img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&h=200&auto=format&fit=crop"
+              },
+              {
+                name: "Rohan Chaudhary",
+                role: "Product Manager at Amazon",
+                quote: "The focus on soft skills and industry exposure prepared me for the challenges of leading large-scale tech products.",
+                img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=200&auto=format&fit=crop"
+              }
+            ].map((testi, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white/5 border border-white/10 p-10 rounded-[40px] hover:bg-white/10 transition-all group"
+              >
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#21409A]/30">
+                    <Image src={testi.img} alt={testi.name} fill className="object-cover" />
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-lg">{testi.name}</h4>
+                    <p className="text-[#21409A] text-xs font-bold uppercase tracking-wider">{testi.role}</p>
+                  </div>
+                </div>
+                <p className="text-gray-300 font-medium leading-relaxed italic">
+                  "{testi.quote}"
+                </p>
+                <div className="mt-8 flex gap-1">
+                  {[...Array(5)].map((_, j) => (
+                    <svg key={j} className="w-4 h-4 text-[#21409A]" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Related Courses Section */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
