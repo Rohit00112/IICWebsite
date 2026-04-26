@@ -29,7 +29,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Itahari International College | World-Class Education in Nepal",
+    default: "Itahari International College | UK Degrees in Itahari, Nepal",
     template: "%s | Itahari International College",
   },
   description: "Itahari International College (IIC) offers world-class undergraduate programs in Information Technology and Business in partnership with London Metropolitan University, UK.",
@@ -68,6 +68,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Itahari International College",
     description: "World-class undergraduate programs in IT and Business in Nepal.",
+    site: "@iic_nepal",
+    creator: "@iic_nepal",
     images: ["/api/og?title=Itahari International College&subtitle=World-Class Education in Nepal&section=IIC Nepal"],
   },
   robots: {
@@ -106,21 +108,60 @@ export default function RootLayout({
                   "@id": "https://iic.edu.np/#college",
                   "name": "Itahari International College",
                   "url": "https://iic.edu.np",
-                  "logo": "https://iic.edu.np/images/common/iic_logo.png",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://iic.edu.np/images/common/iic_logo.png",
+                    "width": "450",
+                    "height": "80"
+                  },
+                  "image": "https://iic.edu.np/images/home/hero.png",
+                  "description": "Itahari International College (IIC) provides world-class UK degrees in IT and Business in partnership with London Metropolitan University.",
+                  "foundingDate": "2017",
+                  "knowsAbout": ["Information Technology", "Business Administration", "Higher Education", "UK Degrees"],
                   "sameAs": [
                     "https://www.facebook.com/iic.nepal",
                     "https://www.instagram.com/iic_nepal",
-                    "https://www.linkedin.com/school/itahari-international-college/"
+                    "https://www.linkedin.com/school/itahari-international-college/",
+                    "https://www.youtube.com/@itahariinternationalcollege"
                   ],
                   "address": {
                     "@type": "PostalAddress",
-                    "streetAddress": "Itahari",
+                    "streetAddress": "Sundar Haraicha 04",
                     "addressLocality": "Itahari",
                     "addressRegion": "Sunsari",
                     "postalCode": "56700",
                     "addressCountry": "NP"
                   },
-                  "telephone": "+977-25-581111"
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "26.6644",
+                    "longitude": "87.2718"
+                  },
+                  "telephone": "+977-25-581111",
+                  "contactPoint": [
+                    {
+                      "@type": "ContactPoint",
+                      "telephone": "+977-25-581111",
+                      "contactType": "admissions",
+                      "areaServed": "NP",
+                      "availableLanguage": "Nepali, English"
+                    },
+                    {
+                      "@type": "ContactPoint",
+                      "telephone": "+977-25-581112",
+                      "contactType": "customer service",
+                      "areaServed": "NP",
+                      "availableLanguage": "Nepali, English"
+                    }
+                  ],
+                  "openingHoursSpecification": [
+                    {
+                      "@type": "OpeningHoursSpecification",
+                      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Sunday"],
+                      "opens": "07:00",
+                      "closes": "18:00"
+                    }
+                  ]
                 },
                 {
                   "@type": "WebSite",

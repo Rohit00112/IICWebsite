@@ -59,7 +59,7 @@ const PartnerSection = () => {
           >
             <Image
               src="/images/home/lmu brand 2.png"
-              alt="Ranking"
+              alt="London Metropolitan University World Ranking"
               fill
               sizes="(max-width: 768px) 256px, 280px"
               className="object-contain"
@@ -74,7 +74,7 @@ const PartnerSection = () => {
           >
             <Image
               src="/images/home/lmu brand 1.png"
-              alt="LMU"
+              alt="London Metropolitan University Official Logo"
               fill
               sizes="(max-width: 768px) 320px, 380px"
               className="object-contain"

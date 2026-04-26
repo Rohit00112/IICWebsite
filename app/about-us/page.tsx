@@ -11,8 +11,8 @@ import ExperienceCTA from '@/components/sections/about-us/ExperienceCTA';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export const metadata = {
-  title: 'About Us | Itahari International College',
-  description: 'Learn about our mission, vision, and the team behind Itahari International College.',
+  title: 'Our Mission & UK Partnership | Itahari International College',
+  description: 'Learn about our partnership with London Metropolitan University, our mission for world-class education, and the team driving excellence at IIC Itahari.',
 };
 
 export default function AboutUsPage() {
