@@ -108,7 +108,7 @@ export default function ClientLayoutWrapper({
           </PageTransition>
         </SmoothScroll>
       ) : (
-        <div className="flex-grow">
+        <div key={pathname} className="flex-grow">
           {children}
         </div>
       )}
