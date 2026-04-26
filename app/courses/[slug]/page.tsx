@@ -2,6 +2,7 @@ import CourseTemplate from '@/components/sections/course-detail/CourseTemplate';
 import { notFound } from 'next/navigation';
 import { getCourseBySlug } from '@/lib/courses';
 import { Metadata } from 'next';
+import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export async function generateMetadata({ 
   params 
@@ -37,7 +38,7 @@ export default async function CoursePage({
   }
 
   // Structured Data for Course
-  const jsonLd = {
+  const courseJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Course',
     name: course.title,
@@ -46,25 +47,73 @@ export default async function CoursePage({
       '@type': 'CollegeOrUniversity',
       name: 'Itahari International College',
       url: 'https://iic.edu.np',
+      logo: 'https://iic.edu.np/images/common/iic_logo.png',
     },
-    educationalCredentialAwarded: course.details?.level,
-    occupationalCredentialAwarded: course.details?.awardingBody,
+    educationalLevel: course.details?.level || 'Undergraduate',
+    about: {
+      '@type': 'Thing',
+      name: course.category,
+    },
     hasCourseInstance: {
       '@type': 'CourseInstance',
       courseMode: 'Full-time',
-      duration: course.duration === '3 Years' ? 'P3Y' : 'P1Y', // ISO 8601 duration
+      duration: course.duration === '3 Years' ? 'P3Y' : 'P1Y',
       courseWorkload: 'Full-time',
+      location: {
+        '@type': 'Place',
+        name: 'Itahari International College Campus',
+        address: {
+          '@type': 'PostalAddress',
+          'addressLocality': 'Itahari',
+          'addressRegion': 'Sunsari',
+          'addressCountry': 'NP'
+        }
+      }
     },
+    educationalCredentialAwarded: course.details?.awardingBody ? `Degree from ${course.details.awardingBody}` : 'Undergraduate Degree',
     image: course.image,
+    syllabusSections: course.curriculum?.map(year => ({
+      '@type': 'Syllabus',
+      name: year.title,
+      description: year.modules?.map(m => m.name).join(', ')
+    }))
   };
+
+  // Structured Data for FAQ if available
+  const faqJsonLd = course.faqs && course.faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: course.faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer
+      }
+    }))
+  } : null;
+
+
+  const breadcrumbs = [
+    { name: 'Home', item: '/' },
+    { name: 'Courses', item: '/courses' },
+    { name: course.title, item: `/courses/${course.slug}` },
+  ];
 
 
   return (
     <>
+      <BreadcrumbSchema items={breadcrumbs} />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <CourseTemplate course={course} />
     </>
   );
