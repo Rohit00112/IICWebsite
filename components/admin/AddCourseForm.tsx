@@ -43,7 +43,7 @@ interface FAQ {
 export default function AddCourseForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [activeSection, setActiveSection] = useState<'core' | 'curriculum' | 'outcomes' | 'faculty' | 'projects' | 'faqs'>('core');
+  const [activeSection, setActiveSection] = useState<'core' | 'curriculum' | 'outcomes' | 'career' | 'faculty' | 'projects' | 'faqs'>('core');
   
   const [formData, setFormData] = useState({
     title: '',
@@ -216,7 +216,7 @@ export default function AddCourseForm() {
                   <button type="button" onClick={addYear} className="text-sm font-bold text-[#21409A]">+ Add Academic Year</button>
                 </div>
                 {formData.curriculum.map((year, yIdx) => (
-                  <div key={yIdx} className="p-8 bg-gray-50 rounded-[32px] space-y-6">
+                  <div key={`year-${yIdx}`} className="p-8 bg-gray-50 rounded-[32px] space-y-6">
                     <div className="flex items-center justify-between">
                       <input type="text" value={year.title} onChange={(e) => {
                         const newCurr = [...formData.curriculum];
@@ -227,7 +227,7 @@ export default function AddCourseForm() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {year.modules.map((mod, mIdx) => (
-                        <div key={mIdx} className="bg-white p-6 rounded-2xl shadow-sm space-y-4">
+                        <div key={`mod-${yIdx}-${mIdx}`} className="bg-white p-6 rounded-2xl shadow-sm space-y-4">
                           <input type="text" value={mod.name} placeholder="Module Name" onChange={(e) => {
                             const newCurr = [...formData.curriculum];
                             newCurr[yIdx].modules[mIdx].name = e.target.value;
@@ -271,7 +271,7 @@ export default function AddCourseForm() {
                   </div>
                   <div className="grid grid-cols-1 gap-4">
                     {formData.learningOutcomes.map((outcome, idx) => (
-                      <input key={idx} type="text" value={outcome} onChange={(e) => {
+                      <input key={`outcome-${idx}`} type="text" value={outcome} onChange={(e) => {
                         const newOutcomes = [...formData.learningOutcomes];
                         newOutcomes[idx] = e.target.value;
                         setFormData({...formData, learningOutcomes: newOutcomes});
@@ -290,7 +290,7 @@ export default function AddCourseForm() {
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   {formData.careerOpportunities.map((career, idx) => (
-                    <div key={idx} className="p-6 bg-gray-50 rounded-2xl space-y-4 border border-gray-100">
+                    <div key={`career-${idx}`} className="p-6 bg-gray-50 rounded-2xl space-y-4 border border-gray-100">
                       <input type="text" value={career.title} placeholder="e.g. Senior Software Architect" onChange={(e) => {
                         const newCareers = [...formData.careerOpportunities];
                         newCareers[idx].title = e.target.value;
@@ -315,7 +315,7 @@ export default function AddCourseForm() {
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   {formData.faculty.map((member, idx) => (
-                    <div key={idx} className="p-8 border border-gray-100 rounded-[32px] space-y-4">
+                    <div key={`faculty-${idx}`} className="p-8 border border-gray-100 rounded-[32px] space-y-4">
                       <input type="text" value={member.name} placeholder="Full Name (e.g. Dr. John Doe)" onChange={(e) => {
                         const newFaculty = [...formData.faculty];
                         newFaculty[idx].name = e.target.value;
@@ -345,7 +345,7 @@ export default function AddCourseForm() {
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   {formData.projects.map((proj, idx) => (
-                    <div key={idx} className="p-6 bg-gray-50 rounded-2xl space-y-4">
+                    <div key={`proj-${idx}`} className="p-6 bg-gray-50 rounded-2xl space-y-4">
                       <input type="text" value={proj.title} placeholder="Project Title" onChange={(e) => {
                         const newProj = [...formData.projects];
                         newProj[idx].title = e.target.value;
@@ -374,7 +374,7 @@ export default function AddCourseForm() {
                   <button type="button" onClick={addFAQ} className="text-sm font-bold text-[#21409A]">+ Add FAQ</button>
                 </div>
                 {formData.faqs.map((faq, idx) => (
-                  <div key={idx} className="space-y-4 p-8 bg-gray-50 rounded-[32px]">
+                  <div key={`faq-${idx}`} className="space-y-4 p-8 bg-gray-50 rounded-[32px]">
                     <input type="text" value={faq.question} placeholder="Frequently Asked Question" onChange={(e) => {
                       const newFAQ = [...(formData.faqs || [])];
                       newFAQ[idx].question = e.target.value;

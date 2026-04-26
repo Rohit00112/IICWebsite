@@ -3,11 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
-
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const NewNewsPage = () => {
   const router = useRouter();
@@ -30,6 +27,8 @@ const NewNewsPage = () => {
       avatar: 'https://i.pravatar.cc/150?u=admin'
     }
   });
+
+  const sanitizedPreviewContent = React.useMemo(() => sanitizeHtml(formData.content), [formData.content]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -256,18 +255,16 @@ const NewNewsPage = () => {
                   onClick={() => setActiveSection('content')}
                   className="px-6 py-3 bg-white hover:bg-gray-50 rounded-xl text-xs font-black transition-all text-gray-700 border-2 border-gray-100"
                 >
-                  Edit Markdown
+                  Edit Content
                 </button>
               </div>
               
-              <div className="prose prose-lg max-w-none prose-headings:font-sora prose-headings:font-bold [&&_h1]:text-[#1A2B56] [&&_h2]:text-[#1A2B56] [&&_h3]:text-[#1A2B56] [&&_h4]:text-[#1A2B56] [&&_p]:text-gray-900 [&&_li]:text-gray-900 [&&_strong]:text-gray-900 [&&_span]:text-gray-900 prose-p:leading-relaxed prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl">
+              <div className="prose prose-lg max-w-none break-words prose-headings:font-sora prose-headings:font-bold [&&_h1]:text-[#1A2B56] [&&_h2]:text-[#1A2B56] [&&_h3]:text-[#1A2B56] [&&_h4]:text-[#1A2B56] [&&_p]:text-slate-800 [&&_li]:text-slate-800 [&&_strong]:text-slate-900 [&&_span]:text-slate-800 prose-p:leading-relaxed prose-li:marker:text-[#21409A] prose-li:marker:font-black prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl">
                 {formData.content ? (
-                  <ReactMarkdown 
-                    remarkPlugins={[remarkGfm]} 
-                    rehypePlugins={[rehypeRaw]}
-                  >
-                    {formData.content}
-                  </ReactMarkdown>
+                  <div 
+                    dangerouslySetInnerHTML={{ __html: sanitizedPreviewContent }}
+                    className="rich-content"
+                  />
                 ) : (
                   <div className="py-20 text-center text-gray-300 italic">No content to preview. Start writing in the Content tab.</div>
                 )}
