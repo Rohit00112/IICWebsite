@@ -30,6 +30,7 @@ export default function Home() {
       <StudentStories />
       <InnovationLab />
       <IngSection />
+      <GEOSection />
       <ProspectusSection />
     </>
   );

@@ -70,7 +70,7 @@ export default function ClientLayoutWrapper({
   const dotY = useSpring(mouseY, springConfig);
 
   return (
-    <div className={`relative min-h-full flex flex-col font-sora ${isAdminPage ? 'cursor-default' : 'cursor-none'}`}>
+    <div className={`relative flex flex-col font-sora ${isAdminPage ? 'cursor-default' : 'cursor-none'}`}>
       {mounted && !isAdminPage && (
         <>
           <motion.div
@@ -106,13 +106,13 @@ export default function ClientLayoutWrapper({
           <PageTransition>
             {children}
           </PageTransition>
+          {mounted && <Footer />}
         </SmoothScroll>
       ) : (
         <div key={pathname} className="flex-grow">
           {children}
         </div>
       )}
-      {mounted && !isAdminPage && <Footer />}
     </div>
 
   );
