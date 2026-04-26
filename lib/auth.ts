@@ -2,7 +2,7 @@ import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-const secretKey = 'iic-website-secret-key-very-secure';
+const secretKey = process.env.JWT_SECRET || 'fallback-secret-key-change-me-in-production';
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: any) {
@@ -25,7 +25,13 @@ export async function login(admin: any) {
   const session = await encrypt({ admin, expires });
 
   // Save the session in a cookie
-  (await cookies()).set('session', session, { expires, httpOnly: true });
+  (await cookies()).set('session', session, { 
+    expires, 
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+  });
 }
 
 export async function logout() {
