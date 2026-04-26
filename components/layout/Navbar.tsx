@@ -72,10 +72,15 @@ const Navbar = () => {
                   Menu
                 </div>
 
-                <ul className="flex flex-col gap-0 items-start mb-10">
+                <ul 
+                  id="main-menu"
+                  role="menu"
+                  className="flex flex-col gap-0 items-start mb-10"
+                >
                   {navLinks.map((link, index) => (
                     <motion.li
                       key={link.name}
+                      role="none"
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}
                       initial={{ opacity: 0, y: 10 }}
@@ -84,8 +89,9 @@ const Navbar = () => {
                     >
                       <Link
                         href={link.href}
+                        role="menuitem"
                         onClick={() => setIsMenuOpen(false)}
-                        className="group relative block py-1 overflow-hidden"
+                        className="group relative block py-1 overflow-hidden focus-visible:outline-none"
                       >
                         <div className="relative h-[40px] overflow-hidden">
                           <motion.div
@@ -147,12 +153,15 @@ const Navbar = () => {
           <Magnetic strength={0.2}>
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="main-menu"
               animate={{
                 width: isMenuOpen ? '64px' : '360px',
                 height: '64px',
                 borderRadius: isMenuOpen ? '12px' : '32px'
               }}
-              className="bg-[#141414]/80 backdrop-blur-[24px] border border-white/15 shadow-2xl flex items-center justify-center relative overflow-hidden"
+              className="bg-[#141414]/80 backdrop-blur-[24px] border border-white/15 shadow-2xl flex items-center justify-center relative overflow-hidden focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
             >
               <AnimatePresence mode="wait">
                 {isMenuOpen ? (
@@ -162,6 +171,7 @@ const Navbar = () => {
                     animate={{ opacity: 1, rotate: 0, scale: 1 }}
                     exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
                     className="relative w-10 h-10 flex items-center justify-center"
+                    aria-hidden="true"
                   >
                     <span className="absolute w-5 h-[1.5px] bg-white rotate-45" />
                     <span className="absolute w-5 h-[1.5px] bg-white -rotate-45" />
@@ -178,13 +188,12 @@ const Navbar = () => {
                       <div className="relative h-7 w-28">
                         <Image
                           src="/images/common/iic_logo.png"
-                          alt="IIC"
+                          alt="Itahari International College"
                           fill
                           sizes="112px"
                           className="object-contain brightness-110 contrast-125"
                         />
                       </div>
-
                     </div>
 
                     <div className="flex items-center gap-5">
@@ -192,7 +201,10 @@ const Navbar = () => {
                       <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-white/70 min-w-[60px] text-right">
                         {getActivePageName()}
                       </span>
-                      <div className="w-8 h-8 rounded-full bg-white/5 flex flex-col gap-1 items-center justify-center">
+                      <div 
+                        className="w-8 h-8 rounded-full bg-white/5 flex flex-col gap-1 items-center justify-center"
+                        aria-hidden="true"
+                      >
                         <span className="w-3.5 h-[1px] bg-white" />
                         <span className="w-3.5 h-[1px] bg-white" />
                         <span className="w-3.5 h-[1px] bg-white" />
