@@ -43,8 +43,8 @@ const LoginPage = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-[#21409A] rounded-[24px] shadow-2xl mb-8">
             <span className="text-white font-black text-2xl tracking-tighter">IIC</span>
           </div>
-          <h1 className="text-4xl font-black text-[#1A2B56] font-sora tracking-tight mb-3">Admin Portal</h1>
-          <p className="text-gray-500 font-medium">Please enter your credentials to continue.</p>
+          <h1 className="text-4xl font-black text-[#1A2B56] font-sora tracking-tight mb-3">Welcome back</h1>
+          <p className="text-gray-500 font-medium">Enter your details to manage the platform.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
