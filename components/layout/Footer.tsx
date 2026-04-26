@@ -27,7 +27,7 @@ const Footer = () => {
               <div className="relative w-72 h-20">
                 <Image
                   src="/images/common/iic_logo.png"
-                  alt="IIC Logo"
+                  alt="Itahari International College Official Logo"
                   fill
                   sizes="(max-width: 768px) 300px, 300px"
                   className="object-contain"
@@ -72,13 +72,26 @@ const Footer = () => {
           <div>
             <h4 className="text-xl font-bold mb-8 font-sora text-white">Quick Links</h4>
             <ul className="flex flex-col gap-4">
-              {['Academic Programs', 'Admissions', 'Campus Life', 'About Us'].map((link) => (
-                <li key={link}>
-                  <Link href="#" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
-                    {link}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/courses" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                  Academic Programs
+                </Link>
+              </li>
+              <li>
+                <Link href="/admissions" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                  Admissions
+                </Link>
+              </li>
+              <li>
+                <Link href="/campus-life" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                  Campus Life
+                </Link>
+              </li>
+              <li>
+                <Link href="/about-us" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                  About Us
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -86,13 +99,26 @@ const Footer = () => {
           <div>
             <h4 className="text-xl font-bold mb-8 font-sora text-white">Resources</h4>
             <ul className="flex flex-col gap-4">
-              {['News & Events', 'Student Portal', 'Alumni Network', 'Contact Support'].map((link) => (
-                <li key={link}>
-                  <Link href="#" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
-                    {link}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/news" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                  News & Events
+                </Link>
+              </li>
+              <li>
+                <Link href="/portal" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                  Student Portal
+                </Link>
+              </li>
+              <li>
+                <Link href="/alumni" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                  Alumni Network
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                  Contact Support
+                </Link>
+              </li>
             </ul>
           </div>
 

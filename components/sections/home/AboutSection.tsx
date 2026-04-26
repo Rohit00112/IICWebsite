@@ -65,7 +65,7 @@ const AboutSection = () => {
         <motion.div style={{ y: yImage }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
           <Image
             src="/images/home/tower_block.png"
-            alt="Tower Block"
+            alt="Itahari International College Tower Block Campus"
             fill
             sizes="(max-width: 768px) 100vw, 100vw"
             className="object-cover object-center"

@@ -4,6 +4,7 @@ import AboutSection from "@/components/sections/home/AboutSection";
 import ProgrammesSection from "@/components/sections/home/ProgrammesSection";
 import Preloader from "@/components/layout/Preloader";
 import { Metadata } from "next";
+import GEOSection from "@/components/sections/home/GEOSection";
 
 const PartnerSection = dynamic(() => import("@/components/sections/home/PartnerSection"), { ssr: true });
 const LifestyleSection = dynamic(() => import("@/components/sections/home/LifestyleSection"), { ssr: true });

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Footer from '@/components/layout/Footer';
+import Link from 'next/link';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
 
@@ -70,7 +71,7 @@ interface CourseData {
   faqs?: FAQ[];
 }
 
-const CourseDetailPage = ({ course }: { course: CourseData }) => {
+const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, relatedCourses?: any[] }) => {
   const [activeYear, setActiveYear] = useState(0);
   const [activeTab, setActiveTab] = useState<'overview' | 'outcomes'>('overview');
   const [activeFAQ, setActiveFAQ] = useState(0);
@@ -422,6 +423,50 @@ const CourseDetailPage = ({ course }: { course: CourseData }) => {
           </div>
         </div>
       </section>
+      {/* Related Courses Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-16">
+            <h2 className="text-4xl font-bold text-[#1a1a1a] relative inline-block mb-4">
+              Explore Other Degrees
+              <div className="absolute -bottom-2 left-0 w-16 h-1.5 bg-[#21409A] rounded-full" />
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {relatedCourses?.map((relCourse: any, i: number) => (
+              <Link href={`/courses/${relCourse.slug}`} key={i} className="group">
+                <div className="bg-[#f8fafc] rounded-[32px] overflow-hidden border border-gray-100 transition-all hover:shadow-xl hover:-translate-y-2">
+                  <div className="relative aspect-[16/9] w-full">
+                    <Image
+                      src={relCourse.image}
+                      alt={relCourse.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
+                  <div className="p-8">
+                    <span className="text-[12px] font-bold text-[#21409A] uppercase tracking-wider mb-3 block">
+                      {relCourse.category}
+                    </span>
+                    <h3 className="text-xl font-bold text-[#1a1a1a] mb-4 group-hover:text-[#21409A] transition-colors">
+                      {relCourse.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-gray-400 font-medium text-sm">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {relCourse.duration}
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </main>
   );

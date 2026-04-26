@@ -1,6 +1,6 @@
 import CourseTemplate from '@/components/sections/course-detail/CourseTemplate';
 import { notFound } from 'next/navigation';
-import { getCourseBySlug } from '@/lib/courses';
+import { getCourseBySlug, getAllCourses } from '@/lib/courses';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
@@ -15,10 +15,10 @@ export async function generateMetadata({
   if (!course) return { title: 'Course Not Found' };
 
   return {
-    title: `${course.title} | Itahari International College`,
-    description: course.description,
+    title: `${course.title} | London Metropolitan University | IIC Itahari`,
+    description: `${course.description} Study ${course.title} in Itahari, Nepal. Direct UK degree in partnership with London Metropolitan University.`,
     openGraph: {
-      title: course.title,
+      title: `${course.title} - London Metropolitan University UK Degree`,
       description: course.description,
       images: [course.image],
     },
@@ -31,11 +31,18 @@ export default async function CoursePage({
   params: Promise<{ slug: string }> 
 }) {
   const { slug } = await params;
-  const course = await getCourseBySlug(slug);
+  const [course, allCourses] = await Promise.all([
+    getCourseBySlug(slug),
+    getAllCourses()
+  ]);
 
   if (!course) {
     notFound();
   }
+
+  const relatedCourses = allCourses
+    .filter(c => c.slug !== slug)
+    .slice(0, 3);
 
   // Structured Data for Course
   const courseJsonLd = {
@@ -100,7 +107,6 @@ export default async function CoursePage({
     { name: course.title, item: `/courses/${course.slug}` },
   ];
 
-
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
@@ -114,7 +120,7 @@ export default async function CoursePage({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
-      <CourseTemplate course={course} />
+      <CourseTemplate course={course} relatedCourses={relatedCourses} />
     </>
   );
 }

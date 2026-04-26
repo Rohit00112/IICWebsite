@@ -5,9 +5,10 @@ import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export const metadata: Metadata = {
-  title: 'Academic Programmes | Itahari International College',
-  description: 'Explore our world-class undergraduate programs in Information Technology and Business Administration at Itahari International College.',
+  title: 'UK Degree Programmes in Itahari | BIT & BBA Catalog | IIC',
+  description: 'Explore our world-class undergraduate programs in Information Technology and Business Administration. Direct UK degrees from London Metropolitan University.',
 };
+
 export default function CoursesPage() {
   const breadcrumbs = [
     { name: 'Home', item: '/' },
