@@ -123,6 +123,36 @@ const Leadership = () => {
           </div>
         </motion.div>
       </div>
+      {/* Leadership Schema for GEO Authority */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Mr. Sulav Budhathoki",
+              "jobTitle": "Chairman",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "ING Group"
+              },
+              "description": "Chairman of ING Group and Itahari International College, dedicated to bringing global education standards to Nepal."
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Mr. Satyabrat Koirala",
+              "jobTitle": "CEO",
+              "worksFor": {
+                "@type": "CollegeOrUniversity",
+                "name": "Itahari International College"
+              },
+              "description": "CEO of Itahari International College, focusing on practical learning and industry exposure."
+            }
+          ])
+        }}
+      />
     </section>
   );
 };

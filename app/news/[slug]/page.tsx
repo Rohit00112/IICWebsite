@@ -49,10 +49,24 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
     description: item.description,
     image: item.image,
     datePublished: new Date(item.date).toISOString(),
+    dateModified: new Date(item.date).toISOString(), // Fallback to datePublished if no explicit modified date
     author: {
-      '@type': 'Organization',
-      name: 'Itahari International College',
+      '@type': 'Person',
+      name: item.author?.name || 'IIC Editorial Team',
+      jobTitle: item.author?.role || 'Contributor'
     },
+    publisher: {
+      '@type': 'CollegeOrUniversity',
+      name: 'Itahari International College',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://iic.edu.np/images/common/iic_logo.png'
+      }
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://iic.edu.np/news/${slug}`
+    }
   };
 
   const breadcrumbs = [

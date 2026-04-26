@@ -24,6 +24,23 @@ const NewsPage = async () => {
     <PageTransition>
       <main className="bg-white min-h-screen">
         <BreadcrumbSchema items={breadcrumbs} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              "name": "Latest News & Events",
+              "numberOfItems": allNews.length,
+              "itemListElement": allNews.map((item: any, index: number) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "url": `https://iic.edu.np/news/${item.slug}`,
+                "name": item.title
+              }))
+            })
+          }}
+        />
         <NewsHero />
         <NewsContent initialNews={allNews} initialFeatured={featuredPost} />
       </main>
