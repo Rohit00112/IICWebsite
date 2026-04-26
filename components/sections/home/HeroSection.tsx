@@ -51,6 +51,7 @@ const HeroSection = () => {
               sizes="(max-width: 768px) 256px, 450px"
               className="object-contain"
               priority
+              loading="eager"
             />
           </motion.div>
         </div>

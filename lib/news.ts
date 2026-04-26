@@ -21,6 +21,8 @@ export interface NewsItem {
   author?: NewsAuthor;
 }
 
+import { unstable_cache } from 'next/cache';
+
 // Helper to convert Mongo document to clean plain object
 function mapNewsItem(doc: any): NewsItem {
   return {
@@ -42,11 +44,15 @@ function mapNewsItem(doc: any): NewsItem {
   };
 }
 
-export async function getAllNews(): Promise<NewsItem[]> {
-  await dbConnect();
-  const news = await News.find({}).sort({ createdAt: -1 });
-  return news.map(mapNewsItem);
-}
+export const getAllNews = unstable_cache(
+  async (): Promise<NewsItem[]> => {
+    await dbConnect();
+    const news = await News.find({}).sort({ createdAt: -1 });
+    return news.map(mapNewsItem);
+  },
+  ['news-list'],
+  { revalidate: 3600, tags: ['news'] }
+);
 
 export async function getNewsById(id: string): Promise<NewsItem | null> {
   await dbConnect();

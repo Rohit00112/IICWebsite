@@ -3,11 +3,15 @@
 import React, { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue, useScroll } from "framer-motion";
 import { usePathname } from "next/navigation";
+import dynamic from "next/dynamic";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import SmoothScroll from "@/components/effects/SmoothScroll";
-import FluidBackground from "@/components/effects/FluidBackground";
 import PageTransition from "@/components/layout/PageTransition";
+
+const FluidBackground = dynamic(() => import("@/components/effects/FluidBackground"), { 
+  ssr: false,
+});
 
 export default function ClientLayoutWrapper({
   children,

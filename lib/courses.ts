@@ -59,6 +59,8 @@ export interface CourseItem {
   }[];
 }
 
+import { unstable_cache } from 'next/cache';
+
 function mapCourse(doc: any): CourseItem {
   return {
     id: doc._id.toString(),
@@ -84,11 +86,15 @@ function mapCourse(doc: any): CourseItem {
   };
 }
 
-export async function getAllCourses(): Promise<CourseItem[]> {
-  await dbConnect();
-  const courses = await Course.find({}).sort({ createdAt: -1 });
-  return courses.map(mapCourse);
-}
+export const getAllCourses = unstable_cache(
+  async (): Promise<CourseItem[]> => {
+    await dbConnect();
+    const courses = await Course.find({}).sort({ createdAt: -1 });
+    return courses.map(mapCourse);
+  },
+  ['courses-list'],
+  { revalidate: 3600, tags: ['courses'] }
+);
 
 export async function getCourseBySlug(slug: string): Promise<CourseItem | null> {
   await dbConnect();
