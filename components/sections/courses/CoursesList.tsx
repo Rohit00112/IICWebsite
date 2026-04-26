@@ -175,11 +175,11 @@ const CoursesList = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col items-center text-center mb-20 md:mb-28">
           <h2 className="text-4xl md:text-[64px] font-black text-[#21409A] mb-8 leading-tight tracking-tight uppercase">
-            Find a Course
+            Browse our degrees
           </h2>
           <p className="text-[#444444] text-[14px] md:text-[18px] max-w-3xl leading-relaxed font-medium">
-            Beginning your college journey is a very personal and sacred experience that encompasses a 
-            wide range of events compounding towards your growth.
+            Choose from our range of UK-affiliated IT and Business programmes, 
+            designed to prepare you for the global job market.
           </p>
         </div>
 
