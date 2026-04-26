@@ -3,16 +3,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 import Magnetic from '../../effects/Magnetic';
+
+
+import { sanitizeHtml } from '@/lib/sanitize';
 
 interface NewsDetailContentProps {
   item: any;
 }
 
 const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
+  const sanitizedContent = React.useMemo(() => sanitizeHtml(item.content), [item.content]);
+
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-6">
@@ -27,7 +29,7 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
               className="prose prose-lg max-w-none prose-headings:font-sora prose-headings:font-bold [&&_h1]:text-[#1A2B56] [&&_h2]:text-[#1A2B56] [&&_h3]:text-[#1A2B56] [&&_h4]:text-[#1A2B56] [&&_p]:text-slate-800 [&&_li]:text-slate-800 [&&_strong]:text-slate-900 [&&_span]:text-slate-800 prose-p:leading-relaxed prose-li:marker:text-[#21409A] prose-li:marker:font-black prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl"
             >
               <div 
-                dangerouslySetInnerHTML={{ __html: item.content }}
+                dangerouslySetInnerHTML={{ __html: sanitizedContent }}
                 className="rich-content"
               />
             </motion.article>

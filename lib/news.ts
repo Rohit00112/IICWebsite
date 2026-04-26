@@ -104,11 +104,17 @@ export async function getFeaturedNews(): Promise<NewsItem | null> {
   return latest ? mapNewsItem(latest) : null;
 }
 
+import { sanitizeHtml } from './sanitize';
+
 export async function createNews(data: Partial<NewsItem>): Promise<NewsItem> {
   await dbConnect();
   // Auto-generate slug from title if not provided
   if (!data.slug && data.title) {
     data.slug = generateSlug(data.title);
+  }
+  // Sanitize content
+  if (data.content) {
+    data.content = sanitizeHtml(data.content);
   }
   const newItem = await News.create(data);
   return mapNewsItem(newItem);
@@ -119,6 +125,10 @@ export async function updateNews(id: string, data: Partial<NewsItem>): Promise<N
   // Regenerate slug if title changed
   if (data.title && !data.slug) {
     data.slug = generateSlug(data.title);
+  }
+  // Sanitize content
+  if (data.content) {
+    data.content = sanitizeHtml(data.content);
   }
   const updatedItem = await News.findByIdAndUpdate(id, data, { new: true });
   return updatedItem ? mapNewsItem(updatedItem) : null;
