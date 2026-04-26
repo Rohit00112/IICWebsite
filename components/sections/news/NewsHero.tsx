@@ -17,15 +17,11 @@ const NewsHero = () => {
         </motion.div>
         
         <div className="flex flex-col items-center">
-          <div className="flex flex-wrap justify-center gap-x-4 mb-8">
+          <div className="flex flex-wrap justify-center mb-8">
             <RevealText 
-              text="News &"
-              className="text-6xl md:text-8xl font-black text-[#1a1a1a] font-sora"
-            />
-            <RevealText 
-              text="Events"
-              className="text-6xl md:text-8xl font-black text-[#21409A] font-sora"
-              delay={0.3}
+              as="h1"
+              text="News & Events"
+              className="text-6xl md:text-8xl font-black font-sora text-[#1a1a1a]"
             />
           </div>
           

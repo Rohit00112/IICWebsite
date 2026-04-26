@@ -28,15 +28,13 @@ const ContactHero = () => {
       <div className="relative z-10 w-full">
         <GlassSurprise>
           <div className="flex flex-col items-center">
-            <RevealText
-              text="Let's Start a"
-              className="text-4xl md:text-6xl font-bold text-[#ffffff] mb-1 font-sora justify-center drop-shadow-sm"
-            />
-            <RevealText
-              text="Conversation"
-              className="text-4xl md:text-6xl font-bold text-[#74C044] mb-6 font-sora justify-center drop-shadow-md"
-              delay={0.3}
-            />
+            <div className="flex flex-col items-center">
+              <RevealText
+                as="h1"
+                text="Let's Start a Conversation"
+                className="text-4xl md:text-6xl font-bold text-[#ffffff] mb-6 font-sora justify-center drop-shadow-md"
+              />
+            </div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}

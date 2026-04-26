@@ -39,6 +39,7 @@ const CoursesHero = () => {
           />
 
           <RevealText 
+            as="h1"
             text="Academic Programs"
             className="text-4xl md:text-[96px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight uppercase justify-center"
             delay={0.3}
