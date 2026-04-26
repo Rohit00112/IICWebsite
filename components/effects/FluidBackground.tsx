@@ -100,13 +100,13 @@ function FluidPlane({ shouldReduceMotion }: FluidPlaneProps) {
     uScroll: { value: 0 }
   }), [size]);
 
-  useFrame((state) => {
-    const { mouse: stateMouse, clock } = state;
+  useFrame((state, delta) => {
+    const { mouse: stateMouse } = state;
     
     // Slow down time significantly for reduced motion
     const timeScale = shouldReduceMotion ? 0.05 : 0.15;
-    // Using clock.getElapsedTime() instead of performance.now() to align with R3F standard
-    uniforms.uTime.value = clock.getElapsedTime() * (timeScale / 0.15);
+    // Manual increment to avoid THREE.Clock deprecation warnings
+    uniforms.uTime.value += delta * timeScale;
     
     // Smooth mouse and scroll follow (slower for reduced motion)
     const lerpFactor = shouldReduceMotion ? 0.01 : 0.05;
