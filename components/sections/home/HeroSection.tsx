@@ -59,9 +59,15 @@ const HeroSection = () => {
         <div className="pt-4 md:pt-8 text-center flex flex-col items-center">
           <RevealText 
             as="h1"
-            text="UK degrees, right here in Itahari. Launch your global career with IT and Business programmes from London Metropolitan University."
-            className="text-xl md:text-[28px] font-medium text-[#1a1a1a] leading-[1.6] mb-12 max-w-3xl px-4 font-sora justify-center"
-            delay={0.5}
+            text="UK Degrees in Itahari"
+            className="text-[42px] md:text-[84px] font-black text-[#21409A] leading-[1.1] mb-6 tracking-tighter uppercase font-sora"
+            delay={0.4}
+          />
+          <RevealText 
+            as="p"
+            text="Launch your global career with IT and Business programmes from London Metropolitan University."
+            className="text-xl md:text-[24px] font-medium text-gray-500 leading-[1.6] mb-12 max-w-3xl px-4 font-sora justify-center"
+            delay={0.7}
           />
 
           <div className="flex flex-col sm:flex-row gap-5 mb-24 md:mb-44">

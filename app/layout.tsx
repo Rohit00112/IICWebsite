@@ -44,7 +44,9 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://iic.edu.np"),
   alternates: {
-    canonical: "/",
+    languages: {
+      "en-NP": "https://iic.edu.np",
+    },
   },
   openGraph: {
     title: "Itahari International College | World-Class Education in Nepal",
