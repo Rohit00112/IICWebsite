@@ -28,6 +28,19 @@ const features = [
         <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
       </svg>
     )
+  },
+  {
+    title: "Future-Ready Edge",
+    description: "Stay ahead with a curriculum co-designed by industry leaders. We integrate AI-thought partnership and green computing into every program, ensuring your degree remains cutting-edge in the 2026 global market.",
+    points: ["AI-Integrated Learning", "Industry-Co-Designed Units", "Global Degree Portability"],
+    image: "/images/about/whychooseiic3.png",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#21409A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+        <line x1="12" y1="22.08" x2="12" y2="12" />
+      </svg>
+    )
   }
 ];
 
