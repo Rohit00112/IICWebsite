@@ -100,7 +100,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
             
             {/* Featured Post Card */}
             {showFeatured && (
-              <Link href={`/news/1`} className="block mb-10">
+              <Link href={`/news/${featuredPost.slug}`} className="block mb-10">
                 <motion.div 
                   layout
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -124,23 +124,23 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
                     />
                   </div>
                   <div className="md:w-[55%] p-10 md:p-14 flex flex-col justify-center">
-                    <div className="flex items-center gap-2 text-gray-400 text-[11px] font-bold mb-4 uppercase">
+                    <div className="flex items-center gap-2 text-slate-500 text-[11px] font-bold mb-4 uppercase">
                       <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                       <span>{featuredPost.date}</span>
                     </div>
                     <h3 className="text-3xl md:text-[38px] font-black text-[#1a1a1a] mb-6 font-sora leading-tight tracking-tight group-hover:text-[#21409A] transition-colors">
                       {featuredPost.title}
                     </h3>
-                    <p className="text-gray-500 mb-10 leading-relaxed text-[15px]">
+                    <p className="text-slate-700 mb-10 leading-relaxed text-[15px] font-medium">
                       Join industry leaders and leading academics for a full day of keynotes, workshops, and networking focused on...
                     </p>
                     
                     <div className="space-y-4 mb-10">
-                      <div className="flex items-center gap-3 text-[11px] font-bold text-gray-500 uppercase">
+                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-500 uppercase">
                         <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         <span>{featuredPost.time}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-[11px] font-bold text-gray-500 uppercase">
+                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-500 uppercase">
                         <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                         <span>{featuredPost.location}</span>
                       </div>
@@ -159,7 +159,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <AnimatePresence mode="popLayout">
                 {filteredItems.map((item, idx) => (
-                  <Link key={item.id} href={`/news/${item.id}`}>
+                  <Link key={item.id} href={`/news/${item.slug}`}>
                     <motion.div
                       layout
                       initial={{ opacity: 0, y: 20 }}
@@ -185,14 +185,14 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
                         />
                       </div>
                       <div className="p-8 md:p-10 flex flex-col flex-grow">
-                        <div className="flex items-center gap-2 text-gray-400 text-[10px] font-bold mb-4 uppercase">
+                        <div className="flex items-center gap-2 text-slate-500 text-[10px] font-bold mb-4 uppercase">
                           <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                           <span>{item.date}</span>
                         </div>
                         <h4 className="text-xl font-bold text-[#1a1a1a] mb-5 font-sora leading-tight tracking-tight line-clamp-2 min-h-[50px] group-hover:text-[#21409A] transition-colors">
                           {item.title}
                         </h4>
-                        <p className="text-gray-500 text-sm mb-10 leading-relaxed line-clamp-3">
+                        <p className="text-slate-600 text-sm mb-10 leading-relaxed line-clamp-3 font-medium">
                           {item.description}
                         </p>
                         <div className="flex items-center justify-between mt-auto">
@@ -222,7 +222,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
                   <svg className="w-6 h-6 text-[#1A2B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                   <h5 className="text-xl font-bold text-[#1a1a1a] font-sora tracking-tight">Upcoming Events</h5>
                 </div>
-                <button className="text-[11px] uppercase tracking-wider font-bold text-gray-400 hover:text-[#00B2A9] transition-colors">View All</button>
+                <button className="text-[11px] uppercase tracking-wider font-bold text-slate-400 hover:text-[#00B2A9] transition-colors">View All</button>
               </div>
 
               <div className="space-y-10">
@@ -234,7 +234,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
                     </div>
                     <div className="flex flex-col justify-center">
                       <h6 className="text-[14px] font-bold text-[#1a1a1a] leading-tight mb-1.5 group-hover:text-[#21409A] transition-colors line-clamp-2">{event.title}</h6>
-                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400">
+                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500">
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         <span>{event.time}</span>
                       </div>
@@ -269,8 +269,8 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
               <div className="space-y-6">
                 {archives.map((archive) => (
                   <div key={archive.month} className="flex items-center justify-between group cursor-pointer">
-                    <span className="text-[15px] font-bold text-gray-500 group-hover:text-[#21409A] transition-colors">{archive.month}</span>
-                    <span className="text-[13px] font-bold text-gray-400">{archive.count}</span>
+                    <span className="text-[15px] font-bold text-slate-600 group-hover:text-[#21409A] transition-colors">{archive.month}</span>
+                    <span className="text-[13px] font-bold text-slate-400">{archive.count}</span>
                   </div>
                 ))}
               </div>

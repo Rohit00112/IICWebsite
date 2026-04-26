@@ -17,6 +17,13 @@ const NewsSchema = new Schema({
     required: [true, 'Please provide a title'],
     trim: true,
   },
+  slug: {
+    type: String,
+    unique: true,
+    sparse: true,
+    trim: true,
+    lowercase: true,
+  },
   description: {
     type: String,
     required: [true, 'Please provide a description'],
@@ -40,6 +47,17 @@ const NewsSchema = new Schema({
   },
 }, {
   timestamps: true,
+});
+
+// Auto-generate slug from title before saving
+NewsSchema.pre('save', function() {
+  if (this.isModified('title') && !this.slug) {
+    this.slug = this.title
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
 });
 
 // Use existing model if it exists, otherwise create a new one

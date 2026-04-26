@@ -1,6 +1,15 @@
 import dbConnect from './db';
 import News from '../models/News';
 
+// Helper to generate a slug from a title
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export interface NewsAuthor {
   name: string;
   role: string;
@@ -17,6 +26,7 @@ export interface NewsItem {
   description: string;
   content: string;
   image: string;
+  slug: string;
   featured: boolean;
   author?: NewsAuthor;
 }
@@ -35,6 +45,7 @@ function mapNewsItem(doc: any): NewsItem {
     description: doc.description,
     content: doc.content,
     image: doc.image,
+    slug: doc.slug || doc._id.toString(),
     featured: doc.featured,
     author: {
       name: doc.author?.name || '',
@@ -64,6 +75,25 @@ export async function getNewsById(id: string): Promise<NewsItem | null> {
   }
 }
 
+export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
+  await dbConnect();
+  try {
+    // Try by slug first
+    let item = await News.findOne({ slug });
+    // Fall back to ID lookup for existing articles without slugs
+    if (!item) {
+      try {
+        item = await News.findById(slug);
+      } catch {
+        // Not a valid ObjectId, that's fine
+      }
+    }
+    return item ? mapNewsItem(item) : null;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getFeaturedNews(): Promise<NewsItem | null> {
   await dbConnect();
   const item = await News.findOne({ featured: true });
@@ -76,12 +106,20 @@ export async function getFeaturedNews(): Promise<NewsItem | null> {
 
 export async function createNews(data: Partial<NewsItem>): Promise<NewsItem> {
   await dbConnect();
+  // Auto-generate slug from title if not provided
+  if (!data.slug && data.title) {
+    data.slug = generateSlug(data.title);
+  }
   const newItem = await News.create(data);
   return mapNewsItem(newItem);
 }
 
 export async function updateNews(id: string, data: Partial<NewsItem>): Promise<NewsItem | null> {
   await dbConnect();
+  // Regenerate slug if title changed
+  if (data.title && !data.slug) {
+    data.slug = generateSlug(data.title);
+  }
   const updatedItem = await News.findByIdAndUpdate(id, data, { new: true });
   return updatedItem ? mapNewsItem(updatedItem) : null;
 }

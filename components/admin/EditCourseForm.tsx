@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import RichTextEditor from './RichTextEditor';
 
 interface Module {
   name: string;
@@ -13,6 +14,30 @@ interface Module {
 interface CurriculumYear {
   title: string;
   modules: Module[];
+}
+
+interface CareerPath {
+  title: string;
+  description: string;
+  color: string;
+}
+
+interface FacultyMember {
+  name: string;
+  role: string;
+  description: string;
+  image: string;
+}
+
+interface Project {
+  title: string;
+  cohort: string;
+  image: string;
+}
+
+interface FAQ {
+  question: string;
+  answer: string;
 }
 
 interface CourseItem {
@@ -34,12 +59,31 @@ interface CourseItem {
     awardingBody: string;
   };
   curriculum: CurriculumYear[];
+  entryRequirements?: {
+    academic: string;
+    language: string;
+  };
+  learningOutcomes?: string[];
+  careerOpportunities?: CareerPath[];
+  faculty?: FacultyMember[];
+  projects?: Project[];
+  faqs?: FAQ[];
 }
 
 export default function EditCourseForm({ course }: { course: CourseItem }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState(course);
+  const [activeSection, setActiveSection] = useState<'core' | 'curriculum' | 'outcomes' | 'faculty' | 'projects' | 'faqs'>('core');
+  
+  const [formData, setFormData] = useState({
+    ...course,
+    entryRequirements: course.entryRequirements || { academic: '', language: '' },
+    learningOutcomes: course.learningOutcomes || [],
+    careerOpportunities: course.careerOpportunities || [],
+    faculty: course.faculty || [],
+    projects: course.projects || [],
+    faqs: course.faqs || []
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,210 +110,323 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
     }
   };
 
-  const addYear = () => {
-    setFormData({
-      ...formData,
-      curriculum: [...formData.curriculum, { title: 'New Year', modules: [] }]
-    });
+  // Helper functions for array fields
+  const addYear = () => setFormData({ ...formData, curriculum: [...formData.curriculum, { title: 'Year ' + (formData.curriculum.length + 1), modules: [] }] });
+  const addModule = (yIdx: number) => {
+    const newCurr = [...formData.curriculum];
+    newCurr[yIdx].modules.push({ name: '', description: '', credits: '' });
+    setFormData({ ...formData, curriculum: newCurr });
   };
-
-  const addModule = (yearIndex: number) => {
-    const newCurriculum = [...formData.curriculum];
-    newCurriculum[yearIndex].modules.push({ name: '', description: '', credits: '' });
-    setFormData({ ...formData, curriculum: newCurriculum });
-  };
+  
+  const addOutcome = () => setFormData({ ...formData, learningOutcomes: [...(formData.learningOutcomes || []), ''] });
+  const addCareer = () => setFormData({ ...formData, careerOpportunities: [...(formData.careerOpportunities || []), { title: '', description: '', color: '#21409A' }] });
+  const addFaculty = () => setFormData({ ...formData, faculty: [...(formData.faculty || []), { name: '', role: '', description: '', image: '' }] });
+  const addProject = () => setFormData({ ...formData, projects: [...(formData.projects || []), { title: '', cohort: '', image: '' }] });
+  const addFAQ = () => setFormData({ ...formData, faqs: [...(formData.faqs || []), { question: '', answer: '' }] });
 
   return (
     <div className="max-w-[1600px] mx-auto pb-20">
+      {/* Header */}
       <div className="mb-12 flex items-end justify-between border-b border-gray-100 pb-10">
         <div>
-          <h1 className="text-5xl font-black text-[#1A2B56] font-sora tracking-tight mb-3">Edit Course</h1>
-          <p className="text-gray-500 font-medium text-lg">Manage curriculum, faculty, and academic requirements.</p>
+          <h1 className="text-5xl font-black text-[#1A2B56] font-sora tracking-tight mb-3">Edit Program</h1>
+          <p className="text-gray-500 font-medium text-lg">Update curriculum, outcomes, and student success data.</p>
         </div>
         <div className="flex items-center gap-8 mb-2">
-          <Link href="/admin/courses" className="text-sm font-bold text-gray-400 hover:text-[#21409A] flex items-center gap-2 group">
+          <Link href="/admin/courses" className="text-sm font-bold text-gray-700 hover:text-[#21409A] flex items-center gap-2 group">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            Back to Courses
+            Discard Changes
           </Link>
           <button 
             onClick={handleSubmit}
             disabled={loading}
             className="px-12 py-5 bg-[#74C044] text-white rounded-[20px] font-bold text-sm shadow-2xl shadow-[#74C044]/30 disabled:opacity-50 flex items-center gap-3"
           >
-            {loading ? 'Saving Changes...' : 'Save Changes'}
+            {loading ? 'Saving Changes...' : 'Save & Deploy'}
           </button>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
-        
-        {/* Sidebar: Metadata */}
-        <div className="lg:col-span-5 flex flex-col lg:sticky lg:top-8 self-start">
-          <div className="bg-white p-12 rounded-[40px] border border-gray-100 shadow-sm space-y-10">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-black text-[#1A2B56] font-sora tracking-tight">Core Details</h2>
-              <p className="text-sm text-gray-400 font-medium">Basic information and program category</p>
-            </div>
-            
-            <div className="space-y-8">
-              <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 ml-1">Course Title</label>
-                <input 
-                  type="text" 
-                  value={formData.title}
-                  onChange={(e) => setFormData({...formData, title: e.target.value})}
-                  className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56]"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-8">
-                <div className="space-y-3">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 ml-1">Category</label>
-                  <input 
-                    type="text" 
-                    value={formData.category}
-                    onChange={(e) => setFormData({...formData, category: e.target.value})}
-                    className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56]"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 ml-1">Level</label>
-                  <input 
-                    type="text" 
-                    value={formData.level}
-                    onChange={(e) => setFormData({...formData, level: e.target.value})}
-                    className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56]"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 ml-1">Featured Image URL</label>
-                <input 
-                  type="url" 
-                  value={formData.image}
-                  onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56]"
-                />
-              </div>
-
-              <div className="space-y-3">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 ml-1">Short Description</label>
-                <textarea 
-                  rows={4}
-                  value={formData.description}
-                  onChange={(e) => setFormData({...formData, description: e.target.value})}
-                  className="w-full bg-gray-50 border-2 border-transparent focus:border-[#21409A]/10 rounded-[20px] py-5 px-8 outline-none font-bold text-[#1A2B56] resize-none leading-relaxed"
-                />
-              </div>
-
-              <div className="flex items-center gap-5 py-5 px-8 bg-[#f8fcfb] rounded-[24px] border border-[#74C044]/20">
-                <input 
-                  type="checkbox"
-                  id="featured"
-                  checked={formData.featured}
-                  onChange={(e) => setFormData({...formData, featured: e.target.checked})}
-                  className="w-6 h-6 rounded-lg border-gray-300 text-[#74C044] focus:ring-[#74C044]"
-                />
-                <label htmlFor="featured" className="text-sm font-bold text-[#1A2B56]">Feature on Home Page</label>
-              </div>
-            </div>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        {/* Navigation Sidebar */}
+        <div className="lg:col-span-3 sticky top-8 space-y-2">
+          {[
+            { id: 'core', label: 'Core Metadata', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+            { id: 'curriculum', label: 'Curriculum Structure', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' },
+            { id: 'outcomes', label: 'Entry & Outcomes', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+            { id: 'career', label: 'Career Paths', icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+            { id: 'faculty', label: 'Faculty Team', icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
+            { id: 'projects', label: 'Student Innovation', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
+            { id: 'faqs', label: 'Support FAQs', icon: 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+          ].map((sec) => (
+            <button
+              key={sec.id}
+              onClick={() => setActiveSection(sec.id as any)}
+              className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-extrabold text-sm transition-all ${
+                activeSection === sec.id ? 'bg-[#21409A] text-white shadow-xl' : 'text-gray-700 hover:bg-gray-100 hover:text-[#1A2B56]'
+              }`}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={sec.icon} /></svg>
+              {sec.label}
+            </button>
+          ))}
         </div>
 
-        {/* Main Content: Curriculum */}
-        <div className="lg:col-span-7 flex flex-col gap-12">
-          <div className="bg-white p-12 rounded-[40px] border border-gray-100 shadow-sm">
-            <div className="flex items-center justify-between mb-10">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-black text-[#1A2B56] font-sora tracking-tight">Curriculum Structure</h2>
-                <p className="text-sm text-gray-400 font-medium">Manage modules across different years</p>
-              </div>
-              <button 
-                type="button"
-                onClick={addYear}
-                className="px-6 py-3 bg-[#f0f4f8] text-[#21409A] rounded-xl font-bold text-sm hover:bg-[#21409A] hover:text-white"
-              >
-                + Add Year
-              </button>
-            </div>
-
-            <div className="space-y-12">
-              {formData.curriculum.map((year, yIdx) => (
-                <div key={yIdx} className="space-y-6">
-                  <div className="flex items-center gap-6">
-                    <input 
-                      type="text" 
-                      value={year.title}
-                      onChange={(e) => {
-                        const newCurriculum = [...formData.curriculum];
-                        newCurriculum[yIdx].title = e.target.value;
-                        setFormData({...formData, curriculum: newCurriculum});
-                      }}
-                      className="text-xl font-bold text-[#1A2B56] bg-transparent border-b-2 border-gray-100 focus:border-[#21409A] pb-2 outline-none flex-grow"
-                    />
-                    <button 
-                      type="button"
-                      onClick={() => addModule(yIdx)}
-                      className="text-xs font-bold text-[#21409A] uppercase tracking-widest"
-                    >
-                      + Add Module
-                    </button>
+        {/* Content Area */}
+        <div className="lg:col-span-9 bg-white p-12 rounded-[40px] border border-gray-100 shadow-sm min-h-[600px]">
+          <form onSubmit={handleSubmit} className="space-y-12">
+            
+            {activeSection === 'core' && (
+              <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4">
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Course Title</label>
+                    <input type="text" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} className="form-input-admin" placeholder="e.g. BSc (Hons) Computing" required />
                   </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Slug (URL)</label>
+                    <input type="text" value={formData.slug} onChange={(e) => setFormData({...formData, slug: e.target.value})} className="form-input-admin" placeholder="bsc-computing" required />
+                  </div>
+                </div>
 
-                  <div className="grid grid-cols-1 gap-6">
-                    {year.modules.map((mod, mIdx) => (
-                      <div key={mIdx} className="bg-gray-50 p-8 rounded-3xl space-y-6 relative group">
-                        <div className="grid grid-cols-3 gap-6">
-                          <div className="col-span-2 space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Module Name</label>
-                            <input 
-                              type="text" 
-                              value={mod.name}
-                              onChange={(e) => {
-                                const newCurriculum = [...formData.curriculum];
-                                newCurriculum[yIdx].modules[mIdx].name = e.target.value;
-                                setFormData({...formData, curriculum: newCurriculum});
-                              }}
-                              className="w-full bg-white border border-gray-100 rounded-xl py-3 px-5 font-bold text-[#1A2B56] text-sm"
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Credits</label>
-                            <input 
-                              type="text" 
-                              value={mod.credits}
-                              onChange={(e) => {
-                                const newCurriculum = [...formData.curriculum];
-                                newCurriculum[yIdx].modules[mIdx].credits = e.target.value;
-                                setFormData({...formData, curriculum: newCurriculum});
-                              }}
-                              className="w-full bg-white border border-gray-100 rounded-xl py-3 px-5 font-bold text-[#1A2B56] text-sm"
-                            />
-                          </div>
+                <div className="grid grid-cols-3 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Category</label>
+                    <input type="text" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})} className="form-input-admin" placeholder="Technology" />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Duration</label>
+                    <input type="text" value={formData.details.duration} onChange={(e) => setFormData({...formData, details: {...formData.details, duration: e.target.value}})} className="form-input-admin" placeholder="3 Years" />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Awarding Body</label>
+                    <input type="text" value={formData.details.awardingBody} onChange={(e) => setFormData({...formData, details: {...formData.details, awardingBody: e.target.value}})} className="form-input-admin" placeholder="London Metropolitan University" />
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Hero Image URL</label>
+                  <input type="text" value={formData.image} onChange={(e) => setFormData({...formData, image: e.target.value})} className="form-input-admin" placeholder="https://..." />
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Detailed Overview</label>
+                  <RichTextEditor 
+                    value={formData.overview} 
+                    onChange={(val) => setFormData({...formData, overview: val})} 
+                    placeholder="Provide a comprehensive program summary..." 
+                  />
+                </div>
+              </div>
+            )}
+
+            {activeSection === 'curriculum' && (
+              <div className="space-y-10">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-[#1A2B56]">Module Structure</h3>
+                  <button type="button" onClick={addYear} className="text-sm font-bold text-[#21409A]">+ Add Academic Year</button>
+                </div>
+                {formData.curriculum.map((year, yIdx) => (
+                  <div key={yIdx} className="p-8 bg-gray-50 rounded-[32px] space-y-6">
+                    <div className="flex items-center justify-between">
+                      <input type="text" value={year.title} onChange={(e) => {
+                        const newCurr = [...formData.curriculum];
+                        newCurr[yIdx].title = e.target.value;
+                        setFormData({...formData, curriculum: newCurr});
+                      }} className="bg-transparent border-b-2 border-gray-200 font-bold text-lg outline-none focus:border-[#21409A]" />
+                      <button type="button" onClick={() => addModule(yIdx)} className="text-xs font-bold uppercase tracking-widest text-[#21409A]">+ Add Module</button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {year.modules.map((mod, mIdx) => (
+                        <div key={mIdx} className="bg-white p-6 rounded-2xl shadow-sm space-y-4">
+                          <input type="text" value={mod.name} placeholder="Module Name" onChange={(e) => {
+                            const newCurr = [...formData.curriculum];
+                            newCurr[yIdx].modules[mIdx].name = e.target.value;
+                            setFormData({...formData, curriculum: newCurr});
+                          }} className="w-full text-sm font-bold outline-none" />
+                          <input type="text" value={mod.credits} placeholder="Credits (e.g. 30)" onChange={(e) => {
+                            const newCurr = [...formData.curriculum];
+                            newCurr[yIdx].modules[mIdx].credits = e.target.value;
+                            setFormData({...formData, curriculum: newCurr});
+                          }} className="w-full text-xs text-gray-700 outline-none" />
+                          <textarea placeholder="Description" rows={2} value={mod.description} onChange={(e) => {
+                            const newCurr = [...formData.curriculum];
+                            newCurr[yIdx].modules[mIdx].description = e.target.value;
+                            setFormData({...formData, curriculum: newCurr});
+                          }} className="w-full text-xs text-gray-500 outline-none resize-none" />
                         </div>
-                        <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Description</label>
-                          <textarea 
-                            rows={2}
-                            value={mod.description}
-                            onChange={(e) => {
-                              const newCurriculum = [...formData.curriculum];
-                              newCurriculum[yIdx].modules[mIdx].description = e.target.value;
-                              setFormData({...formData, curriculum: newCurriculum});
-                            }}
-                            className="w-full bg-white border border-gray-100 rounded-xl py-3 px-5 font-medium text-gray-500 text-sm resize-none"
-                          />
-                        </div>
-                      </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeSection === 'outcomes' && (
+              <div className="space-y-12">
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Academic Requirements</label>
+                    <textarea rows={4} value={formData.entryRequirements?.academic} onChange={(e) => setFormData({...formData, entryRequirements: { academic: e.target.value, language: formData.entryRequirements?.language || '' }})} className="form-input-admin" placeholder="e.g. +2 with minimum 2.4 GPA..." />
+                  </div>
+                  <div className="space-y-4">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Language Requirements</label>
+                    <textarea rows={4} value={formData.entryRequirements?.language} onChange={(e) => setFormData({...formData, entryRequirements: { academic: formData.entryRequirements?.academic || '', language: e.target.value }})} className="form-input-admin" placeholder="e.g. IELTS 6.0 or equivalent..." />
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-bold text-[#1A2B56]">Learning Outcomes</h3>
+                    <button type="button" onClick={addOutcome} className="text-sm font-bold text-[#21409A]">+ Add Outcome</button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4">
+                    {formData.learningOutcomes?.map((outcome, idx) => (
+                      <input key={idx} type="text" value={outcome} onChange={(e) => {
+                        const newOutcomes = [...(formData.learningOutcomes || [])];
+                        newOutcomes[idx] = e.target.value;
+                        setFormData({...formData, learningOutcomes: newOutcomes});
+                      }} className="form-input-admin" placeholder="e.g. Mastery of Data structures..." />
                     ))}
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            )}
+
+            {activeSection === 'career' && (
+              <div className="space-y-10">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-[#1A2B56]">Career Opportunities</h3>
+                  <button type="button" onClick={addCareer} className="text-sm font-bold text-[#21409A]">+ Add Pathway</button>
+                </div>
+                <div className="grid grid-cols-2 gap-6">
+                  {formData.careerOpportunities?.map((career, idx) => (
+                    <div key={idx} className="p-6 bg-gray-50 rounded-2xl space-y-4 border border-gray-100">
+                      <input type="text" value={career.title} placeholder="e.g. Senior Software Architect" onChange={(e) => {
+                        const newCareers = [...(formData.careerOpportunities || [])];
+                        newCareers[idx].title = e.target.value;
+                        setFormData({...formData, careerOpportunities: newCareers});
+                      }} className="w-full font-bold bg-transparent outline-none text-[#1A2B56] placeholder:text-gray-500" />
+                      <textarea placeholder="Describe the career path and potential earnings..." rows={3} value={career.description} onChange={(e) => {
+                        const newCareers = [...(formData.careerOpportunities || [])];
+                        newCareers[idx].description = e.target.value;
+                        setFormData({...formData, careerOpportunities: newCareers});
+                      }} className="w-full text-sm text-[#1A2B56] font-medium bg-transparent outline-none resize-none placeholder:text-gray-500" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeSection === 'faculty' && (
+              <div className="space-y-10">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-[#1A2B56]">Faculty Members</h3>
+                  <button type="button" onClick={addFaculty} className="text-sm font-bold text-[#21409A]">+ Add Faculty</button>
+                </div>
+                <div className="grid grid-cols-2 gap-6">
+                  {formData.faculty?.map((member, idx) => (
+                    <div key={idx} className="p-8 border border-gray-100 rounded-[32px] space-y-4">
+                      <input type="text" value={member.name} placeholder="Full Name (e.g. Dr. Jane Smith)" onChange={(e) => {
+                        const newFaculty = [...(formData.faculty || [])];
+                        newFaculty[idx].name = e.target.value;
+                        setFormData({...formData, faculty: newFaculty});
+                      }} className="w-full font-bold outline-none text-[#1A2B56] placeholder:text-gray-500" />
+                      <input type="text" value={member.role} placeholder="Role (e.g. Head of Computing)" onChange={(e) => {
+                        const newFaculty = [...(formData.faculty || [])];
+                        newFaculty[idx].role = e.target.value;
+                        setFormData({...formData, faculty: newFaculty});
+                      }} className="w-full text-xs font-bold text-[#21409A] outline-none placeholder:text-[#21409A]/40" />
+                      <textarea placeholder="Academic background and expertise..." rows={3} value={member.description} onChange={(e) => {
+                        const newFaculty = [...(formData.faculty || [])];
+                        newFaculty[idx].description = e.target.value;
+                        setFormData({...formData, faculty: newFaculty});
+                      }} className="w-full text-sm text-gray-600 font-medium outline-none resize-none placeholder:text-gray-500" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeSection === 'projects' && (
+              <div className="space-y-10">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-[#1A2B56]">Student Innovation</h3>
+                  <button type="button" onClick={addProject} className="text-sm font-bold text-[#21409A]">+ Add Project</button>
+                </div>
+                <div className="grid grid-cols-2 gap-6">
+                  {formData.projects?.map((proj, idx) => (
+                    <div key={idx} className="p-6 bg-gray-50 rounded-2xl space-y-4">
+                      <input type="text" value={proj.title} placeholder="Project Title" onChange={(e) => {
+                        const newProj = [...(formData.projects || [])];
+                        newProj[idx].title = e.target.value;
+                        setFormData({...formData, projects: newProj});
+                      }} className="w-full font-bold bg-transparent outline-none" />
+                      <input type="text" value={proj.cohort} placeholder="Cohort (e.g. Class of 2024)" onChange={(e) => {
+                        const newProj = [...(formData.projects || [])];
+                        newProj[idx].cohort = e.target.value;
+                        setFormData({...formData, projects: newProj});
+                      }} className="w-full text-xs bg-transparent outline-none" />
+                      <input type="text" value={proj.image} placeholder="Thumbnail URL" onChange={(e) => {
+                        const newProj = [...(formData.projects || [])];
+                        newProj[idx].image = e.target.value;
+                        setFormData({...formData, projects: newProj});
+                      }} className="w-full text-xs text-gray-700 bg-transparent outline-none" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeSection === 'faqs' && (
+              <div className="space-y-10">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-[#1A2B56]">Program FAQs</h3>
+                  <button type="button" onClick={addFAQ} className="text-sm font-bold text-[#21409A]">+ Add FAQ</button>
+                </div>
+                {formData.faqs?.map((faq, idx) => (
+                  <div key={idx} className="space-y-4 p-8 bg-gray-50 rounded-[32px]">
+                    <input type="text" value={faq.question} placeholder="Frequently Asked Question" onChange={(e) => {
+                      const newFAQ = [...(formData.faqs || [])];
+                      newFAQ[idx].question = e.target.value;
+                      setFormData({...formData, faqs: newFAQ});
+                    }} className="w-full font-bold text-[#1A2B56] bg-transparent outline-none border-b border-gray-200 pb-2 placeholder:text-gray-500" />
+                    <textarea placeholder="Write the comprehensive answer here..." rows={3} value={faq.answer} onChange={(e) => {
+                      const newFAQ = [...(formData.faqs || [])];
+                      newFAQ[idx].answer = e.target.value;
+                      setFormData({...formData, faqs: newFAQ});
+                    }} className="w-full text-sm text-[#1A2B56] font-medium bg-transparent outline-none resize-none placeholder:text-gray-500" />
+                  </div>
+                ))}
+              </div>
+            )}
+
+          </form>
         </div>
-      </form>
+      </div>
+
+      <style jsx>{`
+        .form-input-admin {
+          width: 100%;
+          background: #f8fafc;
+          border: 2px solid #eef2f6;
+          border-radius: 20px;
+          padding: 1.25rem 2rem;
+          font-weight: 700;
+          color: #1A2B56;
+          outline: none;
+          transition: all 0.2s;
+        }
+        .form-input-admin::placeholder {
+          color: #64748b;
+          opacity: 1;
+        }
+        .form-input-admin:focus {
+          border-color: #21409A;
+          background: white;
+          box-shadow: 0 10px 30px rgba(33, 64, 154, 0.05);
+        }
+      `}</style>
     </div>
   );
 }
