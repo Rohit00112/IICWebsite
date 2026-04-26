@@ -3,10 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 import RichTextEditor from './RichTextEditor';
+
 
 interface NewsItem {
   id: string;
@@ -20,6 +18,8 @@ interface NewsItem {
   content: string;
   featured: boolean;
 }
+
+import { sanitizeHtml } from '@/lib/sanitize';
 
 export default function EditNewsForm({ article }: { article: NewsItem }) {
   const router = useRouter();
@@ -37,6 +37,8 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
     content: article.content,
     featured: article.featured,
   });
+
+  const sanitizedPreviewContent = React.useMemo(() => sanitizeHtml(formData.content), [formData.content]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -273,7 +275,7 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
               <div className="prose prose-lg max-w-none break-words prose-headings:font-sora prose-headings:font-bold [&&_h1]:text-[#1A2B56] [&&_h2]:text-[#1A2B56] [&&_h3]:text-[#1A2B56] [&&_h4]:text-[#1A2B56] [&&_p]:text-slate-800 [&&_li]:text-slate-800 [&&_strong]:text-slate-900 [&&_span]:text-slate-800 prose-p:leading-relaxed prose-li:marker:text-[#21409A] prose-li:marker:font-black prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl">
                 {formData.content ? (
                   <div 
-                    dangerouslySetInnerHTML={{ __html: formData.content }}
+                    dangerouslySetInnerHTML={{ __html: sanitizedPreviewContent }}
                     className="rich-content"
                   />
                 ) : (

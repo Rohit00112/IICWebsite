@@ -112,14 +112,24 @@ export async function getCourseById(id: string): Promise<CourseItem | null> {
   }
 }
 
+import { sanitizeHtml } from './sanitize';
+
 export async function createCourse(data: Partial<CourseItem>): Promise<CourseItem> {
   await dbConnect();
+  // Sanitize overview
+  if (data.overview) {
+    data.overview = sanitizeHtml(data.overview);
+  }
   const newItem = await Course.create(data);
   return mapCourse(newItem);
 }
 
 export async function updateCourse(id: string, data: Partial<CourseItem>): Promise<CourseItem | null> {
   await dbConnect();
+  // Sanitize overview
+  if (data.overview) {
+    data.overview = sanitizeHtml(data.overview);
+  }
   const updatedItem = await Course.findByIdAndUpdate(id, data, { new: true });
   return updatedItem ? mapCourse(updatedItem) : null;
 }
