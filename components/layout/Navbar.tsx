@@ -24,8 +24,8 @@ const Navbar = () => {
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about-us' },
     { name: 'Courses', href: '/courses' },
-    { name: 'Admission', href: '/admission' },
-    { name: 'Innovation Lab', href: '/innovation-lab' },
+    { name: 'Admission', href: '/#admission' },
+    { name: 'Innovation Lab', href: '/#innovation-lab' },
     { name: 'Life at IIC', href: '/life-at-iic' },
     { name: 'News & Events', href: '/news' },
     { name: 'Contact', href: '/contact' },
@@ -36,8 +36,23 @@ const Navbar = () => {
     return activeLink ? activeLink.name : 'Home';
   };
 
+  const navigationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: navLinks.map((link, index) => ({
+      '@type': 'SiteNavigationElement',
+      position: index + 1,
+      name: link.name,
+      url: `https://iic.edu.np${link.href}`
+    }))
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationJsonLd) }}
+      />
       {/* Background Dimmer */}
       <AnimatePresence>
         {isMenuOpen && (

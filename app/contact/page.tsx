@@ -13,9 +13,34 @@ export default function ContactPage() {
     { name: 'Contact Us', item: '/contact' },
   ];
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact Itahari International College',
+    description: 'Get in touch with Itahari International College for admissions, support, and general inquiries.',
+    mainEntity: {
+      '@type': 'CollegeOrUniversity',
+      name: 'Itahari International College',
+      telephone: '+977-1-12345678',
+      email: 'info@iic.edu.np',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Sundarharaicha-4, Dulari',
+        addressLocality: 'Itahari',
+        addressRegion: 'Morang',
+        postalCode: '56705',
+        addressCountry: 'NP'
+      }
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white">
       <BreadcrumbSchema items={breadcrumbs} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ContactHero />
       <ContactForm />
       <ContactMap />

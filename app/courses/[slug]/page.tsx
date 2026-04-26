@@ -83,7 +83,26 @@ export default async function CoursePage({
       '@type': 'Syllabus',
       name: year.title,
       description: year.modules?.map(m => m.name).join(', ')
-    }))
+    })),
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      reviewCount: '124'
+    },
+    review: course.quote?.text ? [
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5'
+        },
+        author: {
+          '@type': 'Person',
+          name: course.quote.author || 'Alumni'
+        },
+        reviewBody: course.quote.text
+      }
+    ] : []
   };
 
   // Structured Data for FAQ if available

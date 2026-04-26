@@ -78,12 +78,12 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/admissions" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                <Link href="/#admission" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
                   Admissions
                 </Link>
               </li>
               <li>
-                <Link href="/campus-life" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                <Link href="/life-at-iic" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
                   Campus Life
                 </Link>
               </li>

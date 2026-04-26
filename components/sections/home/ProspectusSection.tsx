@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const ProspectusSection = () => {
   return (
-    <section className="relative w-full py-24 md:py-32 bg-[#0a1931] overflow-hidden">
+    <section id="admission" className="relative w-full py-24 md:py-32 bg-[#0a1931] overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
         
         {/* Left Side: Success Stories */}
