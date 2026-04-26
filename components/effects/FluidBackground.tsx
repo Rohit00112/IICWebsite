@@ -85,10 +85,13 @@ const vertexShader = `
   }
 `;
 
-function FluidPlane() {
+interface FluidPlaneProps {
+  shouldReduceMotion: boolean | null;
+}
+
+function FluidPlane({ shouldReduceMotion }: FluidPlaneProps) {
   const meshRef = useRef<THREE.Mesh>(null!);
   const { size } = useThree();
-  const shouldReduceMotion = useReducedMotion();
 
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
@@ -98,11 +101,12 @@ function FluidPlane() {
   }), [size]);
 
   useFrame((state) => {
-    const { mouse: stateMouse } = state;
+    const { mouse: stateMouse, clock } = state;
     
     // Slow down time significantly for reduced motion
     const timeScale = shouldReduceMotion ? 0.05 : 0.15;
-    uniforms.uTime.value = performance.now() * 0.001 * (timeScale / 0.15);
+    // Using clock.getElapsedTime() instead of performance.now() to align with R3F standard
+    uniforms.uTime.value = clock.getElapsedTime() * (timeScale / 0.15);
     
     // Smooth mouse and scroll follow (slower for reduced motion)
     const lerpFactor = shouldReduceMotion ? 0.01 : 0.05;
@@ -127,10 +131,12 @@ function FluidPlane() {
 }
 
 export default function FluidBackground() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <div className="fixed inset-0 -z-10 bg-[#f4f7fa]">
       <Canvas camera={{ position: [0, 0, 1] }}>
-        <FluidPlane />
+        <FluidPlane shouldReduceMotion={shouldReduceMotion} />
       </Canvas>
     </div>
   );
