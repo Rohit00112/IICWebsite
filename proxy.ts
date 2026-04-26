@@ -1,12 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { decrypt } from './lib/auth';
 
+// Add paths that require authentication
+const protectedRoutes = ['/admin'];
+const protectedApiRoutes = [
+  { path: '/api/courses', methods: ['POST', 'PUT', 'DELETE'] },
+  { path: '/api/news', methods: ['POST', 'PUT', 'DELETE'] },
+];
+
 export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const method = request.method;
   const session = request.cookies.get('session')?.value;
 
-  // Paths that require authentication
-  if (request.nextUrl.pathname.startsWith('/admin')) {
+  // 1. Check Protected Pages
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
+  
+  // 2. Check Protected API Routes
+  const isProtectedApiRoute = protectedApiRoutes.some(route => 
+    pathname.startsWith(route.path) && route.methods.includes(method)
+  );
+
+  // Redirect to admin if already logged in and visiting login page
+  if (pathname === '/login' && session) {
+    try {
+      await decrypt(session);
+      return NextResponse.redirect(new URL('/admin/news', request.url));
+    } catch (error) {
+      // Continue to login if session is invalid
+    }
+  }
+
+  if (isProtectedRoute || isProtectedApiRoute) {
     if (!session) {
+      if (isProtectedApiRoute) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
       return NextResponse.redirect(new URL('/login', request.url));
     }
 
@@ -14,26 +43,21 @@ export async function proxy(request: NextRequest) {
       await decrypt(session);
       return NextResponse.next();
     } catch (error) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-  }
-
-  // Redirect to admin if already logged in and visiting login page
-  if (request.nextUrl.pathname === '/login') {
-    if (session) {
-      try {
-        await decrypt(session);
-        return NextResponse.redirect(new URL('/admin/news', request.url));
-      } catch (error) {
-        // Continue to login if session is invalid
+      if (isProtectedApiRoute) {
+        return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
       }
+      return NextResponse.redirect(new URL('/login', request.url));
     }
   }
 
   return NextResponse.next();
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/admin/:path*', '/login'],
+  matcher: [
+    '/admin/:path*',
+    '/api/courses/:path*',
+    '/api/news/:path*',
+    '/login',
+  ],
 };
