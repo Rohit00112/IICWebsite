@@ -71,10 +71,20 @@ interface CourseData {
   faqs?: FAQ[];
 }
 
+import { sanitizeHtml } from '@/lib/sanitize';
+
 const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, relatedCourses?: any[] }) => {
   const [activeYear, setActiveYear] = useState(0);
   const [activeTab, setActiveTab] = useState<'overview' | 'outcomes'>('overview');
   const [activeFAQ, setActiveFAQ] = useState(0);
+
+  const sanitizedOverview = React.useMemo(() => {
+    const overviewHtml = course.overview || `
+      <p>The ${course.title} degree at Itahari International College, awarded by London Metropolitan University, is designed to provide you with a comprehensive understanding of core principles and practical skills in your chosen field.</p>
+      <p>Our industry-aligned curriculum ensures you are exposed to the latest technologies and methodologies, preparing you for a seamless transition into the global workforce.</p>
+    `;
+    return sanitizeHtml(overviewHtml);
+  }, [course.overview, course.title]);
 
   return (
     <main className="bg-white">
@@ -168,10 +178,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   className="space-y-6"
                 >
                   <div className="prose prose-lg text-gray-500 max-w-none font-medium leading-relaxed" 
-                    dangerouslySetInnerHTML={{ __html: course.overview || `
-                      <p>The ${course.title} degree at Itahari International College, awarded by London Metropolitan University, is designed to provide you with a comprehensive understanding of core principles and practical skills in your chosen field.</p>
-                      <p>Our industry-aligned curriculum ensures you are exposed to the latest technologies and methodologies, preparing you for a seamless transition into the global workforce.</p>
-                    ` }} 
+                    dangerouslySetInnerHTML={{ __html: sanitizedOverview }} 
                   />
                 </motion.div>
               ) : (
