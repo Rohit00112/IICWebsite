@@ -72,11 +72,12 @@ const HeroSection = () => {
                 transition={{ delay: 1.2 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="#"
-                className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:opacity-90 transition-all"
+                href="/contact"
+                aria-label="Schedule a campus visit"
+                className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:opacity-90 transition-all focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
               >
                 <span>Schedule A Visit</span>
-                <span className="text-xl">📞</span>
+                <span className="text-xl" role="img" aria-label="telephone icon">📞</span>
               </motion.a>
             </Magnetic>
 
@@ -87,8 +88,9 @@ const HeroSection = () => {
                 transition={{ delay: 1.4 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="#"
-                className="px-10 py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all"
+                href="/courses"
+                aria-label="Explore our academic programmes"
+                className="px-10 py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:outline-none"
               >
                 Explore Programmes
               </motion.a>

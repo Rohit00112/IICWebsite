@@ -3,6 +3,7 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useReducedMotion } from 'framer-motion';
 
 const fragmentShader = `
   uniform float uTime;
@@ -87,6 +88,8 @@ const vertexShader = `
 function FluidPlane() {
   const meshRef = useRef<THREE.Mesh>(null!);
   const { size } = useThree();
+  const shouldReduceMotion = useReducedMotion();
+
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
     uResolution: { value: new THREE.Vector2(size.width, size.height) },
@@ -96,15 +99,19 @@ function FluidPlane() {
 
   useFrame((state) => {
     const { mouse: stateMouse } = state;
-    uniforms.uTime.value = performance.now() * 0.001;
     
-    // Smooth mouse follow
-    uniforms.uMouse.value.x += (stateMouse.x * 0.5 + 0.5 - uniforms.uMouse.value.x) * 0.05;
-    uniforms.uMouse.value.y += (stateMouse.y * 0.5 + 0.5 - uniforms.uMouse.value.y) * 0.05;
+    // Slow down time significantly for reduced motion
+    const timeScale = shouldReduceMotion ? 0.05 : 0.15;
+    uniforms.uTime.value = performance.now() * 0.001 * (timeScale / 0.15);
+    
+    // Smooth mouse and scroll follow (slower for reduced motion)
+    const lerpFactor = shouldReduceMotion ? 0.01 : 0.05;
+    uniforms.uMouse.value.x += (stateMouse.x * 0.5 + 0.5 - uniforms.uMouse.value.x) * lerpFactor;
+    uniforms.uMouse.value.y += (stateMouse.y * 0.5 + 0.5 - uniforms.uMouse.value.y) * lerpFactor;
     
     // Smooth scroll follow
     const targetScroll = typeof window !== 'undefined' ? window.scrollY * 0.001 : 0;
-    uniforms.uScroll.value += (targetScroll - uniforms.uScroll.value) * 0.05;
+    uniforms.uScroll.value += (targetScroll - uniforms.uScroll.value) * lerpFactor;
   });
 
   return (
