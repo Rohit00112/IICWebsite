@@ -21,9 +21,28 @@ export default function AboutUsPage() {
     { name: 'About Us', item: '/about-us' },
   ];
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About Itahari International College',
+    description: 'Learn about our partnership with London Metropolitan University, our mission for world-class education, and the team driving excellence at IIC Itahari.',
+    publisher: {
+      '@type': 'CollegeOrUniversity',
+      name: 'Itahari International College',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://iic.edu.np/images/common/iic_logo.png'
+      }
+    }
+  };
+
   return (
     <main className="relative bg-[#0a0a0a]">
       <BreadcrumbSchema items={breadcrumbs} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <AboutHero />
       <MissionVision />
       <IngSection />

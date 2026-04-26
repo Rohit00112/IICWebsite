@@ -171,7 +171,7 @@ export default function RootLayout({
                   "publisher": { "@id": "https://iic.edu.np/#college" },
                   "potentialAction": {
                     "@type": "SearchAction",
-                    "target": "https://iic.edu.np/courses?search={search_term_string}",
+                    "target": "https://iic.edu.np/search?q={search_term_string}",
                     "query-input": "required name=search_term_string"
                   }
                 }
