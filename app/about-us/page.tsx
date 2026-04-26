@@ -8,6 +8,7 @@ import Leadership from '@/components/sections/about-us/Leadership';
 import WhyChooseIIC from '@/components/sections/about-us/WhyChooseIIC';
 import InnovationGrid from '@/components/sections/about-us/InnovationGrid';
 import ExperienceCTA from '@/components/sections/about-us/ExperienceCTA';
+import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export const metadata = {
   title: 'About Us | Itahari International College',
@@ -15,8 +16,14 @@ export const metadata = {
 };
 
 export default function AboutUsPage() {
+  const breadcrumbs = [
+    { name: 'Home', item: '/' },
+    { name: 'About Us', item: '/about-us' },
+  ];
+
   return (
     <main className="relative bg-[#0a0a0a]">
+      <BreadcrumbSchema items={breadcrumbs} />
       <AboutHero />
       <MissionVision />
       <IngSection />

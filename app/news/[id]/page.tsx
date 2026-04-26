@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import NewsDetailHero from '../../../components/sections/news/NewsDetailHero';
 import NewsDetailContent from '../../../components/sections/news/NewsDetailContent';
 import PageTransition from '../../../components/layout/PageTransition';
@@ -54,8 +55,15 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ id: string }> }) =
     },
   };
 
+  const breadcrumbs = [
+    { name: 'Home', item: '/' },
+    { name: 'News & Events', item: '/news' },
+    { name: item.title, item: `/news/${id}` },
+  ];
+
   return (
     <PageTransition>
+      <BreadcrumbSchema items={breadcrumbs} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
