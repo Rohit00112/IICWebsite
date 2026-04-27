@@ -37,12 +37,12 @@ const HeroSection = () => {
       {/* Hero Content Layer */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 flex flex-col items-center">
         {/* Centered Logo - Specifically for Home Page Hero */}
-        <div className="w-full pt-16 md:pt-28 pb-6 flex items-center justify-center relative z-40">
+        <div className="w-full pt-20 md:pt-32 pb-8 flex items-center justify-center relative z-40">
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="relative h-14 md:h-20 w-64 md:w-[450px]"
+            className="relative h-16 md:h-24 w-72 md:w-[500px]"
           >
             <Image
               src="/images/common/iic_logo.png"
@@ -70,30 +70,30 @@ const HeroSection = () => {
             delay={0.7}
           />
 
-          <div className="flex flex-col sm:flex-row gap-5 mb-24 md:mb-44">
-            <Magnetic strength={0.3}>
+          <div className="flex flex-col sm:flex-row gap-8 mb-24 md:mb-44 relative">
+            <Magnetic strength={0.3} maxDistance={15}>
               <motion.a
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 href="/contact"
                 aria-label="Schedule a campus visit"
-                className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:opacity-90 transition-all focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
+                className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:brightness-110 transition-all focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
               >
                 <span>Visit our campus</span>
                 <span className="text-xl" role="img" aria-label="telephone icon">📞</span>
               </motion.a>
             </Magnetic>
 
-            <Magnetic strength={0.3}>
+            <Magnetic strength={0.3} maxDistance={15}>
               <motion.a
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.4 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 href="/courses"
                 aria-label="Explore our academic programmes"
                 className="px-10 py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:outline-none"

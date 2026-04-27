@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const ExperienceCTA = () => {
   return (
@@ -13,15 +15,24 @@ const ExperienceCTA = () => {
           viewport={{ once: true }}
           className="space-y-8"
         >
-          <h2 className="text-4xl md:text-7xl font-bold font-sora tracking-tight">
-            Experience it yourself.
-          </h2>
+          <AnimeReveal
+            as="h2"
+            text="Experience it yourself."
+            className="text-4xl md:text-7xl font-bold font-sora tracking-tight justify-center"
+            staggerFrom="center"
+          />
           <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed font-sora">
-            Experience the IIC difference firsthand. Whether you're ready to
-            apply or just want to explore our campus, we're here to guide you.
+            Experience the IIC difference firsthand. Whether you&apos;re ready to
+            apply or just want to explore our campus, we&apos;re here to guide you.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12">
+          <AnimeStagger
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12"
+            selector=":scope > *"
+            staggerDelay={120}
+            translateY={24}
+            duration={700}
+          >
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -36,7 +47,7 @@ const ExperienceCTA = () => {
             >
               Start Your Application
             </motion.button>
-          </div>
+          </AnimeStagger>
         </motion.div>
       </div>
     </section>

@@ -4,12 +4,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Magnetic from '../../effects/Magnetic';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
+import type { NewsItem } from '@/lib/news';
 
 
 import { sanitizeHtml } from '@/lib/sanitize';
 
 interface NewsDetailContentProps {
-  item: any;
+  item: NewsItem;
 }
 
 const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
@@ -35,7 +38,7 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
             </motion.article>
 
             {/* Share Section */}
-            <div className="mt-20 pt-10 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8">
+            <AnimeStagger className="mt-20 pt-10 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8" selector=":scope > *" staggerDelay={120} translateY={20} duration={700}>
               <div className="flex items-center gap-4">
                 <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Share this story</span>
                 <div className="flex items-center gap-3">
@@ -53,11 +56,17 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
                 <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 Back to News & Events
               </Link>
-            </div>
+            </AnimeStagger>
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-4 space-y-12">
+          <AnimeStagger
+            className="lg:col-span-4 space-y-12"
+            selector=":scope > div"
+            staggerDelay={140}
+            translateY={28}
+            duration={760}
+          >
             
             {/* Quick Facts Card */}
             <div className="bg-[#f8fcfb] p-10 rounded-[40px] border border-[#74C044]/20 shadow-sm relative overflow-hidden">
@@ -101,7 +110,12 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
 
             {/* Newsletter Signup */}
             <div className="bg-[#DDE5F0] p-10 rounded-[40px] shadow-sm">
-              <h5 className="text-xl font-bold font-sora mb-4 text-[#1a1a1a]">Stay Updated</h5>
+              <AnimeReveal
+                as="h5"
+                text="Stay Updated"
+                className="text-xl font-bold font-sora mb-4 text-[#1a1a1a]"
+                staggerFrom="first"
+              />
               <p className="text-gray-600 text-[14px] mb-8 leading-relaxed font-medium">Never miss an update. Join our newsletter to get the latest IIC news.</p>
               <div className="space-y-4">
                 <input 
@@ -115,7 +129,7 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
               </div>
             </div>
 
-          </div>
+          </AnimeStagger>
 
         </div>
       </div>
@@ -124,4 +138,3 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
 };
 
 export default NewsDetailContent;
-

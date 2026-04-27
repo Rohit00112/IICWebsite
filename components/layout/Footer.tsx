@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Magnetic from '../effects/Magnetic';
+import AnimeStagger from '../effects/AnimeStagger';
 
 const Footer = () => {
   return (
@@ -19,7 +22,13 @@ const Footer = () => {
       </div>
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 pt-24 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
+        <AnimeStagger
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20"
+          selector=":scope > div"
+          staggerDelay={120}
+          translateY={40}
+          duration={800}
+        >
 
           {/* Brand Column */}
           <div className="flex flex-col gap-8">
@@ -140,7 +149,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </AnimeStagger>
 
         {/* Bottom Bar */}
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">

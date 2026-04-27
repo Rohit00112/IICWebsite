@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const ScholarshipsSection = () => {
   return (
@@ -16,26 +18,29 @@ const ScholarshipsSection = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h2 className="text-5xl md:text-7xl lg:text-[76px] font-bold text-[#1a1a1a] mb-8 leading-[1.1] tracking-tight">
-                AAA <br />
-                Scholarships
-              </h2>
+              <AnimeReveal
+                as="h2"
+                text="AAA Scholarships"
+                className="text-5xl md:text-7xl lg:text-[76px] font-bold text-[#1a1a1a] mb-8 leading-[1.1] tracking-tight"
+                staggerFrom="first"
+              />
               <p className="text-gray-500 text-lg md:text-xl max-w-lg leading-relaxed font-medium">
-                We believe financial barriers shouldn't hold back brilliance.
+                We believe financial barriers shouldn&apos;t hold back brilliance.
                 Explore our range of financial support options.
               </p>
             </motion.div>
           </div>
 
           {/* Right Cards */}
-          <div className="w-full lg:w-[65%] flex flex-col md:flex-row gap-8">
+          <AnimeStagger
+            className="w-full lg:w-[65%] flex flex-col md:flex-row gap-8"
+            selector=".scholarship-card"
+            staggerDelay={140}
+            translateY={34}
+            duration={820}
+          >
             {/* Card 1: Academic Excellence */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex-1 bg-white p-10 rounded-[32px] shadow-xl shadow-[#21409A]/5 border border-white flex flex-col"
-            >
+            <div className="scholarship-card flex-1 bg-white p-10 rounded-[32px] shadow-xl shadow-[#21409A]/5 border border-white flex flex-col" style={{ willChange: 'transform, opacity' }}>
               <span className="text-[14px] font-bold text-[#1a1a1a] mb-6 uppercase tracking-wider block">
                 Academic <br /> Excellence
               </span>
@@ -51,15 +56,10 @@ const ScholarshipsSection = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
-            </motion.div>
+            </div>
 
             {/* Card 2: Need Guidance */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex-1 bg-white/50 backdrop-blur-sm p-10 rounded-[32px] border border-white/60 flex flex-col"
-            >
+            <div className="scholarship-card flex-1 bg-white/50 backdrop-blur-sm p-10 rounded-[32px] border border-white/60 flex flex-col" style={{ willChange: 'transform, opacity' }}>
               <h3 className="text-[20px] font-bold text-[#1a1a1a] mb-6">
                 Need Guidance?
               </h3>
@@ -70,8 +70,8 @@ const ScholarshipsSection = () => {
               <button className="mt-auto w-full py-4 border-2 border-[#1a1a1a]/10 bg-white/80 text-[#1a1a1a] rounded-xl font-bold text-[14px] hover:border-[#21409A] hover:text-[#21409A] transition-all">
                 Contact Admissions
               </button>
-            </motion.div>
-          </div>
+            </div>
+          </AnimeStagger>
 
         </div>
       </div>

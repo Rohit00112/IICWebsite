@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const GEOSection = () => {
   const stats = [
@@ -53,15 +55,20 @@ const GEOSection = () => {
             viewport={{ once: true }}
             className="bg-white p-8 md:p-12 rounded-[32px] shadow-sm border border-gray-100"
           >
-            <h2 className="text-2xl font-bold text-[#1a2b56] mb-8">College at a Glance</h2>
-            <div className="space-y-4">
+            <AnimeReveal
+              as="h2"
+              text="College at a Glance"
+              className="text-2xl font-bold text-[#1a2b56] mb-8"
+              staggerFrom="first"
+            />
+            <AnimeStagger className="space-y-4" selector=".geo-stat" staggerDelay={90} translateY={24} duration={700}>
               {stats.map((stat, i) => (
-                <div key={i} className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-4 border-b border-gray-50 last:border-0">
-                  <span className="text-gray-500 font-medium text-sm uppercase tracking-wider">{stat.label}</span>
-                  <span className="text-[#21409A] font-bold text-lg">{stat.value}</span>
+                <div key={i} className="geo-stat grid grid-cols-1 sm:grid-cols-[140px,1fr] md:grid-cols-[180px,1fr] gap-2 sm:gap-10 py-5 border-b border-gray-50 last:border-0 items-start" style={{ willChange: 'transform, opacity' }}>
+                  <span className="text-gray-500 font-medium text-[11px] md:text-xs uppercase tracking-[0.15em] pt-1">{stat.label}</span>
+                  <span className="text-[#21409A] font-bold text-lg md:text-xl leading-[1.3] sm:text-right">{stat.value}</span>
                 </div>
               ))}
-            </div>
+            </AnimeStagger>
           </motion.div>
 
           {/* FAQ for AI Engines & Search Result Snippets */}
@@ -71,20 +78,25 @@ const GEOSection = () => {
             viewport={{ once: true }}
             className="flex flex-col justify-center"
           >
-            <h2 className="text-3xl font-black text-[#1a2b56] mb-10 tracking-tight">Frequently Asked Questions</h2>
-            <div className="space-y-8">
+            <AnimeReveal
+              as="h2"
+              text="Frequently Asked Questions"
+              className="text-3xl font-black text-[#1a2b56] mb-10 tracking-tight"
+              staggerFrom="first"
+            />
+            <AnimeStagger className="space-y-10" selector=".geo-faq" staggerDelay={120} translateY={28} duration={750}>
               {faqs.map((faq, i) => (
-                <div key={i} className="group">
-                  <h3 className="text-lg font-bold text-[#21409A] mb-3 flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-full bg-[#21409A]/10 flex items-center justify-center text-[10px]">Q</span>
-                    {faq.q}
+                <div key={i} className="geo-faq group" style={{ willChange: 'transform, opacity' }}>
+                  <h3 className="text-lg md:text-xl font-bold text-[#21409A] mb-4 flex items-start gap-4">
+                    <span className="w-6 h-6 rounded-full bg-[#21409A]/10 flex items-center justify-center text-[10px] mt-1 shrink-0">Q</span>
+                    <span className="leading-tight">{faq.q}</span>
                   </h3>
-                  <p className="text-gray-600 leading-relaxed pl-9 border-l-2 border-gray-100 group-hover:border-[#21409A]/30 transition-colors">
+                  <p className="text-gray-600 leading-relaxed pl-10 border-l-2 border-gray-100 group-hover:border-[#21409A]/30 transition-colors text-sm md:text-base">
                     {faq.a}
                   </p>
                 </div>
               ))}
-            </div>
+            </AnimeStagger>
           </motion.div>
         </div>
 
@@ -95,7 +107,12 @@ const GEOSection = () => {
           viewport={{ once: true }}
           className="mt-20 overflow-x-auto"
         >
-          <h2 className="text-2xl font-bold text-[#1a2b56] mb-8 text-center">Why IIC Itahari Stands Out</h2>
+          <AnimeReveal
+            as="h2"
+            text="Why IIC Itahari Stands Out"
+            className="text-2xl font-bold text-[#1a2b56] mb-8 text-center justify-center"
+            staggerFrom="center"
+          />
           <table className="w-full text-left border-collapse bg-white rounded-2xl overflow-hidden shadow-sm">
             <thead>
               <tr className="bg-[#21409A] text-white">
@@ -124,9 +141,9 @@ const GEOSection = () => {
             viewport={{ once: true }}
             className="relative p-10 bg-[#21409A]/5 rounded-[40px] border border-[#21409A]/10"
           >
-            <div className="absolute top-0 left-10 -translate-y-1/2 w-12 h-12 bg-[#21409A] text-white rounded-full flex items-center justify-center text-3xl font-serif">"</div>
+            <div className="absolute top-0 left-10 -translate-y-1/2 w-12 h-12 bg-[#21409A] text-white rounded-full flex items-center justify-center text-3xl font-serif">&ldquo;</div>
             <p className="text-xl text-[#1a2b56] font-medium leading-relaxed italic mb-6">
-              {quotes[0].text}
+              &ldquo;{quotes[0].text}&rdquo;
             </p>
             <div>
               <h4 className="font-bold text-[#21409A]">{quotes[0].author}</h4>
@@ -135,9 +152,12 @@ const GEOSection = () => {
           </motion.div>
           
           <div className="text-center md:text-left">
-            <h2 className="text-3xl font-black text-[#1a2b56] mb-6 tracking-tight leading-tight">
-              Verified Excellence in Higher Education.
-            </h2>
+            <AnimeReveal
+              as="h2"
+              text="Verified Excellence in Higher Education."
+              className="text-3xl font-black text-[#1a2b56] mb-6 tracking-tight leading-tight"
+              staggerFrom="first"
+            />
             <p className="text-gray-500 font-medium mb-8">
               We provide direct UK degrees with full accreditation and equivalence, ensuring your future is globally recognized.
             </p>

@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const AboutHero = () => {
   return (
@@ -25,11 +27,12 @@ const AboutHero = () => {
             className="text-3xl md:text-4xl font-bold text-[#1a237e] mb-4 font-sora tracking-tight justify-center"
           />
           
-          <RevealText 
+          <AnimeReveal
             text="GLOBAL EDUCATION"
             as="h1"
             className="text-6xl md:text-8xl lg:text-[110px] font-black text-[#21409A] leading-none mb-6 font-sora tracking-tighter justify-center uppercase"
             delay={0.2}
+            staggerFrom="center"
           />
           
           <RevealText 
@@ -39,11 +42,12 @@ const AboutHero = () => {
           />
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+        <AnimeStagger
           className="flex flex-col sm:flex-row gap-5 mb-16"
+          selector=":scope > *"
+          staggerDelay={120}
+          translateY={24}
+          duration={700}
         >
           <Magnetic strength={0.2}>
             <button className="px-10 py-4 bg-[#21409A] text-white rounded-md font-bold text-sm hover:bg-[#1a337e] transition-all shadow-[0_10px_20px_rgba(33,64,154,0.3)]">
@@ -55,7 +59,7 @@ const AboutHero = () => {
               Schedule a Campus Visit
             </button>
           </Magnetic>
-        </motion.div>
+        </AnimeStagger>
 
         <motion.div
           initial={{ opacity: 0, y: 60 }}
