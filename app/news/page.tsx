@@ -29,15 +29,38 @@ const NewsPage = async () => {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "ItemList",
-              "name": "Latest News & Events",
-              "numberOfItems": allNews.length,
-              "itemListElement": allNews.map((item: any, index: number) => ({
-                "@type": "ListItem",
-                "position": index + 1,
-                "url": `https://iic.edu.np/news/${item.slug}`,
-                "name": item.title
-              }))
+              "@graph": [
+                {
+                  "@type": "ItemList",
+                  "name": "Latest News & Events",
+                  "numberOfItems": allNews.length,
+                  "itemListElement": allNews.map((item: any, index: number) => ({
+                    "@type": "ListItem",
+                    "position": index + 1,
+                    "url": `https://iic.edu.np/news/${item.slug}`,
+                    "name": item.title
+                  }))
+                },
+                ...allNews.filter((item: any) => item.category === 'Event').map((event: any) => ({
+                  "@type": "Event",
+                  "name": event.title,
+                  "startDate": new Date(event.date).toISOString(),
+                  "location": {
+                    "@type": "Place",
+                    "name": event.location || "Itahari International College",
+                    "address": {
+                      "@type": "PostalAddress",
+                      "streetAddress": "Sundar Haraicha 04",
+                      "addressLocality": "Itahari",
+                      "addressCountry": "NP"
+                    }
+                  },
+                  "image": event.image,
+                  "description": event.description,
+                  "eventStatus": "https://schema.org/EventScheduled",
+                  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+                }))
+              ]
             })
           }}
         />

@@ -42,19 +42,37 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
   const relatedNews = await getRelatedNews(item.category, item.id);
 
   // Structured Data (JSON-LD) for SEO
+  const isEvent = item.category === 'Event';
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
-    headline: item.title,
+    '@type': isEvent ? 'Event' : 'NewsArticle',
+    ...(isEvent ? {
+      name: item.title,
+      startDate: new Date(item.date).toISOString(),
+      location: {
+        '@type': 'Place',
+        name: item.location || "Itahari International College",
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: "Sundar Haraicha 04",
+          addressLocality: "Itahari",
+          addressCountry: "NP"
+        }
+      },
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode'
+    } : {
+      headline: item.title,
+      datePublished: new Date(item.date).toISOString(),
+      dateModified: new Date(item.date).toISOString(),
+      author: {
+        '@type': 'Person',
+        name: item.author?.name || 'IIC Editorial Team',
+        jobTitle: item.author?.role || 'Contributor'
+      }
+    }),
     description: item.description,
     image: item.image,
-    datePublished: new Date(item.date).toISOString(),
-    dateModified: new Date(item.date).toISOString(), // Fallback to datePublished if no explicit modified date
-    author: {
-      '@type': 'Person',
-      name: item.author?.name || 'IIC Editorial Team',
-      jobTitle: item.author?.role || 'Contributor'
-    },
     publisher: {
       '@type': 'CollegeOrUniversity',
       name: 'Itahari International College',

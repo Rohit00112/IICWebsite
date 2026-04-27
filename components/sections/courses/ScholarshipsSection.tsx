@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
+import Tilt from '../../effects/Tilt';
 
 const ScholarshipsSection = () => {
   return (
@@ -34,43 +35,47 @@ const ScholarshipsSection = () => {
           {/* Right Cards */}
           <AnimeStagger
             className="w-full lg:w-[65%] flex flex-col md:flex-row gap-8"
-            selector=".scholarship-card"
+            selector=".scholarship-card-wrapper"
             staggerDelay={140}
             translateY={34}
             duration={820}
           >
             {/* Card 1: Academic Excellence */}
-            <div className="scholarship-card flex-1 bg-white p-10 rounded-[32px] shadow-xl shadow-[#21409A]/5 border border-white flex flex-col" style={{ willChange: 'transform, opacity' }}>
-              <span className="text-[14px] font-bold text-[#1a1a1a] mb-6 uppercase tracking-wider block">
-                Academic <br /> Excellence
-              </span>
-              <h3 className="text-[28px] font-black text-[#21409A] mb-4 leading-tight">
-                Up to 100% <br /> Tuition
-              </h3>
-              <p className="text-gray-400 text-sm leading-relaxed mb-10 font-medium">
-                Awarded to top performers in their previous academic qualifications.
-              </p>
-              <button className="mt-auto w-full py-4 bg-[#1a1a1a] text-white rounded-xl font-bold text-[14px] hover:bg-[#21409A] transition-colors flex items-center justify-center gap-2">
-                Learn More
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
+            <Tilt strength={10} className="scholarship-card-wrapper flex-1 w-full h-full">
+              <div className="scholarship-card h-full bg-white p-10 rounded-[32px] shadow-xl shadow-[#21409A]/5 border border-white flex flex-col" style={{ willChange: 'transform, opacity' }}>
+                <span className="text-[14px] font-bold text-[#1a1a1a] mb-6 uppercase tracking-wider block">
+                  Academic <br /> Excellence
+                </span>
+                <h3 className="text-[28px] font-black text-[#21409A] mb-4 leading-tight">
+                  Up to 100% <br /> Tuition
+                </h3>
+                <p className="text-gray-400 text-sm leading-relaxed mb-10 font-medium">
+                  Awarded to top performers in their previous academic qualifications.
+                </p>
+                <button className="mt-auto w-full py-4 bg-[#1a1a1a] text-white rounded-xl font-bold text-[14px] hover:bg-[#21409A] transition-colors flex items-center justify-center gap-2">
+                  Learn More
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </Tilt>
 
             {/* Card 2: Need Guidance */}
-            <div className="scholarship-card flex-1 bg-white/50 backdrop-blur-sm p-10 rounded-[32px] border border-white/60 flex flex-col" style={{ willChange: 'transform, opacity' }}>
-              <h3 className="text-[20px] font-bold text-[#1a1a1a] mb-6">
-                Need Guidance?
-              </h3>
-              <p className="text-gray-500 text-sm leading-relaxed mb-10 font-medium">
-                Not sure which program is right for you? Our admissions team is here to help
-                you navigate your options.
-              </p>
-              <button className="mt-auto w-full py-4 border-2 border-[#1a1a1a]/10 bg-white/80 text-[#1a1a1a] rounded-xl font-bold text-[14px] hover:border-[#21409A] hover:text-[#21409A] transition-all">
-                Contact Admissions
-              </button>
-            </div>
+            <Tilt strength={6} className="scholarship-card-wrapper flex-1 w-full h-full">
+              <div className="scholarship-card h-full bg-white/50 backdrop-blur-sm p-10 rounded-[32px] border border-white/60 flex flex-col" style={{ willChange: 'transform, opacity' }}>
+                <h3 className="text-[20px] font-bold text-[#1a1a1a] mb-6">
+                  Need Guidance?
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-10 font-medium">
+                  Not sure which program is right for you? Our admissions team is here to help
+                  you navigate your options.
+                </p>
+                <button className="mt-auto w-full py-4 border-2 border-[#1a1a1a]/10 bg-white/80 text-[#1a1a1a] rounded-xl font-bold text-[14px] hover:border-[#21409A] hover:text-[#21409A] transition-all">
+                  Contact Admissions
+                </button>
+              </div>
+            </Tilt>
           </AnimeStagger>
 
         </div>

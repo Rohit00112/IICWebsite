@@ -13,6 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/courses',
     '/news',
     '/life-at-iic',
+    '/admissions',
   ];
 
   const staticEntries = staticRoutes.map((route) => ({
