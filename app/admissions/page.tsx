@@ -71,6 +71,35 @@ export default function AdmissionsPage() {
                   "@type": "Offer",
                   "category": "Admission"
                 }
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "What are the entry requirements for Itahari International College?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "The minimum entry requirement for our undergraduate programs is a 2.0 CGPA in +2/NEB or equivalent, along with proficiency in English."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Which degree programs does IIC offer?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "IIC offers BSc (Hons) Computing and BBA (Hons) Business Administration in partnership with London Metropolitan University, UK."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Are the degrees offered at IIC internationally recognized?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes, our programs are awarded by London Metropolitan University, UK, and are fully recognized by the Ministry of Education, Nepal and globally."
+                    }
+                  }
+                ]
               }
             ]
           })
