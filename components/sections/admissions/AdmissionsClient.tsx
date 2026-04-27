@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import AdmissionsHero from './AdmissionsHero';
 import ApplicationForm from './ApplicationForm';
 import AdmissionsSidebar from './AdmissionsSidebar';
-import Navbar from '@/components/layout/Navbar';
 
 export default function AdmissionsClient() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -23,8 +22,6 @@ export default function AdmissionsClient() {
 
   return (
     <>
-      <Navbar />
-
       <AdmissionsHero currentStep={currentStep} />
 
       {/* Main Content Grid */}

@@ -1,0 +1,82 @@
+'use client';
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+
+const NewsLoader = () => {
+  return (
+    <div className="fixed inset-0 z-[1000] bg-white flex flex-col items-center justify-center p-6 text-center">
+      {/* Background Decorative Element */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#21409A] via-transparent to-transparent" />
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative flex flex-col items-center"
+      >
+        {/* Logo */}
+        <motion.div
+          animate={{ 
+            scale: [1, 1.05, 1],
+            opacity: [0.8, 1, 0.8] 
+          }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity,
+            ease: "easeInOut" 
+          }}
+          className="relative w-48 md:w-64 h-16 md:h-20 mb-8"
+        >
+          <Image
+            src="/images/common/iic_logo.png"
+            alt="IIC Logo"
+            fill
+            className="object-contain"
+            priority
+          />
+        </motion.div>
+
+        <div className="w-48 md:w-64">
+          <div className="flex justify-between items-end mb-2">
+            <span className="text-[#21409A] text-[10px] font-black tracking-widest uppercase opacity-50">
+              Fetching News
+            </span>
+            <motion.span 
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="text-[#21409A] text-[10px] font-black tracking-widest uppercase"
+            >
+              Loading
+            </motion.span>
+          </div>
+          
+          {/* Indeterminate Progress Bar */}
+          <div className="h-1.5 w-full bg-blue-50 rounded-full overflow-hidden relative">
+            <motion.div
+              animate={{ 
+                x: ["-100%", "200%"],
+              }}
+              transition={{ 
+                duration: 1.8, 
+                repeat: Infinity,
+                ease: "easeInOut" 
+              }}
+              className="absolute inset-y-0 w-1/3 bg-[#21409A] rounded-full"
+            />
+          </div>
+        </div>
+
+        {/* Subtle Text below */}
+        <p className="mt-6 text-[#21409A]/40 text-[9px] font-bold uppercase tracking-[0.3em]">
+          Itahari International College
+        </p>
+      </motion.div>
+    </div>
+  );
+};
+
+export default NewsLoader;

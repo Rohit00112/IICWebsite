@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, Transition } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { ReactNode, useContext, useRef } from 'react';
+import { ReactNode, useContext, useRef, useState, useEffect } from 'react';
 import { LayoutRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 function FrozenRoute({ children }: { children: ReactNode }) {
@@ -24,6 +24,16 @@ const transition: Transition = {
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const nbOfSlices = 20;
+  const [isFirstMount, setIsFirstMount] = useState(true);
+
+  useEffect(() => {
+    setIsFirstMount(false);
+  }, []);
+
+  // Skip transitions for home page - only preloader there
+  if (pathname === '/') {
+    return <FrozenRoute>{children}</FrozenRoute>;
+  }
 
   return (
     <AnimatePresence mode="wait">
@@ -69,7 +79,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
           {[...Array(nbOfSlices)].map((_, i) => (
             <motion.div
               key={i}
-              initial={{ scaleY: 1 }}
+              initial={isFirstMount ? { scaleY: 0 } : { scaleY: 1 }}
               animate={{ scaleY: 0 }}
               exit={{ scaleY: 0 }}
               transition={{
