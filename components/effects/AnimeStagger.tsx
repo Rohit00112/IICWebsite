@@ -16,6 +16,8 @@ interface AnimeStaggerProps {
   translateY?: number;
   /** Duration per element */
   duration?: number;
+  /** Initial delay before starting the animation in seconds */
+  delay?: number;
   /** Only animate once */
   once?: boolean;
 }
@@ -32,6 +34,7 @@ const AnimeStagger = ({
   from = 'first',
   translateY = 30,
   duration = 700,
+  delay = 0,
   once = true,
 }: AnimeStaggerProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -62,6 +65,7 @@ const AnimeStagger = ({
         duration,
         delay: stagger(staggerDelay, {
           from: from === 'center' ? 'center' : from === 'last' ? 'last' : 'first',
+          start: delay * 1000,
         }),
         ease: spring({ mass: 1, stiffness: 100, damping: 12, velocity: 0 }),
       });
@@ -72,7 +76,7 @@ const AnimeStagger = ({
         (t as HTMLElement).style.transform = 'none';
         });
     }
-  }, [duration, from, prefersReducedMotion, selector, staggerDelay, translateY]);
+  }, [duration, from, prefersReducedMotion, selector, staggerDelay, translateY, delay]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -106,7 +110,7 @@ const AnimeStagger = ({
     observer.observe(el);
 
     return () => observer.disconnect();
-  }, [once, prefersReducedMotion, runAnimation, selector, translateY]);
+  }, [once, prefersReducedMotion, runAnimation, selector, translateY, delay]);
 
   return (
     <div ref={containerRef} className={className}>
