@@ -6,10 +6,11 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 interface TiltProps {
   children: React.ReactNode;
   className?: string;
+  innerClassName?: string;
   strength?: number;
 }
 
-const Tilt = ({ children, className = '', strength = 15 }: TiltProps) => {
+const Tilt = ({ children, className = '', innerClassName = '', strength = 15 }: TiltProps) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -50,6 +51,7 @@ const Tilt = ({ children, className = '', strength = 15 }: TiltProps) => {
       className={`relative ${className}`}
     >
       <div
+        className={`w-full h-full ${innerClassName}`}
         style={{
           transform: "translateZ(30px)",
           transformStyle: "preserve-3d",
