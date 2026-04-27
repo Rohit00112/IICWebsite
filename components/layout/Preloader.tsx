@@ -16,10 +16,20 @@ const Preloader = () => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Only show preloader once per session
+    const hasShown = sessionStorage.getItem('iic_preloader_shown');
+    if (hasShown) {
+      setIsVisible(false);
+      return;
+    }
+
     let cleanup: (() => void) | undefined;
 
     if (prefersReducedMotion) {
-      const timer = setTimeout(() => setIsVisible(false), 300);
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        sessionStorage.setItem('iic_preloader_shown', 'true');
+      }, 300);
       return () => clearTimeout(timer);
     }
 
@@ -88,7 +98,10 @@ const Preloader = () => {
         // Remove from DOM after animation
         tl.add({}, {
           duration: 100,
-          onComplete: () => setIsVisible(false),
+          onComplete: () => {
+            sessionStorage.setItem('iic_preloader_shown', 'true');
+            setIsVisible(false);
+          },
         });
 
         cleanup = () => {
@@ -98,7 +111,10 @@ const Preloader = () => {
         };
       } catch {
         // Fallback: just hide after delay
-        const timer = setTimeout(() => setIsVisible(false), 2500);
+        const timer = setTimeout(() => {
+          sessionStorage.setItem('iic_preloader_shown', 'true');
+          setIsVisible(false);
+        }, 2500);
         cleanup = () => clearTimeout(timer);
       }
     })();
