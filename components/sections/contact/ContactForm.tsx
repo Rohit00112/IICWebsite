@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Magnetic from '../../effects/Magnetic';
 import Link from 'next/link';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,10 +29,15 @@ const ContactForm = () => {
           
           {/* Left Column: Contact Directory */}
           <div className="lg:col-span-5">
-            <h2 className="text-[32px] md:text-[40px] font-bold text-[#1a1a1a] mb-3 font-sora tracking-tight">Contact Directory</h2>
+            <AnimeReveal
+              as="h2"
+              text="Contact Directory"
+              className="text-[32px] md:text-[40px] font-bold text-[#1a1a1a] mb-3 font-sora tracking-tight"
+              staggerFrom="first"
+            />
             <p className="text-gray-500 mb-12 font-medium text-sm md:text-base">Reach out directly to the department that best suits your needs.</p>
             
-            <div className="space-y-6">
+            <AnimeStagger className="space-y-6" selector=":scope > *" staggerDelay={120} translateY={28} duration={760}>
               {/* WhatsApp Fast-Track - NEW CRO ADDITION */}
               <motion.div 
                 initial={{ opacity: 0, x: -20 }}
@@ -143,7 +150,7 @@ const ContactForm = () => {
                   </div>
                 </div>
               </motion.div>
-            </div>
+            </AnimeStagger>
           </div>
 
           {/* Right Column: Send us a Message */}
@@ -188,7 +195,12 @@ const ContactForm = () => {
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-[#1a1a1a] font-sora tracking-tight">Send us a Message</h2>
+                  <AnimeReveal
+                    as="h2"
+                    text="Send us a Message"
+                    className="text-3xl font-bold text-[#1a1a1a] font-sora tracking-tight"
+                    staggerFrom="first"
+                  />
                   <p className="text-gray-400 text-[13px] md:text-sm mt-2 font-medium leading-relaxed max-w-sm">
                     Fill out the form below and our team will get back to you within 24-48 working hours.
                   </p>

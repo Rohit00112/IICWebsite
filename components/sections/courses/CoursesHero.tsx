@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
+import AnimeReveal from '../../effects/AnimeReveal';
 
 const CoursesHero = () => {
   const containerRef = useRef(null);
@@ -38,11 +39,12 @@ const CoursesHero = () => {
             className="text-[#333333] text-2xl md:text-[42px] font-bold mb-2 block tracking-tight justify-center"
           />
 
-          <RevealText 
+          <AnimeReveal
             as="h1"
             text="Academic Programs"
             className="text-4xl md:text-[96px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight uppercase justify-center"
-            delay={0.3}
+            staggerFrom="center"
+            delay={0.2}
           />
 
           <motion.p 

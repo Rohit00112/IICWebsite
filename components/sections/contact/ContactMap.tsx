@@ -4,6 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Magnetic from '../../effects/Magnetic';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const ContactMap = () => {
   return (
@@ -37,14 +39,19 @@ const ContactMap = () => {
               </svg>
             </div>
             
-            <h2 className="text-3xl font-bold text-[#1a1a1a] mb-4 font-sora tracking-tight">Visit Our Campus</h2>
+            <AnimeReveal
+              as="h2"
+              text="Visit Our Campus"
+              className="text-3xl font-bold text-[#1a1a1a] mb-4 font-sora tracking-tight"
+              staggerFrom="first"
+            />
             <p className="text-gray-500 font-medium mb-10 leading-relaxed">
               Sundarharaicha-4, Itahari<br />
               Sunsari, Koshi Province<br />
               Nepal, 56705
             </p>
 
-            <div className="space-y-4">
+            <AnimeStagger className="space-y-4" selector=":scope > *" staggerDelay={120} translateY={20} duration={700}>
               <Magnetic strength={0.2}>
                 <button className="w-full py-4 bg-[#1a1a1a] text-white font-bold rounded-xl shadow-lg hover:bg-black transition-all">
                   Get Directions
@@ -55,7 +62,7 @@ const ContactMap = () => {
                 <span>Explore Campus Life</span>
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </button>
-            </div>
+            </AnimeStagger>
           </motion.div>
 
           {/* Right: Map Embed (Pinned) */}

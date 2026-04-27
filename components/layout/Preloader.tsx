@@ -1,70 +1,194 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import usePrefersReducedMotion from '@/components/effects/usePrefersReducedMotion';
 
 const Preloader = () => {
   const [isVisible, setIsVisible] = useState(true);
-  const [isLogoVisible, setIsLogoVisible] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const taglineRef = useRef<HTMLParagraphElement>(null);
+  const curtainLeftRef = useRef<HTMLDivElement>(null);
+  const curtainRightRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Stage 1: Reveal logo after a short delay
-    const logoTimer = setTimeout(() => {
-      setIsLogoVisible(true);
-    }, 300);
+    let cleanup: (() => void) | undefined;
 
-    // Stage 2: Start fade-out of the whole overlay
-    const hideTimer = setTimeout(() => {
-      setIsVisible(false);
-    }, 2400);
+    if (prefersReducedMotion) {
+      const timer = setTimeout(() => setIsVisible(false), 300);
+      return () => clearTimeout(timer);
+    }
 
-    // cleanup
+    (async () => {
+      try {
+        const { createTimeline, spring } = await import('animejs');
+
+        const tl = createTimeline({
+          defaults: {
+            ease: spring({ mass: 1, stiffness: 80, damping: 10, velocity: 0 }),
+          },
+        });
+
+        // Stage 1: Logo enters with spring bounce
+        tl.add(logoRef.current!, {
+          opacity: [0, 1],
+          scale: [0.85, 1],
+          translateY: [30, 0],
+          duration: 1000,
+          delay: 300,
+        });
+
+        // Stage 2: Progress bar fills (overlaps with logo)
+        tl.add(progressRef.current!, {
+          scaleX: [0, 1],
+          duration: 1400,
+          ease: 'out(4)',
+        }, '-=600');
+
+        // Stage 3: Tagline characters stagger in
+        if (taglineRef.current) {
+          const chars = taglineRef.current.querySelectorAll('.preloader-char');
+          if (chars.length > 0) {
+            const { stagger } = await import('animejs');
+            tl.add(chars, {
+              opacity: [0, 1],
+              translateY: [15, 0],
+              duration: 500,
+              delay: stagger(25),
+            }, '-=800');
+          }
+        }
+
+        // Stage 4: Fade out central content
+        tl.add(contentRef.current!, {
+          opacity: 0,
+          scale: 0.95,
+          duration: 600,
+          delay: 800,
+          ease: 'inOut(3)',
+        });
+
+        // Stage 5: Curtain split exit
+        tl.add(curtainLeftRef.current!, {
+          translateX: [0, '-100%'],
+          duration: 1200,
+          ease: 'inOut(4)',
+        }, '-=300');
+
+        tl.add(curtainRightRef.current!, {
+          translateX: [0, '100%'],
+          duration: 1200,
+          ease: 'inOut(4)',
+        }, '-=1200');
+
+        // Remove from DOM after animation
+        tl.add({}, {
+          duration: 100,
+          onComplete: () => setIsVisible(false),
+        });
+
+        cleanup = () => {
+          if (tl && typeof tl.revert === 'function') {
+            tl.revert();
+          }
+        };
+      } catch {
+        // Fallback: just hide after delay
+        const timer = setTimeout(() => setIsVisible(false), 2500);
+        cleanup = () => clearTimeout(timer);
+      }
+    })();
+
     return () => {
-      clearTimeout(logoTimer);
-      clearTimeout(hideTimer);
+      cleanup?.();
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   if (!isVisible) return null;
 
-  return (
-    <div 
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-1000 ease-in-out ${isLogoVisible && !isVisible ? 'opacity-0' : 'opacity-100'}`}
-      style={{ opacity: isVisible ? 1 : 0 }}
-    >
-      <div className="flex flex-col items-center">
-        {/* Animated Branding Container */}
-        <div 
-          className={`relative h-24 md:h-32 w-64 md:w-96 transition-all duration-[1200ms] cubic-bezier(0.34, 1.56, 0.64, 1) transform ${
-            isLogoVisible ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-0 translate-y-10'
-          }`}
+  // Split tagline into words, then each word into characters
+  const tagline = 'Unleashing Your Potential';
+  const taglineContent = tagline.split(' ').map((word, wordIndex, wordsArray) => (
+    <span key={wordIndex} className="inline-block whitespace-nowrap">
+      {word.split('').map((char, charIndex) => (
+        <span
+          key={`${wordIndex}-${charIndex}`}
+          className="preloader-char inline-block"
+          style={{ opacity: 0 }}
         >
-          <Image
-            src="/images/common/iic_logo.png"
-            alt="Itahari International College Branding"
-            fill
-            sizes="(max-width: 768px) 256px, 384px"
-            className="object-contain"
-            priority
-          />
-        </div>
+          {char}
+        </span>
+      ))}
+      {/* Add space after word if it's not the last word */}
+      {wordIndex < wordsArray.length - 1 && (
+        <span className="inline-block">&nbsp;</span>
+      )}
+    </span>
+  ));
 
-        {/* Reveal Progress Accent - Using IIC Blue */}
-        <div className="mt-8 w-48 md:w-64 h-1 bg-gray-100 rounded-full overflow-hidden">
-          <div 
-            className={`h-full bg-[#1e3a8a] transition-all duration-[2000ms] ease-out ${
-              isLogoVisible ? 'w-full' : 'w-0'
-            }`}
-          />
-        </div>
+  return (
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-[9999] overflow-hidden"
+      aria-hidden="true"
+    >
+      {/* Curtain Left */}
+      <div
+        ref={curtainLeftRef}
+        className="absolute inset-0 w-1/2 left-0 bg-white z-10"
+        style={{ willChange: 'transform' }}
+      />
+      {/* Curtain Right */}
+      <div
+        ref={curtainRightRef}
+        className="absolute inset-0 w-1/2 right-0 left-auto bg-white z-10"
+        style={{ willChange: 'transform' }}
+      />
 
-        {/* Tagline Reveal */}
-        <div className="mt-4 h-6 overflow-hidden">
-          <p className={`text-[#1e3a8a] text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase transition-all duration-1000 delay-500 transform ${
-            isLogoVisible ? 'translate-y-0 opacity-80' : 'translate-y-full opacity-0'
-          }`}>
-            Unleashing Your Potential
-          </p>
+      {/* Content (sits above curtains) */}
+      <div 
+        ref={contentRef}
+        className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+      >
+        <div className="flex flex-col items-center">
+          {/* Logo */}
+          <div
+            ref={logoRef}
+            className="relative h-24 md:h-32 w-64 md:w-96"
+            style={{ opacity: 0, willChange: 'transform, opacity' }}
+          >
+            <Image
+              src="/images/common/iic_logo.png"
+              alt="Itahari International College Branding"
+              fill
+              sizes="(max-width: 768px) 256px, 384px"
+              className="object-contain"
+              priority
+            />
+          </div>
+
+          {/* Progress Bar */}
+          <div className="mt-8 w-48 md:w-64 h-1 bg-gray-100/20 rounded-full overflow-hidden">
+            <div
+              ref={progressRef}
+              className="h-full bg-[#1e3a8a] rounded-full origin-left"
+              style={{ transform: 'scaleX(0)', willChange: 'transform' }}
+            />
+          </div>
+
+          {/* Tagline */}
+          <div className="mt-4 h-6 overflow-hidden">
+            <p
+              ref={taglineRef}
+              className="text-[#1e3a8a] text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase"
+            >
+              {taglineContent}
+            </p>
+          </div>
         </div>
       </div>
     </div>

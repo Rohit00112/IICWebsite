@@ -4,12 +4,18 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import AnimeReveal from '../../effects/AnimeReveal';
+import type { NewsItem } from '@/lib/news';
 
 interface NewsDetailHeroProps {
-  item: any;
+  item: NewsItem;
 }
 
 const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
+  const authorName = item.author?.name || 'IIC Editorial Team';
+  const authorRole = item.author?.role || 'Contributor';
+  const authorAvatar = item.author?.avatar || '/images/common/iic_logo.png';
+
   return (
     <section className="relative w-full h-[60vh] md:h-[70vh] min-h-[500px] flex items-end pb-12 overflow-hidden bg-black">
       {/* Background Image with Cinematic Parallax-like Zoom */}
@@ -56,14 +62,13 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
             {item.category}
           </motion.span>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
+          <AnimeReveal
+            as="h1"
+            text={item.title}
             className="text-4xl md:text-6xl lg:text-7xl font-black text-white font-sora leading-tight mb-8"
-          >
-            {item.title}
-          </motion.h1>
+            staggerFrom="first"
+            delay={0.2}
+          />
 
           <motion.div 
             initial={{ opacity: 0 }}
@@ -73,11 +78,11 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
           >
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/20">
-                <Image src={item.author.avatar} alt={item.author.name} fill sizes="40px" className="object-cover" />
+                <Image src={authorAvatar} alt={authorName} fill sizes="40px" className="object-cover" />
               </div>
               <div>
-                <p className="text-xs font-bold">{item.author.name}</p>
-                <p className="text-[10px] text-white/80">{item.author.role}</p>
+                <p className="text-xs font-bold">{authorName}</p>
+                <p className="text-[10px] text-white/80">{authorRole}</p>
               </div>
             </div>
             
