@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
+import AnimeReveal from '../../effects/AnimeReveal';
 
 const AboutSection = () => {
   const containerRef = useRef(null);
@@ -32,15 +33,14 @@ const AboutSection = () => {
         <Magnetic strength={0.2}>
           <h2 className="text-4xl md:text-7xl lg:text-8xl font-bold text-[#1a1a1a] tracking-tight leading-[1.1] mb-12">
             Shape Your <br />
-            <div className="overflow-hidden inline-block align-bottom">
-              <motion.span
-                initial={{ y: "100%" }}
-                animate={isInView ? { y: 0 } : {}}
-                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[#74C044] block"
-              >
-                FUTURE
-              </motion.span>
+            <div className="inline-block align-bottom">
+              <AnimeReveal
+                text="FUTURE"
+                as="span"
+                className="text-[#74C044]"
+                staggerFrom="center"
+                delay={0.3}
+              />
             </div>
             <br /> In Nepal
           </h2>

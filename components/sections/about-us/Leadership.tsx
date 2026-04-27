@@ -3,6 +3,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const Leadership = () => {
   return (
@@ -19,17 +21,16 @@ const Leadership = () => {
             <span className="text-[#74C044] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
               Message from the
             </span>
-            <h2 className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-sora leading-tight">
-              Our <span className="text-[#74C044]">Chairman</span>
-            </h2>
-            <div className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora">
-              <p>
-                "At Itahari International College, we believe that education is the most powerful weapon which you can use to change the world. Our commitment is to provide a platform where students can achieve their highest potential."
-              </p>
-              <p>
-                "Through our partnership with London Metropolitan University, we bring a global standard of learning to Nepal, ensuring our graduates are competitive on the world stage."
-              </p>
-            </div>
+            <AnimeReveal
+              as="h2"
+              text="Our Chairman"
+              className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-sora leading-tight"
+              staggerFrom="first"
+            />
+            <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
+              <p>{`"At Itahari International College, we believe that education is the most powerful weapon which you can use to change the world. Our commitment is to provide a platform where students can achieve their highest potential."`}</p>
+              <p>{`"Through our partnership with London Metropolitan University, we bring a global standard of learning to Nepal, ensuring our graduates are competitive on the world stage."`}</p>
+            </AnimeStagger>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Sulav Budhathoki</p>
               <p className="text-[#74C044] font-bold uppercase tracking-widest text-sm mt-1">Chairman, ING Group</p>
@@ -66,17 +67,16 @@ const Leadership = () => {
             <span className="text-[#21409A] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
               Message from the
             </span>
-            <h2 className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-sora leading-tight">
-              What our <span className="text-[#21409A]">CEO</span> has to say
-            </h2>
-            <div className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora">
-              <p>
-                "IIC is more than just a college; it's a community of innovators and leaders. We focus on practical learning and industry exposure to make sure every student is ready for the real world."
-              </p>
-              <p>
-                "Our state-of-the-art facilities and dedicated faculty are here to support you in every step of your professional journey."
-              </p>
-            </div>
+            <AnimeReveal
+              as="h2"
+              text="What our CEO has to say"
+              className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-sora leading-tight"
+              staggerFrom="first"
+            />
+            <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
+              <p>{`"IIC is more than just a college; it's a community of innovators and leaders. We focus on practical learning and industry exposure to make sure every student is ready for the real world."`}</p>
+              <p>{`"Our state-of-the-art facilities and dedicated faculty are here to support you in every step of your professional journey."`}</p>
+            </AnimeStagger>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Satyabrat Koirala</p>
               <p className="text-[#21409A] font-bold uppercase tracking-widest text-sm mt-1">CEO, Itahari International College</p>
@@ -113,13 +113,12 @@ const Leadership = () => {
             <span className="text-white/40 font-bold tracking-[0.3em] uppercase text-xs mb-10 block font-sora">
               The IIC Experience
             </span>
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-sora leading-[1.5] font-extralight text-white/80">
-              Education here extends far beyond the <br className="hidden md:block" />
-              four walls of a classroom. It’s about <br className="hidden md:block" />
-              building character, fostering innovation, <br className="hidden md:block" />
-              and creating a community that inspires <br className="hidden md:block" />
-              greatness every single day.
-            </h2>
+            <AnimeReveal
+              as="h2"
+              text="Education here extends far beyond the four walls of a classroom. It’s about building character, fostering innovation, and creating a community that inspires greatness every single day."
+              className="text-2xl md:text-4xl lg:text-5xl font-sora leading-[1.5] font-extralight text-white/80 justify-center"
+              staggerFrom="center"
+            />
           </div>
         </motion.div>
       </div>

@@ -2,16 +2,11 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const IngSection = () => {
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const xText = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
     <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-[#f4f7fa] overflow-hidden border-t border-gray-100">
@@ -21,18 +16,24 @@ const IngSection = () => {
           <h3 className="text-xl md:text-2xl font-bold text-[#1a1a1a] mb-2 font-sora">
             Be A Part Of
           </h3>
-          <motion.h2 
-            style={{ x: xText }}
-            className="text-4xl md:text-7xl font-black text-[#76bc43] leading-[1] tracking-tight font-sora"
-          >
-            SOMETHING BIGGER
-          </motion.h2>
+          <AnimeReveal
+            as="h2"
+            text="SOMETHING BIGGER"
+            className="text-4xl md:text-7xl font-black text-[#76bc43] leading-[1] tracking-tight font-sora justify-center"
+            staggerFrom="center"
+          />
         </div>
 
         {/* Content Section */}
-        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+        <AnimeStagger
+          className="flex flex-col md:flex-row items-center gap-8 md:gap-16"
+          selector=".ing-panel"
+          staggerDelay={140}
+          translateY={36}
+          duration={850}
+        >
           {/* Left: ING Logo */}
-          <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+          <div className="ing-panel w-full md:w-1/2 flex justify-center md:justify-end" style={{ willChange: 'transform, opacity' }}>
             <div className="relative w-full max-w-[320px] md:max-w-[380px] aspect-[1.6/1]">
               <Image
                 src="/images/home/ing.png"
@@ -45,7 +46,7 @@ const IngSection = () => {
           </div>
 
           {/* Right: Description */}
-          <div className="w-full md:w-1/2 flex flex-col items-start text-left">
+          <div className="ing-panel w-full md:w-1/2 flex flex-col items-start text-left" style={{ willChange: 'transform, opacity' }}>
             <p className="text-gray-500 text-base md:text-lg font-medium leading-relaxed mb-8 max-w-xl">
               Transforming Lives Through Innovation & Education with ingenuity at the forefront of all our decisions, we strive to become a contributive factor in the betterment of Nepal and society in general by providing practical career centric education and innovations in technology. ING houses state-of-the-art organizations in a variety of industries which include Tech, Education and More.
             </p>
@@ -56,7 +57,7 @@ const IngSection = () => {
               Learn More
             </a>
           </div>
-        </div>
+        </AnimeStagger>
       </div>
     </section>
   );

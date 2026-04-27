@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const IngSection = () => {
   return (
@@ -18,14 +19,15 @@ const IngSection = () => {
         </div>
 
         {/* Main Green Card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
+        <AnimeStagger
           className="bg-[#568E33] rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row items-stretch p-8 md:p-16 max-w-6xl mx-auto gap-12"
+          selector=".about-ing-panel"
+          staggerDelay={140}
+          translateY={36}
+          duration={850}
         >
           {/* Left Content */}
-          <div className="lg:w-[55%] flex flex-col text-white">
+          <div className="about-ing-panel lg:w-[55%] flex flex-col text-white" style={{ willChange: 'transform, opacity' }}>
             <div className="w-14 h-14 bg-[#3E6B24] rounded-xl flex items-center justify-center mb-10 shadow-lg">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
@@ -33,11 +35,12 @@ const IngSection = () => {
               </svg>
             </div>
 
-            <h3 className="text-4xl md:text-5xl font-black mb-8 font-sora leading-[1.1] tracking-tight">
-              Powered by <br />
-              Innovate Nepal <br />
-              Group
-            </h3>
+            <AnimeReveal
+              as="h3"
+              text="Powered by Innovate Nepal Group"
+              className="text-4xl md:text-5xl font-black mb-8 font-sora leading-[1.1] tracking-tight"
+              staggerFrom="first"
+            />
 
             <p className="text-white/90 text-base md:text-lg font-medium leading-relaxed mb-10 font-sora">
               IIC is proud to be a part of the Innovate Nepal Group (ING), a pioneering organization that has revolutionized higher education in Nepal. This affiliation ensures our students benefit from a vast network of industry connections, shared resources, and a legacy of academic excellence.
@@ -62,7 +65,7 @@ const IngSection = () => {
           </div>
 
           {/* Right Content */}
-          <div className="lg:w-[45%] flex flex-col gap-8">
+          <div className="about-ing-panel lg:w-[45%] flex flex-col gap-8" style={{ willChange: 'transform, opacity' }}>
             <div className="text-white">
               <p className="text-xs font-bold tracking-[0.2em] uppercase mb-8 opacity-80">ACADEMIC PARTNERS & ACCREDITATIONS</p>
               <div className="grid grid-cols-2 gap-4">
@@ -108,7 +111,7 @@ const IngSection = () => {
               </p>
             </div>
           </div>
-        </motion.div>
+        </AnimeStagger>
       </div>
     </section>
   );

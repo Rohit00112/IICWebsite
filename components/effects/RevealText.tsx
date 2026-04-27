@@ -19,7 +19,7 @@ const RevealText = ({ text, className = '', delay = 0, as: Tag = 'div' }: Reveal
   return (
     <Tag ref={ref} className={`flex flex-wrap ${className}`}>
       {words.map((word, i) => (
-        <span key={i} className="relative overflow-hidden inline-block mr-[0.2em] mb-[0.1em]">
+        <span key={i} className="relative overflow-hidden inline-block mr-[0.2em] px-1 -mx-1 py-1 -my-1">
           <motion.span
             initial={{ y: "100%" }}
             animate={isInView ? { y: 0 } : { y: "100%" }}

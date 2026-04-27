@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import RevealText from '../../effects/RevealText';
+import AnimeReveal from '../../effects/AnimeReveal';
 
 const NewsHero = () => {
   return (
@@ -13,17 +13,16 @@ const NewsHero = () => {
           animate={{ opacity: 1, y: 0 }}
           className="inline-flex items-center px-6 py-2 bg-[#00B2A9] text-white rounded-full text-[10px] font-bold uppercase tracking-widest mb-10 shadow-lg shadow-[#00B2A9]/20"
         >
-          Discover What's Happening
+          Discover What&apos;s Happening
         </motion.div>
         
         <div className="flex flex-col items-center">
-          <div className="flex flex-wrap justify-center mb-8">
-            <RevealText 
-              as="h1"
-              text="News & Events"
-              className="text-6xl md:text-8xl font-black font-sora text-[#1a1a1a]"
-            />
-          </div>
+          <AnimeReveal
+            as="h1"
+            text="News & Events"
+            className="text-6xl md:text-8xl font-black font-sora text-[#1a1a1a] mb-8 justify-center"
+            staggerFrom="center"
+          />
           
           <motion.p
             initial={{ opacity: 0 }}
