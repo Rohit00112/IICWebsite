@@ -5,8 +5,10 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
-import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
+import type { CourseItem } from '@/lib/courses';
 
 interface Module {
   name: string;
@@ -73,7 +75,7 @@ interface CourseData {
 
 import { sanitizeHtml } from '@/lib/sanitize';
 
-const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, relatedCourses?: any[] }) => {
+const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, relatedCourses?: CourseItem[] }) => {
   const [activeYear, setActiveYear] = useState(0);
   const [activeTab, setActiveTab] = useState<'overview' | 'outcomes'>('overview');
   const [activeFAQ, setActiveFAQ] = useState(0);
@@ -117,9 +119,10 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
             </span>
           </motion.div>
 
-          <RevealText 
+          <AnimeReveal
             text={course.title}
             className="text-6xl md:text-[100px] font-bold text-white mb-10 leading-[1] tracking-tight max-w-[900px] mx-auto justify-center"
+            staggerFrom="center"
           />
 
           <motion.p
@@ -210,7 +213,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           <div className="lg:col-span-5 bg-white p-12 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-white/50">
             <h3 className="text-2xl font-bold text-[#1a1a1a] mb-10">Program Details</h3>
             
-            <div className="space-y-8">
+            <AnimeStagger className="space-y-8" selector=":scope > div" staggerDelay={110} translateY={22} duration={720}>
               {[
                 { label: 'Level', value: course.details?.level || 'Undergraduate', icon: (
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -249,7 +252,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   </div>
                 </div>
               ))}
-            </div>
+            </AnimeStagger>
           </div>
         </div>
       </section>
@@ -420,7 +423,13 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                 Your <span className="text-[#21409A]">Career</span> Path
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <AnimeStagger
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+              selector=".career-card"
+              staggerDelay={100}
+              translateY={28}
+              duration={760}
+            >
               {course.careerOpportunities.map((path, i) => (
                 <motion.div 
                   key={i}
@@ -428,7 +437,8 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="bg-white/5 border border-white/10 p-8 rounded-[32px] hover:bg-white/10 transition-all"
+                  className="career-card bg-white/5 border border-white/10 p-8 rounded-[32px] hover:bg-white/10 transition-all"
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   <div className="w-12 h-12 rounded-2xl mb-6 flex items-center justify-center bg-[#21409A]/20 text-[#21409A]">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -439,7 +449,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   <p className="text-gray-400 text-sm leading-relaxed">{path.description}</p>
                 </motion.div>
               ))}
-            </div>
+            </AnimeStagger>
           </div>
         </section>
       )}
@@ -494,13 +504,20 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <AnimeStagger
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            selector=".faculty-card"
+            staggerDelay={100}
+            translateY={28}
+            duration={760}
+          >
             {course.faculty?.map((member, i) => {
               const isFirst = i === 0;
               return (
                 <div 
                   key={i} 
-                  className={`${isFirst ? 'bg-[#483d73] text-white' : 'bg-white border border-gray-100 text-[#1a1a1a]'} p-10 rounded-[32px] shadow-sm flex flex-col items-center text-center`}
+                  className={`faculty-card ${isFirst ? 'bg-[#483d73] text-white' : 'bg-white border border-gray-100 text-[#1a1a1a]'} p-10 rounded-[32px] shadow-sm flex flex-col items-center text-center`}
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   <div className={`relative w-28 h-28 rounded-full mb-8 flex items-center justify-center ${isFirst ? 'bg-[#f8d7da]/20' : 'bg-[#f0f4f8]'}`}>
                     <div className="relative w-24 h-24 rounded-full overflow-hidden shadow-inner">
@@ -523,7 +540,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                 </div>
               );
             })}
-          </div>
+          </AnimeStagger>
         </div>
       </section>
 
@@ -634,7 +651,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   </div>
                 </div>
                 <p className="text-gray-300 font-medium leading-relaxed italic">
-                  "{testi.quote}"
+                  {`"${testi.quote}"`}
                 </p>
                 <div className="mt-8 flex gap-1">
                   {[...Array(5)].map((_, j) => (
@@ -659,9 +676,15 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedCourses?.map((relCourse: any, i: number) => (
-              <Link href={`/courses/${relCourse.slug}`} key={i} className="group">
+          <AnimeStagger
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            selector=".related-course-card"
+            staggerDelay={120}
+            translateY={30}
+            duration={760}
+          >
+            {relatedCourses?.map((relCourse, i: number) => (
+              <Link href={`/courses/${relCourse.slug}`} key={i} className="related-course-card group" style={{ willChange: 'transform, opacity' }}>
                 <div className="bg-[#f8fafc] rounded-[32px] overflow-hidden border border-gray-100 transition-all hover:shadow-xl hover:-translate-y-2">
                   <div className="relative aspect-[16/9] w-full">
                     <Image
@@ -689,7 +712,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                 </div>
               </Link>
             ))}
-          </div>
+          </AnimeStagger>
         </div>
       </section>
 

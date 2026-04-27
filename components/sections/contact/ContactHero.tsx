@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import GlassSurprise from '../../effects/GlassSurprise';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const ContactHero = () => {
   return (
@@ -36,25 +37,27 @@ const ContactHero = () => {
               />
             </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 1 }}
-              className="text-white/80 text-base md:text-lg max-w-2xl leading-relaxed font-medium"
+            <AnimeStagger
+              className="flex flex-col items-center"
+              selector=":scope > *"
+              staggerDelay={160}
+              translateY={26}
+              duration={760}
             >
-              Whether you're a prospective student, a potential industry partner, or just have a general question, our team is here to help you navigate your journey with us.
-            </motion.p>
-            
-            {/* Interactive Surprise Indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ repeat: Infinity, duration: 3, delay: 2 }}
-              className="mt-12 flex flex-col items-center gap-2"
-            >
-              <div className="w-[1px] h-12 bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
-              <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-bold">Interact to Explore</span>
-            </motion.div>
+              <p className="text-white/80 text-base md:text-lg max-w-2xl leading-relaxed font-medium">
+                Whether you&apos;re a prospective student, a potential industry partner, or just have a general question, our team is here to help you navigate your journey with us.
+              </p>
+              
+              {/* Interactive Surprise Indicator */}
+              <motion.div
+                animate={{ opacity: [0, 1, 0] }}
+                transition={{ repeat: Infinity, duration: 3, delay: 2 }}
+                className="mt-12 flex flex-col items-center gap-2"
+              >
+                <div className="w-[1px] h-12 bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-bold">Interact to Explore</span>
+              </motion.div>
+            </AnimeStagger>
           </div>
         </GlassSurprise>
       </div>

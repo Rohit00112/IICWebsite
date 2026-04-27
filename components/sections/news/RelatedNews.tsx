@@ -5,6 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { NewsItem } from '@/lib/news';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 interface RelatedNewsProps {
   items: NewsItem[];
@@ -18,7 +20,12 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-16">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] font-sora mb-4">Related Stories</h2>
+            <AnimeReveal
+              as="h2"
+              text="Related Stories"
+              className="text-3xl md:text-4xl font-bold text-[#1a1a1a] font-sora mb-4"
+              staggerFrom="first"
+            />
             <p className="text-gray-500 max-w-md">Continue exploring the latest updates, events, and announcements from IIC.</p>
           </div>
           <Link href="/news" className="hidden md:flex items-center gap-2 text-[#21409A] font-bold text-sm hover:gap-3 transition-all">
@@ -27,7 +34,13 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <AnimeStagger
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          selector=".related-news-card"
+          staggerDelay={120}
+          translateY={30}
+          duration={760}
+        >
           {items.map((item, idx) => (
             <motion.div
               key={item.id}
@@ -35,6 +48,8 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
+              className="related-news-card"
+              style={{ willChange: 'transform, opacity' }}
             >
               <Link href={`/news/${item.slug}`} className="group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
                 <div className="relative h-56 overflow-hidden">
@@ -66,7 +81,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
               </Link>
             </motion.div>
           ))}
-        </div>
+        </AnimeStagger>
       </div>
     </section>
   );

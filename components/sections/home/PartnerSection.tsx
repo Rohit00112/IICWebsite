@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
+import AnimeStagger from '../../effects/AnimeStagger';
+import AnimeReveal from '../../effects/AnimeReveal';
 
 const PartnerSection = () => {
   const containerRef = useRef(null);
@@ -38,14 +40,13 @@ const PartnerSection = () => {
           </motion.span>
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
-              <motion.h1
-                initial={{ y: "100%" }}
-                animate={isInView ? { y: 0 } : {}}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              <AnimeReveal
+                text="UNIVERSITY"
+                as="h2"
                 className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora"
-              >
-                UNIVERSITY
-              </motion.h1>
+                staggerFrom="center"
+                delay={0.2}
+              />
             </Magnetic>
           </div>
         </div>
@@ -118,15 +119,19 @@ const PartnerSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-8 w-full mb-14 px-6 max-w-[1300px]">
+        <AnimeStagger
+          className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-8 w-full mb-14 px-6 max-w-[1300px]"
+          selector=".ranking-card"
+          staggerDelay={120}
+          from="center"
+          translateY={40}
+          duration={800}
+        >
           {rankingCards.map((card, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="relative aspect-[4/3] w-full overflow-hidden"
+              className="ranking-card relative aspect-[4/3] w-full overflow-hidden"
+              style={{ willChange: 'transform, opacity' }}
             >
               <Image
                 src={card}
@@ -135,9 +140,9 @@ const PartnerSection = () => {
                 sizes="(max-width: 768px) 50vw, 20vw"
                 className="object-contain"
               />
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </AnimeStagger>
 
         <div className="max-w-4xl text-center px-6 flex flex-col items-center">
           <RevealText 

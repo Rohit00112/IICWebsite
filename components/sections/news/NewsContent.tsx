@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import Magnetic from '../../effects/Magnetic';
+import AnimeStagger from '../../effects/AnimeStagger';
+import type { NewsItem } from '@/lib/news';
 
 const categories = ['All', 'News', 'Events', 'Announcements'];
 
 interface NewsContentProps {
-  initialNews: any[];
-  initialFeatured: any;
+  initialNews: NewsItem[];
+  initialFeatured: NewsItem | null;
 }
 
 const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured }) => {
@@ -40,8 +41,9 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
   if (activeCategory === 'Events') activeNormalized = 'Event';
   if (activeCategory === 'Announcements') activeNormalized = 'Announcement';
   
-  const showFeatured = (activeCategory === 'All' || featuredPost.category === activeNormalized) && 
-                      (searchQuery === '' || featuredPost.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  const showFeatured = !!featuredPost &&
+    (activeCategory === 'All' || featuredPost.category === activeNormalized) &&
+    (searchQuery === '' || featuredPost.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const upcomingEvents = [
     { id: 1, day: '15', month: 'OCTOBER', title: 'Global Tech & Innovation Summit', time: '09:00 AM - 05:00 PM' },
@@ -99,7 +101,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
           <div className="lg:col-span-8 space-y-10">
             
             {/* Featured Post Card */}
-            {showFeatured && (
+            {showFeatured && featuredPost && (
               <Link href={`/news/${featuredPost.slug}`} className="block mb-10">
                 <motion.div 
                   layout
@@ -156,7 +158,13 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
             )}
 
             {/* Sub-News Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <AnimeStagger
+              className="grid grid-cols-1 md:grid-cols-2 gap-8"
+              selector=".news-card"
+              staggerDelay={100}
+              translateY={30}
+              duration={760}
+            >
               <AnimatePresence mode="popLayout">
                 {filteredItems.map((item, idx) => (
                   <Link key={item.id} href={`/news/${item.slug}`}>
@@ -166,7 +174,8 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.4, delay: idx * 0.05 }}
-                      className="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-500 h-full flex flex-col cursor-pointer"
+                      className="news-card group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-500 h-full flex flex-col cursor-pointer"
+                      style={{ willChange: 'transform, opacity' }}
                     >
                       <div className="relative h-60 overflow-hidden">
                         <div className="absolute top-4 left-4 z-10">
@@ -209,11 +218,17 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
                   </Link>
                 ))}
               </AnimatePresence>
-            </div>
+            </AnimeStagger>
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-4 space-y-8">
+          <AnimeStagger
+            className="lg:col-span-4 space-y-8"
+            selector=":scope > div"
+            staggerDelay={120}
+            translateY={28}
+            duration={760}
+          >
             
             {/* Upcoming Events */}
             <div className="bg-white p-10 rounded-[24px] border-[2px] border-[#00B2A9] shadow-sm">
@@ -276,7 +291,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
               </div>
             </div>
 
-          </div>
+          </AnimeStagger>
 
         </div>
       </div>

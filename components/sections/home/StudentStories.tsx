@@ -2,7 +2,8 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const testimonials = [
   {
@@ -41,12 +42,6 @@ const testimonials = [
 
 const StudentStories = () => {
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const xStudents = useTransform(scrollYProgress, [0, 1], ["5%", "-5%"]);
 
   return (
     <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-[#f8fafc] overflow-hidden">
@@ -59,12 +54,13 @@ const StudentStories = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
             Stories From The
           </h2>
-          <motion.h2 
-            style={{ x: xStudents }}
-            className="text-5xl md:text-7xl font-black text-[#007a5e] leading-[0.8] tracking-tight mb-10 font-sora"
-          >
-            STUDENTS
-          </motion.h2>
+          <AnimeReveal
+            as="h2"
+            text="STUDENTS"
+            className="text-5xl md:text-7xl font-black text-[#007a5e] leading-[0.8] tracking-tight mb-10 font-sora justify-center"
+            staggerFrom="center"
+            delay={0.1}
+          />
           <p className="max-w-2xl text-gray-500 text-base md:text-lg font-medium leading-relaxed">
             Hear Directly From Our Students About How The IIC Campus Environment Shaped Their Academic And Social Lives.
           </p>
@@ -72,19 +68,22 @@ const StudentStories = () => {
 
         {/* Horizontal Scrollable Row */}
         <div className="relative">
-          <div className="flex gap-6 overflow-x-auto pb-12 pt-4 px-2 no-scrollbar snap-x snap-mandatory scroll-smooth">
+          <AnimeStagger
+            className="flex gap-6 overflow-x-auto pb-12 pt-4 px-2 no-scrollbar snap-x snap-mandatory scroll-smooth"
+            selector=".story-card"
+            staggerDelay={120}
+            translateY={36}
+            duration={850}
+          >
             {testimonials.map((item, index) => (
-              <motion.div 
+              <div
                 key={index}
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`flex-none w-[320px] md:w-[450px] p-8 md:p-12 rounded-[24px] md:rounded-[32px] snap-center transition-all duration-300 ${
+                className={`story-card flex-none w-[320px] md:w-[450px] p-8 md:p-12 rounded-[24px] md:rounded-[32px] snap-center transition-all duration-300 ${
                   item.featured 
                     ? 'bg-[#0a3285] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]' 
                     : 'bg-white text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] border border-gray-100'
                 }`}
+                style={{ willChange: 'transform, opacity' }}
               >
                 {/* Quote Icon */}
                 <div className={`text-5xl md:text-6xl font-bold mb-6 leading-none ${item.featured ? 'text-white/40' : 'text-blue-200'} font-serif`}>
@@ -129,9 +128,9 @@ const StudentStories = () => {
                     </p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </div>
+          </AnimeStagger>
         </div>
       </div>
 

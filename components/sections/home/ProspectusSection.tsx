@@ -1,16 +1,29 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
+import AnimeReveal from '../../effects/AnimeReveal';
+import AnimeStagger from '../../effects/AnimeStagger';
 
 const ProspectusSection = () => {
   return (
     <section id="admission" className="relative w-full py-24 md:py-32 bg-[#0a1931] overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6 flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
+      <AnimeStagger
+        className="max-w-[1440px] mx-auto px-6 flex flex-col lg:flex-row gap-16 lg:gap-24 items-center"
+        selector=".prospectus-panel"
+        staggerDelay={160}
+        translateY={44}
+        duration={900}
+      >
         
         {/* Left Side: Success Stories */}
-        <div className="w-full lg:w-1/2">
-          <h2 className="text-4xl md:text-[56px] font-bold text-white mb-6 font-sora">
-            Student Success Stories
-          </h2>
+        <div className="prospectus-panel w-full lg:w-1/2" style={{ willChange: 'transform, opacity' }}>
+          <AnimeReveal
+            as="h2"
+            text="Student Success Stories"
+            className="text-4xl md:text-[56px] font-bold text-white mb-6 font-sora"
+            staggerFrom="first"
+          />
           <p className="text-white/70 text-lg md:text-xl font-medium leading-relaxed mb-12 max-w-xl">
             Hear directly from those who have walked our halls and gone on to achieve remarkable things.
           </p>
@@ -44,7 +57,7 @@ const ProspectusSection = () => {
         </div>
 
         {/* Right Side: Prospectus Form */}
-        <div className="w-full lg:w-1/2">
+        <div className="prospectus-panel w-full lg:w-1/2" style={{ willChange: 'transform, opacity' }}>
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[40px] p-8 md:p-12 shadow-2xl relative">
             {/* Form Header */}
             <div className="flex items-start gap-6 mb-10">
@@ -123,7 +136,7 @@ const ProspectusSection = () => {
             </form>
           </div>
         </div>
-      </div>
+      </AnimeStagger>
     </section>
   );
 };
