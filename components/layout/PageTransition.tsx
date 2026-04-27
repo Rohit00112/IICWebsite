@@ -17,78 +17,84 @@ function FrozenRoute({ children }: { children: ReactNode }) {
 }
 
 const transition: Transition = { 
-  duration: 1, 
-  ease: [0.76, 0, 0.24, 1] 
+  duration: 0.7, 
+  ease: [0.33, 1, 0.68, 1] 
 };
 
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const nbOfSlices = 20;
 
   return (
     <AnimatePresence mode="wait">
-      <div key={pathname} className="relative min-h-screen overflow-hidden bg-white">
+      <div key={pathname} className="relative min-h-screen bg-white">
         
-        {/* Content: Atmospheric Zoom & Blur Reveal */}
+        {/* Content: Digital Distortion Reveal */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, filter: 'blur(20px) grayscale(1)' }}
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px) grayscale(0)' }}
-          exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px) grayscale(1)' }}
+          initial={{ opacity: 0, scale: 1.1, filter: 'blur(10px) contrast(1.5)' }}
+          animate={{ opacity: 1, scale: 1, filter: 'blur(0px) contrast(1)' }}
+          exit={{ opacity: 0, scale: 0.9, filter: 'blur(10px) contrast(1.5)' }}
           transition={transition}
-          className="relative z-10"
         >
           <FrozenRoute>{children}</FrozenRoute>
         </motion.div>
 
-        {/* Exceptional: Concentric Vortex Iris Wipe */}
-        <div className="fixed inset-0 z-[9999] pointer-events-none flex items-center justify-center">
-          {[...Array(5)].map((_, i) => (
+        {/* The Barcode Shutter: 20 Thin Vertical Slices */}
+        <div className="fixed inset-0 z-[9999] pointer-events-none flex w-screen h-screen overflow-hidden">
+          {[...Array(nbOfSlices)].map((_, i) => (
             <motion.div
               key={i}
-              initial={{ clipPath: 'circle(0% at 50% 50%)' }}
-              animate={{ clipPath: 'circle(0% at 50% 50%)' }}
-              exit={{ clipPath: 'circle(100% at 50% 50%)' }}
+              initial={{ scaleY: 0 }}
+              animate={{ scaleY: 0 }}
+              exit={{ scaleY: 1 }}
               transition={{
                 ...transition,
-                delay: i * 0.05,
+                delay: Math.sin(i * 0.2) * 0.15 + 0.1,
               }}
-              className="absolute inset-0 bg-white"
+              className="relative h-full w-full bg-white border-x border-gray-100/30"
               style={{
-                zIndex: 10 - i,
-                opacity: 1 - (i * 0.1),
-                backdropFilter: `blur(${i * 10}px)`
+                backdropFilter: 'blur(20px)',
+                boxShadow: '0 0 40px rgba(0,0,0,0.05)',
+                transformOrigin: i % 2 === 0 ? 'top' : 'bottom'
               }}
-            />
+            >
+              {/* Inner Accent Line */}
+              <div className="absolute inset-x-0 top-0 h-1 bg-[#21409A]/10" />
+            </motion.div>
           ))}
         </div>
 
-        {/* Entrance Wipe: Concentric vortex uncover */}
-        <div className="fixed inset-0 z-[9999] pointer-events-none flex items-center justify-center">
-          {[...Array(5)].map((_, i) => (
+        {/* Entrance Wave: Reverse Shutter */}
+        <div className="fixed inset-0 z-[9999] pointer-events-none flex w-screen h-screen overflow-hidden">
+          {[...Array(nbOfSlices)].map((_, i) => (
             <motion.div
               key={i}
-              initial={{ clipPath: 'circle(100% at 50% 50%)' }}
-              animate={{ clipPath: 'circle(0% at 50% 50%)' }}
-              exit={{ clipPath: 'circle(100% at 50% 50%)' }}
+              initial={{ scaleY: 1 }}
+              animate={{ scaleY: 0 }}
+              exit={{ scaleY: 0 }}
               transition={{
                 ...transition,
-                delay: (5 - i) * 0.05,
+                delay: Math.cos(i * 0.2) * 0.15 + 0.1,
               }}
-              className="absolute inset-0 bg-white"
+              className="relative h-full w-full bg-white border-x border-gray-100/30"
               style={{
-                zIndex: 10 - i,
-                opacity: 1 - (i * 0.1),
-                backdropFilter: `blur(${i * 10}px)`
+                backdropFilter: 'blur(20px)',
+                boxShadow: '0 0 40px rgba(0,0,0,0.05)',
+                transformOrigin: i % 2 === 0 ? 'bottom' : 'top'
               }}
-            />
+            >
+              <div className="absolute inset-x-0 bottom-0 h-1 bg-[#76bc43]/10" />
+            </motion.div>
           ))}
         </div>
 
-        {/* Lens Flare Accent */}
+        {/* Flash Burst */}
         <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: [0, 0.5, 0], scale: [0, 1.5, 2] }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-gradient-radial from-blue-400/20 to-transparent blur-[80px] pointer-events-none z-[10000]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0.4, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+          className="fixed inset-0 z-[10000] bg-[#21409A]/5 pointer-events-none mix-blend-color-burn"
         />
       </div>
     </AnimatePresence>
