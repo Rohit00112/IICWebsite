@@ -5,6 +5,7 @@ import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
 import Tilt from '../../effects/Tilt';
 import ParticleBackground from '../../effects/ParticleBackground';
+import RevealText from '../../effects/RevealText';
 
 const steps = [
   { id: 1, title: 'Details', subtitle: 'Basic info' },
@@ -33,14 +34,13 @@ const AdmissionsHero = ({ currentStep }: AdmissionsHeroProps) => {
           staggerFrom="center"
         />
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-gray-300 text-lg md:text-xl font-medium max-w-2xl mb-16 leading-relaxed font-sora"
-        >
-          Join a community of innovators. Our straightforward application process is your first step towards a global degree at IIC.
-        </motion.p>
+        <div className="max-w-2xl mb-16 px-4">
+          <RevealText
+            text="Join a community of innovators. Our straightforward application process is your first step towards a global degree at IIC."
+            className="text-gray-300 text-lg md:text-xl font-medium leading-relaxed font-sora justify-center"
+            delay={0.6}
+          />
+        </div>
 
         {/* Top Progress Tracker */}
         <AnimeStagger

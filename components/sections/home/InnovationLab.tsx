@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
+import TechGrid from '../../effects/TechGrid';
 
 const InnovationLab = () => {
   const containerRef = useRef(null);
@@ -19,8 +20,10 @@ const InnovationLab = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section id="innovation-lab" ref={containerRef} className="relative w-full py-24 md:py-32 bg-[#f4f7fa] overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6">
+    <section id="innovation-lab" ref={containerRef} className="relative w-full py-24 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-[#f4f7fa] -z-20" />
+      <TechGrid />
+      <div className="max-w-[1440px] mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-16">
           <Magnetic strength={0.1}>
             <motion.h2 
