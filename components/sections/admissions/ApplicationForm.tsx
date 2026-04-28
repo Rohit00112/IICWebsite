@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Magnetic from '../../effects/Magnetic';
 
 const formSteps = [
@@ -33,6 +33,7 @@ interface ApplicationFormProps {
 }
 
 const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) => {
+  const shouldReduceMotion = useReducedMotion();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<string | null>('BIT');
   const [uploadedFiles, setUploadedFiles] = useState<{ [key: string]: { name: string, preview: string | null } }>({});
@@ -55,11 +56,15 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
 
   // Persistence: Data
   useEffect(() => {
-    const savedData = localStorage.getItem('admissions_form_data');
-    if (savedData) {
-      const parsed = JSON.parse(savedData);
-      setFormData(parsed);
-      setSelectedProgram(parsed.program);
+    try {
+      const savedData = localStorage.getItem('admissions_form_data');
+      if (savedData) {
+        const parsed = JSON.parse(savedData);
+        setFormData(parsed);
+        setSelectedProgram(parsed.program);
+      }
+    } catch {
+      localStorage.removeItem('admissions_form_data');
     }
   }, []);
 
@@ -76,7 +81,11 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
     const file = e.target.files?.[0];
     if (file) {
       const preview = file.type.startsWith('image/') ? URL.createObjectURL(file) : null;
-      setUploadedFiles(prev => ({ ...prev, [key]: { name: file.name, preview } }));
+      setUploadedFiles(prev => {
+        const existing = prev[key];
+        if (existing?.preview) URL.revokeObjectURL(existing.preview);
+        return { ...prev, [key]: { name: file.name, preview } };
+      });
     }
     // Reset the input value so the same file can be uploaded again if removed
     if (e.target) e.target.value = '';
@@ -128,7 +137,7 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
           Application Form
         </h2>
         <p className="text-gray-500 text-sm md:text-base font-medium">
-          Please fill in the details carefully. You can save your progress and return later.
+          Please fill in the details carefully. Your progress is automatically saved.
         </p>
       </div>
 
@@ -145,14 +154,16 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
           <div key={step.id} className="relative z-10 flex flex-col items-center">
             <button
               onClick={() => setCurrentStep(step.id)}
-              className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${currentStep >= step.id
+              aria-label={`Go to step ${step.id}: ${step.label}`}
+              aria-current={currentStep === step.id ? 'step' : undefined}
+              className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${currentStep >= step.id
                 ? 'bg-[#21409A] text-white shadow-lg shadow-blue-200'
                 : 'bg-white text-gray-400 border-2 border-gray-100'
                 }`}
             >
-              {step.id}
+              {currentStep > step.id ? '✓' : step.id}
             </button>
-            <span className={`absolute top-12 whitespace-nowrap text-[10px] md:text-xs font-bold uppercase tracking-widest ${currentStep >= step.id ? 'text-[#21409A]' : 'text-gray-400'
+            <span className={`absolute top-14 whitespace-nowrap text-[10px] md:text-xs font-bold uppercase tracking-widest ${currentStep >= step.id ? 'text-[#21409A]' : 'text-gray-400'
               }`}>
               {step.label}
             </span>
@@ -166,9 +177,9 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
           {currentStep === 1 && (
             <motion.div
               key="step1"
-              initial={{ opacity: 0, y: 10 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"
             >
@@ -234,9 +245,9 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
           {currentStep === 2 && (
             <motion.div
               key="step2"
-              initial={{ opacity: 0, y: 10 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"
             >
@@ -282,9 +293,9 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
           {currentStep === 3 && (
             <motion.div
               key="step3"
-              initial={{ opacity: 0, y: 10 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"
             >
@@ -337,9 +348,9 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
           {currentStep === 4 && (
             <motion.div
               key="step4"
-              initial={{ opacity: 0, y: 10 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="grid grid-cols-1 gap-6 mb-12"
             >
@@ -368,7 +379,8 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
                 {uploadedFiles.transcript && (
                   <button
                     onClick={(e) => removeFile(e, 'transcript')}
-                    className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-100 transition-all z-20"
+                    aria-label="Remove uploaded transcript"
+                    className="absolute top-4 right-4 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-100 transition-all z-20"
                   >
                     <XIcon />
                   </button>
@@ -404,7 +416,8 @@ const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) 
                 {uploadedFiles.id && (
                   <button
                     onClick={(e) => removeFile(e, 'id')}
-                    className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-100 transition-all z-20"
+                    aria-label="Remove uploaded identification document"
+                    className="absolute top-6 right-6 w-11 h-11 rounded-full bg-white border border-gray-100 shadow-md flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-100 transition-all z-20"
                   >
                     <XIcon />
                   </button>

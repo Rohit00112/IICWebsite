@@ -4,6 +4,9 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
+import Tilt from '../../effects/Tilt';
+import Magnetic from '../../effects/Magnetic';
+import RevealText from '../../effects/RevealText';
 
 const testimonials = [
   {
@@ -76,58 +79,62 @@ const StudentStories = () => {
             duration={850}
           >
             {testimonials.map((item, index) => (
-              <div
-                key={index}
-                className={`story-card flex-none w-[320px] md:w-[450px] p-8 md:p-12 rounded-[24px] md:rounded-[32px] snap-center transition-all duration-300 ${
-                  item.featured 
-                    ? 'bg-[#0a3285] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]' 
-                    : 'bg-white text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] border border-gray-100'
-                }`}
-                style={{ willChange: 'transform, opacity' }}
-              >
-                {/* Quote Icon */}
-                <div className={`text-5xl md:text-6xl font-bold mb-6 leading-none ${item.featured ? 'text-white/40' : 'text-blue-200'} font-serif`}>
-                  &ldquo;
-                </div>
+              <div key={index} className="story-card flex-none w-[320px] md:w-[450px] snap-center">
+                <Tilt strength={4}>
+                  <div
+                    className={`p-8 md:p-12 rounded-[24px] md:rounded-[32px] transition-all duration-300 h-full ${item.featured
+                        ? 'bg-[#0a3285] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]'
+                        : 'bg-white text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] border border-gray-100'
+                      }`}
+                    style={{ willChange: 'transform, opacity' }}
+                  >
+                    {/* Quote Icon */}
+                    <div className={`text-5xl md:text-6xl font-bold mb-6 leading-none ${item.featured ? 'text-white/40' : 'text-blue-200'} font-serif`}>
+                      &ldquo;
+                    </div>
 
-                {/* Quote Text */}
-                <p className={`text-lg md:text-[22px] font-medium leading-relaxed italic mb-8 ${
-                  item.featured ? 'text-white/90' : 'text-gray-700'
-                }`}>
-                  &ldquo;{item.quote}&rdquo;
-                </p>
-
-                {/* Achievement Tag */}
-                <div className="mb-10">
-                  <span className={`px-4 py-1.5 rounded-full text-xs md:text-sm font-medium border ${
-                    item.featured 
-                      ? 'bg-white/10 border-white/20 text-white' 
-                      : 'bg-blue-50 border-blue-100 text-blue-600'
-                  }`}>
-                    {item.tag}
-                  </span>
-                </div>
-
-                {/* Profile Section */}
-                <div className="flex items-center gap-4 mt-auto">
-                  <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      sizes="(max-width: 768px) 56px, 64px"
-                      className="object-cover"
+                    {/* Quote Text */}
+                    <RevealText
+                      text={item.quote}
+                      className={`text-lg md:text-[22px] font-medium leading-relaxed italic mb-8 ${item.featured ? 'text-white/90' : 'text-gray-700'
+                        }`}
+                      delay={0.4}
                     />
+
+                    {/* Achievement Tag */}
+                    <div className="mb-10">
+                      <span className={`px-4 py-1.5 rounded-full text-xs md:text-sm font-medium border ${item.featured
+                          ? 'bg-white/10 border-white/20 text-white'
+                          : 'bg-blue-50 border-blue-100 text-blue-600'
+                        }`}>
+                        {item.tag}
+                      </span>
+                    </div>
+
+                    {/* Profile Section */}
+                    <div className="flex items-center gap-4 mt-auto">
+                      <Magnetic strength={0.2}>
+                        <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white shadow-sm cursor-pointer">
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            fill
+                            sizes="(max-width: 768px) 56px, 64px"
+                            className="object-cover"
+                          />
+                        </div>
+                      </Magnetic>
+                      <div>
+                        <h4 className={`text-lg md:text-xl font-bold font-sora ${item.featured ? 'text-white' : 'text-[#1a1a1a]'}`}>
+                          {item.name}
+                        </h4>
+                        <p className={`text-sm md:text-base font-medium ${item.featured ? 'text-white/60' : 'text-gray-400'}`}>
+                          {item.degree}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className={`text-lg md:text-xl font-bold font-sora ${item.featured ? 'text-white' : 'text-[#1a1a1a]'}`}>
-                      {item.name}
-                    </h4>
-                    <p className={`text-sm md:text-base font-medium ${item.featured ? 'text-white/60' : 'text-gray-400'}`}>
-                      {item.degree}
-                    </p>
-                  </div>
-                </div>
+                </Tilt>
               </div>
             ))}
           </AnimeStagger>

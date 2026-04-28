@@ -79,7 +79,7 @@ const Navbar = () => {
               animate={{ height: 'auto', opacity: 1, y: 0 }}
               exit={{ height: 0, opacity: 0, y: 20 }}
               transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-              className="pointer-events-auto bg-[#141414]/70 backdrop-blur-[32px] border border-white/10 shadow-2xl w-[380px] max-h-[75vh] rounded-[32px] overflow-hidden flex flex-col mb-4"
+              className="pointer-events-auto bg-[#141414]/70 backdrop-blur-[32px] border border-white/10 shadow-2xl w-[min(380px,92vw)] max-h-[75vh] rounded-[32px] overflow-hidden flex flex-col mb-4"
             >
               <div className="px-9 pt-10 pb-8 flex flex-col h-full">
                 {/* Header Label */}
@@ -106,12 +106,12 @@ const Navbar = () => {
                         href={link.href}
                         role="menuitem"
                         onClick={() => setIsMenuOpen(false)}
-                        className="group relative block py-1 overflow-hidden focus-visible:outline-none"
+                        className="group relative block py-0.5 overflow-hidden focus-visible:outline-none"
                       >
-                        <div className="relative h-[40px] overflow-hidden">
+                        <div className="relative h-[44px] overflow-hidden">
                           <motion.div
                             animate={{
-                              y: hoveredIndex === index ? '-40px' : '0px'
+                              y: hoveredIndex === index ? '-44px' : '0px'
                             }}
                             transition={{
                               duration: 0.4,
@@ -119,11 +119,11 @@ const Navbar = () => {
                             }}
                             className="flex flex-col h-[80px]"
                           >
-                            <span className={`text-[28px] font-medium tracking-tight h-[40px] flex items-center transition-all duration-300 ${hoveredIndex !== null && hoveredIndex !== index ? 'text-white/20' : 'text-white'
+                            <span className={`text-[28px] font-medium tracking-tight h-[44px] flex items-center transition-all duration-300 ${hoveredIndex !== null && hoveredIndex !== index ? 'text-white/20' : 'text-white'
                               }`}>
                               {link.name}
                             </span>
-                            <span className="text-[28px] font-medium tracking-tight h-[40px] flex items-center text-white">
+                            <span className="text-[28px] font-medium tracking-tight h-[44px] flex items-center text-white">
                               {link.name}
                             </span>
                           </motion.div>
@@ -172,9 +172,9 @@ const Navbar = () => {
               aria-expanded={isMenuOpen}
               aria-controls="main-menu"
               animate={{
-                width: isMenuOpen ? '64px' : '360px',
+                width: isMenuOpen ? '64px' : 'min(360px, 92vw)',
                 height: '64px',
-                borderRadius: isMenuOpen ? '12px' : '32px'
+                borderRadius: isMenuOpen ? '16px' : '32px'
               }}
               className="bg-[#141414]/80 backdrop-blur-[24px] border border-white/15 shadow-2xl flex items-center justify-center relative overflow-hidden focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
             >
