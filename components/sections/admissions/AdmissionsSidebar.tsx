@@ -48,8 +48,16 @@ const AdmissionsSidebar = () => {
       'Pass in English, or IELTS 6.0 (no band less than 5.5).',
       'Successful completion of an admissions interview.'
     ]},
-    { id: 'scholarships', title: 'Scholarships', icon: <MedalIcon />, content: [] },
-    { id: 'timeline', title: 'Process Timeline', icon: <CalendarIcon />, content: [] },
+    { id: 'scholarships', title: 'Scholarships', icon: <MedalIcon />, content: [
+      'Up to 100% scholarships for meritorious students.',
+      'Special quotas for underprivileged and diverse backgrounds.',
+      'Early bird discounts for early applications.'
+    ] },
+    { id: 'timeline', title: 'What Happens Next?', icon: <CalendarIcon />, content: [
+      '1. Review: Our team reviews your docs (2-3 days).',
+      '2. Interview: A short session with our counselors.',
+      '3. Offer: Receive your conditional/unconditional offer.'
+    ] },
   ];
 
   return (

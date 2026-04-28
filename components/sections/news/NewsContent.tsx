@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimeStagger from '../../effects/AnimeStagger';
+import Tilt from '../../effects/Tilt';
 import type { NewsItem } from '@/lib/news';
 
 const categories = ['All', 'News', 'Events', 'Announcements'];
@@ -160,31 +161,32 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
             {/* Sub-News Grid */}
             <AnimeStagger
               className="grid grid-cols-1 md:grid-cols-2 gap-8"
-              selector=".news-card"
+              selector=".news-card-wrapper"
               staggerDelay={100}
               translateY={30}
               duration={760}
             >
               <AnimatePresence mode="popLayout">
                 {filteredItems.map((item, idx) => (
-                  <Link key={item.id} href={`/news/${item.slug}`}>
-                    <motion.div
-                      layout
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.4, delay: idx * 0.05 }}
-                      className="news-card group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-500 h-full flex flex-col cursor-pointer"
-                      style={{ willChange: 'transform, opacity' }}
-                    >
-                      <div className="relative h-60 overflow-hidden">
-                        <div className="absolute top-4 left-4 z-10">
-                          <span className={`px-4 py-1.5 text-[9px] font-bold uppercase tracking-wider rounded-full shadow-md text-white ${
-                            item.category === 'News' ? 'bg-[#74C044]' : 'bg-[#00B2A9]'
-                          }`}>
-                            {item.category}
-                          </span>
-                        </div>
+                  <Link key={item.id} href={`/news/${item.slug}`} className="news-card-wrapper">
+                    <Tilt strength={12} className="h-full">
+                      <motion.div
+                        layout
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.4, delay: idx * 0.05 }}
+                        className="news-card group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-500 h-full flex flex-col cursor-pointer"
+                        style={{ willChange: 'transform, opacity' }}
+                      >
+                        <div className="relative h-60 overflow-hidden">
+                          <div className="absolute top-4 left-4 z-10">
+                            <span className={`px-4 py-1.5 text-[9px] font-bold uppercase tracking-wider rounded-full shadow-md text-white ${
+                              item.category === 'News' ? 'bg-[#74C044]' : 'bg-[#00B2A9]'
+                            }`}>
+                              {item.category}
+                            </span>
+                          </div>
                         <Image
                           src={item.image}
                           alt={item.title}
@@ -215,7 +217,8 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
                         </div>
                       </div>
                     </motion.div>
-                  </Link>
+                  </Tilt>
+                </Link>
                 ))}
               </AnimatePresence>
             </AnimeStagger>
