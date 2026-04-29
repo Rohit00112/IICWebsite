@@ -1,22 +1,15 @@
 'use client';
 
 import React, { useRef } from 'react';
-import Image from 'next/image';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
+import ScrollScaleVideo from './ScrollScaleVideo';
 
 const AboutSection = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const yImage = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
 
   return (
     <section ref={containerRef} className="relative w-full py-24 md:py-40 bg-white overflow-hidden">
@@ -61,18 +54,7 @@ const AboutSection = () => {
         </div>
       </div>
 
-      <div className="w-full mt-20 md:mt-32 relative h-[400px] md:h-[700px] overflow-hidden">
-        <motion.div style={{ y: yImage }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
-          <Image
-            src="/images/home/tower_block.png"
-            alt="Itahari International College Tower Block Campus"
-            fill
-            sizes="(max-width: 768px) 100vw, 100vw"
-            className="object-cover object-center"
-          />
-        </motion.div>
-        <div className="absolute inset-0 bg-black/5"></div>
-      </div>
+      <ScrollScaleVideo />
     </section>
   );
 };
