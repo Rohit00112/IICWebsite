@@ -60,7 +60,7 @@ const ScrollScaleVideo = () => {
         onClick={openFullscreen}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden bg-black shadow-2xl cursor-none"
+        className="relative w-full aspect-video md:aspect-[1920/864] overflow-hidden bg-white shadow-2xl cursor-none"
       >
         <video
           src={VIDEO_SRC}
@@ -189,7 +189,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onMouseMove={resetHideTimeout}
-      className="fixed inset-0 z-[10001] bg-black flex items-center justify-center"
+      className="fixed inset-0 z-[10001] bg-white flex items-center justify-center"
     >
       <video
         ref={videoRef}
