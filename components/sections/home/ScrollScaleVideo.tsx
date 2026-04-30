@@ -1,15 +1,34 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 
 const VIDEO_SRC = '/videos/iic.mp4';
 const POSTER_SRC = '/images/home/tower_block.png';
+const IIC_LOGO = '/images/common/iic_logo.png';
+const LMU_LOGO = '/images/home/lmu brand 1.png';
+const ING_LOGO = '/images/home/ing.png';
 
 const ScrollScaleVideo = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false });
+  const outerRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: outerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const centerOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
+  const centerY = useTransform(scrollYProgress, [0, 0.4], [0, -40]);
+  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const maskOpacity = useTransform(scrollYProgress, [0, 0.5], [0.5, 1]);
+  const cornerOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.1, 0.85, 1],
+    [0, 0.6, 0.6, 0]
+  );
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
@@ -22,27 +41,22 @@ const ScrollScaleVideo = () => {
   };
 
   const handleMouseLeave = () => {
-    setCursor(prev => ({ ...prev, visible: false }));
+    setCursor((prev) => ({ ...prev, visible: false }));
   };
 
-  const openFullscreen = () => {
-    setIsFullscreen(true);
-  };
-
-  const closeFullscreen = useCallback(() => {
-    setIsFullscreen(false);
-  }, []);
+  const openFullscreen = () => setIsFullscreen(true);
+  const closeFullscreen = useCallback(() => setIsFullscreen(false), []);
 
   useEffect(() => {
     if (!isFullscreen) return;
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    
+
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeFullscreen();
     };
     window.addEventListener('keydown', handleEsc);
-    
+
     return () => {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener('keydown', handleEsc);
@@ -50,19 +64,15 @@ const ScrollScaleVideo = () => {
   }, [isFullscreen, closeFullscreen]);
 
   return (
-    <section className="relative w-full mt-20 md:mt-32 overflow-hidden group">
-      <motion.div 
+    <section ref={outerRef} className="relative w-full h-[200vh] bg-black mt-20 md:mt-32">
+      <div
         ref={containerRef}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.5 }}
         onClick={openFullscreen}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="relative w-full aspect-video md:aspect-[1920/864] overflow-hidden bg-white shadow-2xl cursor-none"
+        className="sticky top-0 h-screen w-full overflow-hidden cursor-none group"
       >
-        <video
+        <motion.video
           src={VIDEO_SRC}
           poster={POSTER_SRC}
           muted
@@ -70,33 +80,86 @@ const ScrollScaleVideo = () => {
           autoPlay
           playsInline
           preload="metadata"
-          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+          aria-hidden="true"
+          style={{ scale: videoScale }}
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        
-        {/* Cinematic Overlays */}
-        <div className="absolute inset-0 z-10 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
 
-        {/* Framing Lines */}
+        {/* Edge radial blur mask */}
+        <motion.div
+          aria-hidden="true"
+          style={{ opacity: maskOpacity }}
+          className="absolute inset-0 z-10 pointer-events-none fluid-edge-mask"
+        />
+
+        {/* Vignette */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+
+        {/* Grain */}
+        <div className="absolute inset-0 z-10 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+        {/* Framing lines */}
         <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10 z-20" />
         <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/10 z-20" />
         <div className="absolute top-0 left-0 h-full w-[1px] bg-white/10 z-20" />
         <div className="absolute top-0 right-0 h-full w-[1px] bg-white/10 z-20" />
 
-        {/* Custom Cursor Button */}
+        {/* Corner logos */}
+        <motion.div
+          style={{ opacity: cornerOpacity }}
+          className="absolute top-6 left-6 md:top-10 md:left-10 z-30 pointer-events-none"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={LMU_LOGO}
+            alt=""
+            aria-hidden="true"
+            className="h-6 md:h-10 w-auto brightness-0 invert opacity-90"
+          />
+        </motion.div>
+        <motion.div
+          style={{ opacity: cornerOpacity }}
+          className="absolute top-6 right-6 md:top-10 md:right-10 z-30 pointer-events-none"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={ING_LOGO}
+            alt=""
+            aria-hidden="true"
+            className="h-6 md:h-10 w-auto brightness-0 invert opacity-90"
+          />
+        </motion.div>
+
+        {/* Center hero overlay */}
+        <motion.div
+          style={{ opacity: centerOpacity, y: centerY }}
+          className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none px-6 text-center"
+        >
+          <span className="text-white/80 text-[10px] md:text-[12px] font-bold tracking-[0.4em] uppercase mb-6">
+            Start your journey with
+          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={IIC_LOGO}
+            alt="IIC"
+            className="h-16 md:h-24 w-auto brightness-0 invert"
+          />
+        </motion.div>
+
+        {/* Custom cursor pill */}
         <AnimatePresence>
-          {cursor.visible && (
+          {cursor.visible && !isFullscreen && (
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
-              style={{ 
-                left: cursor.x, 
+              style={{
+                left: cursor.x,
                 top: cursor.y,
                 translateX: '-50%',
-                translateY: '-50%'
+                translateY: '-50%',
               }}
-              className="fixed md:absolute z-50 pointer-events-none flex items-center justify-center"
+              className="absolute z-50 pointer-events-none flex items-center justify-center"
             >
               <div className="px-6 py-3 rounded-full bg-[#74C044] text-white text-[10px] font-bold tracking-[0.2em] shadow-2xl flex items-center gap-3 backdrop-blur-sm border border-white/20">
                 <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
@@ -105,7 +168,7 @@ const ScrollScaleVideo = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
 
       <AnimatePresence>
         {isFullscreen && (
@@ -127,6 +190,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showControls, setShowControls] = useState(true);
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -161,6 +225,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
 
   const handleTimeUpdate = () => {
     if (!videoRef.current) return;
+    setCurrentTime(videoRef.current.currentTime);
     setProgress((videoRef.current.currentTime / videoRef.current.duration) * 100);
   };
 
@@ -184,7 +249,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -217,7 +282,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
       </motion.button>
 
       {/* Custom Controls */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: showControls ? 1 : 0, y: showControls ? 0 : 20 }}
         className="absolute bottom-0 left-0 w-full p-8 md:p-12 z-[110] bg-gradient-to-t from-black/80 via-black/40 to-transparent"
@@ -225,19 +290,19 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
         <div className="max-w-7xl mx-auto">
           {/* Progress Bar */}
           <div className="relative w-full h-1 bg-white/20 rounded-full mb-8 group cursor-pointer">
-            <div 
+            <div
               className="absolute top-0 left-0 h-full bg-[#74C044] rounded-full transition-all duration-100"
               style={{ width: `${progress}%` }}
             />
-            <input 
-              type="range" 
-              min="0" 
-              max="100" 
+            <input
+              type="range"
+              min="0"
+              max="100"
               value={progress}
               onChange={handleScrub}
               className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
             />
-            <div 
+            <div
               className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
               style={{ left: `calc(${progress}% - 6px)` }}
             />
@@ -261,7 +326,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
 
               {/* Time */}
               <div className="text-[12px] font-mono tracking-wider opacity-60">
-                {formatTime(videoRef.current?.currentTime || 0)} / {formatTime(duration)}
+                {formatTime(currentTime)} / {formatTime(duration)}
               </div>
             </div>
 
