@@ -14,6 +14,7 @@ const ScrollScaleVideo = () => {
   const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false });
   const outerRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: outerRef,
@@ -21,17 +22,18 @@ const ScrollScaleVideo = () => {
   });
 
   // Frame grows from small to fullscreen as user scrolls into the section.
-  const frameScale = useTransform(scrollYProgress, [0, 0.5], [0.55, 1]);
+  const frameScale = useTransform(scrollYProgress, [0, 0.5], [0.45, 1]);
   const frameRadius = useTransform(scrollYProgress, [0, 0.5], [32, 0]);
   // Center text & corner logos only appear once frame is mostly full.
   const centerOpacity = useTransform(scrollYProgress, [0.45, 0.6, 0.9, 1], [0, 1, 1, 0]);
   const centerY = useTransform(scrollYProgress, [0.45, 0.6], [30, 0]);
   const cornerOpacity = useTransform(scrollYProgress, [0.45, 0.6, 0.9, 1], [0, 0.6, 0.6, 0]);
   const maskOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
+  const sideOverlayOpacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 1, 0]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
+    if (!stickyRef.current) return;
+    const rect = stickyRef.current.getBoundingClientRect();
     setCursor({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
@@ -63,90 +65,88 @@ const ScrollScaleVideo = () => {
   }, [isFullscreen, closeFullscreen]);
 
   return (
-    <section ref={outerRef} className="relative w-full h-[200vh] bg-white">
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+    <section ref={outerRef} className="relative w-full h-[200vh] bg-black">
+      <div
+        ref={stickyRef}
+        onClick={openFullscreen}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden cursor-none"
+      >
+        {/* Side Text Overlays */}
+        <motion.div
+          style={{ opacity: sideOverlayOpacity }}
+          className="absolute left-0 top-0 bottom-0 w-[45%] z-20 hidden xl:flex items-center pl-[4%] pr-32 bg-gradient-to-r from-black/70 via-black/40 to-transparent pointer-events-none"
+        >
+          <h2 className="text-white text-6xl font-light leading-[1.1] tracking-tight font-sora">
+            A place where <br />
+            <span className="text-[#74C044] font-semibold">education</span> and <br />
+            <span className="text-[#74C044] font-semibold">innovation</span> connect.
+          </h2>
+        </motion.div>
+
+        <motion.div
+          style={{ opacity: sideOverlayOpacity }}
+          className="absolute right-0 top-0 bottom-0 w-[45%] z-20 hidden xl:flex flex-col justify-center items-end pr-[4%] pl-32 bg-gradient-to-l from-black/70 via-black/40 to-transparent pointer-events-none text-right"
+        >
+          <div className="mb-12">
+            <span className="text-[#74C044] text-[14px] font-bold tracking-[0.4em] uppercase block mb-4 font-sora opacity-90">ADDRESS</span>
+            <p className="text-white text-3xl font-light leading-snug font-sora tracking-tight">
+              Sundarharaicha-4, Dulari<br />
+              <span className="opacity-80">Morang, Nepal</span>
+            </p>
+          </div>
+          <button className="px-10 py-5 border-2 border-[#74C044]/60 bg-[#74C044]/20 backdrop-blur-md rounded-sm text-white text-[12px] font-bold tracking-[0.4em] uppercase hover:bg-[#74C044] hover:text-white transition-all flex items-center gap-4 ml-auto group font-sora shadow-[0_0_40px_rgba(116,192,68,0.2)] pointer-events-auto">
+            Explore Campus
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-x-1.5 transition-transform"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+          </button>
+        </motion.div>
+
         <motion.div
           ref={containerRef}
-          onClick={openFullscreen}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
           style={{ scale: frameScale, borderRadius: frameRadius }}
-          className="relative w-full h-full overflow-hidden cursor-none group origin-center"
+          className="relative w-full h-full overflow-hidden group origin-center"
         >
-        <video
-          src={VIDEO_SRC}
-          poster={POSTER_SRC}
-          muted
-          loop
-          autoPlay
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
 
-        {/* Edge radial blur mask */}
-        <motion.div
-          aria-hidden="true"
-          style={{ opacity: maskOpacity }}
-          className="absolute inset-0 z-10 pointer-events-none fluid-edge-mask"
-        />
-
-        {/* Vignette */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
-
-        {/* Grain */}
-        <div className="absolute inset-0 z-10 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
-        {/* Framing lines */}
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10 z-20" />
-        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/10 z-20" />
-        <div className="absolute top-0 left-0 h-full w-[1px] bg-white/10 z-20" />
-        <div className="absolute top-0 right-0 h-full w-[1px] bg-white/10 z-20" />
-
-        {/* Corner logos */}
-        <motion.div
-          style={{ opacity: cornerOpacity }}
-          className="absolute top-6 left-6 md:top-10 md:left-10 z-30 pointer-events-none"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={LMU_LOGO}
-            alt=""
+          <video
+            src={VIDEO_SRC}
+            poster={POSTER_SRC}
+            muted
+            loop
+            autoPlay
+            playsInline
+            preload="metadata"
             aria-hidden="true"
-            className="h-6 md:h-10 w-auto brightness-0 invert opacity-90"
+            className="absolute inset-0 w-full h-full object-cover"
           />
-        </motion.div>
-        <motion.div
-          style={{ opacity: cornerOpacity }}
-          className="absolute top-6 right-6 md:top-10 md:right-10 z-30 pointer-events-none"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={ING_LOGO}
-            alt=""
+
+          {/* Edge radial blur mask */}
+          <motion.div
             aria-hidden="true"
-            className="h-6 md:h-10 w-auto brightness-0 invert opacity-90"
+            style={{ opacity: maskOpacity }}
+            className="absolute inset-0 z-10 pointer-events-none fluid-edge-mask"
           />
+
+          {/* Vignette & Global Dark Overlay */}
+          <div className="absolute inset-0 z-10 bg-black/10 pointer-events-none" />
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/40 via-transparent to-black/15 pointer-events-none" />
+
+          {/* Grain */}
+          <div className="absolute inset-0 z-10 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+          {/* Framing lines */}
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10 z-20" />
+          <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/10 z-20" />
+          <div className="absolute top-0 left-0 h-full w-[1px] bg-white/10 z-20" />
+          <div className="absolute top-0 right-0 h-full w-[1px] bg-white/10 z-20" />
+
+
+
+
+
         </motion.div>
 
-        {/* Center hero overlay */}
-        <motion.div
-          style={{ opacity: centerOpacity, y: centerY }}
-          className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none px-6 text-center"
-        >
-          <span className="text-white/80 text-[10px] md:text-[12px] font-bold tracking-[0.4em] uppercase mb-6">
-            Start your journey with
-          </span>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={IIC_LOGO}
-            alt="IIC"
-            className="h-16 md:h-24 w-auto brightness-0 invert"
-          />
-        </motion.div>
-
-        {/* Custom cursor pill */}
+        {/* Custom cursor pill — follows entire section */}
         <AnimatePresence>
           {cursor.visible && !isFullscreen && (
             <motion.div
@@ -168,7 +168,6 @@ const ScrollScaleVideo = () => {
             </motion.div>
           )}
         </AnimatePresence>
-        </motion.div>
       </div>
 
       <AnimatePresence>
@@ -255,7 +254,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onMouseMove={resetHideTimeout}
-      className="fixed inset-0 z-[10001] bg-white flex items-center justify-center"
+      className="fixed inset-0 z-[10001] bg-black flex items-center justify-center"
     >
       <video
         ref={videoRef}
@@ -272,7 +271,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
       {/* Close Button */}
       <motion.button
         initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: showControls ? 1 : 0, y: showControls ? 0 : -20 }}
+        animate={{ opacity: 1, y: 0 }}
         onClick={onClose}
         className="absolute top-8 right-8 z-[110] p-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white transition-colors border border-white/10"
       >
