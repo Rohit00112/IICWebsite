@@ -5,7 +5,6 @@ import { motion, useInView } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
-import ScrollScaleVideo from './ScrollScaleVideo';
 
 const AboutSection = () => {
   const containerRef = useRef(null);
@@ -54,7 +53,6 @@ const AboutSection = () => {
         </div>
       </div>
 
-      <ScrollScaleVideo />
     </section>
   );
 };
