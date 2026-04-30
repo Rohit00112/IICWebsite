@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import HeroSection from "@/components/sections/home/HeroSection";
 import AboutSection from "@/components/sections/home/AboutSection";
+import ScrollScaleVideo from "@/components/sections/home/ScrollScaleVideo";
 import ProgrammesSection from "@/components/sections/home/ProgrammesSection";
 import Preloader from "@/components/layout/Preloader";
 import { Metadata } from "next";
@@ -24,6 +25,7 @@ export default function Home() {
       <Preloader />
       <HeroSection />
       <AboutSection />
+      <ScrollScaleVideo />
       <ProgrammesSection />
       <PartnerSection />
       <LifestyleSection />

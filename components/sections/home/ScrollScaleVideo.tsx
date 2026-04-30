@@ -64,7 +64,7 @@ const ScrollScaleVideo = () => {
   }, [isFullscreen, closeFullscreen]);
 
   return (
-    <section ref={outerRef} className="relative w-full h-[200vh] bg-black mt-20 md:mt-32">
+    <section ref={outerRef} className="relative w-full h-[200vh] bg-black">
       <div
         ref={containerRef}
         onClick={openFullscreen}
