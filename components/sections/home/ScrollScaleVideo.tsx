@@ -20,15 +20,14 @@ const ScrollScaleVideo = () => {
     offset: ['start start', 'end end'],
   });
 
-  const centerOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
-  const centerY = useTransform(scrollYProgress, [0, 0.4], [0, -40]);
-  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const maskOpacity = useTransform(scrollYProgress, [0, 0.5], [0.5, 1]);
-  const cornerOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.1, 0.85, 1],
-    [0, 0.6, 0.6, 0]
-  );
+  // Frame grows from small to fullscreen as user scrolls into the section.
+  const frameScale = useTransform(scrollYProgress, [0, 0.5], [0.55, 1]);
+  const frameRadius = useTransform(scrollYProgress, [0, 0.5], [32, 0]);
+  // Center text & corner logos only appear once frame is mostly full.
+  const centerOpacity = useTransform(scrollYProgress, [0.45, 0.6, 0.9, 1], [0, 1, 1, 0]);
+  const centerY = useTransform(scrollYProgress, [0.45, 0.6], [30, 0]);
+  const cornerOpacity = useTransform(scrollYProgress, [0.45, 0.6, 0.9, 1], [0, 0.6, 0.6, 0]);
+  const maskOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
@@ -64,15 +63,17 @@ const ScrollScaleVideo = () => {
   }, [isFullscreen, closeFullscreen]);
 
   return (
-    <section ref={outerRef} className="relative w-full h-[200vh] bg-black">
-      <div
-        ref={containerRef}
-        onClick={openFullscreen}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className="sticky top-0 h-screen w-full overflow-hidden cursor-none group"
-      >
-        <motion.video
+    <section ref={outerRef} className="relative w-full h-[200vh] bg-white">
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        <motion.div
+          ref={containerRef}
+          onClick={openFullscreen}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          style={{ scale: frameScale, borderRadius: frameRadius }}
+          className="relative w-full h-full overflow-hidden cursor-none group origin-center"
+        >
+        <video
           src={VIDEO_SRC}
           poster={POSTER_SRC}
           muted
@@ -81,7 +82,6 @@ const ScrollScaleVideo = () => {
           playsInline
           preload="metadata"
           aria-hidden="true"
-          style={{ scale: videoScale }}
           className="absolute inset-0 w-full h-full object-cover"
         />
 
@@ -168,6 +168,7 @@ const ScrollScaleVideo = () => {
             </motion.div>
           )}
         </AnimatePresence>
+        </motion.div>
       </div>
 
       <AnimatePresence>
