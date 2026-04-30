@@ -36,3 +36,50 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Fluid.glass-style edge blur mask for ScrollScaleVideo */
+.fluid-edge-mask {
+  -webkit-mask-image: radial-gradient(
+    ellipse 65% 55% at center,
+    transparent 35%,
+    black 75%
+  );
+  mask-image: radial-gradient(
+    ellipse 65% 55% at center,
+    transparent 35%,
+    black 75%
+  );
+}
+
+@supports (backdrop-filter: blur(1px)) {
+  .fluid-edge-mask {
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .fluid-edge-mask {
+    background: radial-gradient(
+      ellipse 65% 55% at center,
+      transparent 35%,
+      rgba(0, 0, 0, 0.7) 90%
+    );
+  }
+}
+
+@media (max-width: 768px) {
+  .fluid-edge-mask {
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 65% at center,
+      transparent 30%,
+      black 80%
+    );
+    mask-image: radial-gradient(
+      ellipse 80% 65% at center,
+      transparent 30%,
+      black 80%
+    );
+  }
+}
