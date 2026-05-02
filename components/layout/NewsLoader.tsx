@@ -6,9 +6,9 @@ import Image from 'next/image';
 
 const NewsLoader = () => {
   return (
-    <div className="fixed inset-0 z-[1000] bg-white flex flex-col items-center justify-center p-6 text-center">
+    <div className="relative w-full min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center overflow-hidden">
       {/* Background Decorative Element */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#21409A] via-transparent to-transparent" />
       </div>
 

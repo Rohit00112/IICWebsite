@@ -7,6 +7,7 @@ import AdmissionsSidebar from './AdmissionsSidebar';
 
 export default function AdmissionsClient() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Persistence: Step
   useEffect(() => {
@@ -30,12 +31,17 @@ export default function AdmissionsClient() {
           <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 items-stretch">
             {/* Form Column */}
             <div className="lg:col-span-8 w-full">
-              <ApplicationForm currentStep={currentStep} setCurrentStep={setCurrentStep} />
+              <ApplicationForm
+                currentStep={currentStep}
+                setCurrentStep={setCurrentStep}
+                isSubmitted={isSubmitted}
+                setIsSubmitted={setIsSubmitted}
+              />
             </div>
 
             {/* Sidebar Column */}
             <div className="lg:col-span-4 w-full">
-              <AdmissionsSidebar />
+              <AdmissionsSidebar isSubmitted={isSubmitted} />
             </div>
           </div>
         </div>

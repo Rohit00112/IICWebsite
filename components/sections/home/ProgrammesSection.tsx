@@ -104,17 +104,18 @@ const ProgrammesSection = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 + 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-wrap gap-4 mb-10"
+                    className="flex items-center gap-2 mb-10 max-w-[60%] md:max-w-[58%] relative z-20"
                   >
-                    <span className={`${prog.tagColor} text-white/95 text-[10px] md:text-[12px] px-5 py-2 rounded-full font-bold tracking-widest uppercase border border-white/10 shadow-lg`}>
+                    <span className={`${prog.tagColor} text-white text-[8px] md:text-[9px] px-3 py-1.5 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap truncate`}>
                       {prog.type}
                     </span>
-                    <span className="bg-white/10 backdrop-blur-xl text-white text-[10px] md:text-[12px] px-5 py-2 rounded-full font-bold border border-white/10 flex items-center gap-2">
-                      <span className="text-sm">🕒</span> {prog.duration}
+                    <span className="bg-white/15 backdrop-blur-xl text-white text-[8px] md:text-[9px] px-2.5 py-1.5 rounded-full font-bold border border-white/10 flex items-center gap-1 whitespace-nowrap shrink-0">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      {prog.duration}
                     </span>
                   </motion.div>
 
-                  <div className="max-w-[70%] md:max-w-[60%]">
+                  <div className="max-w-[60%] md:max-w-[52%] relative z-10">
                     <motion.div
                       variants={{
                         hidden: { opacity: 0, y: 20 },
@@ -198,15 +199,19 @@ const ProgrammesSection = () => {
                   whileInView={{ opacity: 1, x: 0, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 + 0.4, duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ y: prog.parallax }}
-                  className="absolute right-[-5%] bottom-[-5%] w-[55%] h-[90%] pointer-events-none"
+                  style={{
+                    y: prog.parallax,
+                    maskImage: 'linear-gradient(to bottom, black 0%, black 88%, transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 88%, transparent 100%)',
+                  }}
+                  className="absolute right-0 bottom-28 md:bottom-32 top-6 w-[48%] pointer-events-none z-0 overflow-hidden"
                 >
                   <Image
                     src={prog.image}
                     alt={prog.subtitle}
                     fill
                     sizes="(max-width: 768px) 60vw, 40vw"
-                    className="object-contain object-bottom transition-all duration-1000 group-hover:scale-105 group-hover:-translate-y-4 filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
+                    className="object-contain object-right-bottom transition-all duration-1000 group-hover:scale-105 group-hover:-translate-y-2"
                   />
                 </motion.div>
                 
