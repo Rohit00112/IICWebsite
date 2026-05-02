@@ -10,7 +10,7 @@ import TechGrid from '../../effects/TechGrid';
 const InnovationLab = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -26,7 +26,7 @@ const InnovationLab = () => {
       <div className="max-w-[1440px] mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-16">
           <Magnetic strength={0.1}>
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 10 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               className="text-2xl md:text-4xl font-bold text-[#1a1a1a] mb-2 font-sora"
@@ -55,13 +55,13 @@ const InnovationLab = () => {
                 Innovation Lab
               </h3>
             </Magnetic>
-            <RevealText 
+            <RevealText
               text="Beyond academics, IIC offers a dynamic environment fostering creativity, leadership, and lifelong friendships."
               className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed"
             />
           </div>
           <Magnetic strength={0.25}>
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-[#74C044] text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-3 hover:opacity-90 transition-all shadow-lg hover:shadow-xl shrink-0"
@@ -75,10 +75,11 @@ const InnovationLab = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+          <motion.div
+            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative group aspect-[4/3] md:aspect-auto h-full rounded-[32px] md:rounded-[40px] overflow-hidden shadow-2xl"
           >
             <motion.div style={{ y: y1 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
@@ -92,11 +93,11 @@ const InnovationLab = () => {
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             <div className="absolute bottom-10 left-10 right-10">
-              <RevealText 
+              <RevealText
                 text="Clubs & Societies"
-                className="text-2xl md:text-3xl font-bold text-white mb-3 font-sora"
+                className="text-xl md:text-2xl font-bold text-white mb-2 font-sora"
               />
-              <p className="text-white/80 text-base md:text-lg">
+              <p className="text-white/80 text-sm md:text-base">
                 Join over 20 active student-led organizations.
               </p>
             </div>
@@ -104,11 +105,11 @@ const InnovationLab = () => {
 
           <div className="flex flex-col gap-8">
             <div className="grid grid-cols-2 gap-8">
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
+              <motion.div
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: 0.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 className="relative group aspect-square rounded-[24px] md:rounded-[32px] overflow-hidden shadow-xl"
               >
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
@@ -122,16 +123,16 @@ const InnovationLab = () => {
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6">
-                  <h4 className="text-lg md:text-xl font-bold text-white font-sora">
+                  <h4 className="text-base md:text-lg font-bold text-white font-sora">
                     State-of-art Library
                   </h4>
                 </div>
               </motion.div>
-              <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
+              <motion.div
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 className="relative group aspect-square rounded-[24px] md:rounded-[32px] overflow-hidden shadow-xl"
               >
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
@@ -145,18 +146,18 @@ const InnovationLab = () => {
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6">
-                  <h4 className="text-lg md:text-xl font-bold text-white font-sora">
+                  <h4 className="text-base md:text-lg font-bold text-white font-sora">
                     Tech Events & Hackathons
                   </h4>
                 </div>
               </motion.div>
             </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
+            <motion.div
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative group aspect-[21/9] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-xl"
             >
               <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
@@ -170,10 +171,10 @@ const InnovationLab = () => {
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-8 left-8 right-8">
-                <h4 className="text-xl md:text-2xl font-bold text-white mb-2 font-sora">
+                <h4 className="text-lg md:text-xl font-bold text-white mb-1 font-sora">
                   Cafeteria & Social Hub
                 </h4>
-                <p className="text-white/70 text-sm md:text-base">
+                <p className="text-white/70 text-xs md:text-sm">
                   The perfect place to unwind and network between classes.
                 </p>
               </div>

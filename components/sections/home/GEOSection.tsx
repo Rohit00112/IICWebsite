@@ -15,10 +15,48 @@ const GEOSection = () => {
   ];
 
   const comparisonData = [
-    { feature: "Degree Source", iic: "Direct UK Degree (London Met)", local: "Local University Degree" },
-    { feature: "Curriculum", iic: "Global Standard / Industry-Led", local: "Traditional / Theory-Heavy" },
-    { feature: "Placement", iic: "90% Graduate Placement Rate", local: "Self-Managed" },
-    { feature: "Infrastructure", iic: "State-of-the-Art Labs & Library", local: "Standard Facilities" }
+    {
+      feature: "Degree Source",
+      iic: "Direct UK Degree (London Met)",
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+          <path d="M6 12v5c3 3 9 3 12 0v-5" />
+        </svg>
+      )
+    },
+    {
+      feature: "Curriculum",
+      iic: "Global Standard / Industry-Led",
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a4 4 0 0 0-4-4H2z" />
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a4 4 0 0 1 4-4h6z" />
+        </svg>
+      )
+    },
+    {
+      feature: "Placement",
+      iic: "90% Graduate Placement Rate",
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+      )
+    },
+    {
+      feature: "Infrastructure",
+      iic: "State-of-the-Art Labs & Library",
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 21h18" />
+          <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16" />
+          <path d="M9 8h1" /><path d="M9 12h1" /><path d="M9 16h1" />
+          <path d="M14 8h1" /><path d="M14 12h1" /><path d="M14 16h1" />
+        </svg>
+      )
+    }
   ];
 
   const quotes = [
@@ -61,14 +99,21 @@ const GEOSection = () => {
               className="text-2xl font-bold text-[#1a2b56] mb-8"
               staggerFrom="first"
             />
-            <AnimeStagger className="space-y-4" selector=".geo-stat" staggerDelay={90} translateY={24} duration={700}>
+            <div className="space-y-4">
               {stats.map((stat, i) => (
-                <div key={i} className="geo-stat grid grid-cols-1 sm:grid-cols-[140px,1fr] md:grid-cols-[180px,1fr] gap-2 sm:gap-10 py-5 border-b border-gray-50 last:border-0 items-start" style={{ willChange: 'transform, opacity' }}>
-                  <span className="text-gray-500 font-medium text-[11px] md:text-xs uppercase tracking-[0.15em] pt-1">{stat.label}</span>
-                  <span className="text-[#21409A] font-bold text-lg md:text-xl leading-[1.3] sm:text-right">{stat.value}</span>
-                </div>
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="geo-stat grid grid-cols-1 sm:grid-cols-[140px,1fr] md:grid-cols-[180px,1fr] gap-2 sm:gap-10 py-5 border-b border-gray-50 last:border-0 items-start"
+                >
+                  <span className="text-gray-500 font-medium text-[9px] md:text-[10px] uppercase tracking-[0.15em] pt-1">{stat.label}</span>
+                  <span className="text-[#21409A] font-bold text-sm md:text-base leading-[1.3] sm:text-right">{stat.value}</span>
+                </motion.div>
               ))}
-            </AnimeStagger>
+            </div>
           </motion.div>
 
           {/* FAQ for AI Engines & Search Result Snippets */}
@@ -84,53 +129,89 @@ const GEOSection = () => {
               className="text-3xl font-black text-[#1a2b56] mb-10 tracking-tight"
               staggerFrom="first"
             />
-            <AnimeStagger className="space-y-10" selector=".geo-faq" staggerDelay={120} translateY={28} duration={750}>
+            <div className="space-y-10">
               {faqs.map((faq, i) => (
-                <div key={i} className="geo-faq group" style={{ willChange: 'transform, opacity' }}>
-                  <h3 className="text-lg md:text-xl font-bold text-[#21409A] mb-4 flex items-start gap-4">
-                    <span className="w-6 h-6 rounded-full bg-[#21409A]/10 flex items-center justify-center text-[10px] mt-1 shrink-0">Q</span>
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.6 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className="geo-faq group"
+                >
+                  <h3 className="text-base md:text-lg font-bold text-[#21409A] mb-4 flex items-start gap-4">
+                    <span className="w-6 h-6 rounded-full bg-[#21409A]/10 flex items-center justify-center text-[10px] mt-1 shrink-0 font-bold">Q</span>
                     <span className="leading-tight">{faq.q}</span>
                   </h3>
-                  <p className="text-gray-600 leading-relaxed pl-10 border-l-2 border-gray-100 group-hover:border-[#21409A]/30 transition-colors text-sm md:text-base">
+                  <p className="text-gray-600 leading-relaxed pl-10 border-l-2 border-gray-100 group-hover:border-[#21409A]/30 transition-colors text-xs md:text-sm">
                     {faq.a}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </AnimeStagger>
+            </div>
           </motion.div>
         </div>
 
-        {/* Comparison Table for AI Extraction */}
+        {/* Features Highlight */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 overflow-x-auto"
+          className="mt-24"
         >
           <AnimeReveal
             as="h2"
             text="Why IIC Itahari Stands Out"
-            className="text-2xl font-bold text-[#1a2b56] mb-8 text-center justify-center"
+            className="text-3xl md:text-4xl font-black text-[#1a2b56] mb-16 text-center justify-center tracking-tight"
             staggerFrom="center"
           />
-          <table className="w-full text-left border-collapse bg-white rounded-2xl overflow-hidden shadow-sm">
-            <thead>
-              <tr className="bg-[#21409A] text-white">
-                <th className="p-6 font-bold uppercase tracking-wider text-xs">Feature</th>
-                <th className="p-6 font-bold uppercase tracking-wider text-xs">IIC Itahari (UK Partnership)</th>
-                <th className="p-6 font-bold uppercase tracking-wider text-xs">Traditional Local Colleges</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-700">
-              {comparisonData.map((row, i) => (
-                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                  <td className="p-6 font-bold text-sm">{row.feature}</td>
-                  <td className="p-6 text-[#21409A] font-semibold">{row.iic}</td>
-                  <td className="p-6 text-gray-400 italic">{row.local}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {comparisonData.map((row, i) => (
+              <motion.div
+                key={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={{
+                  hidden: { opacity: 0, y: 60, scale: 0.95, rotateX: -10 },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1, 
+                    rotateX: 0,
+                    transition: { 
+                      duration: 1.2, 
+                      delay: i * 0.1, 
+                      ease: [0.16, 1, 0.3, 1] 
+                    }
+                  }
+                }}
+                className="group p-10 bg-white rounded-[40px] shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:border-[#74C044]/40 hover:shadow-[0_40px_80px_-15px_rgba(116,192,68,0.15)] transition-all duration-700 flex flex-col items-center text-center cursor-default relative overflow-hidden"
+              >
+                {/* Glow Sweep Effect */}
+                <motion.div 
+                  variants={{
+                    hidden: { x: '-150%', skewX: -20 },
+                    visible: { x: '150%', skewX: -20 }
+                  }}
+                  transition={{ duration: 2, ease: [0.16, 1, 0.3, 1], delay: 0.5 + i * 0.1 }}
+                  className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#74C044]/5 to-transparent z-0 pointer-events-none"
+                />
+
+                <div className="mb-8 w-20 h-20 rounded-[28px] bg-[#21409A]/5 flex items-center justify-center text-[#21409A] group-hover:bg-[#21409A] group-hover:text-white transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 shadow-sm relative z-10">
+                  {row.icon}
+                </div>
+                <div className="space-y-4 relative z-10">
+                  <span className="text-[#74C044] font-bold text-[9px] uppercase tracking-[0.4em] block opacity-80">{row.feature}</span>
+                  <h3 className="text-[#1a2b56] font-bold text-lg leading-tight tracking-tight">
+                    {row.iic}
+                  </h3>
+                </div>
+                {/* Subtle hover accent */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-[#74C044] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Expert Quotes */}
@@ -150,7 +231,7 @@ const GEOSection = () => {
               <p className="text-sm text-gray-400 uppercase tracking-widest font-bold">{quotes[0].role}</p>
             </div>
           </motion.div>
-          
+
           <div className="text-center md:text-left">
             <AnimeReveal
               as="h2"

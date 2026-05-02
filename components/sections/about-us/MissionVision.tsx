@@ -39,25 +39,27 @@ const MissionVision = () => {
           <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-center justify-center">
             {/* Left Image */}
             <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0, scale: 1.1 }}
+              whileInView={{ clipPath: 'inset(0 0 0% 0)', opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
               className="w-full md:w-[55%] aspect-square md:aspect-[4/3] relative rounded-[2.5rem] overflow-hidden shadow-2xl"
             >
               <Image 
                 src="/images/about/mission.png" 
                 alt="Students at IIC" 
                 fill 
-                className="object-cover" 
+                className="object-cover transition-transform duration-1000 hover:scale-105" 
                 sizes="(max-width: 768px) 100vw, 55vw" 
               />
             </motion.div>
 
             {/* Right Card */}
             <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, x: 50, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: 0.2, duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
               className="w-full md:w-[45%] bg-[#1A2B6D] p-12 md:p-16 rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(26,43,109,0.3)] relative flex flex-col items-start"
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-inner">
@@ -70,8 +72,8 @@ const MissionVision = () => {
                   <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
                 </svg>
               </div>
-              <h3 className="text-3xl font-bold mb-6 font-sora">Our Mission</h3>
-              <p className="text-white/80 text-base md:text-lg leading-relaxed font-medium font-sora">
+              <h3 className="text-2xl md:text-3xl font-bold mb-6 font-sora">Our Mission</h3>
+              <p className="text-white/80 text-sm md:text-base leading-relaxed font-medium font-sora">
                 To deliver exceptional UK university education locally, fostering a culture of academic excellence, critical thinking, and practical skills development that prepares students for immediate industry impact.
               </p>
             </motion.div>
@@ -81,27 +83,27 @@ const MissionVision = () => {
           <div className="flex flex-col md:flex-row-reverse gap-12 md:gap-24 items-center justify-center">
             {/* Right Image */}
             <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0, scale: 1.1 }}
+              whileInView={{ clipPath: 'inset(0 0 0% 0)', opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
               className="w-full md:w-[55%] aspect-square md:aspect-[4/3] relative rounded-[2.5rem] overflow-hidden shadow-2xl"
             >
               <Image 
                 src="/images/about/vision.png" 
                 alt="Campus Life" 
                 fill 
-                className="object-cover" 
+                className="object-cover transition-transform duration-1000 hover:scale-105" 
                 sizes="(max-width: 768px) 100vw, 55vw" 
               />
             </motion.div>
 
             {/* Left Card */}
             <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              initial={{ opacity: 0, x: -50, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: 0.2, duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
               className="w-full md:w-[45%] bg-[#AF1D1D] p-12 md:p-16 rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(175,29,29,0.3)] relative flex flex-col items-start"
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-inner">
@@ -111,8 +113,8 @@ const MissionVision = () => {
                   <path d="M15 15l-6-6M9 15l6-6" />
                 </svg>
               </div>
-              <h3 className="text-3xl font-bold mb-6 font-sora">Our Vision</h3>
-              <p className="text-white/80 text-base md:text-lg leading-relaxed font-medium font-sora">
+              <h3 className="text-2xl md:text-3xl font-bold mb-6 font-sora">Our Vision</h3>
+              <p className="text-white/80 text-sm md:text-base leading-relaxed font-medium font-sora">
                 To be the premier higher education institution in Eastern Nepal, recognized globally for producing innovative leaders and driving socio-economic progress through education.
               </p>
             </motion.div>

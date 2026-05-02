@@ -74,7 +74,7 @@ const AnimeStagger = ({
       targets.forEach((t) => {
         (t as HTMLElement).style.opacity = '1';
         (t as HTMLElement).style.transform = 'none';
-        });
+      });
     }
   }, [duration, from, prefersReducedMotion, selector, staggerDelay, translateY, delay]);
 

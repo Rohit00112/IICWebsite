@@ -51,72 +51,94 @@ const LifestyleSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[800px]">
           {/* Main Large Image (Left) */}
           <div className="md:col-span-2 relative h-full">
-            <Tilt className="h-full">
-              <div className="relative h-[400px] md:h-full group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-2xl cursor-pointer">
-                <motion.div style={{ y: y1 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
-                  <Image
-                    src="/images/home/iic-lifestyle 3.png"
-                    alt="Lifestyle at IIC"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 66vw"
-                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                  />
-                </motion.div>
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
-                {/* Label */}
-                <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 flex items-center gap-3">
-                  <span className="text-white text-lg md:text-2xl font-bold font-sora">
-                    Library
-                  </span>
+            <motion.div
+              initial={{ clipPath: 'inset(100% 0 0 0)', y: 100, opacity: 0 }}
+              whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+              className="h-full"
+            >
+              <Tilt className="h-full">
+                <div className="relative h-[400px] md:h-full group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-2xl cursor-pointer">
+                  <motion.div style={{ y: y1 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+                    <Image
+                      src="/images/home/iic-lifestyle 3.png"
+                      alt="Lifestyle at IIC"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 66vw"
+                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                    />
+                  </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
+                  <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 flex items-center gap-3">
+                    <span className="text-white text-lg md:text-2xl font-bold font-sora">
+                      Library
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Tilt>
+              </Tilt>
+            </motion.div>
           </div>
 
           {/* Right Column (Stacked) */}
           <div className="flex flex-col gap-6">
             {/* Top Stacked Image */}
-            <Tilt className="flex-1">
-              <div className="relative h-[300px] md:h-full group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl cursor-pointer">
-                <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
-                  <Image
-                    src="/images/home/iic-lifestyle 1.png"
-                    alt="Lecture Theater"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                  />
-                </motion.div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70"></div>
-                <div className="absolute bottom-8 left-8 flex items-center gap-2">
-                  <span className="text-white text-base md:text-lg font-bold font-sora">
-                    Lecture Theater
-                  </span>
+            <motion.div
+              initial={{ clipPath: 'inset(100% 0 0 0)', y: 60, opacity: 0 }}
+              whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: 0.2, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+              className="flex-1"
+            >
+              <Tilt className="h-full">
+                <div className="relative h-[300px] md:h-full group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl cursor-pointer">
+                  <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+                    <Image
+                      src="/images/home/iic-lifestyle 1.png"
+                      alt="Lecture Theater"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                    />
+                  </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70"></div>
+                  <div className="absolute bottom-8 left-8 flex items-center gap-2">
+                    <span className="text-white text-base md:text-lg font-bold font-sora">
+                      Lecture Theater
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Tilt>
+              </Tilt>
+            </motion.div>
 
             {/* Bottom Stacked Image */}
-            <Tilt className="flex-1">
-              <div className="relative h-[300px] md:h-full group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl cursor-pointer">
-                <motion.div style={{ y: y3 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
-                  <Image
-                    src="/images/home/iic-lifestyle 2.png"
-                    alt="Advanced Labs"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                  />
-                </motion.div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70"></div>
-                <div className="absolute bottom-8 left-8 flex items-center gap-2">
-                  <span className="text-white text-base md:text-lg font-bold font-sora">
-                    Advanced Labs
-                  </span>
+            <motion.div
+              initial={{ clipPath: 'inset(100% 0 0 0)', y: 60, opacity: 0 }}
+              whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: 0.4, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+              className="flex-1"
+            >
+              <Tilt className="h-full">
+                <div className="relative h-[300px] md:h-full group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl cursor-pointer">
+                  <motion.div style={{ y: y3 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+                    <Image
+                      src="/images/home/iic-lifestyle 2.png"
+                      alt="Advanced Labs"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                    />
+                  </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70"></div>
+                  <div className="absolute bottom-8 left-8 flex items-center gap-2">
+                    <span className="text-white text-base md:text-lg font-bold font-sora">
+                      Advanced Labs
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Tilt>
+              </Tilt>
+            </motion.div>
           </div>
         </div>
       </div>

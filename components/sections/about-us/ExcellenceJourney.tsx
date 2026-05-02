@@ -73,28 +73,32 @@ const ExcellenceJourney = () => {
             {historyItems.map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ 
+                  duration: 1.2, 
+                  delay: index * 0.1, 
+                  ease: [0.34, 1.56, 0.64, 1] // Bouncy easing
+                }}
                 className={`flex flex-col md:flex-row items-center gap-12 md:gap-0 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
               >
                 {/* Content Card Side */}
                 <div className={`w-full md:w-1/2 flex ${index % 2 === 0 ? 'md:justify-end md:pr-12' : 'md:justify-start md:pl-12'}`}>
                   <motion.div 
                     whileHover={{ scale: 1.02, y: -5 }}
-                    className="p-12 md:p-20 rounded-[3.5rem] text-left text-white shadow-2xl w-full max-w-2xl relative group overflow-hidden"
+                    className="p-10 md:p-16 rounded-[3rem] text-left text-white shadow-2xl w-full max-w-2xl relative group overflow-hidden"
                     style={{ backgroundColor: item.color }}
                   >
                     <div className="absolute top-0 right-0 p-12 bg-white/10 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-white/20 transition-all duration-500" />
                     
-                    <div className="inline-block px-5 py-2 bg-black/30 rounded-full text-xs font-bold mb-8 tracking-widest font-sora backdrop-blur-sm">
+                    <div className="inline-block px-4 py-1 bg-black/30 rounded-full text-[10px] font-bold mb-6 tracking-widest font-sora backdrop-blur-sm">
                       {item.year}
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-bold mb-6 font-sora leading-tight tracking-tight">
+                    <h3 className="text-2xl md:text-3xl font-bold mb-4 font-sora leading-tight tracking-tight">
                       {item.title}
                     </h3>
-                    <p className="text-white/80 text-base md:text-lg leading-relaxed font-medium font-sora">
+                    <p className="text-white/80 text-sm md:text-base leading-relaxed font-medium font-sora">
                       {item.description}
                     </p>
                   </motion.div>

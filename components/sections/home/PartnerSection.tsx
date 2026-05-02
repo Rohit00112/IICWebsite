@@ -119,33 +119,33 @@ const PartnerSection = () => {
           </div>
         </div>
 
-        <AnimeStagger
-          className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-8 w-full mb-14 px-6 max-w-[1300px]"
-          selector=".ranking-card"
-          staggerDelay={120}
-          from="center"
-          translateY={40}
-          duration={800}
-        >
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-8 w-full mb-14 px-6 max-w-[1300px]">
           {rankingCards.map((card, index) => (
-            <div
+            <motion.div
               key={index}
-              className="ranking-card relative aspect-[4/3] w-full overflow-hidden"
-              style={{ willChange: 'transform, opacity' }}
+              initial={{ opacity: 0, y: 40, scale: 0.8 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                delay: index * 0.12, 
+                duration: 1, 
+                ease: [0.34, 1.56, 0.64, 1] 
+              }}
+              className="relative aspect-[4/3] w-full overflow-hidden"
             >
               <Image
                 src={card}
                 alt={`LMU Rank ${index + 1}`}
                 fill
                 sizes="(max-width: 768px) 50vw, 20vw"
-                className="object-contain"
+                className="object-contain transition-transform duration-500 hover:scale-110"
               />
-            </div>
+            </motion.div>
           ))}
-        </AnimeStagger>
+        </div>
 
         <div className="max-w-4xl text-center px-6 flex flex-col items-center">
-          <RevealText 
+          <RevealText
             text="London Metropolitan University's Mission Is To Transform Lives Through The Power Of Education – And It Does That By Welcoming Students From All Kinds Of Backgrounds And Supporting Them To Achieve Success. Each And Every One Of Them Belongs There And Uniquely Contributes To The University And The City Around Them."
             className="text-gray-500 text-sm md:text-[16px] font-medium leading-relaxed mb-6 justify-center"
           />
