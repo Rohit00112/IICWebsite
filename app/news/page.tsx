@@ -12,8 +12,17 @@ export const metadata: Metadata = {
 };
 
 const NewsPage = async () => {
-  const allNews = await getAllNews();
-  const featuredPost = await getFeaturedNews();
+  let allNews: Awaited<ReturnType<typeof getAllNews>> = [];
+  let featuredPost: Awaited<ReturnType<typeof getFeaturedNews>> = null;
+
+  try {
+    [allNews, featuredPost] = await Promise.all([
+      getAllNews(),
+      getFeaturedNews(),
+    ]);
+  } catch (err) {
+    console.error('[news] DB unavailable, rendering empty state:', err);
+  }
 
   const breadcrumbs = [
     { name: 'Home', item: '/' },

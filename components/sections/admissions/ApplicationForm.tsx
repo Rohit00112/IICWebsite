@@ -30,11 +30,12 @@ const XIcon = () => (
 interface ApplicationFormProps {
   currentStep: number;
   setCurrentStep: (step: number) => void;
+  isSubmitted: boolean;
+  setIsSubmitted: (submitted: boolean) => void;
 }
 
-const ApplicationForm = ({ currentStep, setCurrentStep }: ApplicationFormProps) => {
+const ApplicationForm = ({ currentStep, setCurrentStep, isSubmitted, setIsSubmitted }: ApplicationFormProps) => {
   const shouldReduceMotion = useReducedMotion();
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<string | null>('BIT');
   const [uploadedFiles, setUploadedFiles] = useState<{ [key: string]: { name: string, preview: string | null } }>({});
 

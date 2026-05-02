@@ -67,7 +67,7 @@ const Navbar = () => {
       </AnimatePresence>
 
       <nav
-        className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] flex flex-col items-center w-full pointer-events-none"
+        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[200] flex flex-col items-center w-full pointer-events-none"
         aria-label="Main Navigation"
       >
 
@@ -79,18 +79,18 @@ const Navbar = () => {
               animate={{ height: 'auto', opacity: 1, y: 0 }}
               exit={{ height: 0, opacity: 0, y: 20 }}
               transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-              className="pointer-events-auto bg-[#141414]/70 backdrop-blur-[32px] border border-white/10 shadow-2xl w-[min(380px,92vw)] max-h-[75vh] rounded-[32px] overflow-hidden flex flex-col mb-4"
+              className="pointer-events-auto bg-[#141414]/75 backdrop-blur-[32px] border border-white/10 shadow-2xl w-[min(340px,92vw)] max-h-[75vh] rounded-[28px] overflow-hidden flex flex-col mb-3"
             >
-              <div className="px-9 pt-10 pb-8 flex flex-col h-full">
+              <div className="px-8 pt-8 pb-6 flex flex-col h-full">
                 {/* Header Label */}
-                <div className="text-white/30 text-[8px] font-bold uppercase tracking-[0.4em] mb-8">
+                <div className="text-white/30 text-[7px] font-bold uppercase tracking-[0.4em] mb-6">
                   Menu
                 </div>
 
                 <ul
                   id="main-menu"
                   role="menu"
-                  className="flex flex-col gap-0 items-start mb-10"
+                  className="flex flex-col gap-0 items-start mb-8"
                 >
                   {navLinks.map((link, index) => (
                     <motion.li
@@ -108,22 +108,22 @@ const Navbar = () => {
                         onClick={() => setIsMenuOpen(false)}
                         className="group relative block py-0.5 overflow-hidden focus-visible:outline-none"
                       >
-                        <div className="relative h-[44px] overflow-hidden">
+                        <div className="relative h-[38px] overflow-hidden">
                           <motion.div
                             animate={{
-                              y: hoveredIndex === index ? '-44px' : '0px'
+                              y: hoveredIndex === index ? '-38px' : '0px'
                             }}
                             transition={{
                               duration: 0.4,
                               ease: [0.76, 0, 0.24, 1]
                             }}
-                            className="flex flex-col h-[80px]"
+                            className="flex flex-col h-[76px]"
                           >
-                            <span className={`text-[28px] font-medium tracking-tight h-[44px] flex items-center transition-all duration-300 ${hoveredIndex !== null && hoveredIndex !== index ? 'text-white/20' : 'text-white'
+                            <span className={`text-[24px] font-medium tracking-tight h-[38px] flex items-center transition-all duration-300 ${hoveredIndex !== null && hoveredIndex !== index ? 'text-white/20' : 'text-white'
                               }`}>
                               {link.name}
                             </span>
-                            <span className="text-[28px] font-medium tracking-tight h-[44px] flex items-center text-white">
+                            <span className="text-[24px] font-medium tracking-tight h-[38px] flex items-center text-white">
                               {link.name}
                             </span>
                           </motion.div>
@@ -134,23 +134,19 @@ const Navbar = () => {
                 </ul>
 
                 {/* Footer Info Section */}
-                <div className="flex flex-col gap-1.5 mb-10">
+                <div className="flex flex-col gap-1 mb-8">
                   <div className="flex justify-between items-center">
-                    <span className="text-white/30 text-[11px] font-medium">News</span>
-                    <span className="text-white/80 text-[11px] font-medium">Events & Updates</span>
+                    <span className="text-white/30 text-[10px] font-medium">News</span>
+                    <span className="text-white/80 text-[10px] font-medium">Events & Updates</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-white/30 text-[11px] font-medium">Email</span>
-                    <span className="text-white/80 text-[11px] font-medium">info@iic.edu.np</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-white/30 text-[11px] font-medium">Phone</span>
-                    <span className="text-white/80 text-[11px] font-medium">+977 123 456789</span>
+                    <span className="text-white/30 text-[10px] font-medium">Email</span>
+                    <span className="text-white/80 text-[10px] font-medium text-xs">info@iic.edu.np</span>
                   </div>
                 </div>
 
                 {/* CTA Button */}
-                <button className="w-full py-3.5 bg-[#21409A] border border-white/5 rounded-lg text-white text-[10px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
+                <button className="w-full py-3 bg-[#21409A] border border-white/5 rounded-lg text-white text-[9px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
                   <span>Schedule a Campus tour</span>
                   <span className="text-base opacity-40">→</span>
                 </button>
@@ -172,9 +168,9 @@ const Navbar = () => {
               aria-expanded={isMenuOpen}
               aria-controls="main-menu"
               animate={{
-                width: isMenuOpen ? '64px' : 'min(360px, 92vw)',
-                height: '64px',
-                borderRadius: isMenuOpen ? '16px' : '32px'
+                width: isMenuOpen ? '56px' : 'min(320px, 92vw)',
+                height: '56px',
+                borderRadius: isMenuOpen ? '14px' : '28px'
               }}
               className="bg-[#141414]/80 backdrop-blur-[24px] border border-white/15 shadow-2xl flex items-center justify-center relative overflow-hidden focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
             >
@@ -185,11 +181,11 @@ const Navbar = () => {
                     initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
                     animate={{ opacity: 1, rotate: 0, scale: 1 }}
                     exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                    className="relative w-10 h-10 flex items-center justify-center"
+                    className="relative w-8 h-8 flex items-center justify-center"
                     aria-hidden="true"
                   >
-                    <span className="absolute w-5 h-[1.5px] bg-white rotate-45" />
-                    <span className="absolute w-5 h-[1.5px] bg-white -rotate-45" />
+                    <span className="absolute w-4 h-[1.5px] bg-white rotate-45" />
+                    <span className="absolute w-4 h-[1.5px] bg-white -rotate-45" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -197,32 +193,32 @@ const Navbar = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="w-full h-full flex items-center justify-between px-8"
+                    className="w-full h-full flex items-center justify-between px-6"
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="relative h-7 w-28">
+                    <div className="flex items-center gap-3">
+                      <div className="relative h-5 w-20">
                         <Image
                           src="/images/common/iic_logo.png"
                           alt="Itahari International College"
                           fill
-                          sizes="112px"
+                          sizes="80px"
                           className="object-contain brightness-110 contrast-125"
                         />
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-5">
-                      <div className="h-5 w-[1px] bg-white/20" />
-                      <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-white/70 min-w-[60px] text-right">
+                    <div className="flex items-center gap-4">
+                      <div className="h-4 w-[1px] bg-white/20" />
+                      <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/70 min-w-[50px] text-right">
                         {getActivePageName()}
                       </span>
                       <div
-                        className="w-8 h-8 rounded-full bg-white/5 flex flex-col gap-1 items-center justify-center"
+                        className="w-7 h-7 rounded-full bg-white/5 flex flex-col gap-0.5 items-center justify-center"
                         aria-hidden="true"
                       >
-                        <span className="w-3.5 h-[1px] bg-white" />
-                        <span className="w-3.5 h-[1px] bg-white" />
-                        <span className="w-3.5 h-[1px] bg-white" />
+                        <span className="w-3 h-[1px] bg-white" />
+                        <span className="w-3 h-[1px] bg-white" />
+                        <span className="w-3 h-[1px] bg-white" />
                       </div>
                     </div>
                   </motion.div>

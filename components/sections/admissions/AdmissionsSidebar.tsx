@@ -34,12 +34,16 @@ const HelpIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
 );
 
-const AdmissionsSidebar = () => {
+interface AdmissionsSidebarProps {
+  isSubmitted?: boolean;
+}
+
+const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
   const [openAccordion, setOpenAccordion] = useState<string | null>('requirements');
 
   const resources = [
-    { name: 'Download Offline Form (PDF)', icon: <DownloadIcon /> },
-    { name: 'Download College Brochure', icon: <BookIcon /> },
+    { name: 'Download Offline Form (PDF)', icon: <DownloadIcon />, gated: false },
+    { name: 'Download College Brochure', icon: <BookIcon />, gated: true },
   ];
 
   const sidebarLinks = [
@@ -72,17 +76,33 @@ const AdmissionsSidebar = () => {
             <h3 className="font-black text-[#1a1a1a] text-[17px] font-sora">Application Resources</h3>
           </div>
           <div className="flex flex-col gap-3">
-            {resources.map((res) => (
-              <button 
-                key={res.name}
-                className="group w-full flex items-center justify-between p-4 bg-gray-50/50 hover:bg-white border border-transparent hover:border-gray-100 rounded-2xl transition-all duration-300"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="opacity-40 group-hover:opacity-100 group-hover:text-[#21409A] transition-all">{res.icon}</span>
-                  <span className="text-[13px] font-bold text-gray-600 group-hover:text-[#1a1a1a] transition-colors">{res.name}</span>
-                </div>
-              </button>
-            ))}
+            {resources.map((res) => {
+              const locked = res.gated && !isSubmitted;
+              return (
+                <button
+                  key={res.name}
+                  disabled={locked}
+                  aria-disabled={locked}
+                  title={locked ? 'Submit your application to unlock the brochure' : undefined}
+                  className={`group w-full flex items-center justify-between p-4 border rounded-2xl transition-all duration-300 ${
+                    locked
+                      ? 'bg-gray-50/50 border-transparent cursor-not-allowed opacity-60'
+                      : 'bg-gray-50/50 hover:bg-white border-transparent hover:border-gray-100'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className={`transition-all ${locked ? 'opacity-40' : 'opacity-40 group-hover:opacity-100 group-hover:text-[#21409A]'}`}>{res.icon}</span>
+                    <span className={`text-[13px] font-bold transition-colors ${locked ? 'text-gray-400' : 'text-gray-600 group-hover:text-[#1a1a1a]'}`}>{res.name}</span>
+                  </div>
+                  {locked && (
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-1">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                      Locked
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </Tilt>
