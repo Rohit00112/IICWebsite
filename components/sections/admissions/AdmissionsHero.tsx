@@ -43,21 +43,34 @@ const AdmissionsHero = ({ currentStep }: AdmissionsHeroProps) => {
         </div>
 
         {/* Top Progress Tracker */}
-        <AnimeStagger
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full"
-          selector=".step-card-wrapper"
-          staggerDelay={100}
-          translateY={20}
-          duration={800}
-          delay={1.2}
-        >
-          {steps.map((step) => (
-            <div key={step.id} className="step-card-wrapper h-full">
-              <Tilt strength={10} className="h-full">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full">
+          {steps.map((step, index) => (
+            <motion.div 
+              key={step.id} 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: { opacity: 0, y: 40, scale: 0.8, rotateX: -20 },
+                visible: { 
+                  opacity: 1, 
+                  y: 0, 
+                  scale: 1, 
+                  rotateX: 0,
+                  transition: { 
+                    duration: 1.2, 
+                    delay: 0.6 + index * 0.15, 
+                    ease: [0.16, 1, 0.3, 1] 
+                  }
+                }
+              }}
+              className="h-full"
+            >
+              <Tilt strength={12} className="h-full">
                 <div
-                  className={`step-card group relative h-full p-6 rounded-2xl border backdrop-blur-md flex flex-col items-center transition-all duration-500 overflow-hidden ${currentStep === step.id
-                      ? 'bg-white/10 border-white/30 shadow-2xl shadow-blue-900/20'
-                      : 'bg-white/5 border-white/10 hover:bg-white/8 hover:border-white/20'
+                  className={`step-card group relative h-full p-8 rounded-3xl border backdrop-blur-xl flex flex-col items-center transition-all duration-700 overflow-hidden ${currentStep === step.id
+                      ? 'bg-white/10 border-white/40 shadow-[0_40px_80px_-15px_rgba(33,64,154,0.3)]'
+                      : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
                     }`}
                 >
                   {/* Holographic Shimmer for active state */}
@@ -65,41 +78,55 @@ const AdmissionsHero = ({ currentStep }: AdmissionsHeroProps) => {
                     <motion.div
                       animate={{
                         x: ['-100%', '200%'],
-                        transition: { duration: 3, repeat: Infinity, ease: "linear" }
+                        transition: { duration: 2.5, repeat: Infinity, ease: "linear" }
                       }}
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 pointer-events-none"
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 pointer-events-none z-0"
                     />
                   )}
 
-                  <motion.div
-                    layout
-                    className={`relative z-10 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-500 mb-4 ${currentStep === step.id
-                        ? 'bg-[#21409A] text-white shadow-lg shadow-blue-900/40 scale-125'
-                        : currentStep > step.id
-                          ? 'bg-[#76bc43] text-white'
-                          : 'bg-white/10 text-white/40'
-                      }`}
-                  >
-                    {currentStep > step.id ? '✓' : step.id}
-                  </motion.div>
-                  <motion.h3
-                    layout
-                    className={`font-bold text-sm md:text-base mb-1 font-sora transition-all duration-500 ${currentStep === step.id ? 'text-white' : 'text-white/70'
-                      }`}
-                  >
-                    {step.title}
-                  </motion.h3>
-                  <motion.p
-                    layout
-                    className="text-gray-400 text-[10px] md:text-xs font-medium uppercase tracking-wider text-center"
-                  >
-                    {step.subtitle}
-                  </motion.p>
+                  <div className="relative z-10 flex flex-col items-center">
+                    <motion.div
+                      layout
+                      className={`relative w-14 h-14 rounded-full flex items-center justify-center font-black text-lg transition-all duration-700 mb-6 ${currentStep === step.id
+                          ? 'bg-[#21409A] text-white shadow-[0_0_30px_rgba(33,64,154,0.6)] scale-110'
+                          : currentStep > step.id
+                            ? 'bg-[#76bc43] text-white'
+                            : 'bg-white/10 text-white/40'
+                        }`}
+                    >
+                      {currentStep > step.id ? (
+                        <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }}>✓</motion.span>
+                      ) : step.id}
+                    </motion.div>
+                    
+                    <motion.h3
+                      layout
+                      className={`font-black text-lg md:text-xl mb-2 font-sora transition-all duration-500 uppercase tracking-tight ${currentStep === step.id ? 'text-white' : 'text-white/60'
+                        }`}
+                    >
+                      {step.title}
+                    </motion.h3>
+                    
+                    <motion.p
+                      layout
+                      className={`text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-center transition-opacity duration-500 ${currentStep === step.id ? 'text-white/60' : 'text-white/30'}`}
+                    >
+                      {step.subtitle}
+                    </motion.p>
+                  </div>
+                  
+                  {/* Active Step Indicator Dot */}
+                  {currentStep === step.id && (
+                    <motion.div 
+                      layoutId="step-indicator"
+                      className="absolute bottom-4 w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_10px_white]"
+                    />
+                  )}
                 </div>
               </Tilt>
-            </div>
+            </motion.div>
           ))}
-        </AnimeStagger>
+        </div>
       </div>
     </section>
   );

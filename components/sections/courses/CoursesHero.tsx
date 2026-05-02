@@ -32,17 +32,17 @@ const CoursesHero = () => {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-center pt-20 md:pt-32 pb-4">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-center pt-24 md:pt-36 pb-4">
         <div className="text-center flex flex-col items-center">
           <RevealText 
             text="Discover Our"
-            className="text-[#333333] text-2xl md:text-[42px] font-bold mb-2 block tracking-tight justify-center"
+            className="text-[#333333] text-xl md:text-[32px] font-bold mb-2 block tracking-tight justify-center"
           />
 
           <AnimeReveal
             as="h1"
             text="Academic Programs"
-            className="text-4xl md:text-[96px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight uppercase justify-center"
+            className="text-4xl md:text-6xl lg:text-[100px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight uppercase justify-center"
             staggerFrom="center"
             delay={0.2}
           />
@@ -50,8 +50,8 @@ const CoursesHero = () => {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="text-[13px] md:text-[16px] text-[#444444] max-w-2xl mx-auto leading-relaxed font-medium"
+            transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-xs md:text-sm text-[#444444] max-w-2xl mx-auto leading-relaxed font-medium uppercase tracking-widest opacity-70"
           >
             Expand your horizons with our diverse educational options designed to meet industry demands.
           </motion.p>
@@ -59,7 +59,12 @@ const CoursesHero = () => {
       </div>
 
       {/* Hero Image Section - Bleed to edges */}
-      <div className="w-full relative h-[350px] md:h-[600px] mt-8 md:mt-12 overflow-hidden">
+      <motion.div 
+        initial={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}
+        animate={{ clipPath: 'inset(0% 0 0 0)', opacity: 1 }}
+        transition={{ duration: 1.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full relative h-[350px] md:h-[600px] mt-8 md:mt-12 overflow-hidden"
+      >
         <motion.div
           style={{ y, opacity, scale }}
           className="absolute inset-0 w-full h-[120%] -top-[10%]"
@@ -73,7 +78,7 @@ const CoursesHero = () => {
             priority
           />
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };

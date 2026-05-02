@@ -10,6 +10,7 @@ interface AnimeRevealProps {
   delay?: number;
   staggerFrom?: 'first' | 'center' | 'last';
   duration?: number;
+  stagger?: number;
   style?: React.CSSProperties;
 }
 
@@ -24,6 +25,7 @@ const AnimeReveal = ({
   delay = 0,
   staggerFrom = 'center',
   duration = 900,
+  stagger: staggerValue = 30,
   style,
 }: AnimeRevealProps) => {
   const containerRef = useRef<HTMLElement>(null);
@@ -79,7 +81,7 @@ const AnimeReveal = ({
           opacity: [0, 1],
           rotateZ: [8, 0],
           duration,
-          delay: stagger(50, {
+          delay: stagger(staggerValue, {
             from: staggerFrom === 'center' ? 'center' : staggerFrom === 'last' ? 'last' : 'first',
             start: delay * 1000,
           }),
@@ -103,7 +105,7 @@ const AnimeReveal = ({
     return () => {
       cleanup?.();
     };
-  }, [duration, shouldShow, delay, prefersReducedMotion, staggerFrom]);
+  }, [duration, shouldShow, delay, prefersReducedMotion, staggerFrom, staggerValue]);
 
   // Split text into words, then each word into characters
   // Each word is wrapped in a span with whitespace-nowrap to prevent line breaks within words

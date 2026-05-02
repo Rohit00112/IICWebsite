@@ -36,6 +36,9 @@ const LifeHero = () => {
 
       {/* Glassmorphism Card with Surprise Effect */}
       <motion.div 
+        initial={{ opacity: 0, y: 100, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
         style={{ 
           opacity: opacityProgress,
           y: yTranslate
@@ -44,11 +47,16 @@ const LifeHero = () => {
       >
         <GlassSurprise>
           {/* Top Badge */}
-          <div className="inline-block mb-6 md:mb-8 px-6 py-2 rounded-full bg-[#007a5e] text-white">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-block mb-6 md:mb-8 px-6 py-2 rounded-full bg-[#007a5e] text-white"
+          >
             <span className="text-xs md:text-sm font-semibold tracking-wide">
               Experience IIC
             </span>
-          </div>
+          </motion.div>
 
           {/* Main Title */}
           <div className="flex flex-wrap items-center justify-center gap-x-4 mb-8">
@@ -66,7 +74,7 @@ const LifeHero = () => {
               <motion.svg
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 1, delay: 1, ease: "easeOut" }}
+                transition={{ duration: 1.2, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute -bottom-1 md:-bottom-2 left-0 w-full origin-left"
                 viewBox="0 0 200 30"
                 fill="none"
@@ -79,36 +87,46 @@ const LifeHero = () => {
 
           {/* Paragraph text */}
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.2 }}
-            className="max-w-[750px] mx-auto text-[#333333] text-base md:text-lg font-medium leading-relaxed mb-8 font-sora"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-[750px] mx-auto text-[#333333] text-sm md:text-base font-medium leading-relaxed mb-8 font-sora opacity-80"
           >
             Beyond the classroom, IIC offers a dynamic ecosystem designed to foster personal growth, leadership, and lifelong friendships. Discover your place in our thriving community.
           </motion.p>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 w-full sm:w-auto">
-            <Magnetic strength={0.2}>
-              <button className="w-full sm:w-auto px-8 py-4 bg-[#21409A] text-white rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-[#1a3279] transition-all">
-                Schedule a Campus Tour
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </button>
-            </Magnetic>
+            <motion.button 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full sm:w-auto px-8 py-4 bg-[#21409A] text-white rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-[#1a3279] transition-all"
+            >
+              Schedule a Campus Tour
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </motion.button>
 
-            <Magnetic strength={0.2}>
-              <button className="w-full sm:w-auto px-8 py-4 bg-white/60 backdrop-blur-md border border-white/70 text-[#21409A] rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-white/80 transition-all shadow-sm">
-                Watch Campus Video
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 18V5l12-2v13"></path>
-                  <circle cx="6" cy="18" r="3"></circle>
-                  <circle cx="18" cy="16" r="3"></circle>
-                </svg>
-              </button>
-            </Magnetic>
+            <motion.button 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full sm:w-auto px-8 py-4 bg-white/60 backdrop-blur-md border border-white/70 text-[#21409A] rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-white/80 transition-all shadow-sm"
+            >
+              Watch Campus Video
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18V5l12-2v13"></path>
+                <circle cx="6" cy="18" r="3"></circle>
+                <circle cx="18" cy="16" r="3"></circle>
+              </svg>
+            </motion.button>
           </div>
         </GlassSurprise>
       </motion.div>

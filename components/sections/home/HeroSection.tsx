@@ -38,7 +38,7 @@ const HeroSection = () => {
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 flex flex-col items-center">
         {/* Centered Logo - Specifically for Home Page Hero */}
         <div className="w-full pt-20 md:pt-32 pb-8 flex items-center justify-center relative z-40">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
@@ -57,13 +57,13 @@ const HeroSection = () => {
         </div>
 
         <div className="pt-4 md:pt-8 text-center flex flex-col items-center">
-          <RevealText 
+          <RevealText
             as="h1"
             text="UK Degrees in Itahari"
             className="text-[42px] md:text-[84px] font-black text-[#21409A] leading-[1.1] mb-6 tracking-tighter uppercase font-sora"
             delay={0.4}
           />
-          <RevealText 
+          <RevealText
             as="p"
             text="Launch your global career with IT and Business programmes from London Metropolitan University."
             className="text-xl md:text-[24px] font-medium text-gray-500 leading-[1.6] mb-12 max-w-3xl px-4 font-sora justify-center"
@@ -71,36 +71,32 @@ const HeroSection = () => {
           />
 
           <div className="flex flex-col sm:flex-row gap-8 mb-24 md:mb-44 relative">
-            <Magnetic strength={0.3} maxDistance={15}>
-              <motion.a
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                href="/contact"
-                aria-label="Schedule a campus visit"
-                className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:brightness-110 transition-all focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
-              >
-                <span>Visit our campus</span>
-                <span className="text-xl" role="img" aria-label="telephone icon">📞</span>
-              </motion.a>
-            </Magnetic>
+            <motion.a
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="/contact"
+              aria-label="Schedule a campus visit"
+              className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:brightness-110 transition-all focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
+            >
+              <span>Visit our campus</span>
+              <span className="text-xl" role="img" aria-label="telephone icon">📞</span>
+            </motion.a>
 
-            <Magnetic strength={0.3} maxDistance={15}>
-              <motion.a
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.4 }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                href="/courses"
-                aria-label="Explore our academic programmes"
-                className="px-10 py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:outline-none"
-              >
-                Browse degrees
-              </motion.a>
-            </Magnetic>
+            <motion.a
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="/courses"
+              aria-label="Explore our academic programmes"
+              className="px-10 py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:outline-none"
+            >
+              Browse degrees
+            </motion.a>
           </div>
         </div>
       </div>

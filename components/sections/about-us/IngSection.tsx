@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
+import { motion } from 'framer-motion';
 
 const IngSection = () => {
   return (
@@ -19,15 +20,15 @@ const IngSection = () => {
         </div>
 
         {/* Main Green Card */}
-        <AnimeStagger
+        <motion.div
+          initial={{ clipPath: 'inset(100% 0 0 0)', y: 100, opacity: 0 }}
+          whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="bg-[#568E33] rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row items-stretch p-8 md:p-16 max-w-6xl mx-auto gap-12"
-          selector=".about-ing-panel"
-          staggerDelay={140}
-          translateY={36}
-          duration={850}
         >
           {/* Left Content */}
-          <div className="about-ing-panel lg:w-[55%] flex flex-col text-white" style={{ willChange: 'transform, opacity' }}>
+          <div className="lg:w-[55%] flex flex-col text-white">
             <div className="w-14 h-14 bg-[#3E6B24] rounded-xl flex items-center justify-center mb-10 shadow-lg">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
@@ -38,11 +39,11 @@ const IngSection = () => {
             <AnimeReveal
               as="h3"
               text="Powered by Innovate Nepal Group"
-              className="text-4xl md:text-5xl font-black mb-8 font-sora leading-[1.1] tracking-tight"
+              className="text-3xl md:text-4xl font-black mb-8 font-sora leading-[1.1] tracking-tight"
               staggerFrom="first"
             />
 
-            <p className="text-white/90 text-base md:text-lg font-medium leading-relaxed mb-10 font-sora">
+            <p className="text-white/90 text-sm md:text-base font-medium leading-relaxed mb-10 font-sora">
               IIC is proud to be a part of the Innovate Nepal Group (ING), a pioneering organization that has revolutionized higher education in Nepal. This affiliation ensures our students benefit from a vast network of industry connections, shared resources, and a legacy of academic excellence.
             </p>
 
@@ -58,16 +59,16 @@ const IngSection = () => {
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
-                  <span className="text-white font-bold text-sm md:text-base tracking-wide font-sora">{item}</span>
+                  <span className="text-white font-bold text-xs md:text-sm tracking-wide font-sora">{item}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Right Content */}
-          <div className="about-ing-panel lg:w-[45%] flex flex-col gap-8" style={{ willChange: 'transform, opacity' }}>
+          <div className="lg:w-[45%] flex flex-col gap-8">
             <div className="text-white">
-              <p className="text-xs font-bold tracking-[0.2em] uppercase mb-8 opacity-80">ACADEMIC PARTNERS & ACCREDITATIONS</p>
+              <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-8 opacity-80">ACADEMIC PARTNERS & ACCREDITATIONS</p>
               <div className="grid grid-cols-2 gap-4">
                 {/* Partner 1 */}
                 <div className="bg-white rounded-3xl p-6 shadow-xl flex flex-col items-center justify-center text-center gap-4 aspect-square">
@@ -78,7 +79,7 @@ const IngSection = () => {
                       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                     </svg>
                   </div>
-                  <p className="text-[#1A2B6D] font-bold text-xs md:text-sm leading-tight font-sora">
+                  <p className="text-[#1A2B6D] font-bold text-[10px] md:text-xs leading-tight font-sora">
                     London <br /> Metropolitan <br /> University
                   </p>
                 </div>
@@ -91,7 +92,7 @@ const IngSection = () => {
                       <polyline points="22 4 12 14.01 9 11.01" />
                     </svg>
                   </div>
-                  <p className="text-[#1A2B6D] font-bold text-xs md:text-sm leading-tight font-sora">
+                  <p className="text-[#1A2B6D] font-bold text-[10px] md:text-xs leading-tight font-sora">
                     Ministry of <br /> Education, Nepal
                   </p>
                 </div>
@@ -106,12 +107,12 @@ const IngSection = () => {
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                 </svg>
               </div>
-              <p className="text-white text-base md:text-xl font-medium leading-relaxed font-sora">
+              <p className="text-white text-sm md:text-lg font-medium leading-relaxed font-sora">
                 All our programs are fully approved by the Government of Nepal and recognized by Tribhuvan University as equivalent to their respective degrees.
               </p>
             </div>
           </div>
-        </AnimeStagger>
+        </motion.div>
       </div>
     </section>
   );

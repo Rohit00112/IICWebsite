@@ -66,7 +66,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      <nav 
+      <nav
         className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] flex flex-col items-center w-full pointer-events-none"
         aria-label="Main Navigation"
       >
@@ -87,7 +87,7 @@ const Navbar = () => {
                   Menu
                 </div>
 
-                <ul 
+                <ul
                   id="main-menu"
                   role="menu"
                   className="flex flex-col gap-0 items-start mb-10"
@@ -216,7 +216,7 @@ const Navbar = () => {
                       <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-white/70 min-w-[60px] text-right">
                         {getActivePageName()}
                       </span>
-                      <div 
+                      <div
                         className="w-8 h-8 rounded-full bg-white/5 flex flex-col gap-1 items-center justify-center"
                         aria-hidden="true"
                       >

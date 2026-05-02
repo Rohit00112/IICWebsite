@@ -118,6 +118,7 @@ const Leadership = () => {
               text="Education here extends far beyond the four walls of a classroom. It’s about building character, fostering innovation, and creating a community that inspires greatness every single day."
               className="text-2xl md:text-4xl lg:text-5xl font-sora leading-[1.5] font-extralight text-white/80 justify-center"
               staggerFrom="center"
+              stagger={10}
             />
           </div>
         </motion.div>

@@ -37,14 +37,13 @@ const ContactHero = () => {
               />
             </div>
 
-            <AnimeStagger
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col items-center"
-              selector=":scope > *"
-              staggerDelay={160}
-              translateY={26}
-              duration={760}
             >
-              <p className="text-white/80 text-base md:text-lg max-w-2xl leading-relaxed font-medium">
+              <p className="text-white/80 text-sm md:text-base max-w-2xl leading-relaxed font-medium mb-12">
                 Whether you&apos;re a prospective student, a potential industry partner, or just have a general question, our team is here to help you navigate your journey with us.
               </p>
               
@@ -52,12 +51,12 @@ const ContactHero = () => {
               <motion.div
                 animate={{ opacity: [0, 1, 0] }}
                 transition={{ repeat: Infinity, duration: 3, delay: 2 }}
-                className="mt-12 flex flex-col items-center gap-2"
+                className="flex flex-col items-center gap-2"
               >
                 <div className="w-[1px] h-12 bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
                 <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-bold">Interact to Explore</span>
               </motion.div>
-            </AnimeStagger>
+            </motion.div>
           </div>
         </GlassSurprise>
       </div>
