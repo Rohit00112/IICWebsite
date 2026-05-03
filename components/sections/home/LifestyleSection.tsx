@@ -6,7 +6,94 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
-import Tilt from '../../effects/Tilt';
+
+interface FlipCardProps {
+  image: string;
+  alt: string;
+  title: string;
+  description: string;
+  stats: { label: string; value: string }[];
+  accent: string;
+  rounded: string;
+  parallaxY: ReturnType<typeof useTransform<number, string>>;
+}
+
+const FlipCard: React.FC<FlipCardProps> = ({ image, alt, title, description, stats, accent, rounded, parallaxY }) => {
+  const [flipped, setFlipped] = React.useState(false);
+  return (
+    <div
+      className="relative h-full w-full cursor-pointer"
+      style={{ perspective: '1500px' }}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+    >
+      <motion.div
+        className="relative h-full w-full"
+        style={{ transformStyle: 'preserve-3d' }}
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* Front */}
+        <div
+          className={`absolute inset-0 ${rounded} overflow-hidden shadow-2xl`}
+          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+        >
+          <motion.div style={{ y: parallaxY }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+            <Image
+              src={image}
+              alt={alt}
+              fill
+              sizes="(max-width: 768px) 100vw, 66vw"
+              className="object-cover"
+            />
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+          <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 flex items-center gap-3">
+            <span className="text-white text-lg md:text-2xl font-bold font-sora">{title}</span>
+          </div>
+        </div>
+
+        {/* Back */}
+        <div
+          className={`absolute inset-0 ${rounded} overflow-hidden shadow-2xl flex flex-col justify-between p-8 md:p-10`}
+          style={{
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+            background: `linear-gradient(135deg, ${accent} 0%, #21409A 100%)`,
+          }}
+        >
+          <div>
+            <span className="inline-block text-white/80 text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-3 font-sora">
+              Explore
+            </span>
+            <h3 className="text-white text-2xl md:text-4xl font-black font-sora leading-tight mb-4">{title}</h3>
+            <p className="text-white/85 text-sm md:text-base leading-relaxed font-sora">{description}</p>
+          </div>
+
+          <div className="flex flex-wrap gap-6 mt-6">
+            {stats.map((s, i) => (
+              <div key={i}>
+                <div className="text-white text-2xl md:text-3xl font-black font-sora">{s.value}</div>
+                <div className="text-white/70 text-xs md:text-sm font-medium font-sora">{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6">
+            <span className="inline-flex items-center gap-2 text-white font-bold text-sm md:text-base font-sora border-b-2 border-white/60 pb-1">
+              Learn more
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
 
 const LifestyleSection = () => {
   const containerRef = useRef(null);
@@ -49,95 +136,76 @@ const LifestyleSection = () => {
 
         {/* Lifestyle Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[800px]">
-          {/* Main Large Image (Left) */}
-          <div className="md:col-span-2 relative h-full">
+          {/* Main Large Card (Left) */}
+          <div className="md:col-span-2 relative h-[400px] md:h-full">
             <motion.div
               initial={{ clipPath: 'inset(100% 0 0 0)', y: 100, opacity: 0 }}
               whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-              className="h-full"
+              className="h-full w-full"
             >
-              <Tilt className="h-full">
-                <div className="relative h-[400px] md:h-full group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-2xl cursor-pointer">
-                  <motion.div style={{ y: y1 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
-                    <Image
-                      src="/images/home/iic-lifestyle 3.png"
-                      alt="Lifestyle at IIC"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 66vw"
-                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                  </motion.div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
-                  <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 flex items-center gap-3">
-                    <span className="text-white text-lg md:text-2xl font-bold font-sora">
-                      Library
-                    </span>
-                  </div>
-                </div>
-              </Tilt>
+              <FlipCard
+                image="/images/home/iic-lifestyle 3.png"
+                alt="Library at IIC"
+                title="Library"
+                description="A quiet, modern space stocked with academic texts, journals, and digital resources to power your research and study."
+                stats={[
+                  { value: '5K+', label: 'Books' },
+                  { value: '24/7', label: 'Digital Access' },
+                  { value: '120', label: 'Study Seats' },
+                ]}
+                accent="#74C044"
+                rounded="rounded-[24px] md:rounded-[40px]"
+                parallaxY={y1}
+              />
             </motion.div>
           </div>
 
           {/* Right Column (Stacked) */}
           <div className="flex flex-col gap-6">
-            {/* Top Stacked Image */}
             <motion.div
               initial={{ clipPath: 'inset(100% 0 0 0)', y: 60, opacity: 0 }}
               whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: 0.2, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1"
+              className="flex-1 h-[300px] md:h-auto"
             >
-              <Tilt className="h-full">
-                <div className="relative h-[300px] md:h-full group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl cursor-pointer">
-                  <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
-                    <Image
-                      src="/images/home/iic-lifestyle 1.png"
-                      alt="Lecture Theater"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                  </motion.div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70"></div>
-                  <div className="absolute bottom-8 left-8 flex items-center gap-2">
-                    <span className="text-white text-base md:text-lg font-bold font-sora">
-                      Lecture Theater
-                    </span>
-                  </div>
-                </div>
-              </Tilt>
+              <FlipCard
+                image="/images/home/iic-lifestyle 1.png"
+                alt="Lecture Theater"
+                title="Lecture Theater"
+                description="Spacious tiered halls with high-quality AV setups, designed for engaging lectures and dynamic seminars."
+                stats={[
+                  { value: '200', label: 'Capacity' },
+                  { value: 'HD', label: 'Projection' },
+                ]}
+                accent="#21409A"
+                rounded="rounded-[24px] md:rounded-[40px]"
+                parallaxY={y2}
+              />
             </motion.div>
 
-            {/* Bottom Stacked Image */}
             <motion.div
               initial={{ clipPath: 'inset(100% 0 0 0)', y: 60, opacity: 0 }}
               whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: 0.4, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1"
+              className="flex-1 h-[300px] md:h-auto"
             >
-              <Tilt className="h-full">
-                <div className="relative h-[300px] md:h-full group rounded-[24px] md:rounded-[40px] overflow-hidden shadow-xl cursor-pointer">
-                  <motion.div style={{ y: y3 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
-                    <Image
-                      src="/images/home/iic-lifestyle 2.png"
-                      alt="Advanced Labs"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                  </motion.div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70"></div>
-                  <div className="absolute bottom-8 left-8 flex items-center gap-2">
-                    <span className="text-white text-base md:text-lg font-bold font-sora">
-                      Advanced Labs
-                    </span>
-                  </div>
-                </div>
-              </Tilt>
+              <FlipCard
+                image="/images/home/iic-lifestyle 2.png"
+                alt="Advanced Labs"
+                title="Advanced Labs"
+                description="Industry-grade computing labs equipped with the latest hardware and software for hands-on technical training."
+                stats={[
+                  { value: '8', label: 'Labs' },
+                  { value: '160', label: 'Workstations' },
+                ]}
+                accent="#007a5e"
+                rounded="rounded-[24px] md:rounded-[40px]"
+                parallaxY={y3}
+              />
             </motion.div>
           </div>
         </div>
