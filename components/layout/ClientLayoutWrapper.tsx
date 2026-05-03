@@ -9,7 +9,10 @@ import Navbar from "@/components/layout/Navbar";
 import SmoothScroll from "@/components/effects/SmoothScroll";
 import PageTransition from "@/components/layout/PageTransition";
 
-const FluidBackground = dynamic(() => import("@/components/effects/FluidBackground"), { 
+const FluidBackground = dynamic(() => import("@/components/effects/FluidBackground"), {
+  ssr: false,
+});
+const CloudBackground = dynamic(() => import("@/components/effects/CloudBackground"), {
   ssr: false,
 });
 
@@ -97,6 +100,7 @@ export default function ClientLayoutWrapper({
             }}
           />
           <FluidBackground />
+          <CloudBackground />
         </>
       )}
 
