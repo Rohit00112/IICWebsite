@@ -32,9 +32,13 @@ h6 {
 }
 
 body {
-  background: var(--background);
+  background: transparent;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  background: var(--background);
 }
 
 /* Fluid.glass-style edge blur mask for ScrollScaleVideo */

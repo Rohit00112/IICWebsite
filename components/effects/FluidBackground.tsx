@@ -134,7 +134,7 @@ export default function FluidBackground() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div className="fixed inset-0 -z-10 bg-[#f4f7fa]">
+    <div className="fixed inset-0 -z-20 bg-[#f4f7fa]">
       <Canvas camera={{ position: [0, 0, 1] }}>
         <FluidPlane shouldReduceMotion={shouldReduceMotion} />
       </Canvas>

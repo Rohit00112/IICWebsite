@@ -23,7 +23,7 @@ const HeroSection = () => {
   const yBlob2 = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
 
   return (
-    <section ref={containerRef} className="relative w-full flex flex-col items-center bg-white overflow-hidden min-h-screen">
+    <section ref={containerRef} className="relative w-full flex flex-col items-center overflow-hidden min-h-screen">
       {/* Decorative Floating Blobs */}
       <motion.div
         style={{ y: yBlob1 }}
@@ -37,7 +37,7 @@ const HeroSection = () => {
       {/* Hero Content Layer */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 flex flex-col items-center">
         {/* Centered Logo - Specifically for Home Page Hero */}
-        <div className="w-full pt-20 md:pt-32 pb-8 flex items-center justify-center relative z-40">
+        <div className="w-full pt-8 md:pt-12 pb-4 flex items-center justify-center relative z-40">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -56,7 +56,7 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        <div className="pt-4 md:pt-8 text-center flex flex-col items-center">
+        <div className="pt-2 md:pt-4 text-center flex flex-col items-center">
           <RevealText
             as="h1"
             text="UK Degrees in Itahari"
