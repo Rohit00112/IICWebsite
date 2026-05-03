@@ -23,7 +23,7 @@
 # misc
 .DS_Store
 *.pem
-*.mp4
+public/videos/iic.mp4
 
 # debug
 npm-debug.log*
