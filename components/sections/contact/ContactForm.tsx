@@ -7,20 +7,43 @@ import Link from 'next/link';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
 
+const REASONS = [
+  { value: 'admissions', label: 'Admissions Inquiry', programmes: true },
+  { value: 'scholarship', label: 'Scholarship Information', programmes: true },
+  { value: 'general', label: 'General Support', programmes: false },
+  { value: 'partnership', label: 'Business Partnership', programmes: false },
+  { value: 'visit', label: 'Schedule a Campus Visit', programmes: false },
+];
+
+const PROGRAMMES = [
+  'BIT (Hons)',
+  'BBA (Hons)',
+  'MBA',
+  'Not sure yet',
+];
+
+const MESSAGE_MAX = 600;
+
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [reason, setReason] = useState('');
+  const [programme, setProgramme] = useState('');
+  const [message, setMessage] = useState('');
+
+  const showProgramme = REASONS.find(r => r.value === reason)?.programmes;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
+    await new Promise(resolve => setTimeout(resolve, 1600));
     setIsSubmitting(false);
     setIsSuccess(true);
   };
+
+  const fieldClass = "w-full px-5 py-4 bg-white border border-gray-200 rounded-xl focus:border-[#21409A] focus:ring-2 focus:ring-[#21409A]/15 outline-none transition-all placeholder:text-gray-400 font-medium text-sm text-[#1a1a1a]";
+  const labelClass = "flex items-center gap-1 text-[13px] font-bold text-[#1a1a1a]";
+  const requiredMark = <span aria-hidden className="text-[#dc2626]">*</span>;
 
   return (
     <section className="py-24 bg-[#f3f6fb] overflow-hidden">
@@ -188,113 +211,184 @@ const ContactForm = () => {
                 )}
               </AnimatePresence>
 
-              <div className="flex items-start gap-4 mb-3">
-                <div className="mt-1 text-[#21409A]">
-                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                  </svg>
+              <div className="mb-8 flex flex-col items-start">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#74C044]/10 border border-[#74C044]/20 rounded-full mb-6 self-start">
+                  <span className="relative flex w-2 h-2">
+                    <span className="absolute inline-flex w-full h-full bg-[#74C044] rounded-full opacity-75 animate-ping" />
+                    <span className="relative inline-flex w-2 h-2 bg-[#74C044] rounded-full" />
+                  </span>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#3a7a1f]">Avg. reply in 4 hours</span>
                 </div>
-                <div>
-                  <AnimeReveal
-                    as="h2"
-                    text="Send us a Message"
-                    className="text-3xl font-bold text-[#1a1a1a] font-sora tracking-tight"
-                    staggerFrom="first"
-                  />
-                  <p className="text-gray-400 text-[13px] md:text-sm mt-2 font-medium leading-relaxed max-w-sm">
-                    Fill out the form below and our team will get back to you within 24-48 working hours.
-                  </p>
-                </div>
+
+                <AnimeReveal
+                  as="h2"
+                  text="Send us a Message"
+                  className="text-3xl md:text-[34px] font-bold text-[#1a1a1a] font-sora tracking-tight"
+                  staggerFrom="first"
+                />
+                <p className="text-gray-500 text-sm mt-3 font-medium leading-relaxed max-w-md">
+                  Tell us a little about you. Fields marked <span className="text-[#dc2626] font-bold">*</span> are required.
+                </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="mt-12 space-y-7">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-                  <div className="space-y-2.5">
-                    <label className="text-[13px] font-bold text-[#1a1a1a]">First Name</label>
-                    <input 
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <label htmlFor="firstName" className={labelClass}>First Name {requiredMark}</label>
+                    <input
+                      id="firstName"
                       required
-                      type="text" 
-                      placeholder="John" 
-                      className="w-full px-6 py-4 bg-[#f8fafc] border border-gray-100 rounded-xl focus:border-[#21409A]/20 focus:ring-0 outline-none transition-all placeholder:text-gray-300 font-medium text-sm"
+                      type="text"
+                      autoComplete="given-name"
+                      placeholder="e.g. Aarav"
+                      className={fieldClass}
                     />
                   </div>
-                  <div className="space-y-2.5">
-                    <label className="text-[13px] font-bold text-[#1a1a1a]">Last Name</label>
-                    <input 
+                  <div className="space-y-2">
+                    <label htmlFor="lastName" className={labelClass}>Last Name {requiredMark}</label>
+                    <input
+                      id="lastName"
                       required
-                      type="text" 
-                      placeholder="Doe" 
-                      className="w-full px-6 py-4 bg-[#f8fafc] border border-gray-100 rounded-xl focus:border-[#21409A]/20 focus:ring-0 outline-none transition-all placeholder:text-gray-300 font-medium text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-                  <div className="space-y-2.5">
-                    <label className="text-[13px] font-bold text-[#1a1a1a]">Email Address</label>
-                    <input 
-                      required
-                      type="email" 
-                      placeholder="john@example.com" 
-                      className="w-full px-6 py-4 bg-[#f8fafc] border border-gray-100 rounded-xl focus:border-[#21409A]/20 focus:ring-0 outline-none transition-all placeholder:text-gray-300 font-medium text-sm"
-                    />
-                  </div>
-                  <div className="space-y-2.5">
-                    <label className="text-[13px] font-bold text-[#1a1a1a]">Phone Number</label>
-                    <input 
-                      required
-                      type="tel" 
-                      placeholder="+977 98..." 
-                      className="w-full px-6 py-4 bg-[#f8fafc] border border-gray-100 rounded-xl focus:border-[#21409A]/20 focus:ring-0 outline-none transition-all placeholder:text-gray-300 font-medium text-sm"
+                      type="text"
+                      autoComplete="family-name"
+                      placeholder="e.g. Sharma"
+                      className={fieldClass}
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2.5 relative">
-                  <label className="text-[13px] font-bold text-[#1a1a1a]">Reason for Contact</label>
-                  <div className="relative">
-                    <select required className="w-full px-6 py-4 bg-[#f8fafc] border border-gray-100 rounded-xl focus:border-[#21409A]/20 focus:ring-0 outline-none transition-all font-medium text-sm appearance-none">
-                      <option value="">Select an option</option>
-                      <option>Admissions - BIT (Hons)</option>
-                      <option>Admissions - BBA (Hons)</option>
-                      <option>Admissions - MBA</option>
-                      <option>General Support</option>
-                      <option>Business Partnership</option>
-                    </select>
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <label htmlFor="email" className={labelClass}>Email Address {requiredMark}</label>
+                    <div className="relative">
+                      <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <input
+                        id="email"
+                        required
+                        type="email"
+                        autoComplete="email"
+                        placeholder="you@example.com"
+                        className={`${fieldClass} pl-11`}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="phone" className={labelClass}>Phone Number</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">+977</span>
+                      <input
+                        id="phone"
+                        type="tel"
+                        autoComplete="tel"
+                        placeholder="98XXXXXXXX"
+                        className={`${fieldClass} pl-16`}
+                      />
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-2.5">
-                  <label className="text-[13px] font-bold text-[#1a1a1a]">Your Message</label>
-                  <textarea 
+                <div className="space-y-2">
+                  <label htmlFor="reason" className={labelClass}>Reason for Contact {requiredMark}</label>
+                  <div className="relative">
+                    <select
+                      id="reason"
+                      required
+                      value={reason}
+                      onChange={(e) => { setReason(e.target.value); setProgramme(''); }}
+                      className={`${fieldClass} appearance-none pr-12 ${reason ? '' : 'text-gray-400'}`}
+                    >
+                      <option value="" disabled>Select what brings you here…</option>
+                      {REASONS.map(r => (
+                        <option key={r.value} value={r.value} className="text-[#1a1a1a]">{r.label}</option>
+                      ))}
+                    </select>
+                    <svg className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#21409A] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+
+                <AnimatePresence initial={false}>
+                  {showProgramme && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                      animate={{ opacity: 1, height: 'auto', marginTop: 0 }}
+                      exit={{ opacity: 0, height: 0, marginTop: -24 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="space-y-3 pt-1">
+                        <label className={labelClass}>Programme of Interest {requiredMark}</label>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                          {PROGRAMMES.map(p => {
+                            const active = programme === p;
+                            return (
+                              <button
+                                type="button"
+                                key={p}
+                                onClick={() => setProgramme(p)}
+                                aria-pressed={active}
+                                className={`px-3 py-3 rounded-xl border text-xs font-bold transition-all ${
+                                  active
+                                    ? 'bg-[#21409A] border-[#21409A] text-white shadow-md'
+                                    : 'bg-white border-gray-200 text-[#1a1a1a] hover:border-[#21409A]/40'
+                                }`}
+                              >
+                                {p}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="message" className={labelClass}>Your Message {requiredMark}</label>
+                    <span className={`text-[11px] font-bold tabular-nums ${message.length > MESSAGE_MAX * 0.9 ? 'text-[#dc2626]' : 'text-gray-400'}`}>
+                      {message.length}/{MESSAGE_MAX}
+                    </span>
+                  </div>
+                  <textarea
+                    id="message"
                     required
-                    rows={5} 
-                    placeholder="Tell us about your academic goals..." 
-                    className="w-full px-6 py-4 bg-[#f8fafc] border border-gray-100 rounded-xl focus:border-[#21409A]/20 focus:ring-0 outline-none transition-all placeholder:text-gray-300 font-medium text-sm resize-none"
-                  ></textarea>
+                    rows={5}
+                    maxLength={MESSAGE_MAX}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Share your goals, questions, or which programme excites you most…"
+                    className={`${fieldClass} resize-none leading-relaxed`}
+                  />
                 </div>
 
                 <Magnetic strength={0.2}>
-                  <button 
+                  <button
+                    type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-5 bg-[#21409A] text-white font-bold rounded-xl shadow-xl hover:bg-[#1a337e] transition-all flex items-center justify-center gap-3 mt-4 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                    className={`w-full py-[18px] bg-[#21409A] text-white font-bold rounded-xl shadow-[0_10px_30px_rgba(33,64,154,0.3)] hover:bg-[#1a337e] hover:shadow-[0_14px_40px_rgba(33,64,154,0.4)] transition-all flex items-center justify-center gap-3 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
                     {isSubmitting ? (
-                      <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <>
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Sending…</span>
+                      </>
                     ) : (
                       <>
                         <span>Send Message</span>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
                       </>
                     )}
                   </button>
                 </Magnetic>
 
-                <p className="text-[11px] text-gray-400 text-center mt-8 font-medium">
-                  By submitting this form, you agree to our <Link href="#" className="underline">Privacy Policy</Link>. We respect your inbox.
+                <p className="text-[11px] text-gray-400 text-center font-medium leading-relaxed">
+                  By submitting, you agree to our <Link href="#" className="underline hover:text-[#21409A]">Privacy Policy</Link>. We never share your data.
                 </p>
               </form>
             </motion.div>

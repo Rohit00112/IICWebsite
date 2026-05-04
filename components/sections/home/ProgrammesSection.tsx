@@ -106,11 +106,11 @@ const ProgrammesSection = () => {
                     transition={{ delay: index * 0.1 + 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="flex items-center gap-2 mb-10 max-w-[60%] md:max-w-[58%] relative z-20"
                   >
-                    <span className={`${prog.tagColor} text-white text-[8px] md:text-[9px] px-3 py-1.5 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap truncate`}>
+                    <span className={`${prog.tagColor} text-white text-[10px] md:text-[11px] px-4 py-2 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap truncate`}>
                       {prog.type}
                     </span>
-                    <span className="bg-white/15 backdrop-blur-xl text-white text-[8px] md:text-[9px] px-2.5 py-1.5 rounded-full font-bold border border-white/10 flex items-center gap-1 whitespace-nowrap shrink-0">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span className="bg-white/15 backdrop-blur-xl text-white text-[10px] md:text-[11px] px-3.5 py-2 rounded-full font-bold border border-white/10 flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                       {prog.duration}
                     </span>
                   </motion.div>
@@ -126,7 +126,7 @@ const ProgrammesSection = () => {
                       <h3 className="text-white/60 text-lg md:text-xl font-medium mb-1 font-sora tracking-tight">
                         {prog.title}
                       </h3>
-                      <h3 className="text-white text-3xl md:text-4xl font-black leading-[1.05] mb-8 font-sora tracking-tighter uppercase italic">
+                      <h3 className="text-white text-3xl md:text-4xl font-black leading-[1.05] mb-8 font-sora tracking-tighter uppercase">
                         {prog.subtitle}
                       </h3>
                     </motion.div>
@@ -159,10 +159,10 @@ const ProgrammesSection = () => {
                       transition={{ delay: index * 0.1 + 0.9, duration: 0.8, ease: "backOut" }}
                       className="flex gap-4"
                     >
-                      <span className="bg-white/10 backdrop-blur-xl text-white text-[10px] md:text-[11px] font-bold px-4 py-1.5 rounded-full border border-white/10">
+                      <span className="bg-white/10 backdrop-blur-xl text-white text-[12px] md:text-[13px] font-bold px-5 py-2 rounded-full border border-white/10">
                         {prog.modules}
                       </span>
-                      <span className="bg-white/10 backdrop-blur-xl text-white text-[10px] md:text-[11px] font-bold px-4 py-1.5 rounded-full border border-white/10">
+                      <span className="bg-white/10 backdrop-blur-xl text-white text-[12px] md:text-[13px] font-bold px-5 py-2 rounded-full border border-white/10">
                         {prog.credits}
                       </span>
                     </motion.div>

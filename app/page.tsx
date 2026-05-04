@@ -8,6 +8,7 @@ import { Metadata } from "next";
 import GEOSection from "@/components/sections/home/GEOSection";
 
 const PartnerSection = dynamic(() => import("@/components/sections/home/PartnerSection"), { ssr: true });
+const ScholarshipSection = dynamic(() => import("@/components/sections/home/ScholarshipSection"), { ssr: true });
 const LifestyleSection = dynamic(() => import("@/components/sections/home/LifestyleSection"), { ssr: true });
 const StudentStories = dynamic(() => import("@/components/sections/home/StudentStories"), { ssr: true });
 const InnovationLab = dynamic(() => import("@/components/sections/home/InnovationLab"), { ssr: true });
@@ -28,6 +29,7 @@ export default function Home() {
       <ScrollScaleVideo />
       <ProgrammesSection />
       <PartnerSection />
+      <ScholarshipSection />
       <LifestyleSection />
       <StudentStories />
       <InnovationLab />
