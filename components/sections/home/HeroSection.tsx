@@ -102,17 +102,17 @@ const HeroSection = () => {
       </div>
 
       {/* Building Image Layer — Pinned to bottom, separate from content flow */}
-      <div className="w-full relative h-[400px] md:h-[650px] mt-auto overflow-hidden z-0">
+      <div className="w-full relative h-[400px] md:h-[650px] mt-auto -mt-12 md:-mt-24 overflow-visible z-0">
         <motion.div
           style={{ y, opacity, scale }}
-          className="absolute inset-0 w-full h-[120%] -top-[5%]"
+          className="absolute inset-x-0 bottom-0 w-full h-full"
         >
           <Image
             src="/images/home/hero.png"
             alt="IIC ING Block Building"
             fill
             sizes="(max-width: 1536px) 100vw, 1536px"
-            className="object-cover object-center"
+            className="object-cover object-top"
             priority
           />
         </motion.div>

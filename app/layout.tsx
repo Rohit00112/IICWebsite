@@ -1,5 +1,5 @@
 import React from "react";
-import { Geist, Geist_Mono, Sora } from "next/font/google";
+import { Geist, Geist_Mono, Sora, Roboto } from "next/font/google";
 import "./globals.css";
 import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
 import { Metadata, Viewport } from "next";
@@ -18,6 +18,12 @@ const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+});
+
+const roboto = Roboto({
+  variable: "--font-roboto",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700", "900"],
 });
 
 export const viewport: Viewport = {
@@ -93,7 +99,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${roboto.variable} antialiased`}
       suppressHydrationWarning
     >
       <body className="bg-white">

@@ -56,13 +56,13 @@ const PartnerSection = () => {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.5 }}
-            className="relative h-10 md:h-12 w-64 md:w-[280px]"
+            className="relative h-16 md:h-20 w-80 md:w-[400px]"
           >
             <Image
               src="/images/home/lmu brand 2.png"
               alt="London Metropolitan University World Ranking"
               fill
-              sizes="(max-width: 768px) 256px, 280px"
+              sizes="(max-width: 768px) 320px, 400px"
               className="object-contain"
             />
           </motion.div>
@@ -71,13 +71,13 @@ const PartnerSection = () => {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.7 }}
-            className="relative h-20 md:h-24 w-[360px] md:w-[480px]"
+            className="relative h-28 md:h-36 w-[460px] md:w-[640px]"
           >
             <Image
               src="/images/home/lmu brand 1.png"
               alt="London Metropolitan University Official Logo"
               fill
-              sizes="(max-width: 768px) 360px, 480px"
+              sizes="(max-width: 768px) 460px, 640px"
               className="object-contain"
             />
           </motion.div>
