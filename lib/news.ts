@@ -166,6 +166,78 @@ export async function filterNews(category: string, search: string): Promise<News
   return news.map(mapNewsItem);
 }
 
+export interface UpcomingEvent {
+  id: string;
+  slug: string;
+  title: string;
+  time?: string;
+  day: string;
+  month: string;
+  date: string;
+}
+
+export async function getUpcomingEvents(limit = 4): Promise<UpcomingEvent[]> {
+  await dbConnect();
+  const now = new Date();
+  const events = await News.find({ category: 'Event' });
+  const monthShort = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+  return events
+    .map((doc: any) => {
+      const d = new Date(doc.date);
+      return {
+        raw: d,
+        item: {
+          id: doc._id.toString(),
+          slug: doc.slug || doc._id.toString(),
+          title: doc.title,
+          time: doc.time,
+          date: doc.date,
+          day: String(d.getDate()).padStart(2, '0'),
+          month: monthShort[d.getMonth()] || '',
+        } as UpcomingEvent,
+      };
+    })
+    .filter(({ raw }) => !isNaN(raw.getTime()) && raw.getTime() >= now.getTime() - 24 * 60 * 60 * 1000)
+    .sort((a, b) => a.raw.getTime() - b.raw.getTime())
+    .slice(0, limit)
+    .map(({ item }) => item);
+}
+
+export interface ArchiveEntry {
+  month: string;
+  year: number;
+  monthIndex: number;
+  count: number;
+}
+
+export async function getNewsArchive(limit = 6): Promise<ArchiveEntry[]> {
+  await dbConnect();
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
+  const docs = await News.aggregate([
+    {
+      $group: {
+        _id: {
+          y: { $year: '$createdAt' },
+          m: { $month: '$createdAt' },
+        },
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { '_id.y': -1, '_id.m': -1 } },
+    { $limit: limit },
+  ]);
+  return docs.map((d: any) => ({
+    monthIndex: d._id.m - 1,
+    year: d._id.y,
+    month: `${monthNames[d._id.m - 1]} ${d._id.y}`,
+    count: d.count,
+  }));
+}
+
 export async function getRelatedNews(category: string, currentId: string, limit = 3): Promise<NewsItem[]> {
   await dbConnect();
   const news = await News.find({
