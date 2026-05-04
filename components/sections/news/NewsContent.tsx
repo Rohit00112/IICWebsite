@@ -6,17 +6,20 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimeStagger from '../../effects/AnimeStagger';
 import Tilt from '../../effects/Tilt';
-import type { NewsItem } from '@/lib/news';
+import type { NewsItem, UpcomingEvent, ArchiveEntry } from '@/lib/news';
 import ShareMenu from './ShareMenu';
+import NewsletterSignup from './NewsletterSignup';
 
 const categories = ['All', 'News', 'Events', 'Announcements'];
 
 interface NewsContentProps {
   initialNews: NewsItem[];
   initialFeatured: NewsItem | null;
+  upcomingEvents: UpcomingEvent[];
+  archive: ArchiveEntry[];
 }
 
-const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured }) => {
+const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured, upcomingEvents, archive }) => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -47,19 +50,6 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
     (activeCategory === 'All' || featuredPost.category === activeNormalized) &&
     (searchQuery === '' || featuredPost.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  const upcomingEvents = [
-    { id: 1, day: '15', month: 'OCTOBER', title: 'Global Tech & Innovation Summit', time: '09:00 AM - 05:00 PM' },
-    { id: 2, day: '05', month: 'NOVEMBER', title: 'Alumni Networking Mixer: Bus', time: '06:00 PM - 08:30 PM' },
-    { id: 3, day: '22', month: 'OCTOBER', title: 'Guest Lecture: The Future of E-', time: '02:00 PM - 04:00 PM' }
-  ];
-
-  const archives = [
-    { month: 'September 2024', count: 12 },
-    { month: 'August 2024', count: 8 },
-    { month: 'July 2024', count: 15 },
-    { month: 'June 2024', count: 5 },
-    { month: 'May 2024', count: 20 }
-  ];
 
   return (
     <section className="pb-32 bg-[#F8FAFC]">
@@ -238,63 +228,75 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured 
             
             {/* Upcoming Events */}
             <div className="bg-white p-10 rounded-[24px] border-[2px] border-[#00B2A9] shadow-sm">
-              <div className="flex items-center justify-between mb-12">
+              <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center gap-3">
                   <svg className="w-6 h-6 text-[#1A2B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                   <h5 className="text-xl font-bold text-[#1a1a1a] font-sora tracking-tight">Upcoming Events</h5>
                 </div>
-                <button className="text-[11px] uppercase tracking-wider font-bold text-slate-400 hover:text-[#00B2A9] transition-colors">View All</button>
-              </div>
-
-              <div className="space-y-10">
-                {upcomingEvents.map((event) => (
-                  <div key={event.id} className="flex gap-4 group cursor-pointer">
-                    <div className="flex flex-col items-center justify-center w-16 h-16 bg-[#E8EEF5] rounded-xl shrink-0">
-                      <span className="text-[9px] font-bold text-[#21409A] mb-1">{event.month}</span>
-                      <span className="text-2xl font-black text-[#1A2B56] leading-none">{event.day}</span>
-                    </div>
-                    <div className="flex flex-col justify-center">
-                      <h6 className="text-[14px] font-bold text-[#1a1a1a] leading-tight mb-1.5 group-hover:text-[#21409A] transition-colors line-clamp-2">{event.title}</h6>
-                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500">
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <span>{event.time}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Newsletter - Matches Reference Precisely */}
-            <div className="bg-[#DDE5F0] p-10 rounded-[24px] shadow-sm">
-              <h5 className="text-xl font-bold font-sora mb-4 text-[#1a1a1a] tracking-tight">Stay Informed</h5>
-              <p className="text-gray-600 text-[14px] mb-10 leading-relaxed font-medium">Get the latest news and event updates delivered directly to your inbox.</p>
-              <div className="space-y-4">
-                <input 
-                  type="email"
-                  placeholder="Your email address"
-                  className="w-full bg-[#E8EEF5] border-none rounded-lg py-4 px-5 outline-none focus:ring-2 focus:ring-[#21409A]/10 transition-all text-sm text-[#1A2B56] font-medium placeholder:text-gray-400"
-                />
-                <button className="w-full py-4 bg-[#1F3E97] text-white font-bold rounded-lg text-sm hover:shadow-xl transition-all active:scale-[0.98]">
-                  Subscribe Newsletter
+                <button
+                  onClick={() => setActiveCategory('Events')}
+                  className="text-[11px] uppercase tracking-wider font-bold text-slate-400 hover:text-[#00B2A9] transition-colors"
+                >
+                  View All
                 </button>
               </div>
+
+              {upcomingEvents.length === 0 ? (
+                <p className="text-sm text-slate-500 font-medium">No events scheduled. Check back soon.</p>
+              ) : (
+                <div className="space-y-8">
+                  {upcomingEvents.map((event) => (
+                    <Link
+                      key={event.id}
+                      href={`/news/${event.slug}`}
+                      className="flex gap-4 group"
+                    >
+                      <div className="flex flex-col items-center justify-center w-16 h-16 bg-[#E8EEF5] rounded-xl shrink-0">
+                        <span className="text-[9px] font-bold text-[#21409A] mb-1">{event.month}</span>
+                        <span className="text-2xl font-black text-[#1A2B56] leading-none">{event.day}</span>
+                      </div>
+                      <div className="flex flex-col justify-center min-w-0">
+                        <h6 className="text-[14px] font-bold text-[#1a1a1a] leading-tight mb-1.5 group-hover:text-[#21409A] transition-colors line-clamp-2">{event.title}</h6>
+                        {event.time && (
+                          <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500">
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span>{event.time}</span>
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
+
+            <NewsletterSignup />
 
             {/* Archive */}
             <div className="bg-[#F3F7FA] p-10 rounded-[24px] shadow-sm">
-              <div className="flex items-center gap-3 mb-10">
-                <svg className="w-6 h-6 text-[#1A2B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <div className="flex items-center gap-3 mb-8">
+                <svg className="w-6 h-6 text-[#1A2B56]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7h16M4 12h16M4 17h10" /></svg>
                 <h5 className="text-xl font-bold text-[#1a1a1a] font-sora tracking-tight">News Archive</h5>
               </div>
-              <div className="space-y-6">
-                {archives.map((archive) => (
-                  <div key={archive.month} className="flex items-center justify-between group cursor-pointer">
-                    <span className="text-[15px] font-bold text-slate-600 group-hover:text-[#21409A] transition-colors">{archive.month}</span>
-                    <span className="text-[13px] font-bold text-slate-400">{archive.count}</span>
-                  </div>
-                ))}
-              </div>
+              {archive.length === 0 ? (
+                <p className="text-sm text-slate-500 font-medium">No archive yet.</p>
+              ) : (
+                <div className="space-y-5">
+                  {archive.map((entry) => (
+                    <button
+                      key={entry.month}
+                      onClick={() => {
+                        setSearchQuery('');
+                        setActiveCategory('All');
+                      }}
+                      className="w-full flex items-center justify-between group"
+                    >
+                      <span className="text-[15px] font-bold text-slate-600 group-hover:text-[#21409A] transition-colors">{entry.month}</span>
+                      <span className="text-[12px] font-bold text-slate-500 bg-white px-2.5 py-1 rounded-full tabular-nums">{entry.count}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
           </AnimeStagger>
