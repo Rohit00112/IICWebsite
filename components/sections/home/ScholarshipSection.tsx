@@ -181,7 +181,7 @@ const ScholarshipSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-[#7FB3FF] text-[12px] md:text-[14px] font-bold tracking-[0.4em] uppercase mb-8 font-sora"
         >
-          Scholarship
+          Scholarships in Nepal
         </motion.span>
 
         {/* Huge AAA letters */}
@@ -233,7 +233,7 @@ const ScholarshipSection = () => {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="text-2xl md:text-5xl font-black text-white tracking-tight uppercase font-sora text-center mb-6"
         >
-          Triple A Scholarship
+          Triple A Scholarships at IIC
         </motion.h2>
 
         <RevealText
@@ -398,7 +398,7 @@ const ScholarshipSection = () => {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="text-2xl md:text-5xl font-black text-white tracking-tight uppercase font-sora text-center mt-4 mb-6"
         >
-          Free Master&apos;s Degree
+          Free Master&apos;s Degree Scholarship
         </motion.h2>
 
         <RevealText
