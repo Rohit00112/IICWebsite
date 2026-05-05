@@ -136,12 +136,12 @@ const LifestyleSection = () => {
           </span>
           <Magnetic strength={0.1}>
             <h2 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
-              Lifestyle At
+              Student Lifestyle at
             </h2>
           </Magnetic>
           <Magnetic strength={0.2}>
             <AnimeReveal
-              text="IIC"
+              text="IIC NEPAL"
               as="h2"
               className="text-6xl md:text-8xl font-black text-[#74C044] leading-[0.8] tracking-tight mb-10 font-sora justify-center"
               staggerFrom="center"
@@ -167,7 +167,7 @@ const LifestyleSection = () => {
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 3.png"
-                alt="Library at IIC"
+                alt="Modern State-of-the-Art Library at Itahari International College"
                 title="Library"
                 description="A quiet, modern space stocked with academic texts, journals, and digital resources to power your research and study."
                 stats={[
@@ -193,7 +193,7 @@ const LifestyleSection = () => {
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 1.png"
-                alt="Lecture Theater"
+                alt="Equipped Lecture Theater for Engaging Learning at IIC Nepal"
                 title="Lecture Theater"
                 description="Spacious tiered halls with high-quality AV setups, designed for engaging lectures and dynamic seminars."
                 stats={[
@@ -215,7 +215,7 @@ const LifestyleSection = () => {
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 2.png"
-                alt="Advanced Labs"
+                alt="Advanced Computing Labs for Hands-on Technical Training at IIC"
                 title="Advanced Labs"
                 description="Industry-grade computing labs equipped with the latest hardware and software for hands-on technical training."
                 stats={[

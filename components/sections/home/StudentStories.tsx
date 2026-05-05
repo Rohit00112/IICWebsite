@@ -153,7 +153,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
               <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white shadow-sm">
                 <Image
                   src={item.image}
-                  alt={item.name}
+                  alt={`${item.name} - Successful IIC Student Testimonial`}
                   fill
                   sizes="(max-width: 768px) 56px, 64px"
                   className="object-cover"
@@ -214,11 +214,11 @@ const StudentStories = () => {
             Insights
           </span>
           <h2 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
-            Stories From The
+            Success Stories From
           </h2>
           <AnimeReveal
             as="h2"
-            text="STUDENTS"
+            text="IIC STUDENTS"
             className="text-5xl md:text-7xl font-black text-[#007a5e] leading-[0.8] tracking-tight mb-10 font-sora justify-center"
             staggerFrom="center"
             delay={0.1}
