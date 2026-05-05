@@ -41,21 +41,21 @@ const Preloader = () => {
           key="preloader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.8, delay: 1.0 }} // Longer delay to let curtains finish
           className="fixed inset-0 z-[9999] bg-white flex items-center justify-center overflow-hidden"
         >
           {/* Curtains */}
           <motion.div
-            initial={{ scaleX: 1 }}
-            exit={{ scaleX: 0 }}
-            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-            className="absolute inset-y-0 left-0 w-1/2 bg-white origin-left z-10"
+            initial={{ x: 0 }}
+            exit={{ x: '-100%' }}
+            transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
+            className="absolute inset-y-0 left-0 w-1/2 bg-white z-10 border-r border-blue-50/50 shadow-[20px_0_40px_rgba(0,0,0,0.03)]"
           />
           <motion.div
-            initial={{ scaleX: 1 }}
-            exit={{ scaleX: 0 }}
-            transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-            className="absolute inset-y-0 right-0 w-1/2 bg-white origin-right z-10"
+            initial={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
+            className="absolute inset-y-0 right-0 w-1/2 bg-white z-10 border-l border-blue-50/50 shadow-[-20px_0_40px_rgba(0,0,0,0.03)]"
           />
 
           {/* Central Content */}
