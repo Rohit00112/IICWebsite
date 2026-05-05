@@ -87,19 +87,75 @@ const ScrollScaleVideo = () => {
 
         <motion.div
           style={{ opacity: sideOverlayOpacity }}
-          className="absolute right-0 top-0 bottom-0 w-[45%] z-20 hidden xl:flex flex-col justify-center items-end pr-[4%] pl-32 bg-gradient-to-l from-black/70 via-black/40 to-transparent pointer-events-none text-right"
+          className="absolute right-0 top-0 bottom-0 w-[45%] z-20 hidden xl:flex flex-col justify-center items-end pr-[4%] pl-32 bg-gradient-to-l from-black/75 via-black/40 to-transparent pointer-events-none"
         >
-          <div className="mb-12">
-            <span className="text-[#74C044] text-[14px] font-bold tracking-[0.4em] uppercase block mb-4 font-sora opacity-90">ADDRESS</span>
-            <p className="text-white text-3xl font-light leading-snug font-sora tracking-tight">
-              Sundarharaicha-4, Dulari<br />
-              <span className="opacity-80">Morang, Nepal</span>
-            </p>
+          <div className="flex flex-col items-end gap-6 max-w-md">
+            {/* Address card */}
+            <div className="relative w-full">
+              <div className="absolute -left-4 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#74C044] to-transparent" />
+              <div className="flex items-start gap-4 justify-end">
+                <div className="text-right">
+                  <span className="text-[#74C044] text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-sora">
+                    Address
+                  </span>
+                  <p className="text-white text-2xl font-light leading-snug font-sora tracking-tight">
+                    Sundarharaicha-4, Dulari
+                  </p>
+                  <p className="text-white/70 text-xl font-light font-sora">
+                    Morang, Nepal
+                  </p>
+                </div>
+                <div className="shrink-0 w-11 h-11 rounded-full bg-[#74C044]/15 border border-[#74C044]/40 flex items-center justify-center backdrop-blur-sm">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#74C044" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="w-24 h-px bg-gradient-to-l from-[#74C044]/60 to-transparent" />
+
+            {/* Contact + Hours stack */}
+            <div className="flex items-start gap-4 justify-end w-full">
+              <div className="text-right">
+                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-sora">
+                  Contact
+                </span>
+                <p className="text-white text-base font-light font-sora tracking-tight">
+                  +977 25-587677
+                </p>
+                <p className="text-white/70 text-base font-light font-sora">
+                  info@iic.edu.np
+                </p>
+              </div>
+              <div className="shrink-0 w-11 h-11 rounded-full bg-white/5 border border-white/15 flex items-center justify-center backdrop-blur-sm">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </div>
+            </div>
+
+            <div className="w-24 h-px bg-gradient-to-l from-[#74C044]/60 to-transparent" />
+
+            <div className="flex items-start gap-4 justify-end w-full">
+              <div className="text-right">
+                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-sora">
+                  Visit Hours
+                </span>
+                <p className="text-white text-base font-light font-sora tracking-tight">
+                  Sun – Fri · 9:00 AM – 5:00 PM
+                </p>
+              </div>
+              <div className="shrink-0 w-11 h-11 rounded-full bg-white/5 border border-white/15 flex items-center justify-center backdrop-blur-sm">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+            </div>
           </div>
-          <button className="px-10 py-5 border-2 border-[#74C044]/60 bg-[#74C044]/20 backdrop-blur-md rounded-sm text-white text-[12px] font-bold tracking-[0.4em] uppercase hover:bg-[#74C044] hover:text-white transition-all flex items-center gap-4 ml-auto group font-sora shadow-[0_0_40px_rgba(116,192,68,0.2)] pointer-events-auto">
-            Explore Campus
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-x-1.5 transition-transform"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-          </button>
         </motion.div>
 
         <motion.div

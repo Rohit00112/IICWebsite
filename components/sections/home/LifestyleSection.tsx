@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
+import WaveCurtain from '../../effects/WaveCurtain';
 
-interface FlipCardProps {
+interface LifestyleCardProps {
   image: string;
   alt: string;
   title: string;
@@ -18,79 +19,98 @@ interface FlipCardProps {
   parallaxY: ReturnType<typeof useTransform<number, string>>;
 }
 
-const FlipCard: React.FC<FlipCardProps> = ({ image, alt, title, description, stats, accent, rounded, parallaxY }) => {
-  const [flipped, setFlipped] = React.useState(false);
+const CURTAIN_MS = 1300; // duration + max stagger for WaveCurtain enter/exit
+
+type Phase = 'idle' | 'opening' | 'open' | 'closing';
+
+const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, description, stats, accent, rounded, parallaxY }) => {
+  const [hovered, setHovered] = useState(false);
+  // We no longer need the phase state for content visibility.
+  // We'll use Framer Motion transitions that match the curtain's timing.
+  const contentShown = hovered;
+  const defaultShown = !hovered;
+
   return (
     <div
-      className="relative h-full w-full cursor-pointer"
-      style={{ perspective: '1500px' }}
-      onMouseEnter={() => setFlipped(true)}
-      onMouseLeave={() => setFlipped(false)}
+      className={`relative h-full w-full cursor-pointer ${rounded} overflow-hidden shadow-2xl`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
+      {/* Image — single base layer, always visible */}
+      <div className="absolute inset-0 z-0">
+        <motion.div style={{ y: parallaxY }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+          <Image
+            src={image}
+            alt={alt}
+            fill
+            sizes="(max-width: 768px) 100vw, 66vw"
+            className="object-cover"
+          />
+        </motion.div>
+      </div>
+
+      {/* Default state — title + dark gradient at bottom */}
       <motion.div
-        className="relative h-full w-full"
-        style={{ transformStyle: 'preserve-3d' }}
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+        initial={false}
+        animate={{ opacity: defaultShown ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="absolute inset-0 z-10 pointer-events-none"
       >
-        {/* Front */}
-        <div
-          className={`absolute inset-0 ${rounded} overflow-hidden shadow-2xl`}
-          style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
-        >
-          <motion.div style={{ y: parallaxY }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
-            <Image
-              src={image}
-              alt={alt}
-              fill
-              sizes="(max-width: 768px) 100vw, 66vw"
-              className="object-cover"
-            />
-          </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-          <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 flex items-center gap-3">
-            <span className="text-white text-lg md:text-2xl font-bold font-sora">{title}</span>
-          </div>
-        </div>
-
-        {/* Back */}
-        <div
-          className={`absolute inset-0 ${rounded} overflow-hidden shadow-2xl flex flex-col justify-between p-8 md:p-10`}
-          style={{
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)',
-            background: `linear-gradient(135deg, ${accent} 0%, #21409A 100%)`,
-          }}
-        >
-          <div>
-            <span className="inline-block text-white/80 text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-3 font-sora">
-              Explore
-            </span>
-            <h3 className="text-white text-2xl md:text-4xl font-black font-sora leading-tight mb-4">{title}</h3>
-            <p className="text-white/85 text-sm md:text-base leading-relaxed font-sora">{description}</p>
-          </div>
-
-          <div className="flex flex-wrap gap-6 mt-6">
-            {stats.map((s, i) => (
-              <div key={i}>
-                <div className="text-white text-2xl md:text-3xl font-black font-sora">{s.value}</div>
-                <div className="text-white/70 text-xs md:text-sm font-medium font-sora">{s.label}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6">
-            <span className="inline-flex items-center gap-2 text-white font-bold text-sm md:text-base font-sora border-b-2 border-white/60 pb-1">
-              Learn more
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </span>
-          </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+        <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 flex items-center gap-3">
+          <span className="text-white text-lg md:text-2xl font-bold font-sora">{title}</span>
         </div>
       </motion.div>
+
+      {/* Hover state — accent tint + details overlay on top of image */}
+      <motion.div
+        initial={false}
+        animate={{ opacity: contentShown ? 1 : 0 }}
+        transition={{
+          duration: 0.8,
+          delay: hovered ? 0 : 0.6, // Wait for curtain to partially cover
+          ease: "easeInOut"
+        }}
+        className="absolute inset-0 z-10 flex flex-col justify-between p-8 md:p-10 pointer-events-none"
+        style={{
+          background: `linear-gradient(135deg, ${accent}D9 0%, rgba(33,64,154,0.85) 100%)`,
+        }}
+      >
+        <div>
+          <span className="inline-block text-white/80 text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-3 font-sora">
+            Explore
+          </span>
+          <h3 className="text-white text-2xl md:text-4xl font-black font-sora leading-tight mb-4">{title}</h3>
+          <p className="text-white/90 text-sm md:text-base leading-relaxed font-sora">{description}</p>
+        </div>
+
+        <div className="flex flex-wrap gap-6 mt-6">
+          {stats.map((s, i) => (
+            <div key={i}>
+              <div className="text-white text-2xl md:text-3xl font-black font-sora">{s.value}</div>
+              <div className="text-white/80 text-xs md:text-sm font-medium font-sora">{s.label}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6">
+          <span className="inline-flex items-center gap-2 text-white font-bold text-sm md:text-base font-sora border-b-2 border-white/60 pb-1">
+            Learn more
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </span>
+        </div>
+      </motion.div>
+
+      {/* Wave curtain — solid color panels, fold away on hover */}
+      <WaveCurtain
+        active={hovered}
+        panelClassName=""
+        panelStyle={{ background: `linear-gradient(135deg, ${accent} 0%, #21409A 100%)` }}
+        zIndex={20}
+      />
     </div>
   );
 };
@@ -145,7 +165,7 @@ const LifestyleSection = () => {
               transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
               className="h-full w-full"
             >
-              <FlipCard
+              <LifestyleCard
                 image="/images/home/iic-lifestyle 3.png"
                 alt="Library at IIC"
                 title="Library"
@@ -171,7 +191,7 @@ const LifestyleSection = () => {
               transition={{ delay: 0.2, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
               className="flex-1 h-[300px] md:h-auto"
             >
-              <FlipCard
+              <LifestyleCard
                 image="/images/home/iic-lifestyle 1.png"
                 alt="Lecture Theater"
                 title="Lecture Theater"
@@ -193,7 +213,7 @@ const LifestyleSection = () => {
               transition={{ delay: 0.4, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
               className="flex-1 h-[300px] md:h-auto"
             >
-              <FlipCard
+              <LifestyleCard
                 image="/images/home/iic-lifestyle 2.png"
                 alt="Advanced Labs"
                 title="Advanced Labs"

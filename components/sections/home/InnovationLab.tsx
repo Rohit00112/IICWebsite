@@ -20,8 +20,7 @@ const InnovationLab = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section id="innovation-lab" ref={containerRef} className="relative w-full py-24 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-[#f4f7fa] -z-20" />
+    <section id="innovation-lab" ref={containerRef} className="relative w-full py-24 md:py-32 overflow-hidden bg-[#f4f7fa]">
       <TechGrid />
       <div className="max-w-[1440px] mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-16">

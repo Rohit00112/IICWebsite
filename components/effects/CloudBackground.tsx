@@ -164,22 +164,10 @@ const Cloud: React.FC<CloudProps> = ({ delay, duration, top, width, opacity, blu
 
 const CloudBackground = () => {
   const clouds = useMemo(() => [
-    // each "lane" has 2 clouds at half-period offset → continuous flow, no gaps
-    // lane 1 (top, →)
-    { delay: 0, duration: 180, top: '8%', width: '240px', opacity: 0.55, blur: 2.5, tint: 'A8BCD8', reverse: false },
-    { delay: -90, duration: 180, top: '8%', width: '280px', opacity: 0.5, blur: 2, tint: 'B8C8E0', reverse: false },
-    // lane 2 (top, ←)
-    { delay: 0, duration: 160, top: '16%', width: '360px', opacity: 0.7, blur: 1, tint: 'C8D4E8', reverse: true },
-    { delay: -80, duration: 160, top: '16%', width: '320px', opacity: 0.65, blur: 1.5, tint: 'B8C8E0', reverse: true },
-    // lane 3 (upper-mid, →)
-    { delay: 0, duration: 200, top: '32%', width: '300px', opacity: 0.5, blur: 2, tint: 'A8BCD8', reverse: false },
-    { delay: -100, duration: 200, top: '32%', width: '260px', opacity: 0.55, blur: 1.8, tint: 'C8D4E8', reverse: false },
-    // lane 4 (mid, ←)
-    { delay: 0, duration: 190, top: '46%', width: '340px', opacity: 0.6, blur: 1, tint: 'C8D4E8', reverse: true },
-    { delay: -95, duration: 190, top: '46%', width: '300px', opacity: 0.55, blur: 1.5, tint: 'B8C8E0', reverse: true },
-    // lane 5 (lower, →)
-    { delay: 0, duration: 210, top: '60%', width: '320px', opacity: 0.5, blur: 1.8, tint: 'B8C8E0', reverse: false },
-    { delay: -105, duration: 210, top: '60%', width: '280px', opacity: 0.45, blur: 2, tint: 'A8BCD8', reverse: false },
+    // sparse: 1 cloud per lane, fewer lanes
+    { delay: 0, duration: 60, top: '10%', width: '260px', opacity: 1, blur: 2, tint: 'B8C8E0', reverse: false },
+    { delay: -10, duration: 70, top: '38%', width: '300px', opacity: 1, blur: 1.5, tint: 'C8D4E8', reverse: true },
+    { delay: -25, duration: 80, top: '62%', width: '280px', opacity: 1, blur: 2, tint: 'A8BCD8', reverse: false },
   ], []);
 
   const birds = useMemo(() => [

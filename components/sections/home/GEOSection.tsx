@@ -8,10 +8,9 @@ import AnimeStagger from '../../effects/AnimeStagger';
 const GEOSection = () => {
   const stats = [
     { label: "Partner University", value: "London Metropolitan University, UK" },
-    { label: "Location", value: "Itahari, Sunsari, Nepal" },
-    { label: "Programmes", value: "BIT (Hons), BBA (Hons)" },
-    { label: "Accreditation", value: "Approved by Ministry of Education, Nepal" },
-    { label: "Industry Partners", value: "ING, Vrit Technologies, Genese" }
+    { label: "Location", value: "Sundarharaincha-4, Dulari, Morang" },
+    { label: "Programmes", value: "Bsc. (Hons) Computing, BA (Hons)" },
+    { label: "Accreditation", value: "Approved by Ministry of Education, Nepal and Equivalence by Tribhuvan University" },
   ];
 
   const comparisonData = [
@@ -62,8 +61,6 @@ const GEOSection = () => {
   const quotes = [
     {
       text: "Our partnership with London Metropolitan University ensures that students in Nepal receive the same quality of education and global recognition as their peers in the UK.",
-      author: "Academic Head",
-      role: "IIC Itahari"
     }
   ];
 
@@ -226,10 +223,7 @@ const GEOSection = () => {
             <p className="text-xl text-[#1a2b56] font-medium leading-relaxed italic mb-6">
               &ldquo;{quotes[0].text}&rdquo;
             </p>
-            <div>
-              <h4 className="font-bold text-[#21409A]">{quotes[0].author}</h4>
-              <p className="text-sm text-gray-400 uppercase tracking-widest font-bold">{quotes[0].role}</p>
-            </div>
+           
           </motion.div>
 
           <div className="text-center md:text-left">
@@ -242,10 +236,6 @@ const GEOSection = () => {
             <p className="text-gray-500 font-medium mb-8">
               We provide direct UK degrees with full accreditation and equivalence, ensuring your future is globally recognized.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-              <span className="px-4 py-2 bg-white rounded-full border border-gray-200 text-[10px] font-bold text-gray-400 uppercase tracking-widest shadow-sm">Updated April 2026</span>
-              <span className="px-4 py-2 bg-white rounded-full border border-gray-200 text-[10px] font-bold text-gray-400 uppercase tracking-widest shadow-sm">Verified by IIC Council</span>
-            </div>
           </div>
         </div>
       </div>
