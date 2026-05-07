@@ -3,6 +3,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import AnimeReveal from '../../effects/AnimeReveal';
+import RevealText from '../../effects/RevealText';
 
 const campusItems = [
   { 
@@ -21,13 +23,13 @@ const campusItems = [
     title: "Advanced Computing Labs", 
     image: "/images/about/Image-5.png" 
   },
-  { 
-    title: "Student Lounge", 
-    image: "/images/about/img1.png" 
+  {
+    title: "Cafeteria",
+    image: "/images/about/img1.png"
   },
-  { 
-    title: "Recreation Hub", 
-    image: "/images/about/img2.png" 
+  {
+    title: "Seminar Hall",
+    image: "/images/about/img2.png"
   }
 ];
 
@@ -46,12 +48,17 @@ const InnovationGrid = () => {
             <p className="text-2xl md:text-3xl font-medium font-sora text-white/90">
               A Campus Built For
             </p>
-            <h2 className="text-6xl md:text-8xl lg:text-[120px] font-black text-white font-sora leading-none tracking-tight">
-              INNOVATION
-            </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg mt-8 font-medium leading-relaxed font-sora">
-              Explore our modern facilities designed to provide an optimal environment for learning, research, and recreation.
-            </p>
+            <AnimeReveal
+              as="h2"
+              text="INNOVATION"
+              className="text-6xl md:text-8xl lg:text-[120px] font-black text-white font-sora leading-none tracking-tight justify-center"
+              staggerFrom="center"
+              delay={0.15}
+            />
+            <RevealText
+              text="Explore our modern facilities designed to provide an optimal environment for learning, research, and recreation."
+              className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg mt-8 font-medium leading-relaxed font-sora justify-center"
+            />
           </motion.div>
         </div>
 

@@ -398,11 +398,12 @@ const ScholarshipSection = () => {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="text-2xl md:text-5xl font-black text-white tracking-tight uppercase font-sora text-center mt-4 mb-6"
         >
-          Free Master&apos;s Degree Scholarship
+          Fully Funded Masters Degree
         </motion.h2>
 
         <RevealText
-          text="One top achiever each year earns a fully-funded master's at any ING partnership college in the course of their choice."
+          text="A special scholarship opportunity for one eligible graduate to persue quality post
+gradutae study at ING Colleges in Nepal."
           className="text-white/70 text-base md:text-xl font-medium leading-relaxed text-center max-w-2xl mb-12 justify-center"
         />
 

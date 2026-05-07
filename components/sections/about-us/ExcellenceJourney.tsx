@@ -6,35 +6,30 @@ import { motion, useScroll, useTransform, useSpring, MotionValue, cubicBezier } 
 const historyItems = [
   {
     year: "2017",
+    markerLabel: "2017 · Founded",
     title: "Foundation Established",
     description: "IIC was established with a vision to bring world-class British education to the Eastern region of Nepal.",
     stat: "1st",
-    statLabel: "British curriculum in East Nepal",
+    statLabel: "British curriculum in Eastern Nepal",
     color: "#00A69C",
   },
   {
-    year: "2018",
+    year: "2017",
+    markerLabel: "2017 · First Cohort",
     title: "First Cohort Enrolled",
-    description: "Welcomed our first batch of enthusiastic students in the BSc (Hons) Computing program.",
-    stat: "30+",
+    description: "Welcomed our first batch of enthusiastic students in the BSc (Hons) Computing and BA (Hons) Business Administration programs.",
+    stat: "60+",
     statLabel: "Pioneer students",
     color: "#21409A",
   },
   {
-    year: "2020",
+    year: "2024",
+    markerLabel: "2024 · Expansion",
     title: "Campus Expansion",
-    description: "Inaugurated the new state-of-the-art facility featuring advanced labs and a modern learning environment.",
+    description: "Inaugurated the new ING Block — a state-of-the-art facility featuring advanced labs, a library, a learning zone with a lecture theatre and tutorial rooms, and a modern learning environment.",
     stat: "8",
     statLabel: "Advanced labs",
     color: "#5B4B9C",
-  },
-  {
-    year: "2022",
-    title: "Industry Partnerships",
-    description: "Strengthened our ecosystem with over 50+ local and international industry partners.",
-    stat: "50+",
-    statLabel: "Partners onboard",
-    color: "#C04444",
   },
 ];
 
@@ -56,10 +51,10 @@ const Panel = ({ item, index, total, progress }: PanelProps) => {
   const isLast = index === total - 1;
   const isFirst = index === 0;
 
-  const fadeIn = isFirst ? -0.0001 : start;
-  const holdStart = isFirst ? -0.0001 : start + segment * 0.35;
-  const holdEnd = isLast ? 1.0001 : end - segment * 0.35;
-  const fadeOut = isLast ? 1.0001 : end;
+  const fadeIn = isFirst ? -0.0001 : start + segment * 0.15;
+  const holdStart = isFirst ? -0.0001 : start + segment * 0.3;
+  const holdEnd = isLast ? 1.0001 : end - segment * 0.15;
+  const fadeOut = isLast ? 1.0001 : end - segment * 0.02;
 
   const opacity = useTransform(
     progress,
@@ -70,7 +65,7 @@ const Panel = ({ item, index, total, progress }: PanelProps) => {
   const blurValue = useTransform(
     progress,
     [fadeIn, holdStart, holdEnd, fadeOut],
-    [isFirst ? 0 : 8, 0, 0, isLast ? 0 : 8],
+    [isFirst ? 0 : 4, 0, 0, isLast ? 0 : 4],
     { ease: easeInOut }
   );
   const itemFilter = useTransform(blurValue, (b) => `blur(${b}px)`);
@@ -207,9 +202,9 @@ const Marker = ({ item, index, total, progress }: { item: typeof historyItems[0]
       />
       <motion.span
         style={{ opacity: labelOpacity, color: item.color }}
-        className="absolute top-5 text-[11px] md:text-xs font-bold tracking-widest font-sora"
+        className="absolute top-5 whitespace-nowrap text-[10px] md:text-[11px] font-bold tracking-widest font-sora"
       >
-        {item.year}
+        {item.markerLabel}
       </motion.span>
     </div>
   );
@@ -259,7 +254,7 @@ const ExcellenceJourney = () => {
         <div className="absolute inset-0">
           {historyItems.map((item, i) => (
             <Panel
-              key={item.year}
+              key={`${item.year}-${i}`}
               item={item}
               index={i}
               total={total}
@@ -281,7 +276,7 @@ const ExcellenceJourney = () => {
               <div className="absolute inset-0 flex justify-between items-center -translate-y-0">
                 {historyItems.map((item, i) => (
                   <Marker
-                    key={item.year}
+                    key={`${item.year}-${i}`}
                     item={item}
                     index={i}
                     total={total}

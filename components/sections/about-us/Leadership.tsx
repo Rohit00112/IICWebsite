@@ -28,8 +28,9 @@ const Leadership = () => {
               staggerFrom="first"
             />
             <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
-              <p>{`"At Itahari International College, we believe that education is the most powerful weapon which you can use to change the world. Our commitment is to provide a platform where students can achieve their highest potential."`}</p>
-              <p>{`"Through our partnership with London Metropolitan University, we bring a global standard of learning to Nepal, ensuring our graduates are competitive on the world stage."`}</p>
+              <p>{`"Welcome to Itahari International College, where we offer world-class IT and Business academic qualifications through partnerships with prestigious international universities from the UK."`}</p>
+              <p>{`"Our innovative approach to education goes beyond textbooks and classrooms, engaging the mind, body, and spirit of our students. With a focus on nurturing talent, we instil in our students a passion for learning and excellence, preparing them for real-world challenges."`}</p>
+              <p>{`"Embark on a transformative learning journey that shapes your future at Itahari International College, the college of your own!"`}</p>
             </AnimeStagger>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Sulav Budhathoki</p>
@@ -74,8 +75,8 @@ const Leadership = () => {
               staggerFrom="first"
             />
             <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
-              <p>{`"IIC is more than just a college; it's a community of innovators and leaders. We focus on practical learning and industry exposure to make sure every student is ready for the real world."`}</p>
-              <p>{`"Our state-of-the-art facilities and dedicated faculty are here to support you in every step of your professional journey."`}</p>
+              <p>{`"Itahari International College offers exceptional academic programmes, setting us apart from other institutions. As part of Innovate Nepal Group (ING), a renowned provider of practical career-centric education, we prioritise guiding our students and equipping them with practical skills. Our experienced faculty and top-notch infrastructure, combined with the latest international curriculum, ensure a comprehensive learning experience. We provide in-demand Business and IT courses in partnership with London Metropolitan University, aiming to produce globally competitive professionals."`}</p>
+              <p>{`"Through ongoing support and innovative approaches, we strive to enhance each student's career prospects and contribute to society."`}</p>
             </AnimeStagger>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Satyabrat Koirala</p>
@@ -115,7 +116,7 @@ const Leadership = () => {
             </span>
             <AnimeReveal
               as="h2"
-              text="Education here extends far beyond the four walls of a classroom. It’s about building character, fostering innovation, and creating a community that inspires greatness every single day."
+              text="Education here extends far beyond the classrooms, developing strong values, encouraging creativity, and building a vibrant community that empowers confident leaders to global professionals ready to make a real world impact."
               className="text-2xl md:text-4xl lg:text-5xl font-sora leading-[1.5] font-extralight text-white/80 justify-center"
               staggerFrom="center"
               stagger={10}

@@ -22,8 +22,8 @@ const ExperienceCTA = () => {
             staggerFrom="center"
           />
           <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed font-sora">
-            Experience the IIC difference firsthand. Whether you&apos;re ready to
-            apply or just want to explore our campus, we&apos;re here to guide you.
+            Experience the IIC difference yourself. Don&apos;t miss your chance whether you are ready to
+            apply or just starting to explore, step in and discover a place you will naturally want to be part of.
           </p>
 
           <AnimeStagger

@@ -1,135 +1,72 @@
 'use client';
 
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface WaveCurtainProps {
   active: boolean;
   panelClassName?: string;
   panelStyle?: React.CSSProperties;
-  strips?: number;
+  zIndex?: number;
+  origin?: 'bottom-left' | 'bottom-right' | 'center' | 'top-right' | 'top-left';
+  /** Direction of clip-path sweep when active becomes true. */
+  reveal?: 'circle' | 'diagonal';
   duration?: number;
+  /** Reserved for compatibility with previous API. Ignored. */
+  strips?: number;
   stripDelay?: number;
   skew?: number;
-  zIndex?: number;
   showFoldShading?: boolean;
   foldShadingDark?: string;
   foldShadingLight?: string;
 }
 
-const DEFAULTS = {
-  strips: 6,
-  duration: 1.1,
-  stripDelay: 0.04,
-  skew: 1.5,
+const ORIGIN_MAP: Record<NonNullable<WaveCurtainProps['origin']>, string> = {
+  'bottom-left': '0% 100%',
+  'bottom-right': '100% 100%',
+  center: '50% 50%',
+  'top-right': '100% 0%',
+  'top-left': '0% 0%',
 };
-
-const EASE: [number, number, number, number] = [0.6, 0.01, 0, 0.95];
 
 const WaveCurtain: React.FC<WaveCurtainProps> = ({
   active,
   panelClassName = 'bg-white',
   panelStyle,
-  strips = DEFAULTS.strips,
-  duration = DEFAULTS.duration,
-  stripDelay = DEFAULTS.stripDelay,
-  skew = DEFAULTS.skew,
   zIndex = 20,
-  showFoldShading = true,
-  foldShadingDark = 'rgba(0,0,0,0.12)',
-  foldShadingLight = 'rgba(255,255,255,0.05)',
+  origin = 'bottom-right',
+  reveal = 'circle',
+  duration = 0.85,
 }) => {
-  const variants = {
-    initial: (side: 'left' | 'right') => ({
-      scaleX: 1,
-      x: 0,
-      skewY: 0,
-      opacity: 0,
-    }),
-    open: (side: 'left' | 'right') => ({
-      scaleX: 0,
-      x: side === 'left' ? '-100%' : '100%',
-      skewY: side === 'left' ? -skew : skew,
-      opacity: 1,
-    }),
-    closed: (side: 'left' | 'right') => ({
-      scaleX: 1,
-      x: 0,
-      skewY: 0,
-      opacity: 1, // Stay opaque while closing
-    })
-  };
+  const o = ORIGIN_MAP[origin];
 
-  const renderStrips = (side: 'left' | 'right') =>
-    Array.from({ length: strips }).map((_, i) => {
-      const stripIndex = side === 'left' ? strips - 1 - i : i;
-      const delay = stripIndex * stripDelay;
-
-      return (
-        <motion.div
-          key={`${side}-${i}`}
-          custom={side}
-          variants={variants}
-          initial="initial"
-          animate="open"
-          exit="closed"
-          transition={{
-            duration,
-            delay,
-            ease: EASE,
-            opacity: { duration: 0.1, delay } // Quick snap to visible
-          }}
-          className={`relative h-full ${panelClassName}`}
-          style={{
-            width: `calc(${100 / strips}% + 1px)`,
-            transformOrigin: side === 'left' ? 'left center' : 'right center',
-            willChange: 'transform, opacity',
-            backfaceVisibility: 'hidden',
-            WebkitFontSmoothing: 'antialiased',
-            contain: 'layout paint',
-            ...panelStyle,
-          }}
-        >
-          {showFoldShading && (
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: i % 2 === 0
-                  ? `linear-gradient(90deg, ${foldShadingDark} 0%, rgba(0,0,0,0) 50%, ${foldShadingDark} 100%)`
-                  : `linear-gradient(90deg, rgba(0,0,0,0) 0%, ${foldShadingLight} 50%, rgba(0,0,0,0) 100%)`,
-              }}
-            />
-          )}
-        </motion.div>
-      );
-    });
+  const closedClip =
+    reveal === 'circle'
+      ? `circle(0% at ${o})`
+      : 'polygon(100% 0%, 100% 0%, 100% 0%, 100% 0%)';
+  const openClip =
+    reveal === 'circle'
+      ? `circle(160% at ${o})`
+      : 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
 
   return (
-    <AnimatePresence>
-      {active && (
-        <motion.div
-          key="curtain-wrapper"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, delay: duration + strips * stripDelay }}
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          style={{ zIndex }}
-        >
-          <div
-            className="absolute top-0 left-0 w-1/2 h-full flex"
-            style={{ perspective: '1200px' }}
-          >
-            {renderStrips('left')}
-          </div>
-          <div
-            className="absolute top-0 right-0 w-1/2 h-full flex"
-            style={{ perspective: '1200px' }}
-          >
-            {renderStrips('right')}
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <motion.div
+      aria-hidden
+      initial={false}
+      animate={{ clipPath: active ? openClip : closedClip }}
+      transition={{
+        duration: active ? duration : duration * 0.75,
+        ease: active ? [0.22, 1, 0.36, 1] : [0.7, 0, 0.84, 0],
+      }}
+      className={`absolute inset-0 pointer-events-none ${panelClassName}`}
+      style={{
+        zIndex,
+        clipPath: closedClip,
+        WebkitClipPath: closedClip,
+        willChange: 'clip-path',
+        ...panelStyle,
+      }}
+    />
   );
 };
 

@@ -26,8 +26,7 @@ const ScholarshipsSection = () => {
                 staggerFrom="first"
               />
               <p className="text-gray-500 text-lg md:text-xl max-w-lg leading-relaxed font-medium">
-                We believe financial barriers shouldn&apos;t hold back brilliance.
-                Explore our range of financial support options.
+                Few make it to the top — every year, we proudly celebrate and recognize the top 10% of students who demonstrate true excellence in Academics, Attendance, and Attitude.
               </p>
             </motion.div>
           </div>

@@ -18,7 +18,7 @@ const LifeIntro = () => {
         <AnimeStagger
           className="max-w-3xl mx-auto text-gray-500 text-base md:text-lg lg:text-xl font-medium leading-relaxed font-sora"
         >
-          <p>At Itahari International College, we believe that education extends far beyond the walls of the lecture theatre. Our campus is designed to be a dynamic ecosystem that nurtures your passions, builds lifelong friendships, and prepares you for the global stage.</p>
+          <p>At IIC, experience growth beyond the classroom—through interactive learning, supportive faculty, and a dynamic campus life that keeps you inspired.</p>
         </AnimeStagger>
       </div>
     </section>

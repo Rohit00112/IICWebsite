@@ -13,7 +13,7 @@ const AboutHero = () => {
     <section className="relative pt-32 md:pt-40 bg-[#EDF2F7] overflow-hidden flex flex-col items-center">
       <div className="max-w-[1440px] w-full mx-auto px-6 text-center flex flex-col items-center relative z-10">
         <div className="mb-10 flex flex-col items-center">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -21,12 +21,12 @@ const AboutHero = () => {
           >
             EXPERIENCE THE EXTRAORDINARY
           </motion.span>
-          
-          <RevealText 
-            text="Pioneering"
+
+          <RevealText
+            text="Leading"
             className="text-2xl md:text-3xl font-bold text-[#1a237e] mb-4 font-sora tracking-tight justify-center"
           />
-          
+
           <AnimeReveal
             text="GLOBAL EDUCATION"
             as="h1"
@@ -34,16 +34,16 @@ const AboutHero = () => {
             delay={0.2}
             staggerFrom="center"
           />
-          
-          <RevealText 
-            text="In Nepal"
+
+          <RevealText
+            text="In Eastern Nepal"
             className="text-2xl md:text-3xl font-bold text-[#1a237e] font-sora tracking-tight justify-center"
             delay={0.6}
           />
         </div>
 
         <div className="flex flex-col sm:flex-row gap-5 mb-16">
-          <motion.button 
+          <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -53,7 +53,7 @@ const AboutHero = () => {
           >
             Apply for Admissions
           </motion.button>
-          <motion.button 
+          <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 1, ease: [0.16, 1, 0.3, 1] }}

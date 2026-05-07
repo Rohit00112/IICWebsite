@@ -92,7 +92,7 @@ const LifeHero = () => {
             transition={{ duration: 1.2, delay: 1, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-[750px] mx-auto text-[#333333] text-sm md:text-base font-medium leading-relaxed mb-8 font-sora opacity-80"
           >
-            Beyond the classroom, IIC offers a dynamic ecosystem designed to foster personal growth, leadership, and lifelong friendships. Discover your place in our thriving community.
+            Beyond the classroom, IIC offers a dynamic ecosystem designed to foster personal growth, leadership and creativity. Discover your place in our thriving community.
           </motion.p>
 
           {/* Action Buttons */}

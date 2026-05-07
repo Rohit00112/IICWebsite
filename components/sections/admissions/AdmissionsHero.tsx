@@ -36,7 +36,7 @@ const AdmissionsHero = ({ currentStep }: AdmissionsHeroProps) => {
 
         <div className="max-w-2xl mb-16 px-4">
           <RevealText
-            text="Join a community of innovators. Our straightforward application process is your first step towards a global degree at IIC."
+            text="Join our community of innovators and begin your journey with a clear and simple application process toward a globally recognised degree at IIC."
             className="text-gray-300 text-lg md:text-xl font-medium leading-relaxed font-sora justify-center"
             delay={0.6}
           />

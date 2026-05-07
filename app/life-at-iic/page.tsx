@@ -3,6 +3,7 @@ import LifeHero from '@/components/sections/life-at-iic/LifeHero';
 import LifeIntro from '@/components/sections/life-at-iic/LifeIntro';
 import CampusGallery from '@/components/sections/life-at-iic/CampusGallery';
 import StudentExperience from '@/components/sections/life-at-iic/StudentExperience';
+import EventsHighlights from '@/components/sections/life-at-iic/EventsHighlights';
 import CampusPictures from '@/components/sections/life-at-iic/CampusPictures';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
@@ -36,6 +37,7 @@ export default function LifeAtIicPage() {
       <LifeIntro />
       <CampusGallery />
       <StudentExperience />
+      <EventsHighlights />
       <CampusPictures />
     </main>
   );

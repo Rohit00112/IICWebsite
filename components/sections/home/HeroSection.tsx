@@ -81,8 +81,7 @@ const HeroSection = () => {
               aria-label="Schedule a campus visit"
               className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:brightness-110 transition-all focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
             >
-              <span>Visit our campus</span>
-              <span className="text-xl" role="img" aria-label="telephone icon">📞</span>
+              <span>Schedule A Visit</span>
             </motion.a>
 
             <motion.a

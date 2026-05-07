@@ -23,11 +23,11 @@ const MissionVision = () => {
                 <path d="M12 11v4" />
               </svg>
             </div>
-            
+
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#2D2D5F] font-sora leading-tight tracking-tight mb-6">
-              "Shaping the Future of <br className="hidden md:block"/> Global Professionals"
+              "Developing impactful <br className="hidden md:block" /> industry ready graduates"
             </h2>
-            
+
             <p className="text-gray-400 font-bold tracking-[0.2em] text-xs md:text-sm uppercase font-sora">
               ITAHARI INTERNATIONAL COLLEGE
             </p>
@@ -38,24 +38,24 @@ const MissionVision = () => {
           {/* Row 1: Mission */}
           <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-center justify-center">
             {/* Left Image */}
-            <motion.div 
+            <motion.div
               initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0, scale: 1.1 }}
               whileInView={{ clipPath: 'inset(0 0 0% 0)', opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
               className="w-full md:w-[55%] aspect-square md:aspect-[4/3] relative rounded-[2.5rem] overflow-hidden shadow-2xl"
             >
-              <Image 
-                src="/images/about/mission.png" 
-                alt="Students at IIC" 
-                fill 
-                className="object-cover transition-transform duration-1000 hover:scale-105" 
-                sizes="(max-width: 768px) 100vw, 55vw" 
+              <Image
+                src="/images/about/mission.png"
+                alt="Students at IIC"
+                fill
+                className="object-cover transition-transform duration-1000 hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 55vw"
               />
             </motion.div>
 
             {/* Right Card */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 50, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -74,7 +74,9 @@ const MissionVision = () => {
               </div>
               <h3 className="text-2xl md:text-3xl font-bold mb-6 font-sora">Our Mission</h3>
               <p className="text-white/80 text-sm md:text-base leading-relaxed font-medium font-sora">
-                To deliver exceptional UK university education locally, fostering a culture of academic excellence, critical thinking, and practical skills development that prepares students for immediate industry impact.
+                To deliver direct UK University education locally, cultivating academic excellence,
+Critical thinking and hands on skills that prepares students to make an immediate
+impact in the industry.
               </p>
             </motion.div>
           </div>
@@ -82,24 +84,24 @@ const MissionVision = () => {
           {/* Row 2: Vision */}
           <div className="flex flex-col md:flex-row-reverse gap-12 md:gap-24 items-center justify-center">
             {/* Right Image */}
-            <motion.div 
+            <motion.div
               initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0, scale: 1.1 }}
               whileInView={{ clipPath: 'inset(0 0 0% 0)', opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
               className="w-full md:w-[55%] aspect-square md:aspect-[4/3] relative rounded-[2.5rem] overflow-hidden shadow-2xl"
             >
-              <Image 
-                src="/images/about/vision.png" 
-                alt="Campus Life" 
-                fill 
-                className="object-cover transition-transform duration-1000 hover:scale-105" 
-                sizes="(max-width: 768px) 100vw, 55vw" 
+              <Image
+                src="/images/about/vision.png"
+                alt="Campus Life"
+                fill
+                className="object-cover transition-transform duration-1000 hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 55vw"
               />
             </motion.div>
 
             {/* Left Card */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -50, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -115,7 +117,9 @@ const MissionVision = () => {
               </div>
               <h3 className="text-2xl md:text-3xl font-bold mb-6 font-sora">Our Vision</h3>
               <p className="text-white/80 text-sm md:text-base leading-relaxed font-medium font-sora">
-                To be the premier higher education institution in Eastern Nepal, recognized globally for producing innovative leaders and driving socio-economic progress through education.
+               To be the leading higher education institution in Eastern Nepal, recognized globally for
+producing innovative leaders and contributing in socio-economic progress through
+quality education.
               </p>
             </motion.div>
           </div>

@@ -17,13 +17,14 @@ interface LifestyleCardProps {
   accent: string;
   rounded: string;
   parallaxY: ReturnType<typeof useTransform<number, string>>;
+  revealOrigin?: 'bottom-left' | 'bottom-right' | 'center' | 'top-right' | 'top-left';
 }
 
 const CURTAIN_MS = 1300; // duration + max stagger for WaveCurtain enter/exit
 
 type Phase = 'idle' | 'opening' | 'open' | 'closing';
 
-const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, description, stats, accent, rounded, parallaxY }) => {
+const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, description, stats, accent, rounded, parallaxY, revealOrigin = 'bottom-right' }) => {
   const [hovered, setHovered] = useState(false);
   // We no longer need the phase state for content visibility.
   // We'll use Framer Motion transitions that match the curtain's timing.
@@ -36,9 +37,14 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Image — single base layer, always visible */}
-      <div className="absolute inset-0 z-0">
-        <motion.div style={{ y: parallaxY }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+      {/* Image — base layer, scales on hover */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <motion.div
+          style={{ y: parallaxY }}
+          animate={{ scale: hovered ? 1.08 : 1 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 w-full h-[120%] -top-[10%]"
+        >
           <Image
             src={image}
             alt={alt}
@@ -53,8 +59,12 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
       <motion.div
         initial={false}
         animate={{ opacity: defaultShown ? 1 : 0 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="absolute inset-0 z-10 pointer-events-none"
+        transition={{
+          duration: 0.35,
+          delay: defaultShown ? 0.4 : 0,
+          ease: [0.22, 1, 0.36, 1]
+        }}
+        className="absolute inset-0 z-30 pointer-events-none"
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
         <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 flex items-center gap-3">
@@ -65,13 +75,13 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
       {/* Hover state — accent tint + details overlay on top of image */}
       <motion.div
         initial={false}
-        animate={{ opacity: contentShown ? 1 : 0 }}
+        animate={{ opacity: contentShown ? 1 : 0, y: contentShown ? 0 : 12 }}
         transition={{
-          duration: 0.8,
-          delay: hovered ? 0 : 0.6, // Wait for curtain to partially cover
-          ease: "easeInOut"
+          duration: 0.5,
+          delay: hovered ? 0.35 : 0,
+          ease: [0.22, 1, 0.36, 1]
         }}
-        className="absolute inset-0 z-10 flex flex-col justify-between p-8 md:p-10 pointer-events-none"
+        className="absolute inset-0 z-30 flex flex-col justify-between p-8 md:p-10 pointer-events-none"
         style={{
           background: `linear-gradient(135deg, ${accent}D9 0%, rgba(33,64,154,0.85) 100%)`,
         }}
@@ -104,12 +114,15 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
         </div>
       </motion.div>
 
-      {/* Wave curtain — solid color panels, fold away on hover */}
+      {/* Bloom reveal — accent gradient sweeps in from origin */}
       <WaveCurtain
         active={hovered}
         panelClassName=""
         panelStyle={{ background: `linear-gradient(135deg, ${accent} 0%, #21409A 100%)` }}
-        zIndex={20}
+        zIndex={15}
+        origin={revealOrigin}
+        reveal="circle"
+        duration={0.85}
       />
     </div>
   );
@@ -178,6 +191,7 @@ const LifestyleSection = () => {
                 accent="#74C044"
                 rounded="rounded-[24px] md:rounded-[40px]"
                 parallaxY={y1}
+                revealOrigin="bottom-left"
               />
             </motion.div>
           </div>
@@ -203,6 +217,7 @@ const LifestyleSection = () => {
                 accent="#21409A"
                 rounded="rounded-[24px] md:rounded-[40px]"
                 parallaxY={y2}
+                revealOrigin="top-right"
               />
             </motion.div>
 
@@ -225,6 +240,7 @@ const LifestyleSection = () => {
                 accent="#007a5e"
                 rounded="rounded-[24px] md:rounded-[40px]"
                 parallaxY={y3}
+                revealOrigin="bottom-right"
               />
             </motion.div>
           </div>

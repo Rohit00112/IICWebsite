@@ -209,7 +209,7 @@ const CoursesList = () => {
       category: "BSc (Hons) Computing",
       duration: "3 Years",
       bg: "#1a2b5e",
-      description: "A comprehensive program covering software engineering, databases, and systems analysis, designed to build a strong foundation in modern computing.",
+      description: "A programme built for the next generation of innovators. Covering software engineering, application development, artificial intelligence, and systems analysis, this program combines strong theory with hands-on, industry-relevant learning. Graduate with more than a degree — leave with the technical depth, real-world experience, and problem-solving mindset that top employers are looking for.",
       credits: "360 Credits",
       modules: "17 Modules",
       image: "/images/courses/bit.png",

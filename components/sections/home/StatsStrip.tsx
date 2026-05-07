@@ -72,8 +72,8 @@ const AnimatedNumber = ({ value, suffix }: { value: number; suffix: string }) =>
 
 const StatsStrip = () => {
   const stats = [
-    { label: 'Students Enrolled', value: 2000, suffix: '+' },
-    { label: 'Industry Partners', value: 100, suffix: '+' },
+    { label: 'Graduates', value: 1000, suffix: '+' },
+    { label: 'Industry Partners', value: 150, suffix: '+' },
     { label: 'Years Of Excellence', value: 8, suffix: '+' },
   ];
 

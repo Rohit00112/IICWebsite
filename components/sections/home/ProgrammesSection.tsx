@@ -29,8 +29,9 @@ const ProgrammesSection = () => {
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/home/course1.png',
-      bgColor: 'bg-[#2a4d1b]', // Darker version of brand green
-      tagColor: 'bg-[#74C044]',
+      bgColor: 'bg-[#126DA2]',
+      tagColor: 'bg-[#0e567f]',
+      tags: ['Artificial Intelligence', 'Application Development', 'IoT'],
       parallax: y1
     },
     {
@@ -42,8 +43,9 @@ const ProgrammesSection = () => {
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/home/course2.png',
-      bgColor: 'bg-[#21409A]',
-      tagColor: 'bg-[#1a337e]',
+      bgColor: 'bg-[#00BBCC]',
+      tagColor: 'bg-[#0095a3]',
+      tags: ['Project Management', 'Marketing'],
       parallax: y1
     },
   ];
@@ -61,7 +63,7 @@ const ProgrammesSection = () => {
 
         <div className="text-center mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-sora">
-            Nepal's First Direct UK Degree At
+            Nepal's First Direct UK Degree in
           </h2>
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
@@ -80,37 +82,37 @@ const ProgrammesSection = () => {
           {programmes.map((prog, index) => (
             <Tilt key={index} strength={4}>
               <motion.div
-                initial={{ 
-                  clipPath: 'inset(100% 0 0 0)', 
+                initial={{
+                  clipPath: 'inset(100% 0 0 0)',
                   y: 100,
                   opacity: 0
                 }}
-                whileInView={{ 
-                  clipPath: 'inset(0% 0 0 0)', 
+                whileInView={{
+                  clipPath: 'inset(0% 0 0 0)',
                   y: 0,
                   opacity: 1
                 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ 
-                  delay: index * 0.1, 
-                  duration: 1.4, 
-                  ease: [0.16, 1, 0.3, 1] 
+                transition={{
+                  delay: index * 0.1,
+                  duration: 1.4,
+                  ease: [0.16, 1, 0.3, 1]
                 }}
                 className={`${prog.bgColor} rounded-[40px] md:rounded-[48px] p-10 md:p-12 relative overflow-hidden flex flex-col justify-between min-h-[440px] md:h-[480px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] group cursor-pointer border border-white/5 transition-shadow duration-500 hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)]`}
               >
                 <div className="relative z-10 flex flex-col h-full">
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 + 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="flex items-center gap-2 mb-10 max-w-[60%] md:max-w-[58%] relative z-20"
                   >
-                    <span className={`${prog.tagColor} text-white text-[10px] md:text-[11px] px-4 py-2 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap truncate`}>
+                    <span className={`${prog.tagColor} text-white text-[10px] md:text-[11px] px-4 py-2 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap `}>
                       {prog.type}
                     </span>
                     <span className="bg-white/15 backdrop-blur-xl text-white text-[10px] md:text-[11px] px-3.5 py-2 rounded-full font-bold border border-white/10 flex items-center gap-1.5 whitespace-nowrap shrink-0">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                       {prog.duration}
                     </span>
                   </motion.div>
@@ -132,7 +134,7 @@ const ProgrammesSection = () => {
                     </motion.div>
 
                     {prog.list && (
-                      <motion.ul 
+                      <motion.ul
                         variants={{
                           hidden: { opacity: 0, x: -20 },
                           visible: { opacity: 1, x: 0 }
@@ -142,8 +144,8 @@ const ProgrammesSection = () => {
                       >
                         {prog.list.map((item, i) => (
                           <li key={i} className="text-white/80 text-[13px] md:text-[15px] flex items-center gap-3 font-medium transition-transform duration-300 hover:translate-x-2">
-                             <span className="w-1.5 h-1.5 bg-[#74C044] rounded-full shrink-0 shadow-[0_0_8px_rgba(116,192,68,0.6)]"></span>
-                             {item}
+                            <span className="w-1.5 h-1.5 bg-[#74C044] rounded-full shrink-0 shadow-[0_0_8px_rgba(116,192,68,0.6)]"></span>
+                            {item}
                           </li>
                         ))}
                       </motion.ul>
@@ -151,7 +153,7 @@ const ProgrammesSection = () => {
                   </div>
 
                   <div className="mt-auto flex flex-col gap-6">
-                    <motion.div 
+                    <motion.div
                       variants={{
                         hidden: { opacity: 0, scale: 0.9 },
                         visible: { opacity: 1, scale: 1 }
@@ -175,12 +177,12 @@ const ProgrammesSection = () => {
                       transition={{ delay: index * 0.1 + 1.1 }}
                       className="flex items-center justify-between pt-6 border-t border-white/10"
                     >
-                      <div className="flex gap-2">
-                         {prog.list?.slice(0, 2).map((item, i) => (
-                           <span key={i} className="text-[9px] font-black uppercase tracking-widest text-white/40 px-3 py-1 bg-white/5 rounded-md border border-white/5">
-                             {item.split(' ').slice(-1)[0]}
-                           </span>
-                         ))}
+                      <div className="flex gap-2 flex-wrap">
+                        {prog.tags?.map((item, i) => (
+                          <span key={i} className="text-[9px] font-black uppercase tracking-widest text-white/40 px-3 py-1 bg-white/5 rounded-md border border-white/5">
+                            {item}
+                          </span>
+                        ))}
                       </div>
                       <div className="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest text-white group/btn">
                         Explore
@@ -214,7 +216,7 @@ const ProgrammesSection = () => {
                     className="object-contain object-right-bottom transition-all duration-1000 group-hover:scale-105 group-hover:-translate-y-2"
                   />
                 </motion.div>
-                
+
                 {/* Decorative background glow */}
                 <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
               </motion.div>
@@ -224,7 +226,9 @@ const ProgrammesSection = () => {
 
         <div className="max-w-3xl text-center flex flex-col items-center">
           <RevealText
-            text="Beginning Your College Journey Is A Very Personal And Sacred Experience That Encompasses A Wide Range Of Events Compounding Your Growth."
+            text="Starting your college journey is a meaningful experience shaped by growth, and we’re
+here to support you every step of the way, helping you feel confident and connected as
+you begin this new chapter."
             className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-10 px-4 justify-center"
           />
           <Magnetic strength={0.3}>

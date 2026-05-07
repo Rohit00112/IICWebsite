@@ -41,7 +41,7 @@ const InnovationLab = () => {
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="text-5xl md:text-8xl font-black text-[#74C044] leading-[0.9] tracking-tighter font-sora"
               >
-                IIC INNOVATION LAB
+                Classroom
               </motion.h1>
             </Magnetic>
           </div>
@@ -55,7 +55,9 @@ const InnovationLab = () => {
               </h3>
             </Magnetic>
             <RevealText
-              text="Beyond academics, IIC offers a dynamic environment fostering creativity, leadership, and lifelong friendships."
+              text="Beyond Academics, Innovation Lab at Itahari International
+College offers a dynamic environment fostering creativity, leadership, and personal
+growth."
               className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed"
             />
           </div>

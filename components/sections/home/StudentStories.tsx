@@ -5,7 +5,6 @@ import Image from 'next/image';
 import AnimeReveal from '../../effects/AnimeReveal';
 import Tilt from '../../effects/Tilt';
 import RevealText from '../../effects/RevealText';
-import WaveCurtain from '../../effects/WaveCurtain';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const testimonials = [
@@ -42,9 +41,6 @@ type StoryCardProps = {
   item: typeof testimonials[number];
   index: number;
 };
-
-const CURTAIN_MS = 1300;
-type Phase = 'idle' | 'opening' | 'open' | 'closing';
 
 const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
   const [hovered, setHovered] = useState(false);
@@ -93,16 +89,20 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
             }`}
           style={{ willChange: 'transform, opacity' }}
         >
-          {/* Video layer — sits behind curtain, visible while curtain animating */}
+          {/* Video layer — clip-path bloom from corner reveals video over card */}
           <motion.div
             initial={false}
-            animate={{ opacity: videoShown ? 1 : 0 }}
-            transition={{
-              duration: 0.6,
-              delay: hovered ? 0 : 0.6, // Keep video visible while curtain closes
-              ease: "easeInOut"
+            animate={{
+              clipPath: videoShown
+                ? `circle(160% at ${index % 2 === 0 ? '100% 100%' : '0% 100%'})`
+                : `circle(0% at ${index % 2 === 0 ? '100% 100%' : '0% 100%'})`,
             }}
-            className="absolute inset-0 z-0 overflow-hidden rounded-[24px] md:rounded-[32px]"
+            transition={{
+              duration: 0.75,
+              ease: videoShown ? [0.22, 1, 0.36, 1] : [0.7, 0, 0.84, 0],
+            }}
+            className="absolute inset-0 z-20 overflow-hidden rounded-[24px] md:rounded-[32px]"
+            style={{ willChange: 'clip-path' }}
           >
             <video
               ref={videoRef}
@@ -122,7 +122,11 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
           <motion.div
             initial={false}
             animate={{ opacity: defaultShown ? 1 : 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            transition={{
+              duration: 0.4,
+              delay: defaultShown ? 0.45 : 0,
+              ease: [0.22, 1, 0.36, 1]
+            }}
             className="relative z-10"
           >
             {/* Quote Icon */}
@@ -170,13 +174,6 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
             </div>
           </motion.div>
 
-          <WaveCurtain
-            active={hovered}
-            panelClassName={item.featured ? 'bg-[#0a3285]' : 'bg-white'}
-            foldShadingDark={item.featured ? 'rgba(0,0,0,0.25)' : 'rgba(0,0,0,0.06)'}
-            foldShadingLight={item.featured ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)'}
-          />
-
           {/* Reveal overlay — name + tag pinned to bottom over video */}
           <AnimatePresence>
             {videoShown && (
@@ -186,7 +183,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 16 }}
                 transition={{ delay: 0.35, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-x-0 bottom-0 z-30 p-6 md:p-8 text-white"
+                className="absolute inset-x-0 bottom-0 z-40 p-6 md:p-8 text-white"
               >
                 <span className="inline-block px-3 py-1 rounded-full text-[11px] md:text-xs font-medium bg-white/15 border border-white/25 backdrop-blur-sm mb-3">
                   {item.tag}

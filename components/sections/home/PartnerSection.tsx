@@ -126,10 +126,10 @@ const PartnerSection = () => {
               initial={{ opacity: 0, y: 40, scale: 0.8 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ 
-                delay: index * 0.12, 
-                duration: 1, 
-                ease: [0.34, 1.56, 0.64, 1] 
+              transition={{
+                delay: index * 0.12,
+                duration: 1,
+                ease: [0.34, 1.56, 0.64, 1]
               }}
               className="relative aspect-[4/3] w-full overflow-hidden"
             >
@@ -146,7 +146,11 @@ const PartnerSection = () => {
 
         <div className="max-w-4xl text-center px-6 flex flex-col items-center">
           <RevealText
-            text="London Metropolitan University's Mission Is To Transform Lives Through The Power Of Education – And It Does That By Welcoming Students From All Kinds Of Backgrounds And Supporting Them To Achieve Success. Each And Every One Of Them Belongs There And Uniquely Contributes To The University And The City Around Them."
+            text="London Metropolitan University believes that education has the power to transform lives
+— and that belief shapes everything we do. We welcome students from all
+backgrounds, providing the support and opportunities they need to reach their full
+potential. Every student belongs, matters, and brings a distinct perspective that enriches
+our university and city."
             className="text-gray-500 text-sm md:text-[16px] font-medium leading-relaxed mb-6 justify-center"
           />
           <Magnetic strength={0.2}>

@@ -41,29 +41,29 @@ const Preloader = () => {
           key="preloader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }} // Longer delay to let curtains finish
+          transition={{ duration: 0.4, delay: 1.3 }}
           className="fixed inset-0 z-[9999] bg-white flex items-center justify-center overflow-hidden"
         >
-          {/* Curtains */}
+          {/* Split panels — invisible during load, slide apart on exit */}
           <motion.div
             initial={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
-            className="absolute inset-y-0 left-0 w-1/2 bg-white z-10 border-r border-blue-50/50 shadow-[20px_0_40px_rgba(0,0,0,0.03)]"
+            exit={{ x: '-101%' }}
+            transition={{ duration: 1.4, ease: [0.83, 0, 0.17, 1], delay: 0.1 }}
+            className="absolute inset-y-0 left-0 w-1/2 z-10 bg-white will-change-transform"
           />
           <motion.div
             initial={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ duration: 1.4, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
-            className="absolute inset-y-0 right-0 w-1/2 bg-white z-10 border-l border-blue-50/50 shadow-[-20px_0_40px_rgba(0,0,0,0.03)]"
+            exit={{ x: '101%' }}
+            transition={{ duration: 1.4, ease: [0.83, 0, 0.17, 1], delay: 0.1 }}
+            className="absolute inset-y-0 right-0 w-1/2 z-10 bg-white will-change-transform"
           />
 
           {/* Central Content */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            exit={{ opacity: 0, scale: 0.92, y: -10 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-20 flex flex-col items-center"
           >
             {/* Logo */}
