@@ -124,7 +124,7 @@ const ScrollScaleVideo = () => {
                   Contact
                 </span>
                 <p className="text-white text-base font-light font-sora tracking-tight">
-                  +977 25-587677
+                  +977 9869258083
                 </p>
                 <p className="text-white/70 text-base font-light font-sora">
                   info@iic.edu.np
