@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import ImageUpload from '@/components/admin/ImageUpload';
 import { sanitizeHtml } from '@/lib/sanitize';
 
 const NewNewsPage = () => {
@@ -198,22 +199,13 @@ const NewNewsPage = () => {
 
           {activeSection === 'media' && (
             <div className="space-y-10 animate-in fade-in slide-in-from-right-4 duration-500">
-              <div className="space-y-3">
-                <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Featured Image URL</label>
-                <input 
-                  type="url" 
-                  required
-                  value={formData.image}
-                  onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  placeholder="https://images.unsplash.com/photo-..."
-                  className="form-input-admin"
+               <div className="space-y-3">
+                <ImageUpload 
+                  label="Featured Image"
+                  value={formData.image} 
+                  onChange={(url) => setFormData({...formData, image: url})} 
+                  onRemove={() => setFormData({...formData, image: ''})}
                 />
-                {formData.image && (
-                  <div className="mt-6 relative h-[400px] rounded-[32px] overflow-hidden border-8 border-gray-50 shadow-2xl group">
-                    <img src={formData.image} alt="Preview" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                  </div>
-                )}
               </div>
 
               <div className="space-y-3">
