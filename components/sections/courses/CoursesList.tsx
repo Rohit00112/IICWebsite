@@ -3,28 +3,49 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 
 import Tilt from '../../effects/Tilt';
 
-const CourseCard = ({ course, index }: { course: any, index: number }) => {
-  const ref = useRef(null);
+const CourseCard = ({ course, index, total }: { course: any, index: number, total: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  // Stack-reveal: track card progress thru viewport
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
+  // Outgoing animation — fires when next card overlaps
+  const { scrollYProgress: exitProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+
+  const smoothExit = useSpring(exitProgress, {
+    stiffness: 100,
+    damping: 30,
+    mass: 0.4,
+    restDelta: 0.001
+  });
+
   const isEven = index % 2 === 0;
-  
-  // Advanced Parallax Transforms
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const scrollScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.9]);
-  const rotate = useTransform(scrollYProgress, [0, 0.5, 1], [isEven ? -5 : 5, 0, isEven ? 5 : -5]);
-  const scrollOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-  const x = useTransform(scrollYProgress, [0, 0.4], [isEven ? -100 : 100, 0]);
-  
-  // Image specific parallax
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const isLast = index === total - 1;
+
+  // Outgoing card shrinks + fades as next overlaps
+  const cardScale = useTransform(smoothExit, [0, 1], reduceMotion || isLast ? [1, 1] : [1, 0.92]);
+  const cardOpacity = useTransform(smoothExit, [0, 1], reduceMotion || isLast ? [1, 1] : [1, 0.5]);
+
+  // Image parallax
+  const imageY = useTransform(
+    useSpring(scrollYProgress, { stiffness: 80, damping: 25, mass: 0.5 }),
+    [0, 1],
+    reduceMotion ? ["0%", "0%"] : ["-8%", "8%"]
+  );
+
+  // Stagger top offset so cards stack visibly
+  const topOffset = 80 + index * 24;
 
   return (
     <motion.div
@@ -33,32 +54,30 @@ const CourseCard = ({ course, index }: { course: any, index: number }) => {
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       variants={{
-        hidden: { 
+        hidden: {
           opacity: 0,
-          y: 60,
-          scale: 0.98
+          y: 80
         },
-        visible: { 
+        visible: {
           opacity: 1,
           y: 0,
-          scale: 1,
-          transition: { 
-            duration: 1.2, 
-            ease: [0.16, 1, 0.3, 1],
-            staggerChildren: 0.08,
-            delayChildren: 0.1
+          transition: {
+            duration: 1,
+            ease: [0.22, 1, 0.36, 1],
+            staggerChildren: 0.07,
+            delayChildren: 0.15
           }
         }
       }}
-      style={{ 
+      style={{
         backgroundColor: course.bg,
-        scale: scrollScale, 
-        rotate, 
-        opacity: scrollOpacity,
-        x,
-        perspective: 1000
+        scale: cardScale,
+        opacity: cardOpacity,
+        top: `${topOffset}px`,
+        willChange: 'transform, opacity',
+        transformOrigin: 'center top'
       }}
-      className={`group relative overflow-hidden rounded-[32px] mb-24 md:mb-32 min-h-[450px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] border border-white/10`}
+      className={`group sticky overflow-hidden rounded-[32px] min-h-[450px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] border border-white/10`}
     >
       {/* Premium Glow Sweep Effect */}
       <motion.div 
@@ -77,13 +96,13 @@ const CourseCard = ({ course, index }: { course: any, index: number }) => {
       >
         {/* Image Section with Curtain Reveal */}
         <div className="w-full md:w-1/2 relative h-[300px] md:h-auto overflow-hidden">
-          <motion.div 
+          <motion.div
             variants={{
-              hidden: { clipPath: 'inset(0% 0% 100% 0%)', scale: 1.2 },
-              visible: { clipPath: 'inset(0% 0% 0% 0%)', scale: 1 }
+              hidden: { clipPath: 'inset(0% 0% 100% 0%)' },
+              visible: { clipPath: 'inset(0% 0% 0% 0%)' }
             }}
-            transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{ y: imageY }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            style={{ y: imageY, willChange: 'transform' }}
             className="absolute inset-0 w-full h-full"
           >
             <Image
@@ -267,10 +286,14 @@ const CoursesList = () => {
           </p>
         </div>
 
-        <div className="space-y-12">
+        <div className="relative">
           {courses.map((course, index) => (
-            <CourseCard key={index} course={course} index={index} />
+            <div key={index} className="mb-[15vh] last:mb-0">
+              <CourseCard course={course} index={index} total={courses.length} />
+            </div>
           ))}
+          {/* Spacer so last sticky card releases */}
+          <div aria-hidden className="h-[20vh]" />
         </div>
       </div>
     </section>
