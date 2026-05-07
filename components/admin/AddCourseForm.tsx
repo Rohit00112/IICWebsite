@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import RichTextEditor from './RichTextEditor';
+import ImageUpload from './ImageUpload';
 
 interface Module {
   name: string;
@@ -194,8 +195,12 @@ export default function AddCourseForm() {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Hero Image URL</label>
-                  <input type="text" value={formData.image} onChange={(e) => setFormData({...formData, image: e.target.value})} className="form-input-admin" placeholder="https://..." />
+                  <ImageUpload 
+                    label="Hero Image"
+                    value={formData.image} 
+                    onChange={(url) => setFormData({...formData, image: url})} 
+                    onRemove={() => setFormData({...formData, image: ''})}
+                  />
                 </div>
 
                 <div className="space-y-3">
@@ -222,7 +227,7 @@ export default function AddCourseForm() {
                         const newCurr = [...formData.curriculum];
                         newCurr[yIdx].title = e.target.value;
                         setFormData({...formData, curriculum: newCurr});
-                      }} className="bg-transparent border-b-2 border-gray-200 font-bold text-lg outline-none focus:border-[#21409A]" />
+                      }} className="bg-transparent border-b-2 border-gray-200 font-bold text-lg outline-none focus:border-[#21409A] text-[#1A2B56]" />
                       <button type="button" onClick={() => addModule(yIdx)} className="text-xs font-bold uppercase tracking-widest text-[#21409A]">+ Add Module</button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -231,18 +236,18 @@ export default function AddCourseForm() {
                           <input type="text" value={mod.name} placeholder="Module Name" onChange={(e) => {
                             const newCurr = [...formData.curriculum];
                             newCurr[yIdx].modules[mIdx].name = e.target.value;
-                            setFormData({...formData, curriculum: newCurr});
-                          }} className="w-full text-sm font-bold outline-none" />
+                             setFormData({...formData, curriculum: newCurr});
+                          }} className="w-full text-sm font-bold outline-none text-[#1A2B56]" />
                           <input type="text" value={mod.credits} placeholder="Credits (e.g. 30)" onChange={(e) => {
                             const newCurr = [...formData.curriculum];
                             newCurr[yIdx].modules[mIdx].credits = e.target.value;
-                            setFormData({...formData, curriculum: newCurr});
-                          }} className="w-full text-xs text-gray-700 outline-none" />
+                             setFormData({...formData, curriculum: newCurr});
+                          }} className="w-full text-xs text-gray-700 outline-none font-medium" />
                           <textarea placeholder="Description" rows={2} value={mod.description} onChange={(e) => {
                             const newCurr = [...formData.curriculum];
                             newCurr[yIdx].modules[mIdx].description = e.target.value;
-                            setFormData({...formData, curriculum: newCurr});
-                          }} className="w-full text-xs text-gray-500 outline-none resize-none" />
+                             setFormData({...formData, curriculum: newCurr});
+                          }} className="w-full text-xs text-gray-600 outline-none resize-none font-medium" />
                         </div>
                       ))}
                     </div>
@@ -331,6 +336,20 @@ export default function AddCourseForm() {
                         newFaculty[idx].description = e.target.value;
                         setFormData({...formData, faculty: newFaculty});
                       }} className="w-full text-sm text-gray-600 font-medium outline-none resize-none placeholder:text-gray-500" />
+                      <ImageUpload 
+                        label="Faculty Image"
+                        value={member.image}
+                        onChange={(url) => {
+                          const newFaculty = [...formData.faculty];
+                          newFaculty[idx].image = url;
+                          setFormData({...formData, faculty: newFaculty});
+                        }}
+                        onRemove={() => {
+                          const newFaculty = [...formData.faculty];
+                          newFaculty[idx].image = '';
+                          setFormData({...formData, faculty: newFaculty});
+                        }}
+                      />
                     </div>
                   ))}
                 </div>
@@ -349,18 +368,27 @@ export default function AddCourseForm() {
                       <input type="text" value={proj.title} placeholder="Project Title" onChange={(e) => {
                         const newProj = [...formData.projects];
                         newProj[idx].title = e.target.value;
-                        setFormData({...formData, projects: newProj});
-                      }} className="w-full font-bold bg-transparent outline-none" />
+                         setFormData({...formData, projects: newProj});
+                      }} className="w-full font-bold bg-transparent outline-none text-[#1A2B56]" />
                       <input type="text" value={proj.cohort} placeholder="Cohort (e.g. Class of 2024)" onChange={(e) => {
                         const newProj = [...formData.projects];
                         newProj[idx].cohort = e.target.value;
-                        setFormData({...formData, projects: newProj});
-                      }} className="w-full text-xs bg-transparent outline-none" />
-                      <input type="text" value={proj.image} placeholder="Thumbnail URL" onChange={(e) => {
-                        const newProj = [...formData.projects];
-                        newProj[idx].image = e.target.value;
-                        setFormData({...formData, projects: newProj});
-                      }} className="w-full text-xs text-gray-700 bg-transparent outline-none" />
+                         setFormData({...formData, projects: newProj});
+                      }} className="w-full text-xs bg-transparent outline-none text-[#1A2B56]/70 font-bold" />
+                      <ImageUpload 
+                        label="Project Image"
+                        value={proj.image}
+                        onChange={(url) => {
+                          const newProj = [...formData.projects];
+                          newProj[idx].image = url;
+                          setFormData({...formData, projects: newProj});
+                        }}
+                        onRemove={() => {
+                          const newProj = [...formData.projects];
+                          newProj[idx].image = '';
+                          setFormData({...formData, projects: newProj});
+                        }}
+                      />
                     </div>
                   ))}
                 </div>
@@ -406,7 +434,9 @@ export default function AddCourseForm() {
           outline: none;
           transition: all 0.2s;
         }
-        .form-input-admin::placeholder {
+        .form-input-admin::placeholder,
+        input::placeholder,
+        textarea::placeholder {
           color: #64748b;
           opacity: 1;
         }
