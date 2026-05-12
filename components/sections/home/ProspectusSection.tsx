@@ -35,7 +35,7 @@ const ProspectusSection = () => {
             </div>
             <div className="relative z-10">
               <p className="text-gray-700 text-lg md:text-xl font-medium leading-relaxed italic mb-10 pt-4">
-                &ldquo;The practical approach to learning at IIC completely transformed my understanding of software development. The facilities and the faculty support are truly world-class, preparing me perfectly for my current role.&rdquo;
+                &ldquo;The practical approach to learning at Itahari International College completely transformed my understanding of software development. The facilities and the faculty support are truly world-class, preparing me perfectly for my current role.&rdquo;
               </p>
               <div className="flex items-center gap-4">
                 <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">

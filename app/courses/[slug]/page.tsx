@@ -15,7 +15,7 @@ export async function generateMetadata({
   if (!course) return { title: 'Course Not Found' };
 
   return {
-    title: `${course.title} | London Metropolitan University | IIC Itahari`,
+    title: `${course.title} | London Metropolitan University | Itahari International College`,
     description: `${course.description} Study ${course.title} in Itahari, Nepal. Direct UK degree in partnership with London Metropolitan University.`,
     openGraph: {
       title: `${course.title} - London Metropolitan University UK Degree`,

@@ -8,7 +8,7 @@ const historyItems = [
     year: "2017",
     markerLabel: "2017 · Founded",
     title: "Foundation Established",
-    description: "IIC was established with a vision to bring world-class British education to the Eastern region of Nepal.",
+    description: "Itahari International College was established with a vision to bring world-class British education to the Eastern region of Nepal.",
     stat: "1st",
     statLabel: "British curriculum in Eastern Nepal",
     color: "#00A69C",

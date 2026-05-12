@@ -33,7 +33,7 @@ const NewsLoader = () => {
         >
           <Image
             src="/images/common/iic_logo.png"
-            alt="IIC Logo"
+            alt="Itahari International College Logo"
             fill
             className="object-contain"
             priority

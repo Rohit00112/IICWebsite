@@ -19,7 +19,7 @@ const features = [
   },
   {
     title: "Practical Learning Experience",
-    description: "IIC follows the innovative L-T-W approach — Lecture, Tutorial, and Workshop — combining theoretical understanding with hands-on practice to build real-world skills and industry readiness.",
+    description: "Itahari International College follows the innovative L-T-W approach — Lecture, Tutorial, and Workshop — combining theoretical understanding with hands-on practice to build real-world skills and industry readiness.",
     points: ["Interactive Lecture Sessions", "Collaborative Tutorials and Activities", "Hands-On Workshops and Projects"],
     image: "/images/about/whychooseiic2.png",
     icon: (
@@ -30,7 +30,7 @@ const features = [
   },
   {
     title: "Professional Networking Opportunities",
-    description: "IIC provides valuable networking experiences through projects, guest lectures, and industry interactions, helping students connect with professionals and build strong career opportunities.",
+    description: "Itahari International College provides valuable networking experiences through projects, guest lectures, and industry interactions, helping students connect with professionals and build strong career opportunities.",
     points: ["Industry Expert Interactions", "Insightful Guest Lecture Sessions", "Career-Focused Project Collaborations"],
     image: "/images/about/whychoseiic1.png",
     icon: (
@@ -67,7 +67,7 @@ const WhyChooseIIC = () => {
           className="text-center mb-24 md:mb-32"
         >
           <h2 className="text-4xl md:text-6xl font-black text-[#1a1a1a] font-sora">
-            Why choose IIC ?
+            Why choose Itahari International College ?
           </h2>
         </motion.div>
 

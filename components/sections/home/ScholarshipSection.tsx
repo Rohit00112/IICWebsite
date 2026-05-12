@@ -233,7 +233,7 @@ const ScholarshipSection = () => {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="text-2xl md:text-5xl font-black text-white tracking-tight uppercase font-sora text-center mb-6"
         >
-          Triple A Scholarships at IIC
+          Triple A Scholarships at Itahari International College
         </motion.h2>
 
         <RevealText

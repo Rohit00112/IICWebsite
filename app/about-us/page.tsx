@@ -12,7 +12,7 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export const metadata = {
   title: 'Our Mission & UK Partnership | Itahari International College',
-  description: 'Learn about our partnership with London Metropolitan University, our mission for world-class education, and the team driving excellence at IIC Itahari.',
+  description: 'Learn about our partnership with London Metropolitan University, our mission for world-class education, and the team driving excellence at Itahari International College.',
 };
 
 export default function AboutUsPage() {
@@ -25,7 +25,7 @@ export default function AboutUsPage() {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     name: 'About Itahari International College',
-    description: 'Learn about our partnership with London Metropolitan University, our mission for world-class education, and the team driving excellence at IIC Itahari.',
+    description: 'Learn about our partnership with London Metropolitan University, our mission for world-class education, and the team driving excellence at Itahari International College.',
     publisher: {
       '@type': 'CollegeOrUniversity',
       name: 'Itahari International College',

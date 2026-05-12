@@ -12,7 +12,7 @@ interface NewsDetailHeroProps {
 }
 
 const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
-  const authorName = item.author?.name || 'IIC Editorial Team';
+  const authorName = item.author?.name || 'Itahari International College Editorial Team';
   const authorRole = item.author?.role || 'Contributor';
   const authorAvatar = item.author?.avatar || '/images/common/iic_logo.png';
 

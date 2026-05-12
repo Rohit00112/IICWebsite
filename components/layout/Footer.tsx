@@ -21,7 +21,7 @@ const Footer = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/70"></div>
       </div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 pt-24 pb-12">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 pt-32 pb-16">
         <AnimeStagger
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20"
           selector=":scope > div"
@@ -32,13 +32,13 @@ const Footer = () => {
 
           {/* Brand Column */}
           <div className="flex flex-col gap-8">
-            <div className="flex items-center gap-6">
-              <div className="relative w-72 h-20">
+            <div className="inline-flex items-center self-start bg-white rounded-2xl px-5 py-4 shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+              <div className="relative w-64 h-16">
                 <Image
                   src="/images/common/iic_logo.png"
                   alt="Itahari International College Official Logo"
                   fill
-                  sizes="(max-width: 768px) 300px, 300px"
+                  sizes="(max-width: 768px) 260px, 260px"
                   className="object-contain"
                 />
               </div>

@@ -35,11 +35,11 @@ const LifeHero = () => {
       <div className="absolute inset-0 bg-white/10" />
 
       {/* Glassmorphism Card with Surprise Effect */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 100, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        style={{ 
+        style={{
           opacity: opacityProgress,
           y: yTranslate
         }}
@@ -47,14 +47,14 @@ const LifeHero = () => {
       >
         <GlassSurprise>
           {/* Top Badge */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="inline-block mb-6 md:mb-8 px-6 py-2 rounded-full bg-[#007a5e] text-white"
           >
             <span className="text-xs md:text-sm font-semibold tracking-wide">
-              Experience IIC
+              Experience Itahari International College
             </span>
           </motion.div>
 
@@ -92,12 +92,12 @@ const LifeHero = () => {
             transition={{ duration: 1.2, delay: 1, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-[750px] mx-auto text-[#333333] text-sm md:text-base font-medium leading-relaxed mb-8 font-sora opacity-80"
           >
-            Beyond the classroom, IIC offers a dynamic ecosystem designed to foster personal growth, leadership and creativity. Discover your place in our thriving community.
+            Beyond the classroom, Itahari International College offers a dynamic ecosystem designed to foster personal growth, leadership and creativity. Discover your place in our thriving community.
           </motion.p>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 w-full sm:w-auto">
-            <motion.button 
+            <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -112,7 +112,7 @@ const LifeHero = () => {
               </svg>
             </motion.button>
 
-            <motion.button 
+            <motion.button
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}

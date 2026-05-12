@@ -21,7 +21,7 @@ const AdminDashboard = async () => {
     <div className="space-y-12">
       <div>
         <h1 className="text-4xl font-black text-[#1A2B56] font-sora tracking-tight mb-2">Dashboard</h1>
-        <p className="text-gray-500 font-medium">Welcome back, Administrator. Here's what's happening at IIC.</p>
+        <p className="text-gray-500 font-medium">Welcome back, Administrator. Here's what's happening at Itahari International College.</p>
       </div>
 
       {/* Stats Cards */}

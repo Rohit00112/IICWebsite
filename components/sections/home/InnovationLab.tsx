@@ -51,7 +51,7 @@ const InnovationLab = () => {
           <div className="max-w-2xl">
             <Magnetic strength={0.1}>
               <h3 className="text-4xl md:text-[56px] font-bold text-[#21409A] mb-6 font-sora">
-                IIC Innovation Lab
+                Innovation Lab
               </h3>
             </Magnetic>
             <RevealText
@@ -116,7 +116,7 @@ growth."
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
                     src="/images/home/ivlab2.png"
-                    alt="Modern State-of-the-Art Library and Research Center at IIC Nepal"
+                    alt="Modern State-of-the-Art Library and Research Center at Itahari International College Nepal"
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -139,7 +139,7 @@ growth."
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
                     src="/images/home/ivlab3.png"
-                    alt="Tech Events and Hackathons at Itahari International College Innovation Lab"
+                    alt="Tech Events and Hackathons at Innovation Lab"
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"

@@ -44,7 +44,7 @@ const AboutSection = () => {
 
         <div className="max-w-3xl">
           <RevealText
-            text="IIC is a flagship institution of Innovate Nepal Group. We offer BSc (Hons) Computing and BA (Hons) Business Administration directly delivered in partnership with London Metropolitan University — right here in Itahari."
+            text="Itahari International College is a flagship institution of Innovate Nepal Group. We offer BSc (Hons) Computing and BA (Hons) Business Administration directly delivered in partnership with London Metropolitan University — right here in Itahari."
             className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed justify-center"
             delay={0.3}
           />

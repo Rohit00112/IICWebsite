@@ -73,7 +73,7 @@ const AboutHero = () => {
         >
           <Image
             src="/images/about/about-hero.png"
-            alt="Students at IIC"
+            alt="Students at Itahari International College"
             fill
             priority
             className="object-contain object-bottom scale-110"

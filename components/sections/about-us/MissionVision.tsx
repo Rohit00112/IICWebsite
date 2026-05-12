@@ -47,7 +47,7 @@ const MissionVision = () => {
             >
               <Image
                 src="/images/about/mission.png"
-                alt="Students at IIC"
+                alt="Students at Itahari International College"
                 fill
                 className="object-cover transition-transform duration-1000 hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 55vw"
