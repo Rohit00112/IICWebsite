@@ -71,7 +71,7 @@ const CoursesHero = () => {
         >
           <Image
             src="/images/courses/course-hero.png"
-            alt="IIC Campus Life"
+            alt="Itahari International College Campus Life"
             fill
             sizes="(max-width: 1280px) 100vw, 1280px"
             className="object-cover object-center grayscale-[20%] brightness-105"

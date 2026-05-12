@@ -16,7 +16,7 @@ const ContactHero = () => {
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/home/tower_block.png"
-          alt="IIC Tower Block"
+          alt="Itahari International College Tower Block"
           fill
           className="object-cover brightness-50 scale-105"
           priority

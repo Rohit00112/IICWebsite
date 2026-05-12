@@ -44,7 +44,7 @@ const IngSection = () => {
             />
 
             <p className="text-white/90 text-sm md:text-base font-medium leading-relaxed mb-10 font-sora">
-              IIC is proud to be a part of the Innovate Nepal Group (ING), a pioneering organization that has revolutionized higher education in Nepal. This affiliation ensures our students benefit from a vast network of industry connections, shared resources, and a legacy of academic excellence.
+              Itahari International College is proud to be a part of the Innovate Nepal Group (ING), a pioneering organization that has revolutionized higher education in Nepal. This affiliation ensures our students benefit from a vast network of industry connections, shared resources, and a legacy of academic excellence.
             </p>
 
             <div className="space-y-4">

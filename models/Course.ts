@@ -35,10 +35,6 @@ const CourseSchema = new Schema({
       credits: String,
     }]
   }],
-  entryRequirements: {
-    academic: String,
-    language: String,
-  },
   learningOutcomes: [String],
   careerOpportunities: [{
     title: String,

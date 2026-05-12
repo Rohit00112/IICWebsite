@@ -120,7 +120,7 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
                   className="text-xl font-bold font-sora mb-4 text-[#1a1a1a]"
                   staggerFrom="first"
                 />
-                <p className="text-gray-600 text-[14px] mb-8 leading-relaxed font-medium">Never miss an update. Join our newsletter to get the latest IIC news.</p>
+                <p className="text-gray-600 text-[14px] mb-8 leading-relaxed font-medium">Never miss an update. Join our newsletter to get the latest Itahari International College news.</p>
                 <div className="space-y-4">
                   <input
                     type="email"

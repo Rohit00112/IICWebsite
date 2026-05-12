@@ -29,7 +29,7 @@ const testimonials = [
   {
     name: "Emily Watson",
     degree: "BSc (Hons) AI",
-    quote: "The mentorship programs at IIC connected me with industry leaders in Kathmandu's growing tech scene. I had my first internship offer before even graduating.",
+    quote: "The mentorship programs at Itahari International College connected me with industry leaders in Kathmandu's growing tech scene. I had my first internship offer before even graduating.",
     tag: "AI Research Lead",
     image: "/images/profiles/emily.png",
     video: "/videos/students/emily.mp4",
@@ -157,7 +157,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
               <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white shadow-sm">
                 <Image
                   src={item.image}
-                  alt={`${item.name} - Successful IIC Student Testimonial`}
+                  alt={`${item.name} - Successful Itahari International College Student Testimonial`}
                   fill
                   sizes="(max-width: 768px) 56px, 64px"
                   className="object-cover"
@@ -215,13 +215,13 @@ const StudentStories = () => {
           </h2>
           <AnimeReveal
             as="h2"
-            text="IIC STUDENTS"
+            text="STUDENTS"
             className="text-5xl md:text-7xl font-black text-[#007a5e] leading-[0.8] tracking-tight mb-10 font-sora justify-center"
             staggerFrom="center"
             delay={0.1}
           />
           <p className="max-w-2xl text-gray-500 text-base md:text-lg font-medium leading-relaxed">
-            Hear Directly From Our Students About How The IIC Campus Environment Shaped Their Academic And Social Lives.
+            Hear Directly From Our Students About How The Itahari International College Campus Environment Shaped Their Academic And Social Lives.
           </p>
         </div>
 

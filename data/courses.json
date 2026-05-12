@@ -32,10 +32,6 @@
         ]
       }
     ],
-    "entryRequirements": {
-      "academic": "Completion of 10+2 with a minimum of 50%",
-      "language": "IELTS 6.0 or equivalent"
-    },
     "learningOutcomes": [
       "Design and implement complex software solutions",
       "Apply agile methodologies in team environments",
@@ -49,7 +45,7 @@
       { "name": "Dr. Sameer Rai", "role": "Head of Computing", "description": "15+ years of industry experience in AI.", "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop" }
     ],
     "quote": {
-      "text": "The computing program at IIC transformed my perspective on technology.",
+      "text": "The computing program at Itahari International College transformed my perspective on technology.",
       "author": "Anjali Sharma, Alumna"
     },
     "projects": [

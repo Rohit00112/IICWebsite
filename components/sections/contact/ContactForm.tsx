@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Magnetic from '../../effects/Magnetic';
 import Link from 'next/link';
@@ -22,6 +22,29 @@ const PROGRAMMES = [
   'Not sure yet',
 ];
 
+const COUNTRIES = [
+  { code: 'NP', name: 'Nepal', dial: '+977', flag: '🇳🇵' },
+  { code: 'IN', name: 'India', dial: '+91', flag: '🇮🇳' },
+  { code: 'BD', name: 'Bangladesh', dial: '+880', flag: '🇧🇩' },
+  { code: 'BT', name: 'Bhutan', dial: '+975', flag: '🇧🇹' },
+  { code: 'LK', name: 'Sri Lanka', dial: '+94', flag: '🇱🇰' },
+  { code: 'PK', name: 'Pakistan', dial: '+92', flag: '🇵🇰' },
+  { code: 'CN', name: 'China', dial: '+86', flag: '🇨🇳' },
+  { code: 'US', name: 'United States', dial: '+1', flag: '🇺🇸' },
+  { code: 'GB', name: 'United Kingdom', dial: '+44', flag: '🇬🇧' },
+  { code: 'AU', name: 'Australia', dial: '+61', flag: '🇦🇺' },
+  { code: 'CA', name: 'Canada', dial: '+1', flag: '🇨🇦' },
+  { code: 'AE', name: 'United Arab Emirates', dial: '+971', flag: '🇦🇪' },
+  { code: 'QA', name: 'Qatar', dial: '+974', flag: '🇶🇦' },
+  { code: 'SA', name: 'Saudi Arabia', dial: '+966', flag: '🇸🇦' },
+  { code: 'MY', name: 'Malaysia', dial: '+60', flag: '🇲🇾' },
+  { code: 'SG', name: 'Singapore', dial: '+65', flag: '🇸🇬' },
+  { code: 'JP', name: 'Japan', dial: '+81', flag: '🇯🇵' },
+  { code: 'KR', name: 'South Korea', dial: '+82', flag: '🇰🇷' },
+  { code: 'DE', name: 'Germany', dial: '+49', flag: '🇩🇪' },
+  { code: 'FR', name: 'France', dial: '+33', flag: '🇫🇷' },
+];
+
 const MESSAGE_MAX = 600;
 
 const ContactForm = () => {
@@ -30,6 +53,27 @@ const ContactForm = () => {
   const [reason, setReason] = useState('');
   const [programme, setProgramme] = useState('');
   const [message, setMessage] = useState('');
+  const [country, setCountry] = useState(COUNTRIES[0]);
+  const [countryOpen, setCountryOpen] = useState(false);
+  const [countryQuery, setCountryQuery] = useState('');
+  const countryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!countryOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (countryRef.current && !countryRef.current.contains(e.target as Node)) {
+        setCountryOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [countryOpen]);
+
+  const filteredCountries = COUNTRIES.filter(c => {
+    const q = countryQuery.trim().toLowerCase();
+    if (!q) return true;
+    return c.name.toLowerCase().includes(q) || c.dial.includes(q) || c.code.toLowerCase().includes(q);
+  });
 
   const showProgramme = REASONS.find(r => r.value === reason)?.programmes;
 
@@ -276,15 +320,83 @@ const ContactForm = () => {
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="phone" className={labelClass}>Phone Number</label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">+977</span>
+                    <div ref={countryRef} className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setCountryOpen(v => !v)}
+                        aria-haspopup="listbox"
+                        aria-expanded={countryOpen}
+                        aria-label={`Country code: ${country.name} ${country.dial}`}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 flex items-center gap-1.5 pl-2 pr-2 py-1.5 rounded-lg bg-white hover:bg-gray-50 transition-colors"
+                      >
+                        <span className="text-base leading-none" aria-hidden>{country.flag}</span>
+                        <span className="text-sm font-bold text-gray-700">{country.dial}</span>
+                        <svg className={`w-3 h-3 text-gray-400 transition-transform ${countryOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      <span className="absolute left-[112px] top-1/2 -translate-y-1/2 h-6 w-px bg-gray-200 z-10 pointer-events-none" aria-hidden />
                       <input
                         id="phone"
                         type="tel"
                         autoComplete="tel"
                         placeholder="98XXXXXXXX"
-                        className={`${fieldClass} pl-16`}
+                        className={`${fieldClass} pl-[128px] relative`}
                       />
+                      <AnimatePresence>
+                        {countryOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: -8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.15 }}
+                            className="absolute z-20 left-0 right-0 top-[calc(100%+6px)] bg-white border border-gray-200 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.12)] overflow-hidden"
+                          >
+                            <div className="p-2 border-b border-gray-100">
+                              <input
+                                autoFocus
+                                type="text"
+                                value={countryQuery}
+                                onChange={(e) => setCountryQuery(e.target.value)}
+                                placeholder="Search country or code"
+                                className="w-full px-3 py-2 text-sm bg-gray-50 rounded-lg outline-none focus:bg-white focus:ring-2 focus:ring-[#21409A]/15 font-semibold text-[#1a1a1a] placeholder:text-gray-400 placeholder:font-medium"
+                              />
+                            </div>
+                            <ul
+                              role="listbox"
+                              data-lenis-prevent
+                              style={{ maxHeight: '240px' }}
+                              className="overflow-y-auto overscroll-contain py-1 [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full"
+                            >
+                              {filteredCountries.length === 0 && (
+                                <li className="px-4 py-3 text-xs text-gray-400 font-medium">No matches</li>
+                              )}
+                              {filteredCountries.map(c => {
+                                const active = c.code === country.code;
+                                return (
+                                  <li key={c.code} role="option" aria-selected={active}>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setCountry(c);
+                                        setCountryOpen(false);
+                                        setCountryQuery('');
+                                      }}
+                                      className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
+                                        active ? 'bg-[#21409A]/5 text-[#21409A]' : 'text-[#1a1a1a] hover:bg-gray-50'
+                                      }`}
+                                    >
+                                      <span className="text-lg leading-none" aria-hidden>{c.flag}</span>
+                                      <span className="font-bold flex-1 truncate">{c.name}</span>
+                                      <span className="text-xs font-bold text-gray-400 tabular-nums">{c.dial}</span>
+                                    </button>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   </div>
                 </div>

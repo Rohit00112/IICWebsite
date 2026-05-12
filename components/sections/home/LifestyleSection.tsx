@@ -154,7 +154,7 @@ const LifestyleSection = () => {
           </Magnetic>
           <Magnetic strength={0.2}>
             <AnimeReveal
-              text="IIC NEPAL"
+              text="ITAHARI INTERNATIONAL COLLEGE"
               as="h2"
               className="text-6xl md:text-8xl font-black text-[#74C044] leading-[0.8] tracking-tight mb-10 font-sora justify-center"
               staggerFrom="center"
@@ -207,7 +207,7 @@ const LifestyleSection = () => {
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 1.png"
-                alt="Equipped Lecture Theater for Engaging Learning at IIC Nepal"
+                alt="Equipped Lecture Theater for Engaging Learning at Itahari International College Nepal"
                 title="Lecture Theater"
                 description="Spacious tiered halls with high-quality AV setups, designed for engaging lectures and dynamic seminars."
                 stats={[
@@ -230,7 +230,7 @@ const LifestyleSection = () => {
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 2.png"
-                alt="Advanced Computing Labs for Hands-on Technical Training at IIC"
+                alt="Advanced Computing Labs for Hands-on Technical Training at Itahari International College"
                 title="Advanced Labs"
                 description="Industry-grade computing labs equipped with the latest hardware and software for hands-on technical training."
                 stats={[

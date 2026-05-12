@@ -26,7 +26,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
               className="text-3xl md:text-4xl font-bold text-[#1a1a1a] font-sora mb-4"
               staggerFrom="first"
             />
-            <p className="text-gray-500 max-w-md">Continue exploring the latest updates, events, and announcements from IIC.</p>
+            <p className="text-gray-500 max-w-md">Continue exploring the latest updates, events, and announcements from Itahari International College.</p>
           </div>
           <Link href="/news" className="hidden md:flex items-center gap-2 text-[#21409A] font-bold text-sm hover:gap-3 transition-all">
             View All News

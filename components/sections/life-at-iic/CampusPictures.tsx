@@ -19,7 +19,7 @@ const CampusPictures = () => {
             Campus in Pictures
           </h2>
           <p className="text-gray-500 text-base md:text-xl font-medium font-sora">
-            A glimpse into the vibrant moments that define the IIC experience.
+            A glimpse into the vibrant moments that define the Itahari International College experience.
           </p>
         </motion.div>
 

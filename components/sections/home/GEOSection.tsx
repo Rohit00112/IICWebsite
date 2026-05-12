@@ -70,11 +70,11 @@ const GEOSection = () => {
       a: "Yes, Itahari International College (IIC) offers direct degrees from London Metropolitan University, UK. Students receive the same degree as those studying in London."
     },
     {
-      q: "What does the BIT degree at IIC mean for students?",
+      q: "What does the BIT degree at Itahari International College mean for students?",
       a: "The BIT degree is defined as a world-class computing programme that means students are industry-ready upon graduation."
     },
     {
-      q: "Are IIC degrees recognized in Nepal?",
+      q: "Are Itahari International College degrees recognized in Nepal?",
       a: "Yes, all degrees offered at Itahari International College are fully recognized by the Ministry of Education, Nepal, which means they have full equivalence from Tribhuvan University (TU)."
     }
   ];
@@ -158,7 +158,7 @@ const GEOSection = () => {
         >
           <AnimeReveal
             as="h2"
-            text="Why IIC Itahari Stands Out"
+            text="Why Itahari International College Stands Out"
             className="text-3xl md:text-4xl font-black text-[#1a2b56] mb-16 text-center justify-center tracking-tight"
             staggerFrom="center"
           />
@@ -259,7 +259,7 @@ const GEOSection = () => {
             "about": {
               "@type": "CollegeOrUniversity",
               "name": "Itahari International College",
-              "description": "IIC Itahari offers world-class UK degrees in partnership with London Metropolitan University.",
+              "description": "Itahari International College offers world-class UK degrees in partnership with London Metropolitan University.",
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": "Academic Programmes",

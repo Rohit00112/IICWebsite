@@ -4,16 +4,16 @@ import AdmissionsClient from '@/components/sections/admissions/AdmissionsClient'
 export const metadata: Metadata = {
   title: 'Apply Now | Admissions 2026',
   description: 'Join Itahari International College. Apply online for our BIT and BBA programs in partnership with London Metropolitan University, UK. Start your global journey today.',
-  keywords: ['Apply to IIC', 'College Admission Nepal', 'IT Admission Itahari', 'BBA Admission Nepal', 'Online Application IIC'],
+  keywords: ['Apply to Itahari International College', 'College Admission Nepal', 'IT Admission Itahari', 'BBA Admission Nepal', 'Online Application Itahari International College'],
   openGraph: {
     title: 'Apply Now | Admissions - Itahari International College',
-    description: 'Start your application for world-class UK degrees in IT and Business at IIC.',
+    description: 'Start your application for world-class UK degrees in IT and Business at Itahari International College.',
     images: [
       {
         url: '/api/og?title=Admissions 2026&subtitle=Start Your Global Journey&section=Apply Now',
         width: 1200,
         height: 630,
-        alt: 'IIC Admissions',
+        alt: 'Itahari International College Admissions',
       },
     ],
   },
@@ -85,15 +85,15 @@ export default function AdmissionsPage() {
                   },
                   {
                     "@type": "Question",
-                    "name": "Which degree programs does IIC offer?",
+                    "name": "Which degree programs does Itahari International College offer?",
                     "acceptedAnswer": {
                       "@type": "Answer",
-                      "text": "IIC offers BSc (Hons) Computing and BBA (Hons) Business Administration in partnership with London Metropolitan University, UK."
+                      "text": "Itahari International College offers BSc (Hons) Computing and BBA (Hons) Business Administration in partnership with London Metropolitan University, UK."
                     }
                   },
                   {
                     "@type": "Question",
-                    "name": "Are the degrees offered at IIC internationally recognized?",
+                    "name": "Are the degrees offered at Itahari International College internationally recognized?",
                     "acceptedAnswer": {
                       "@type": "Answer",
                       "text": "Yes, our programs are awarded by London Metropolitan University, UK, and are fully recognized by the Ministry of Education, Nepal and globally."

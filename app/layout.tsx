@@ -56,12 +56,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Itahari International College | World-Class Education in Nepal",
-    description: "Empowering students with world-class education and global partnerships. Join IIC for industry-focused programs.",
+    description: "Empowering students with world-class education and global partnerships. Join Itahari International College for industry-focused programs.",
     url: "https://iic.edu.np",
     siteName: "Itahari International College",
     images: [
       {
-        url: "/api/og?title=Itahari International College&subtitle=World-Class Education in Nepal&section=IIC Nepal",
+        url: "/api/og?title=Itahari International College&subtitle=World-Class Education in Nepal&section=Itahari International College Nepal",
         width: 1200,
         height: 630,
         alt: "Itahari International College",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     description: "World-class undergraduate programs in IT and Business in Nepal.",
     site: "@iic_nepal",
     creator: "@iic_nepal",
-    images: ["/api/og?title=Itahari International College&subtitle=World-Class Education in Nepal&section=IIC Nepal"],
+    images: ["/api/og?title=Itahari International College&subtitle=World-Class Education in Nepal&section=Itahari International College Nepal"],
   },
   robots: {
     index: true,

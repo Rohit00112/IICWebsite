@@ -20,8 +20,27 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
-  const onUpload = (result: any) => {
-    onChange(result.info.secure_url);
+  const restoreScroll = () => {
+    if (typeof document === 'undefined') return;
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+  };
+
+  const onSuccess = (result: any) => {
+    const url = result?.info?.secure_url;
+    if (typeof url === 'string') {
+      onChange(url);
+    } else {
+      console.error('[ImageUpload] Upload succeeded but secure_url missing:', result);
+    }
+    setTimeout(restoreScroll, 0);
+  };
+
+  const onClose = () => {
+    setTimeout(restoreScroll, 0);
   };
 
   if (!cloudName || !uploadPreset) {
@@ -75,7 +94,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             />
           </div>
         ) : (
-          <CldUploadWidget onUpload={onUpload} uploadPreset={uploadPreset}>
+          <CldUploadWidget onSuccess={onSuccess} onClose={onClose} uploadPreset={uploadPreset}>
             {({ open }) => {
               const onClick = () => {
                 open();

@@ -1,11 +1,10 @@
 import CoursesHero from '@/components/sections/courses/CoursesHero';
 import CoursesList from '@/components/sections/courses/CoursesList';
-import ScholarshipsSection from '@/components/sections/courses/ScholarshipsSection';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export const metadata: Metadata = {
-  title: 'UK Degree Programmes in Itahari | BIT & BBA Catalog | IIC',
+  title: 'UK Degree Programmes in Itahari | BIT & BBA Catalog | Itahari International College',
   description: 'Explore our world-class undergraduate programs in Information Technology and Business Administration. Direct UK degrees from London Metropolitan University.',
 };
 
@@ -69,7 +68,6 @@ export default function CoursesPage() {
 
       <CoursesHero />
       <CoursesList />
-      <ScholarshipsSection />
     </main>
   );
 }

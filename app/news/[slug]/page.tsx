@@ -67,7 +67,7 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
       dateModified: new Date(item.date).toISOString(),
       author: {
         '@type': 'Person',
-        name: item.author?.name || 'IIC Editorial Team',
+        name: item.author?.name || 'Itahari International College Editorial Team',
         jobTitle: item.author?.role || 'Contributor'
       }
     }),

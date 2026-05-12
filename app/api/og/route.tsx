@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
           {/* Logo Placeholder / Top Bar */}
           <div style={{ position: 'absolute', top: 60, left: 80, display: 'flex', alignItems: 'center' }}>
             <div style={{ width: 40, height: 40, borderRadius: 8, backgroundColor: '#74C044', marginRight: 15 }} />
-            <span style={{ color: '#fff', fontSize: 24, fontWeight: 'bold', letterSpacing: '0.05em' }}>IIC NEPAL</span>
+            <span style={{ color: '#fff', fontSize: 24, fontWeight: 'bold', letterSpacing: '0.05em' }}>ITAHARI INTERNATIONAL COLLEGE NEPAL</span>
           </div>
 
           {/* Section Tag */}

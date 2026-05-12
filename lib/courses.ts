@@ -27,10 +27,6 @@ export interface CourseItem {
       credits?: string;
     }[];
   }[];
-  entryRequirements?: {
-    academic?: string;
-    language?: string;
-  };
   learningOutcomes?: string[];
   careerOpportunities?: {
     title: string;
@@ -59,30 +55,63 @@ export interface CourseItem {
   }[];
 }
 
-import { unstable_cache } from 'next/cache';
+import { unstable_cache, revalidateTag } from 'next/cache';
 
 function mapCourse(doc: any): CourseItem {
+  const plain = typeof doc.toObject === 'function'
+    ? doc.toObject({ depopulate: true, virtuals: false, flattenObjectIds: true, versionKey: false })
+    : doc;
+  const d = plain.details || {};
+  const q = plain.quote || {};
   return {
-    id: doc._id.toString(),
-    title: doc.title,
-    subtitle: doc.subtitle || '',
-    slug: doc.slug,
-    category: doc.category,
-    duration: doc.duration,
-    description: doc.description,
-    image: doc.image,
-    level: doc.level,
-    featured: doc.featured,
-    overview: doc.overview || '',
-    details: doc.details || { level: '', duration: '', intake: '', awardingBody: '' },
-    curriculum: doc.curriculum || [],
-    entryRequirements: doc.entryRequirements || { academic: '', language: '' },
-    learningOutcomes: doc.learningOutcomes || [],
-    careerOpportunities: doc.careerOpportunities || [],
-    faculty: doc.faculty || [],
-    quote: doc.quote || { text: '', author: '' },
-    projects: doc.projects || [],
-    faqs: doc.faqs || [],
+    id: plain._id?.toString?.() ?? String(plain._id),
+    title: plain.title,
+    subtitle: plain.subtitle || '',
+    slug: plain.slug,
+    category: plain.category,
+    duration: plain.duration,
+    description: plain.description,
+    image: plain.image,
+    level: plain.level,
+    featured: !!plain.featured,
+    overview: plain.overview || '',
+    details: {
+      level: d.level || '',
+      duration: d.duration || '',
+      intake: d.intake || '',
+      awardingBody: d.awardingBody || '',
+    },
+    curriculum: (plain.curriculum || []).map((y: any) => ({
+      title: y.title || '',
+      modules: (y.modules || []).map((m: any) => ({
+        name: m.name || '',
+        description: m.description || '',
+        credits: m.credits || '',
+      })),
+    })),
+    learningOutcomes: (plain.learningOutcomes || []).map((s: any) => String(s)),
+    careerOpportunities: (plain.careerOpportunities || []).map((c: any) => ({
+      title: c.title || '',
+      description: c.description || '',
+      color: c.color || '',
+    })),
+    faculty: (plain.faculty || []).map((f: any) => ({
+      name: f.name || '',
+      role: f.role || '',
+      description: f.description || '',
+      image: f.image || '',
+      color: f.color || '',
+    })),
+    quote: { text: q.text || '', author: q.author || '' },
+    projects: (plain.projects || []).map((p: any) => ({
+      title: p.title || '',
+      cohort: p.cohort || '',
+      image: p.image || '',
+    })),
+    faqs: (plain.faqs || []).map((f: any) => ({
+      question: f.question || '',
+      answer: f.answer || '',
+    })),
   };
 }
 
@@ -116,26 +145,27 @@ import { sanitizeHtml } from './sanitize';
 
 export async function createCourse(data: Partial<CourseItem>): Promise<CourseItem> {
   await dbConnect();
-  // Sanitize overview
   if (data.overview) {
     data.overview = sanitizeHtml(data.overview);
   }
   const newItem = await Course.create(data);
+  revalidateTag('courses');
   return mapCourse(newItem);
 }
 
 export async function updateCourse(id: string, data: Partial<CourseItem>): Promise<CourseItem | null> {
   await dbConnect();
-  // Sanitize overview
   if (data.overview) {
     data.overview = sanitizeHtml(data.overview);
   }
   const updatedItem = await Course.findByIdAndUpdate(id, data, { new: true });
+  revalidateTag('courses');
   return updatedItem ? mapCourse(updatedItem) : null;
 }
 
 export async function deleteCourse(id: string): Promise<boolean> {
   await dbConnect();
   const result = await Course.findByIdAndDelete(id);
+  revalidateTag('courses');
   return !!result;
 }

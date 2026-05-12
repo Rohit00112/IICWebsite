@@ -108,7 +108,7 @@ const HeroSection = () => {
         >
           <Image
             src="/images/home/hero.png"
-            alt="IIC ING Block Building"
+            alt="Itahari International College ING Block Building"
             fill
             sizes="(max-width: 1536px) 100vw, 1536px"
             className="object-cover object-top"

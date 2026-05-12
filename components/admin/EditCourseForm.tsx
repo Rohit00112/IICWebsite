@@ -60,10 +60,6 @@ interface CourseItem {
     awardingBody: string;
   };
   curriculum: CurriculumYear[];
-  entryRequirements?: {
-    academic: string;
-    language: string;
-  };
   learningOutcomes?: string[];
   careerOpportunities?: CareerPath[];
   faculty?: FacultyMember[];
@@ -78,7 +74,6 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
   
   const [formData, setFormData] = useState({
     ...course,
-    entryRequirements: course.entryRequirements || { academic: '', language: '' },
     learningOutcomes: course.learningOutcomes || [],
     careerOpportunities: course.careerOpportunities || [],
     faculty: course.faculty || [],
@@ -269,17 +264,6 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
 
             {activeSection === 'outcomes' && (
               <div className="space-y-12">
-                <div className="grid grid-cols-2 gap-8">
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Academic Requirements</label>
-                    <textarea rows={4} value={formData.entryRequirements?.academic} onChange={(e) => setFormData({...formData, entryRequirements: { academic: e.target.value, language: formData.entryRequirements?.language || '' }})} className="form-input-admin" placeholder="e.g. +2 with minimum 2.4 GPA..." />
-                  </div>
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Language Requirements</label>
-                    <textarea rows={4} value={formData.entryRequirements?.language} onChange={(e) => setFormData({...formData, entryRequirements: { academic: formData.entryRequirements?.academic || '', language: e.target.value }})} className="form-input-admin" placeholder="e.g. IELTS 6.0 or equivalent..." />
-                  </div>
-                </div>
-
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xl font-bold text-[#1A2B56]">Learning Outcomes</h3>

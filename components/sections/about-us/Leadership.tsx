@@ -112,7 +112,7 @@ const Leadership = () => {
         >
           <div className="max-w-[1200px] mx-auto text-white">
             <span className="text-white/40 font-bold tracking-[0.3em] uppercase text-xs mb-10 block font-sora">
-              The IIC Experience
+              The Itahari International College Experience
             </span>
             <AnimeReveal
               as="h2"

@@ -64,10 +64,6 @@ export default function AddCourseForm() {
       awardingBody: ''
     },
     curriculum: [] as CurriculumYear[],
-    entryRequirements: {
-      academic: '',
-      language: ''
-    },
     learningOutcomes: [] as string[],
     careerOpportunities: [] as CareerPath[],
     faculty: [] as FacultyMember[],
@@ -77,20 +73,39 @@ export default function AddCourseForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.image) {
+      alert('Please upload a hero image before publishing.');
+      setActiveSection('core');
+      return;
+    }
+
     setLoading(true);
+
+    const payload = {
+      ...formData,
+      projects: formData.projects.map(({ image, ...rest }) => (image ? { ...rest, image } : rest)),
+      faculty: formData.faculty.map(({ image, ...rest }) => (image ? { ...rest, image } : rest)),
+    };
 
     try {
       const res = await fetch('/api/courses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
         router.push('/admin/courses');
         router.refresh();
       } else {
-        alert('Failed to create course');
+        const body = await res.json().catch(() => null);
+        if (body?.details?.length) {
+          const lines = body.details.map((d: { path: (string | number)[]; message: string }) => `• ${d.path.join('.')}: ${d.message}`).join('\n');
+          alert(`Validation failed:\n${lines}`);
+        } else {
+          alert(body?.error || 'Failed to create course');
+        }
       }
     } catch (error) {
       console.error('Error creating course:', error);
@@ -182,11 +197,11 @@ export default function AddCourseForm() {
                 <div className="grid grid-cols-3 gap-8">
                   <div className="space-y-3">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Category</label>
-                    <input type="text" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})} className="form-input-admin" placeholder="Technology" />
+                    <input type="text" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})} className="form-input-admin" placeholder="Technology" required />
                   </div>
                   <div className="space-y-3">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Duration</label>
-                    <input type="text" value={formData.details.duration} onChange={(e) => setFormData({...formData, details: {...formData.details, duration: e.target.value}})} className="form-input-admin" placeholder="3 Years" />
+                    <input type="text" value={formData.duration} onChange={(e) => setFormData({...formData, duration: e.target.value, details: {...formData.details, duration: e.target.value}})} className="form-input-admin" placeholder="3 Years" required />
                   </div>
                   <div className="space-y-3">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Awarding Body</label>
@@ -195,11 +210,23 @@ export default function AddCourseForm() {
                 </div>
 
                 <div className="space-y-3">
-                  <ImageUpload 
+                  <ImageUpload
                     label="Hero Image"
-                    value={formData.image} 
-                    onChange={(url) => setFormData({...formData, image: url})} 
+                    value={formData.image}
+                    onChange={(url) => setFormData({...formData, image: url})}
                     onRemove={() => setFormData({...formData, image: ''})}
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Short Description</label>
+                  <textarea
+                    rows={3}
+                    value={formData.description}
+                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                    className="form-input-admin"
+                    placeholder="A concise summary shown in course listings (min 10 characters)..."
+                    required
                   />
                 </div>
 
@@ -258,17 +285,6 @@ export default function AddCourseForm() {
 
             {activeSection === 'outcomes' && (
               <div className="space-y-12">
-                <div className="grid grid-cols-2 gap-8">
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Academic Requirements</label>
-                    <textarea rows={4} value={formData.entryRequirements.academic} onChange={(e) => setFormData({...formData, entryRequirements: {...formData.entryRequirements, academic: e.target.value}})} className="form-input-admin" placeholder="e.g. +2 with minimum 2.4 GPA..." />
-                  </div>
-                  <div className="space-y-4">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Language Requirements</label>
-                    <textarea rows={4} value={formData.entryRequirements.language} onChange={(e) => setFormData({...formData, entryRequirements: {...formData.entryRequirements, language: e.target.value}})} className="form-input-admin" placeholder="e.g. IELTS 6.0 or equivalent..." />
-                  </div>
-                </div>
-
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xl font-bold text-[#1A2B56]">Learning Outcomes</h3>

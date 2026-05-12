@@ -53,9 +53,9 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
       'Successful completion of an admissions interview.'
     ]},
     { id: 'scholarships', title: 'Scholarships', icon: <MedalIcon />, content: [
-      'Up to 100% scholarships for meritorious students.',
-      'Special quotas for underprivileged and diverse backgrounds.',
-      'Early bird discounts for early applications.'
+      'Triple A Scholarship — up to 100% tuition waiver for excellence in Academics, Attendance, and Attitude (awarded to the top 10% of students).',
+      'Fully Funded Masters — 100% postgraduate scholarship at ING Colleges for First Class Honours graduates of our London Met BA programme.',
+      'Eligibility includes good academic standing, 80%+ module attendance, timely fee payment, and a clean disciplinary record.'
     ] },
     { id: 'timeline', title: 'What Happens Next?', icon: <CalendarIcon />, content: [
       '1. Review: Our team reviews your docs (2-3 days).',

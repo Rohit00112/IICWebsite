@@ -1,6 +1,6 @@
 # Itahari International College (IIC) Website
 
-Marketing and admissions site for Itahari International College, built with Next.js 16 (App Router), React 19, MongoDB, and Tailwind CSS 4. Includes a public marketing surface (Home, About, Courses, Admissions, News, Contact, Life at IIC) plus an authenticated `/admin` panel for managing news and courses.
+Marketing and admissions site for Itahari International College, built with Next.js 16 (App Router), React 19, MongoDB, and Tailwind CSS 4. Includes a public marketing surface (Home, About, Courses, Admissions, News, Contact, Life at Itahari International College) plus an authenticated `/admin` panel for managing news and courses.
 
 ## Tech Stack
 

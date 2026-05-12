@@ -24,7 +24,7 @@ const events = [
   },
   {
     title: 'Holi',
-    description: 'Colors, music, and community — IIC celebrates the festival of spring with the entire student body.',
+    description: 'Colors, music, and community — Itahari International College celebrates the festival of spring with the entire student body.',
     image: '/images/about/img2.png',
   },
   {
@@ -70,7 +70,7 @@ const EventsHighlights = () => {
             delay={0.15}
           />
           <RevealText
-            text="From cultural festivals to flagship competitions, IIC's calendar is built around moments that bring the community together."
+            text="From cultural festivals to flagship competitions, Itahari International College's calendar is built around moments that bring the community together."
             className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg mt-8 font-medium leading-relaxed font-sora justify-center"
           />
         </div>

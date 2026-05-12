@@ -43,6 +43,11 @@ export async function POST(request: Request) {
       }, { status: 400 });
     }
     console.error('Course creation error:', error);
-    return NextResponse.json({ error: 'Failed to create course' }, { status: 500 });
+    const err = error as { code?: number; keyPattern?: Record<string, unknown>; message?: string };
+    if (err?.code === 11000) {
+      const field = err.keyPattern ? Object.keys(err.keyPattern)[0] : 'field';
+      return NextResponse.json({ error: `A course with this ${field} already exists.` }, { status: 409 });
+    }
+    return NextResponse.json({ error: err?.message || 'Failed to create course' }, { status: 500 });
   }
 }
