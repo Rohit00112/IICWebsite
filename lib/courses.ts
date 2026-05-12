@@ -149,7 +149,7 @@ export async function createCourse(data: Partial<CourseItem>): Promise<CourseIte
     data.overview = sanitizeHtml(data.overview);
   }
   const newItem = await Course.create(data);
-  revalidateTag('courses');
+  revalidateTag('courses', 'max');
   return mapCourse(newItem);
 }
 
@@ -159,13 +159,13 @@ export async function updateCourse(id: string, data: Partial<CourseItem>): Promi
     data.overview = sanitizeHtml(data.overview);
   }
   const updatedItem = await Course.findByIdAndUpdate(id, data, { new: true });
-  revalidateTag('courses');
+  revalidateTag('courses', 'max');
   return updatedItem ? mapCourse(updatedItem) : null;
 }
 
 export async function deleteCourse(id: string): Promise<boolean> {
   await dbConnect();
   const result = await Course.findByIdAndDelete(id);
-  revalidateTag('courses');
+  revalidateTag('courses', 'max');
   return !!result;
 }

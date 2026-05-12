@@ -31,7 +31,7 @@ export interface NewsItem {
   author?: NewsAuthor;
 }
 
-import { unstable_cache } from 'next/cache';
+import { unstable_cache, revalidateTag } from 'next/cache';
 
 // Helper to convert Mongo document to clean plain object
 function mapNewsItem(doc: any): NewsItem {
@@ -117,6 +117,7 @@ export async function createNews(data: Partial<NewsItem>): Promise<NewsItem> {
     data.content = sanitizeHtml(data.content);
   }
   const newItem = await News.create(data);
+  revalidateTag('news', 'max');
   return mapNewsItem(newItem);
 }
 
@@ -131,12 +132,14 @@ export async function updateNews(id: string, data: Partial<NewsItem>): Promise<N
     data.content = sanitizeHtml(data.content);
   }
   const updatedItem = await News.findByIdAndUpdate(id, data, { new: true });
+  revalidateTag('news', 'max');
   return updatedItem ? mapNewsItem(updatedItem) : null;
 }
 
 export async function deleteNews(id: string): Promise<boolean> {
   await dbConnect();
   const result = await News.findByIdAndDelete(id);
+  revalidateTag('news', 'max');
   return !!result;
 }
 
