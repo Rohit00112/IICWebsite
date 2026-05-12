@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import Footer from '@/components/layout/Footer';
 import Link from 'next/link';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
@@ -58,10 +57,6 @@ interface CourseData {
     awardingBody?: string;
   };
   curriculum?: Year[];
-  entryRequirements?: {
-    academic?: string;
-    language?: string;
-  };
   learningOutcomes?: string[];
   careerOpportunities?: CareerPath[];
   faculty?: FacultyMember[];
@@ -348,65 +343,45 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       {/* Entry Requirements Section */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Eligibility</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] font-sora tracking-tight leading-tight mb-8">
-                Entry <span className="text-[#21409A]">Requirements</span>
-              </h2>
-              <div className="space-y-8">
-                <div className="bg-[#f8fafc] p-8 rounded-3xl border border-gray-100">
-                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#21409A]/10 flex items-center justify-center text-[#21409A]">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                      </svg>
-                    </div>
-                    Academic Criteria
-                  </h4>
-                  <p className="text-gray-500 font-medium leading-relaxed">
-                    {course.entryRequirements?.academic || "Please contact the admissions office for specific academic requirements for this program."}
-                  </p>
+          <div className="mb-12 text-center">
+            <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Eligibility</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] font-sora tracking-tight leading-tight">
+              Entry <span className="text-[#21409A]">Requirements</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            <div className="bg-[#f8fafc] p-8 rounded-3xl border border-gray-100">
+              <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#21409A]/10 flex items-center justify-center text-[#21409A]">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
                 </div>
-                <div className="bg-[#f8fafc] p-8 rounded-3xl border border-gray-100">
-                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#21409A]/10 flex items-center justify-center text-[#21409A]">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                      </svg>
-                    </div>
-                    Language Proficiency
-                  </h4>
-                  <p className="text-gray-500 font-medium leading-relaxed">
-                    {course.entryRequirements?.language || "Proficiency in English is required. Equivalent qualifications like IELTS or TOEFL are accepted."}
-                  </p>
-                </div>
-              </div>
+                Academic Level
+              </h4>
+              <ul className="list-disc pl-5 space-y-3 text-gray-500 font-medium leading-relaxed">
+                <li>NEB +2 overall aggregate of 2.2 CGPA (55%) or above, grade 12 English score of 60 or minimum of grade C+ and SEE Mathematics score of 50 or minimum of grade C+.</li>
+                <li>For A-Level minimum of 3 &lsquo;A&rsquo; Level passes with minimum of grade D or General Paper or English (A or AS) with minimum of grade E.</li>
+                <li>For CBSE / ICSE / any Indian Board an aggregate score of 65% or above &amp; grade 10 Mathematics grade of 60 or above.</li>
+              </ul>
             </div>
-            <div className="relative">
-              <div className="absolute inset-0 bg-[#21409A]/5 blur-[100px] rounded-full" />
-              <div className="relative bg-[#1a1a1a] p-12 rounded-[48px] border border-white/10 shadow-2xl">
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-2">Ready to Start?</h3>
-                  <p className="text-gray-400">Our admissions team is here to guide you through every step of the process.</p>
+            <div className="bg-[#f8fafc] p-8 rounded-3xl border border-gray-100">
+              <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#21409A]/10 flex items-center justify-center text-[#21409A]">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                  </svg>
                 </div>
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4 text-white">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-[#21409A]">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Next Intake</p>
-                      <p className="text-lg font-bold">{course.details?.intake || "Spring 2026"}</p>
-                    </div>
-                  </div>
-                  <Link href="/contact" className="block w-full py-4 bg-[#21409A] text-white text-center font-bold rounded-2xl hover:bg-[#1a337e] transition-all">
-                    Inquire for Details
-                  </Link>
-                </div>
-              </div>
+                English &amp; Math Proficiency
+              </h4>
+              <p className="text-gray-700 font-semibold leading-relaxed mb-4">
+                Applicants not meeting the aforementioned criteria for English or Math can demonstrate their English or Math proficiency with the following internationally recognised English or Math Tests.
+              </p>
+              <p className="text-[#1a1a1a] font-bold mb-3">For Level 4 or Year 1 BIT / BBA</p>
+              <ul className="list-disc pl-5 space-y-3 text-gray-500 font-medium leading-relaxed">
+                <li>Pass in General Paper or English Language or IELTS 6.0 with a minimum of 5.5 in each sub-element or PTE 57.</li>
+                <li>Pass in English or Math Test approved by London Metropolitan University.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -617,13 +592,13 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
               {
                 name: "Anish Shrestha",
                 role: "Software Engineer at Google",
-                quote: "The hands-on curriculum at IIC gave me the technical foundation I needed to excel in my career at a global scale.",
+                quote: "The hands-on curriculum at Itahari International College gave me the technical foundation I needed to excel in my career at a global scale.",
                 img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop"
               },
               {
                 name: "Priya Sharma",
                 role: "Data Analyst at Microsoft",
-                quote: "IIC's partnership with London Met provided me with a world-class degree while staying close to my roots in Itahari.",
+                quote: "Itahari International College's partnership with London Met provided me with a world-class degree while staying close to my roots in Itahari.",
                 img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&h=200&auto=format&fit=crop"
               },
               {
@@ -715,8 +690,6 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           </AnimeStagger>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 };

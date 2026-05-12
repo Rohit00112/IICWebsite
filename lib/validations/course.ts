@@ -24,10 +24,6 @@ export const courseSchema = z.object({
       credits: z.string().optional()
     }))
   })).optional(),
-  entryRequirements: z.object({
-    academic: z.string().optional(),
-    language: z.string().optional()
-  }).optional(),
   learningOutcomes: z.array(z.string()).optional(),
   careerOpportunities: z.array(z.object({
     title: z.string(),

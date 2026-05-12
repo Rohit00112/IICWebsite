@@ -65,7 +65,7 @@ async function seed() {
     await Admin.create({
       email: 'admin@iic.edu.np',
       password: hashedPassword,
-      name: 'IIC Administrator'
+      name: 'Itahari International College Administrator'
     });
     console.log('Admin user seeded.');
 
