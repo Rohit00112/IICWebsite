@@ -1,0 +1,630 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "IIC Nepal API",
+    "description": "REST API for Itahari International College — manages authentication, courses, and news/events.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "IIC Nepal",
+      "url": "https://iic.edu.np"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api",
+      "description": "Current environment"
+    }
+  ],
+  "tags": [
+    { "name": "Auth", "description": "Admin authentication" },
+    { "name": "Courses", "description": "Course management (CRUD)" },
+    { "name": "News & Events", "description": "News, events & announcements (CRUD)" }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Admin login",
+        "description": "Authenticate an admin user with email and password. Rate-limited to 5 attempts per 15 minutes per IP.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginRequest" },
+              "example": {
+                "email": "admin@iic.edu.np",
+                "password": "securePassword123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful — session cookie is set",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MessageResponse" },
+                "example": { "message": "Logged in successfully" }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "Invalid credentials" }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "Too many login attempts. Please try again after 15 minutes." }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    },
+    "/courses": {
+      "get": {
+        "tags": ["Courses"],
+        "summary": "List all courses",
+        "description": "Retrieve every course in the system.",
+        "responses": {
+          "200": {
+            "description": "An array of courses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Course" }
+                }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      },
+      "post": {
+        "tags": ["Courses"],
+        "summary": "Create a course",
+        "description": "Add a new course. A slug is auto-generated from the title if not supplied. Rate-limited to 10 requests per minute per IP.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CourseInput" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Course created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Course" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ValidationErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    },
+    "/courses/{id}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/ResourceId" }
+      ],
+      "get": {
+        "tags": ["Courses"],
+        "summary": "Get a course by ID",
+        "responses": {
+          "200": {
+            "description": "The requested course",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Course" }
+              }
+            }
+          },
+          "404": {
+            "description": "Course not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "Course not found" }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      },
+      "patch": {
+        "tags": ["Courses"],
+        "summary": "Update a course",
+        "description": "Partially update a course by ID.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CourseInput" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Course updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Course" }
+              }
+            }
+          },
+          "404": {
+            "description": "Course not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      },
+      "delete": {
+        "tags": ["Courses"],
+        "summary": "Delete a course",
+        "responses": {
+          "200": {
+            "description": "Course deleted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MessageResponse" },
+                "example": { "message": "Course deleted successfully" }
+              }
+            }
+          },
+          "404": {
+            "description": "Course not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    },
+    "/news": {
+      "get": {
+        "tags": ["News & Events"],
+        "summary": "List news articles",
+        "description": "Retrieve news articles, optionally filtered by category and search term.",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["All", "News", "Event", "Announcement"],
+              "default": "All"
+            },
+            "description": "Filter by article category"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Full-text search term"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of news articles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/News" }
+                }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      },
+      "post": {
+        "tags": ["News & Events"],
+        "summary": "Create a news article",
+        "description": "Publish a new news article, event, or announcement. Rate-limited to 10 requests per minute per IP.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/NewsInput" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Article created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/News" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ValidationErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    },
+    "/news/{id}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/ResourceId" }
+      ],
+      "get": {
+        "tags": ["News & Events"],
+        "summary": "Get a news article by ID",
+        "responses": {
+          "200": {
+            "description": "The requested news article",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/News" }
+              }
+            }
+          },
+          "404": {
+            "description": "News item not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": "News item not found" }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      },
+      "patch": {
+        "tags": ["News & Events"],
+        "summary": "Update a news article",
+        "description": "Partially update a news article by ID. All fields are optional.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/NewsInput" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Article updated",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/News" }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ValidationErrorResponse" }
+              }
+            }
+          },
+          "404": {
+            "description": "News item not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      },
+      "delete": {
+        "tags": ["News & Events"],
+        "summary": "Delete a news article",
+        "responses": {
+          "200": {
+            "description": "Article deleted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MessageResponse" },
+                "example": { "message": "News item deleted successfully" }
+              }
+            }
+          },
+          "404": {
+            "description": "News item not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "ResourceId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "MongoDB ObjectId"
+      }
+    },
+    "responses": {
+      "InternalServerError": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+            "example": { "error": "Internal Server Error" }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string", "format": "password" }
+        }
+      },
+      "MessageResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" }
+        }
+      },
+      "ValidationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string", "example": "Validation failed" },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "message": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "CourseInput": {
+        "type": "object",
+        "required": ["title", "category", "duration", "description", "image"],
+        "properties": {
+          "title": { "type": "string", "minLength": 5, "maxLength": 100 },
+          "subtitle": { "type": "string" },
+          "slug": { "type": "string", "description": "Auto-generated from title if omitted" },
+          "category": { "type": "string", "minLength": 1 },
+          "duration": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 10 },
+          "image": { "type": "string", "format": "uri" },
+          "level": { "type": "string" },
+          "featured": { "type": "boolean", "default": false },
+          "overview": { "type": "string" },
+          "details": { "$ref": "#/components/schemas/CourseDetails" },
+          "curriculum": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CurriculumYear" }
+          },
+          "entryRequirements": { "$ref": "#/components/schemas/EntryRequirements" },
+          "learningOutcomes": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "careerOpportunities": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CareerOpportunity" }
+          },
+          "faculty": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FacultyMember" }
+          },
+          "quote": { "$ref": "#/components/schemas/Quote" },
+          "projects": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/StudentProject" }
+          },
+          "faqs": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/FAQ" }
+          }
+        }
+      },
+      "Course": {
+        "allOf": [
+          { "$ref": "#/components/schemas/CourseInput" },
+          {
+            "type": "object",
+            "properties": {
+              "_id": { "type": "string" },
+              "createdAt": { "type": "string", "format": "date-time" },
+              "updatedAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        ]
+      },
+      "CourseDetails": {
+        "type": "object",
+        "properties": {
+          "level": { "type": "string" },
+          "duration": { "type": "string" },
+          "intake": { "type": "string" },
+          "awardingBody": { "type": "string" }
+        }
+      },
+      "CurriculumYear": {
+        "type": "object",
+        "required": ["title", "modules"],
+        "properties": {
+          "title": { "type": "string" },
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": { "type": "string" },
+                "description": { "type": "string" },
+                "credits": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "EntryRequirements": {
+        "type": "object",
+        "properties": {
+          "academic": { "type": "string" },
+          "language": { "type": "string" }
+        }
+      },
+      "CareerOpportunity": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "color": { "type": "string" }
+        }
+      },
+      "FacultyMember": {
+        "type": "object",
+        "required": ["name", "role"],
+        "properties": {
+          "name": { "type": "string" },
+          "role": { "type": "string" },
+          "description": { "type": "string" },
+          "image": { "type": "string" },
+          "color": { "type": "string" }
+        }
+      },
+      "Quote": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string" },
+          "author": { "type": "string" }
+        }
+      },
+      "StudentProject": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": { "type": "string" },
+          "cohort": { "type": "string" },
+          "image": { "type": "string", "format": "uri" }
+        }
+      },
+      "FAQ": {
+        "type": "object",
+        "required": ["question", "answer"],
+        "properties": {
+          "question": { "type": "string" },
+          "answer": { "type": "string" }
+        }
+      },
+      "NewsInput": {
+        "type": "object",
+        "required": ["title", "category", "date", "image", "description", "content"],
+        "properties": {
+          "title": { "type": "string", "minLength": 5, "maxLength": 150 },
+          "slug": { "type": "string", "description": "Auto-generated from title if omitted" },
+          "category": { "type": "string", "enum": ["News", "Event", "Announcement"] },
+          "date": { "type": "string", "description": "Publication date" },
+          "time": { "type": "string" },
+          "location": { "type": "string" },
+          "image": { "type": "string", "format": "uri" },
+          "description": { "type": "string", "minLength": 10, "maxLength": 500 },
+          "content": { "type": "string", "minLength": 20 },
+          "featured": { "type": "boolean", "default": false },
+          "author": { "$ref": "#/components/schemas/Author" }
+        }
+      },
+      "News": {
+        "allOf": [
+          { "$ref": "#/components/schemas/NewsInput" },
+          {
+            "type": "object",
+            "properties": {
+              "_id": { "type": "string" },
+              "createdAt": { "type": "string", "format": "date-time" },
+              "updatedAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        ]
+      },
+      "Author": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "minLength": 2 },
+          "role": { "type": "string", "minLength": 2 },
+          "avatar": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  }
+}
