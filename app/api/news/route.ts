@@ -13,6 +13,7 @@ export async function GET(request: Request) {
     const news = await filterNews(category, search);
     return NextResponse.json(news);
   } catch (error) {
+    console.error('GET /api/news error:', error);
     return NextResponse.json({ error: 'Failed to fetch news' }, { status: 500 });
   }
 }
@@ -36,11 +37,12 @@ export async function POST(request: Request) {
     return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
     if (error instanceof ZodError) {
-      return NextResponse.json({ 
-        error: 'Validation failed', 
-        details: error.issues.map(e => ({ path: e.path, message: e.message })) 
+      return NextResponse.json({
+        error: 'Validation failed',
+        details: error.issues.map(e => ({ path: e.path, message: e.message }))
       }, { status: 400 });
     }
+    console.error('POST /api/news error:', error);
     return NextResponse.json({ error: 'Failed to create news item' }, { status: 500 });
   }
 }

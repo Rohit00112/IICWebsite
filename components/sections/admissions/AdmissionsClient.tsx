@@ -1,29 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AdmissionsHero from './AdmissionsHero';
 import ApplicationForm from './ApplicationForm';
 import AdmissionsSidebar from './AdmissionsSidebar';
 
 export default function AdmissionsClient() {
-  const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  // Persistence: Step
-  useEffect(() => {
-    const savedStep = localStorage.getItem('admissions_step');
-    if (savedStep) {
-      setCurrentStep(parseInt(savedStep));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('admissions_step', currentStep.toString());
-  }, [currentStep]);
 
   return (
     <>
-      <AdmissionsHero currentStep={currentStep} />
+      <AdmissionsHero />
 
       {/* Main Content Grid */}
       <section className="relative w-full py-12 md:py-20 -mt-8 md:-mt-12 z-20">
@@ -32,8 +19,6 @@ export default function AdmissionsClient() {
             {/* Form Column */}
             <div className="lg:col-span-8 w-full">
               <ApplicationForm
-                currentStep={currentStep}
-                setCurrentStep={setCurrentStep}
                 isSubmitted={isSubmitted}
                 setIsSubmitted={setIsSubmitted}
               />

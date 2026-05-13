@@ -13,6 +13,7 @@ export async function GET(
     }
     return NextResponse.json(item);
   } catch (error) {
+    console.error('GET /api/courses/[id] error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
@@ -32,6 +33,7 @@ export async function PATCH(
 
     return NextResponse.json(updatedItem);
   } catch (error) {
+    console.error('PATCH /api/courses/[id] error:', error);
     return NextResponse.json({ error: 'Failed to update course' }, { status: 500 });
   }
 }
@@ -50,6 +52,7 @@ export async function DELETE(
 
     return NextResponse.json({ message: 'Course deleted successfully' });
   } catch (error) {
+    console.error('DELETE /api/courses/[id] error:', error);
     return NextResponse.json({ error: 'Failed to delete course' }, { status: 500 });
   }
 }
