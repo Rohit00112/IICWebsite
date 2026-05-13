@@ -1,11 +1,7 @@
 import { NextResponse } from 'next/server';
-import path from 'path';
-import fs from 'fs';
+import spec from '../../../docs/swagger.json';
 
 export async function GET() {
-  const specPath = path.join(process.cwd(), 'docs/swagger.json');
-  const spec = JSON.parse(fs.readFileSync(specPath, 'utf-8'));
-
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +20,11 @@ export async function GET() {
         spec: ${JSON.stringify(spec)},
         dom_id: '#swagger-ui',
         deepLinking: true,
+        withCredentials: true,
+        requestInterceptor: function(req) {
+          req.credentials = 'include';
+          return req;
+        },
         presets: [
           SwaggerUIBundle.presets.apis,
           SwaggerUIStandalonePreset

@@ -392,6 +392,14 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "session",
+        "description": "Session cookie set by POST /auth/login. Use the 'Authorize' button after logging in; the browser will automatically send the cookie on subsequent requests."
+      }
+    },
     "parameters": {
       "ResourceId": {
         "name": "id",
