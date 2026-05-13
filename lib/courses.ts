@@ -55,7 +55,15 @@ export interface CourseItem {
   }[];
 }
 
-import { unstable_cache, revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
+
+function safeRevalidateTag(tag: string) {
+  try {
+    revalidateTag(tag, 'max');
+  } catch (e) {
+    console.warn(`revalidateTag(${tag}) skipped:`, e);
+  }
+}
 
 function mapCourse(doc: any): CourseItem {
   const plain = typeof doc.toObject === 'function'
@@ -115,15 +123,11 @@ function mapCourse(doc: any): CourseItem {
   };
 }
 
-export const getAllCourses = unstable_cache(
-  async (): Promise<CourseItem[]> => {
-    await dbConnect();
-    const courses = await Course.find({}).sort({ createdAt: -1 });
-    return courses.map(mapCourse);
-  },
-  ['courses-list'],
-  { revalidate: 3600, tags: ['courses'] }
-);
+export async function getAllCourses(): Promise<CourseItem[]> {
+  await dbConnect();
+  const courses = await Course.find({}).sort({ createdAt: -1 });
+  return courses.map(mapCourse);
+}
 
 export async function getCourseBySlug(slug: string): Promise<CourseItem | null> {
   await dbConnect();
@@ -149,7 +153,7 @@ export async function createCourse(data: Partial<CourseItem>): Promise<CourseIte
     data.overview = sanitizeHtml(data.overview);
   }
   const newItem = await Course.create(data);
-  revalidateTag('courses', 'max');
+  safeRevalidateTag('courses');
   return mapCourse(newItem);
 }
 
@@ -159,13 +163,13 @@ export async function updateCourse(id: string, data: Partial<CourseItem>): Promi
     data.overview = sanitizeHtml(data.overview);
   }
   const updatedItem = await Course.findByIdAndUpdate(id, data, { new: true });
-  revalidateTag('courses', 'max');
+  safeRevalidateTag('courses');
   return updatedItem ? mapCourse(updatedItem) : null;
 }
 
 export async function deleteCourse(id: string): Promise<boolean> {
   await dbConnect();
   const result = await Course.findByIdAndDelete(id);
-  revalidateTag('courses', 'max');
+  safeRevalidateTag('courses');
   return !!result;
 }

@@ -31,7 +31,15 @@ export interface NewsItem {
   author?: NewsAuthor;
 }
 
-import { unstable_cache, revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
+
+function safeRevalidateTag(tag: string) {
+  try {
+    revalidateTag(tag, 'max');
+  } catch (e) {
+    console.warn(`revalidateTag(${tag}) skipped:`, e);
+  }
+}
 
 // Helper to convert Mongo document to clean plain object
 function mapNewsItem(doc: any): NewsItem {
@@ -55,15 +63,11 @@ function mapNewsItem(doc: any): NewsItem {
   };
 }
 
-export const getAllNews = unstable_cache(
-  async (): Promise<NewsItem[]> => {
-    await dbConnect();
-    const news = await News.find({}).sort({ createdAt: -1 });
-    return news.map(mapNewsItem);
-  },
-  ['news-list'],
-  { revalidate: 3600, tags: ['news'] }
-);
+export async function getAllNews(): Promise<NewsItem[]> {
+  await dbConnect();
+  const news = await News.find({}).sort({ createdAt: -1 });
+  return news.map(mapNewsItem);
+}
 
 export async function getNewsById(id: string): Promise<NewsItem | null> {
   await dbConnect();
@@ -117,7 +121,7 @@ export async function createNews(data: Partial<NewsItem>): Promise<NewsItem> {
     data.content = sanitizeHtml(data.content);
   }
   const newItem = await News.create(data);
-  revalidateTag('news', 'max');
+  safeRevalidateTag('news');
   return mapNewsItem(newItem);
 }
 
@@ -132,14 +136,14 @@ export async function updateNews(id: string, data: Partial<NewsItem>): Promise<N
     data.content = sanitizeHtml(data.content);
   }
   const updatedItem = await News.findByIdAndUpdate(id, data, { new: true });
-  revalidateTag('news', 'max');
+  safeRevalidateTag('news');
   return updatedItem ? mapNewsItem(updatedItem) : null;
 }
 
 export async function deleteNews(id: string): Promise<boolean> {
   await dbConnect();
   const result = await News.findByIdAndDelete(id);
-  revalidateTag('news', 'max');
+  safeRevalidateTag('news');
   return !!result;
 }
 
