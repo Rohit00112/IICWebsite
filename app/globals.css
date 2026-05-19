@@ -36,10 +36,12 @@ body {
   background: transparent;
   color: var(--foreground);
   font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
 html {
   background: var(--background);
+  overflow-x: hidden;
 }
 
 /* Fluid.glass-style edge blur mask for ScrollScaleVideo */

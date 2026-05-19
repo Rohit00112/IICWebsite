@@ -27,7 +27,7 @@ const Bird: React.FC<BirdProps> = ({ delay, duration, top, scale, reverse = fals
       style={{ top, transform: `scale(${scale})` }}
       className="absolute pointer-events-none will-change-transform"
     >
-      <div style={{ transform: reverse ? 'scaleX(-1)' : undefined, width: 56, height: 32 }}>
+      <div style={{ transform: reverse ? undefined : 'scaleX(-1)', width: 56, height: 32 }}>
         <svg width="56" height="32" viewBox="0 0 56 32" fill="none">
           {/* body */}
           <ellipse cx="28" cy="20" rx="6" ry="2.5" fill="#1a2f6e" />
