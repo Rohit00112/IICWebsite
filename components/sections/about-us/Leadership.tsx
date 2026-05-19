@@ -8,8 +8,8 @@ import AnimeStagger from '../../effects/AnimeStagger';
 
 const Leadership = () => {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-[1440px] mx-auto px-6 space-y-32">
+    <section className="pt-24 bg-white">
+      <div className="max-w-[1440px] mx-auto px-6 space-y-32 pb-32">
         {/* Chairman Section */}
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <motion.div
@@ -103,27 +103,28 @@ const Leadership = () => {
           </motion.div>
         </div>
 
-        {/* Quote Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-[#0A1629] w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-32 px-6 text-center"
-        >
-          <div className="max-w-[1200px] mx-auto text-white">
-            <span className="text-white/40 font-bold tracking-[0.3em] uppercase text-xs mb-10 block font-sora">
-              The Itahari International College Experience
-            </span>
-            <AnimeReveal
-              as="h2"
-              text="Education here extends far beyond the classrooms, developing strong values, encouraging creativity, and building a vibrant community that empowers confident leaders to global professionals ready to make a real world impact."
-              className="text-2xl md:text-4xl lg:text-5xl font-sora leading-[1.5] font-extralight text-white/80 justify-center"
-              staggerFrom="center"
-              stagger={10}
-            />
-          </div>
-        </motion.div>
       </div>
+
+      {/* Quote Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="bg-[#0A1629] py-32 px-6 text-center"
+      >
+        <div className="max-w-[1200px] mx-auto text-white">
+          <span className="text-white/40 font-bold tracking-[0.3em] uppercase text-xs mb-10 block font-sora">
+            The Itahari International College Experience
+          </span>
+          <AnimeReveal
+            as="h2"
+            text="Education here extends far beyond the classrooms, developing strong values, encouraging creativity, and building a vibrant community that empowers confident leaders to global professionals ready to make a real world impact."
+            className="text-2xl md:text-4xl lg:text-5xl font-sora leading-[1.5] font-extralight text-white/80 justify-center"
+            staggerFrom="center"
+            stagger={10}
+          />
+        </div>
+      </motion.div>
       {/* Leadership Schema for GEO Authority */}
       <script
         type="application/ld+json"

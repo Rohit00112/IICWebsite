@@ -58,82 +58,92 @@ const features = [
 
 const WhyChooseIIC = () => {
   return (
-    <section className="py-24 md:py-32 bg-[#F8FAFF]">
-      <div className="max-w-[1440px] mx-auto px-6">
+    <section className="py-16 md:py-32 bg-[#F8FAFF]">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-24 md:mb-32"
+          className="text-center mb-12 md:mb-24"
         >
-          <h2 className="text-4xl md:text-6xl font-black text-[#1a1a1a] font-sora">
-            Why choose Itahari International College ?
+          <p className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold text-[#21409A] mb-3 md:mb-4 font-sora">
+            What Sets Us Apart
+          </p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#1a1a1a] font-sora leading-tight">
+            Why choose Itahari International College?
           </h2>
         </motion.div>
 
-        <div className="space-y-40 md:space-y-64">
-          {features.map((feature, idx) => (
-            <div key={idx} className={`relative flex flex-col items-center justify-center ${idx % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
-
-              {/* Uniform Glassmorphic Card */}
-              <motion.div
-                initial={{ opacity: 0, x: idx % 2 === 0 ? -60 : 60 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                style={{ backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
-                className={`w-full lg:w-[60%] bg-white/10 rounded-[3rem] shadow-[0_30px_70px_rgba(0,0,0,0.08)] border border-white/40 relative z-20 overflow-hidden ${idx % 2 === 0 ? 'lg:-mr-48' : 'lg:-ml-48'}`}
+        <div className="space-y-16 md:space-y-32">
+          {features.map((feature, idx) => {
+            const reverse = idx % 2 === 1;
+            return (
+              <div
+                key={idx}
+                className={`relative flex flex-col items-stretch lg:items-center justify-center gap-0 lg:gap-0 ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
               >
-                <div className={`flex flex-col md:flex-row ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
-                  {/* Content Section (Takes up most of the card) */}
-                  <div className="flex-[1.5] p-10 md:p-16">
-                    <div className="w-14 h-14 bg-white/40 rounded-xl flex items-center justify-center mb-8 shadow-inner border border-white/20">
-                      {feature.icon}
-                    </div>
+                {/* Image */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.9, ease: 'easeOut' }}
+                  className={`w-full lg:w-[58%] h-[260px] sm:h-[340px] md:h-[520px] relative rounded-t-2xl md:rounded-t-[2rem] lg:rounded-t-none ${reverse ? 'lg:rounded-r-[2.5rem] lg:rounded-l-none' : 'lg:rounded-l-[2.5rem] lg:rounded-r-none'} overflow-hidden shadow-xl`}
+                >
+                  <Image
+                    src={feature.image}
+                    alt={feature.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                  />
+                  {/* Number badge — placed on the outer corner so the overlapping card never covers it */}
+                  <div className={`absolute top-4 md:top-6 ${reverse ? 'right-4 md:right-6' : 'left-4 md:left-6'} bg-white/95 backdrop-blur-sm rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shadow-lg z-30`}>
+                    <span className="text-[#21409A] font-black text-sm md:text-base font-sora">
+                      0{idx + 1}
+                    </span>
+                  </div>
+                </motion.div>
 
-                    <h3 className="text-3xl md:text-4xl font-bold text-[#1a1a1a] mb-6 font-sora tracking-tight">
-                      {feature.title}
-                    </h3>
-
-                    <p className="text-[#2D2D2D] text-base md:text-lg leading-relaxed mb-10 font-sora font-medium">
-                      {feature.description}
-                    </p>
-
-                    <ul className="space-y-5">
-                      {feature.points.map((point, pIdx) => (
-                        <li key={pIdx} className="flex items-center gap-4 text-sm md:text-base font-bold text-[#21409A] font-sora">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="9 18 15 12 9 6" />
-                          </svg>
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
+                {/* Content card */}
+                <motion.div
+                  initial={{ opacity: 0, x: reverse ? -40 : 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-100px' }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                  className={`w-full lg:w-[48%] bg-white rounded-b-2xl md:rounded-b-[2rem] lg:rounded-b-none ${reverse ? 'lg:rounded-l-[2.5rem] lg:rounded-r-none lg:-mr-12 xl:-mr-20' : 'lg:rounded-r-[2.5rem] lg:rounded-l-none lg:-ml-12 xl:-ml-20'} shadow-[0_30px_70px_rgba(33,64,154,0.08)] border border-[#E5EAF5] relative z-20 p-6 sm:p-8 md:p-10 lg:p-12`}
+                >
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-[#EEF2FB] rounded-xl flex items-center justify-center mb-5 md:mb-7">
+                    {feature.icon}
                   </div>
 
-                  {/* Empty Space for Overlap Visibility (Ensures text doesn't touch the image) */}
-                  <div className="flex-1 hidden md:block" />
-                </div>
-              </motion.div>
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1a1a1a] mb-4 md:mb-5 font-sora tracking-tight leading-tight">
+                    {feature.title}
+                  </h3>
 
-              {/* Image Container */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1 }}
-                className="w-full lg:w-[65%] h-[400px] md:h-[650px] relative rounded-[3rem] overflow-hidden shadow-xl mt-8 lg:mt-0"
-              >
-                <Image
-                  src={feature.image}
-                  alt={feature.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 65vw"
-                />
-              </motion.div>
-            </div>
-          ))}
+                  <p className="text-[#4A5568] text-sm md:text-base lg:text-lg leading-relaxed mb-6 md:mb-8 font-sora">
+                    {feature.description}
+                  </p>
+
+                  <ul className="space-y-3 md:space-y-4 border-t border-[#E5EAF5] pt-5 md:pt-6">
+                    {feature.points.map((point, pIdx) => (
+                      <li
+                        key={pIdx}
+                        className="flex items-center gap-3 text-sm md:text-base font-semibold text-[#21409A] font-sora"
+                      >
+                        <span className="w-6 h-6 rounded-full bg-[#21409A]/10 flex items-center justify-center shrink-0">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="9 18 15 12 9 6" />
+                          </svg>
+                        </span>
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

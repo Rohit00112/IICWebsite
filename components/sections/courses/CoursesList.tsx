@@ -11,21 +11,19 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
 
-  // Stack-reveal: track card progress thru viewport
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  // Outgoing animation — fires when next card overlaps
   const { scrollYProgress: exitProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"]
   });
 
   const smoothExit = useSpring(exitProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 90,
+    damping: 28,
     mass: 0.4,
     restDelta: 0.001
   });
@@ -33,18 +31,15 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
   const isEven = index % 2 === 0;
   const isLast = index === total - 1;
 
-  // Outgoing card shrinks + fades as next overlaps
-  const cardScale = useTransform(smoothExit, [0, 1], reduceMotion || isLast ? [1, 1] : [1, 0.92]);
-  const cardOpacity = useTransform(smoothExit, [0, 1], reduceMotion || isLast ? [1, 1] : [1, 0.5]);
+  const cardScale = useTransform(smoothExit, [0, 1], reduceMotion || isLast ? [1, 1] : [1, 0.94]);
+  const cardOpacity = useTransform(smoothExit, [0, 1], reduceMotion || isLast ? [1, 1] : [1, 0.55]);
 
-  // Image parallax
   const imageY = useTransform(
     useSpring(scrollYProgress, { stiffness: 80, damping: 25, mass: 0.5 }),
     [0, 1],
-    reduceMotion ? ["0%", "0%"] : ["-8%", "8%"]
+    reduceMotion ? ["0%", "0%"] : ["-6%", "6%"]
   );
 
-  // Stagger top offset so cards stack visibly
   const topOffset = 80 + index * 24;
 
   return (
@@ -52,20 +47,17 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
       ref={ref}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={{ once: true, margin: "-80px" }}
       variants={{
-        hidden: {
-          opacity: 0,
-          y: 80
-        },
+        hidden: { opacity: 0, y: 60 },
         visible: {
           opacity: 1,
           y: 0,
           transition: {
-            duration: 1,
+            duration: 0.9,
             ease: [0.22, 1, 0.36, 1],
-            staggerChildren: 0.07,
-            delayChildren: 0.15
+            staggerChildren: 0.08,
+            delayChildren: 0.2,
           }
         }
       }}
@@ -77,31 +69,24 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
         willChange: 'transform, opacity',
         transformOrigin: 'center top'
       }}
-      className={`group sticky overflow-hidden rounded-[32px] min-h-[450px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] border border-white/10`}
+      className="group sticky overflow-hidden rounded-2xl md:rounded-[32px] min-h-[480px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.45)] border border-white/10"
     >
-      {/* Premium Glow Sweep Effect */}
-      <motion.div 
-        variants={{
-          hidden: { x: '-150%', skewX: -25 },
-          visible: { x: '150%', skewX: -25 }
-        }}
-        transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/15 to-transparent z-20 pointer-events-none"
-      />
+      {/* Soft ambient gradient overlay — adds depth without busy effects */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.08),transparent_60%)] z-[1]" />
 
-      <Tilt 
-        strength={5} 
+      <Tilt
+        strength={3}
         className="w-full h-full relative z-10"
         innerClassName={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}
       >
-        {/* Image Section with Curtain Reveal */}
-        <div className="w-full md:w-1/2 relative h-[300px] md:h-auto overflow-hidden">
+        {/* Image Section */}
+        <div className="w-full md:w-1/2 relative h-[260px] sm:h-[320px] md:h-auto md:min-h-[480px] overflow-hidden">
           <motion.div
             variants={{
               hidden: { clipPath: 'inset(0% 0% 100% 0%)' },
               visible: { clipPath: 'inset(0% 0% 0% 0%)' }
             }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             style={{ y: imageY, willChange: 'transform' }}
             className="absolute inset-0 w-full h-full"
           >
@@ -111,110 +96,121 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               priority={index < 2}
-              className="object-cover transition-transform duration-1000 group-hover:scale-110"
+              className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
             />
           </motion.div>
-          {/* Glass Overlay on Image */}
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700" />
-          
-          {/* Subtle Magnetic Pulse Point */}
-          <motion.div 
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/2 right-1/4 w-3 h-3 bg-[#74C044] rounded-full blur-[2px] z-20 pointer-events-none shadow-[0_0_15px_#74C044]"
+
+          {/* Gradient veil — fades image into the colored side smoothly */}
+          <div
+            className={`pointer-events-none absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-transparent via-transparent to-black/30`}
           />
+
+          {/* Index marker, sits in the photo's outer corner */}
+          <div className={`absolute top-5 ${isEven ? 'left-5 md:left-6' : 'right-5 md:right-6'} z-20`}>
+            <div className="flex items-center gap-2 text-white/85">
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase">
+                {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+              </span>
+              <span className="w-8 h-px bg-white/40" />
+            </div>
+          </div>
         </div>
 
         {/* Content Section */}
-        <div className="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center text-white relative z-10">
-          <div className="relative">
-            {/* Category Tags Reveal */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, x: -20 },
-                visible: { opacity: 1, x: 0 }
-              }}
-              className="flex items-center gap-4 mb-8"
-            >
-              <span className="px-4 py-1.5 border border-white/20 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase bg-white/5 backdrop-blur-sm">
-                {course.category}
-              </span>
-              <div className="flex items-center gap-2 px-4 py-1.5 bg-white/10 rounded-full text-[10px] font-bold tracking-[0.1em] uppercase">
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {course.duration}
-              </div>
-            </motion.div>
+        <div className="w-full md:w-1/2 p-7 sm:p-10 md:p-12 lg:p-16 flex flex-col justify-center text-white relative z-10">
+          {/* Eyebrow row: category + duration */}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, x: -16 },
+              visible: { opacity: 1, x: 0 }
+            }}
+            className="flex flex-wrap items-center gap-2.5 mb-6"
+          >
+            <span className="px-3.5 py-1.5 border border-white/25 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase bg-white/[0.06] backdrop-blur-sm">
+              {course.category}
+            </span>
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white/[0.08] border border-white/10 rounded-full text-[10px] font-bold tracking-[0.15em] uppercase">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {course.duration}
+            </div>
+          </motion.div>
 
-            {/* Title Reveal */}
-            <motion.h3
-              variants={{
-                hidden: { opacity: 0, y: 40, skewY: 3 },
-                visible: { opacity: 1, y: 0, skewY: 0 }
-              }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl md:text-[46px] font-black mb-8 leading-[1.05] tracking-tighter uppercase italic"
-            >
-              {course.title}
-            </motion.h3>
+          {/* Title */}
+          <motion.h3
+            variants={{
+              hidden: { opacity: 0, y: 28 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[28px] sm:text-4xl md:text-[42px] lg:text-[48px] font-black mb-7 leading-[1.05] tracking-tight uppercase"
+          >
+            {course.title}
+          </motion.h3>
 
-            {/* Stats Reveal */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, scale: 0.8 },
-                visible: { opacity: 1, scale: 1 }
-              }}
-              transition={{ duration: 0.8, ease: "backOut" }}
-              className="flex items-center gap-3 mb-8"
-            >
-              <span className="px-4 py-1.5 bg-white text-black rounded-sm text-[9px] font-black uppercase tracking-widest shadow-xl">
-                {course.modules}
-              </span>
-              <span className="px-4 py-1.5 bg-white text-black rounded-sm text-[9px] font-black uppercase tracking-widest shadow-xl">
-                {course.credits}
-              </span>
-            </motion.div>
+          {/* Stat strip — two columns with subtle divider */}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 12 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            className="grid grid-cols-2 gap-0 mb-7 border-y border-white/10 divide-x divide-white/10"
+          >
+            <div className="py-3.5 pr-4">
+              <div className="text-[9px] font-bold tracking-[0.25em] uppercase text-white/50 mb-1">Modules</div>
+              <div className="text-lg md:text-xl font-black text-white">{course.modules.replace(/\s*Modules?$/i, '')}</div>
+            </div>
+            <div className="py-3.5 pl-4">
+              <div className="text-[9px] font-bold tracking-[0.25em] uppercase text-white/50 mb-1">Credits</div>
+              <div className="text-lg md:text-xl font-black text-white">{course.credits.replace(/\s*Credits?$/i, '')}</div>
+            </div>
+          </motion.div>
 
-            {/* Description Reveal */}
-            <motion.p
-              variants={{
-                hidden: { opacity: 0 },
-                visible: { opacity: 0.75 }
-              }}
-              className="text-white mb-12 leading-relaxed text-sm md:text-base max-w-lg font-medium"
-            >
-              {course.description}
-            </motion.p>
+          {/* Description */}
+          <motion.p
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 0.78 }
+            }}
+            className="text-white mb-8 leading-relaxed text-sm md:text-[15px] max-w-lg font-medium"
+          >
+            {course.description}
+          </motion.p>
 
-            {/* Action Reveal */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 }
-              }}
-              className="mt-auto pt-10 border-t border-white/10 flex items-center justify-between"
+          {/* Footer: feature tags + CTA */}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 16 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            className="mt-auto pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5"
+          >
+            <div className="flex flex-wrap gap-2">
+              {course.features.slice(0, 2).map((feature: string, i: number) => (
+                <span key={i} className="px-3 py-1.5 bg-white/[0.04] rounded-md text-[9px] font-bold uppercase tracking-[0.2em] text-white/50 border border-white/10">
+                  {feature}
+                </span>
+              ))}
+            </div>
+            <Link
+              href={`/courses/${course.slug}`}
+              className="inline-flex items-center gap-3 self-start sm:self-auto text-[11px] font-black uppercase tracking-[0.25em] group/btn"
             >
-              <div className="flex gap-3">
-                {course.features.slice(0, 2).map((feature: string, i: number) => (
-                  <span key={i} className="px-4 py-1.5 bg-white/5 rounded-md text-[9px] font-bold uppercase tracking-[0.2em] text-white/40 border border-white/5">
-                    {feature}
-                  </span>
-                ))}
-              </div>
-              <Link 
-                href={`/courses/${course.slug}`}
-                className="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest group/btn hover:text-[#74C044] transition-colors"
-              >
+              <span className="relative transition-colors duration-300 group-hover/btn:text-[#74C044]">
                 Explore
-                <div className="w-10 h-10 rounded-full border-2 border-white/10 flex items-center justify-center group-hover/btn:border-[#74C044] group-hover/btn:bg-[#74C044] group-hover/btn:text-white transition-all duration-500 transform group-hover/btn:rotate-[360deg]">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </div>
-              </Link>
-            </motion.div>
-          </div>
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#74C044] transition-all duration-500 group-hover/btn:w-full" />
+              </span>
+              <span className="relative w-10 h-10 rounded-full border border-white/20 flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover/btn:border-[#74C044] group-hover/btn:bg-[#74C044]">
+                <svg className="w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+                <svg className="w-4 h-4 absolute -translate-x-6 transition-transform duration-500 group-hover/btn:translate-x-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </span>
+            </Link>
+          </motion.div>
         </div>
       </Tilt>
     </motion.div>
@@ -274,14 +270,17 @@ const CoursesList = () => {
   ];
 
   return (
-    <section className="relative w-full py-20 md:py-32 bg-[#f3f6fb] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col items-center text-center mb-20 md:mb-28">
-          <h2 className="text-4xl md:text-[64px] font-black text-[#21409A] mb-8 leading-tight tracking-tight uppercase">
+    <section className="relative w-full py-16 md:py-32 bg-[#f3f6fb] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="flex flex-col items-center text-center mb-14 md:mb-24">
+          <p className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold text-[#74C044] mb-4">
+            Programmes &middot; UK Affiliated
+          </p>
+          <h2 className="text-3xl md:text-5xl lg:text-[64px] font-black text-[#21409A] mb-6 leading-[1.05] tracking-tight uppercase">
             Browse our degrees
           </h2>
-          <p className="text-[#444444] text-[14px] md:text-[18px] max-w-3xl leading-relaxed font-medium">
-            Choose from our range of UK-affiliated IT and Business programmes, 
+          <p className="text-[#444444] text-sm md:text-lg max-w-2xl leading-relaxed font-medium">
+            Choose from our range of UK-affiliated IT and Business programmes,
             designed to prepare you for the global job market.
           </p>
         </div>

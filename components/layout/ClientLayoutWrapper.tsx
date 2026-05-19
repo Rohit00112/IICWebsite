@@ -29,6 +29,7 @@ export default function ClientLayoutWrapper({
   }, []);
 
   const isAdminPage = mounted && (pathname?.startsWith('/admin') || pathname === '/login');
+  const isHomePage = mounted && pathname === '/';
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -100,7 +101,7 @@ export default function ClientLayoutWrapper({
             }}
           />
           <FluidBackground />
-          <CloudBackground />
+          {isHomePage && <CloudBackground />}
         </>
       )}
 
