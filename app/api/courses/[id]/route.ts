@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getCourseById, updateCourse, deleteCourse } from '../../../../lib/courses';
+import { getSession } from '../../../../lib/auth';
 
 export async function GET(
   request: Request,
@@ -22,6 +23,18 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Session check (defense-in-depth)
+  let session;
+  try {
+    session = await getSession();
+  } catch (error) {
+    return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
+  }
+
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const { id } = await params;
     const data = await request.json();
@@ -42,6 +55,18 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Session check (defense-in-depth)
+  let session;
+  try {
+    session = await getSession();
+  } catch (error) {
+    return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
+  }
+
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const { id } = await params;
     const success = await deleteCourse(id);

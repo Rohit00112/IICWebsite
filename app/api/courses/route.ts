@@ -3,6 +3,7 @@ import { getAllCourses, createCourse } from '../../../lib/courses';
 import { courseSchema } from '../../../lib/validations/course';
 import { ZodError } from 'zod';
 import { rateLimit } from '../../../lib/rate-limit';
+import { getSession } from '../../../lib/auth';
 
 export async function GET() {
   try {
@@ -21,6 +22,18 @@ export async function POST(request: Request) {
   
   if (!success) {
     return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+  }
+
+  // Session check (defense-in-depth)
+  let session;
+  try {
+    session = await getSession();
+  } catch (error) {
+    return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
+  }
+
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
