@@ -4,8 +4,8 @@ import { decrypt } from './lib/auth';
 // Add paths that require authentication
 const protectedRoutes = ['/admin'];
 const protectedApiRoutes = [
-  { path: '/api/courses', methods: ['POST', 'PUT', 'DELETE'] },
-  { path: '/api/news', methods: ['POST', 'PUT', 'DELETE'] },
+  { path: '/api/courses', methods: ['POST', 'PUT', 'PATCH', 'DELETE'] },
+  { path: '/api/news', methods: ['POST', 'PUT', 'PATCH', 'DELETE'] },
 ];
 
 export async function proxy(request: NextRequest) {

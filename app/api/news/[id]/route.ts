@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getNewsById, updateNews, deleteNews } from '../../../../lib/news';
 import { newsSchema } from '../../../../lib/validations/news';
 import { ZodError } from 'zod';
+import { getSession } from '../../../../lib/auth';
 
 export async function GET(
   request: Request,
@@ -24,6 +25,18 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Session check (defense-in-depth)
+  let session;
+  try {
+    session = await getSession();
+  } catch (error) {
+    return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
+  }
+
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const { id } = await params;
     const body = await request.json();
@@ -54,6 +67,18 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Session check (defense-in-depth)
+  let session;
+  try {
+    session = await getSession();
+  } catch (error) {
+    return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
+  }
+
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const { id } = await params;
     const success = await deleteNews(id);
