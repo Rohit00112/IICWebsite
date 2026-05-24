@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
@@ -20,10 +20,6 @@ interface LifestyleCardProps {
   revealOrigin?: 'bottom-left' | 'bottom-right' | 'center' | 'top-right' | 'top-left';
 }
 
-const CURTAIN_MS = 1300; // duration + max stagger for WaveCurtain enter/exit
-
-type Phase = 'idle' | 'opening' | 'open' | 'closing';
-
 const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, description, stats, accent, rounded, parallaxY, revealOrigin = 'bottom-right' }) => {
   const [hovered, setHovered] = useState(false);
   // We no longer need the phase state for content visibility.
@@ -33,7 +29,7 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
 
   return (
     <div
-      className={`relative h-full w-full cursor-pointer ${rounded} overflow-hidden shadow-2xl`}
+      className={`relative h-full min-h-[inherit] w-full cursor-pointer ${rounded} overflow-hidden shadow-2xl`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -67,8 +63,8 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
         className="absolute inset-0 z-30 pointer-events-none"
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-        <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 flex items-center gap-3">
-          <span className="text-white text-lg md:text-2xl font-bold font-sora">{title}</span>
+        <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 lg:bottom-10 lg:left-10 flex items-center gap-3">
+          <span className="text-white text-xl sm:text-2xl lg:text-3xl font-bold font-sora leading-tight">{title}</span>
         </div>
       </motion.div>
 
@@ -81,30 +77,30 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
           delay: hovered ? 0.35 : 0,
           ease: [0.22, 1, 0.36, 1]
         }}
-        className="absolute inset-0 z-30 flex flex-col justify-between p-8 md:p-10 pointer-events-none"
+        className="absolute inset-0 z-30 flex flex-col justify-between gap-4 p-5 sm:p-7 xl:p-8 2xl:p-10 pointer-events-none"
         style={{
           background: `linear-gradient(135deg, ${accent}D9 0%, rgba(33,64,154,0.85) 100%)`,
         }}
       >
         <div>
-          <span className="inline-block text-white/80 text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-3 font-sora">
+          <span className="inline-block text-white/80 text-[10px] sm:text-xs xl:text-sm font-bold tracking-[0.18em] uppercase mb-3 font-sora">
             Explore
           </span>
-          <h3 className="text-white text-2xl md:text-4xl font-black font-sora leading-tight mb-4">{title}</h3>
-          <p className="text-white/90 text-sm md:text-base leading-relaxed font-sora">{description}</p>
+          <h3 className="text-white text-2xl sm:text-3xl xl:text-4xl font-black font-sora leading-tight mb-3">{title}</h3>
+          <p className="text-white/90 text-sm xl:text-base leading-relaxed font-sora">{description}</p>
         </div>
 
-        <div className="flex flex-wrap gap-6 mt-6">
+        <div className="flex flex-wrap gap-4 sm:gap-6 mt-auto">
           {stats.map((s, i) => (
             <div key={i}>
-              <div className="text-white text-2xl md:text-3xl font-black font-sora">{s.value}</div>
-              <div className="text-white/80 text-xs md:text-sm font-medium font-sora">{s.label}</div>
+              <div className="text-white text-xl sm:text-2xl xl:text-3xl font-black font-sora">{s.value}</div>
+              <div className="text-white/80 text-xs xl:text-sm font-medium font-sora">{s.label}</div>
             </div>
           ))}
         </div>
 
-        <div className="mt-6">
-          <span className="inline-flex items-center gap-2 text-white font-bold text-sm md:text-base font-sora border-b-2 border-white/60 pb-1">
+        <div>
+          <span className="inline-flex items-center gap-2 text-white font-bold text-sm xl:text-base font-sora border-b-2 border-white/60 pb-1">
             Learn more
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -140,8 +136,8 @@ const LifestyleSection = () => {
   const y3 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6">
+    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-x-clip overflow-y-visible">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-20">
           <span className="text-[#74C044] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 font-sora">
@@ -168,14 +164,14 @@ const LifestyleSection = () => {
         </div>
 
         {/* Lifestyle Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[800px]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 h-auto lg:min-h-[720px] xl:min-h-[800px]">
           {/* Main Large Card (Left) */}
-          <div className="md:col-span-2 relative h-[400px] md:h-full">
+          <div className="lg:col-span-2 relative h-[460px] sm:h-[560px] lg:h-full">
             <motion.div
-              initial={{ clipPath: 'inset(100% 0 0 0)', y: 100, opacity: 0 }}
-              whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ y: 70, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.15 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="h-full w-full"
             >
               <LifestyleCard
@@ -197,13 +193,13 @@ const LifestyleSection = () => {
           </div>
 
           {/* Right Column (Stacked) */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-5 sm:gap-6 min-h-0">
             <motion.div
-              initial={{ clipPath: 'inset(100% 0 0 0)', y: 60, opacity: 0 }}
-              whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: 0.2, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1 h-[300px] md:h-auto"
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.18 }}
+              transition={{ delay: 0.15, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="h-[340px] sm:h-[380px] lg:h-auto lg:flex-1 lg:min-h-0"
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 1.png"
@@ -222,11 +218,11 @@ const LifestyleSection = () => {
             </motion.div>
 
             <motion.div
-              initial={{ clipPath: 'inset(100% 0 0 0)', y: 60, opacity: 0 }}
-              whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: 0.4, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1 h-[300px] md:h-auto"
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.18 }}
+              transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="h-[340px] sm:h-[380px] lg:h-auto lg:flex-1 lg:min-h-0"
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 2.png"
@@ -251,4 +247,3 @@ const LifestyleSection = () => {
 };
 
 export default LifestyleSection;
-
