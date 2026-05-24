@@ -7,7 +7,7 @@ import Image from 'next/image';
 const experiences = [
   {
     id: "01",
-    title: "Coders",
+    title: "Tech",
     description: "Where ideas become reality. This community is focused on developing real products through collaboration, problem-solving, and hands-on coding. Members work together to design, build, and refine software — turning concepts into functioning solutions that solve real problems.",
     image: "/images/home/ivlab2.png"
   },
@@ -19,13 +19,13 @@ const experiences = [
   },
   {
     id: "03",
-    title: "Entrepreneurs",
+    title: "Entrepreneur",
     description: "Where technology meets the market. This community focuses on the business side of innovation — studying market trends, identifying gaps, and developing strategies to bring products to the right audience. Members think like founders, learning how to validate ideas and build something people actually want.",
     image: "/images/home/ivlab4.png"
   },
   {
     id: "04",
-    title: "Digital Presence",
+    title: "creator",
     description: "Where innovation meets creativity. This community lives at the intersection of technology and digital culture — building brands, creating content, and driving engagement through smart marketing and creative campaigns. Members use the innovation lab as their playground to experiment, create, and make noise in the digital world.",
     image: "/images/home/ivlab2.png"
   }
@@ -47,9 +47,9 @@ const StudentExperience = () => {
           </h2>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.9fr)] gap-12 lg:gap-16 items-center">
           {/* Accordion / List */}
-          <div className="w-full lg:w-1/2 flex flex-col gap-8">
+          <div className="w-full min-w-0 flex flex-col gap-8">
             {experiences.map((exp, index) => (
               <div 
                 key={exp.id}
@@ -62,7 +62,7 @@ const StudentExperience = () => {
                   <span className={`text-2xl md:text-4xl font-light font-sora transition-colors duration-500 ${activeIndex === index ? 'text-[#74C044]' : 'text-white/30 group-hover:text-white/50'}`}>
                     {exp.id}
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className={`text-3xl md:text-5xl font-bold font-sora mb-4 transition-all duration-500 ${activeIndex === index ? 'text-white translate-x-4' : 'text-white/50 group-hover:text-white/70'}`}>
                       {exp.title}
                     </h3>
@@ -75,7 +75,7 @@ const StudentExperience = () => {
                           transition={{ duration: 0.4, ease: "easeInOut" }}
                           className="overflow-hidden"
                         >
-                          <p className="text-white/70 text-lg translate-x-4 max-w-md pb-4">
+                          <p className="text-white/70 text-lg leading-relaxed pl-4 max-w-2xl pb-4">
                             {exp.description}
                           </p>
                         </motion.div>
@@ -88,7 +88,7 @@ const StudentExperience = () => {
           </div>
 
           {/* Image Display */}
-          <div className="w-full lg:w-1/2 relative aspect-[4/5] md:aspect-[3/4] lg:aspect-square rounded-[40px] overflow-hidden">
+          <div className="w-full relative aspect-[4/5] md:aspect-[3/4] lg:aspect-square rounded-[40px] overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
