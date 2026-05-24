@@ -18,7 +18,6 @@ const ProgrammesSection = () => {
   });
 
   const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
-  const y2 = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
 
   const programmes = [
     {
@@ -51,8 +50,8 @@ const ProgrammesSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
+    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-x-clip overflow-y-visible">
+      <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -63,7 +62,7 @@ const ProgrammesSection = () => {
 
         <div className="text-center mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-sora">
-            Nepal's First Direct UK Degree in
+            Nepal&apos;s First Direct UK Degree in
           </h2>
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
@@ -78,27 +77,25 @@ const ProgrammesSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full mb-20 max-w-[1440px]">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 w-full mb-20 max-w-[1440px] 2xl:max-w-[1600px]">
           {programmes.map((prog, index) => (
-            <Tilt key={index} strength={4}>
+            <Tilt key={index} strength={4} className="h-full min-w-0">
               <motion.div
                 initial={{
-                  clipPath: 'inset(100% 0 0 0)',
-                  y: 100,
+                  y: 60,
                   opacity: 0
                 }}
                 whileInView={{
-                  clipPath: 'inset(0% 0 0 0)',
                   y: 0,
                   opacity: 1
                 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.15 }}
                 transition={{
                   delay: index * 0.1,
-                  duration: 1.4,
+                  duration: 1,
                   ease: [0.16, 1, 0.3, 1]
                 }}
-                className={`${prog.bgColor} rounded-[40px] md:rounded-[48px] p-10 md:p-12 relative overflow-hidden flex flex-col justify-between min-h-[440px] md:h-[480px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] group cursor-pointer border border-white/5 transition-shadow duration-500 hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)]`}
+                className={`${prog.bgColor} rounded-[32px] sm:rounded-[40px] md:rounded-[48px] p-6 sm:p-8 md:p-10 2xl:p-12 relative overflow-hidden flex h-full min-h-[520px] sm:min-h-[500px] md:min-h-[520px] xl:min-h-[500px] 2xl:min-h-[540px] flex-col justify-between shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] group cursor-pointer border border-white/5 transition-shadow duration-500 hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)]`}
               >
                 <div className="relative z-10 flex flex-col h-full">
                   <motion.div
@@ -106,9 +103,9 @@ const ProgrammesSection = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 + 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex items-center gap-2 mb-10 max-w-[60%] md:max-w-[58%] relative z-20"
+                    className="flex flex-wrap items-center gap-2 mb-8 sm:mb-10 max-w-[72%] sm:max-w-[64%] xl:max-w-[58%] relative z-20"
                   >
-                    <span className={`${prog.tagColor} text-white text-[10px] md:text-[11px] px-4 py-2 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap `}>
+                    <span className={`${prog.tagColor} max-w-full truncate text-white text-[10px] md:text-[11px] px-4 py-2 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap `}>
                       {prog.type}
                     </span>
                     <span className="bg-white/15 backdrop-blur-xl text-white text-[10px] md:text-[11px] px-3.5 py-2 rounded-full font-bold border border-white/10 flex items-center gap-1.5 whitespace-nowrap shrink-0">
@@ -117,7 +114,7 @@ const ProgrammesSection = () => {
                     </span>
                   </motion.div>
 
-                  <div className="max-w-[60%] md:max-w-[52%] relative z-10">
+                  <div className="max-w-[70%] sm:max-w-[62%] xl:max-w-[54%] relative z-10">
                     <motion.div
                       variants={{
                         hidden: { opacity: 0, y: 20 },
@@ -128,7 +125,7 @@ const ProgrammesSection = () => {
                       <h3 className="text-white/60 text-lg md:text-xl font-medium mb-1 font-sora tracking-tight">
                         {prog.title}
                       </h3>
-                      <h3 className="text-white text-3xl md:text-4xl font-black leading-[1.05] mb-8 font-sora tracking-tighter uppercase">
+                      <h3 className="text-white text-[32px] sm:text-4xl md:text-[42px] xl:text-4xl 2xl:text-[44px] font-black leading-[1.05] mb-8 font-sora uppercase">
                         {prog.subtitle}
                       </h3>
                     </motion.div>
@@ -143,7 +140,7 @@ const ProgrammesSection = () => {
                         className="space-y-2 mb-8"
                       >
                         {prog.list.map((item, i) => (
-                          <li key={i} className="text-white/80 text-[13px] md:text-[15px] flex items-center gap-3 font-medium transition-transform duration-300 hover:translate-x-2">
+                          <li key={i} className="text-white/80 text-[13px] md:text-[15px] flex items-center gap-3 font-medium leading-relaxed transition-transform duration-300 hover:translate-x-2">
                             <span className="w-1.5 h-1.5 bg-[#74C044] rounded-full shrink-0 shadow-[0_0_8px_rgba(116,192,68,0.6)]"></span>
                             {item}
                           </li>
@@ -159,7 +156,7 @@ const ProgrammesSection = () => {
                         visible: { opacity: 1, scale: 1 }
                       }}
                       transition={{ delay: index * 0.1 + 0.9, duration: 0.8, ease: "backOut" }}
-                      className="flex gap-4"
+                      className="flex flex-wrap gap-3 sm:gap-4"
                     >
                       <span className="bg-white/10 backdrop-blur-xl text-white text-[12px] md:text-[13px] font-bold px-5 py-2 rounded-full border border-white/10">
                         {prog.modules}
@@ -175,16 +172,16 @@ const ProgrammesSection = () => {
                         visible: { opacity: 1, y: 0 }
                       }}
                       transition={{ delay: index * 0.1 + 1.1 }}
-                      className="flex items-center justify-between pt-6 border-t border-white/10"
+                      className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 pt-6 border-t border-white/10"
                     >
-                      <div className="flex gap-2 flex-wrap">
+                      <div className="flex gap-2 flex-wrap min-w-0 sm:max-w-[72%]">
                         {prog.tags?.map((item, i) => (
-                          <span key={i} className="text-[9px] font-black uppercase tracking-widest text-white/40 px-3 py-1 bg-white/5 rounded-md border border-white/5">
+                          <span key={i} className="max-w-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest leading-snug text-white/40 px-3 py-1.5 bg-white/5 rounded-md border border-white/5">
                             {item}
                           </span>
                         ))}
                       </div>
-                      <div className="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest text-white group/btn">
+                      <div className="flex shrink-0 items-center gap-4 self-start sm:self-auto text-[11px] font-black uppercase tracking-widest text-white group/btn">
                         Explore
                         <div className="w-10 h-10 rounded-full border-2 border-white/10 flex items-center justify-center group-hover/btn:border-[#74C044] group-hover/btn:bg-[#74C044] transition-all duration-500">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,13 +203,13 @@ const ProgrammesSection = () => {
                     maskImage: 'linear-gradient(to bottom, black 0%, black 88%, transparent 100%)',
                     WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 88%, transparent 100%)',
                   }}
-                  className="absolute right-0 bottom-28 md:bottom-32 top-6 w-[48%] pointer-events-none z-0 overflow-hidden"
+                  className="absolute right-[-8%] top-24 bottom-36 w-[54%] pointer-events-none z-0 overflow-hidden sm:right-[-2%] sm:top-8 sm:bottom-32 sm:w-[50%] md:right-0 md:top-6 md:w-[48%]"
                 >
                   <Image
                     src={prog.image}
                     alt={prog.subtitle}
                     fill
-                    sizes="(max-width: 768px) 60vw, 40vw"
+                    sizes="(max-width: 640px) 60vw, (max-width: 1280px) 50vw, 28vw"
                     className="object-contain object-right-bottom transition-all duration-1000 group-hover:scale-105 group-hover:-translate-y-2"
                   />
                 </motion.div>
@@ -243,4 +240,3 @@ you begin this new chapter."
 };
 
 export default ProgrammesSection;
-
