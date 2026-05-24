@@ -1,16 +1,17 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 
 const VIDEO_SRC = '/videos/iic.mp4';
 const POSTER_SRC = '/images/home/tower_block.png';
-const DEFAULT_VIEWPORT = { width: 1440, height: 900 };
+type PinState = 'before' | 'active' | 'after';
 
 const ScrollScaleVideo = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false });
-  const [viewport, setViewport] = useState(DEFAULT_VIEWPORT);
+  const [pinState, setPinState] = useState<PinState>('before');
+  const [scrollProgress, setScrollProgress] = useState(0);
   const outerRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
 
@@ -19,36 +20,41 @@ const ScrollScaleVideo = () => {
     offset: ['start start', 'end end'],
   });
 
-  const frameSize = useMemo(() => {
-    const width = Math.max(viewport.width, 320);
-    const height = Math.max(viewport.height, 520);
-    const largeStage = width >= 1800;
-    const sidePanelAllowance = largeStage ? 920 : width < 768 ? 24 : 96;
-    const maxStartWidth = Math.max(280, width - sidePanelAllowance);
-    const desiredStartWidth = width * (largeStage ? 0.44 : width < 768 ? 0.9 : 0.58);
-    const startWidth = Math.min(960, maxStartWidth, Math.max(300, desiredStartWidth));
-    const startHeight = Math.max(
-      180,
-      Math.min(startWidth * 0.5625, height * (width < 768 ? 0.42 : 0.52))
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    setScrollProgress((currentProgress) =>
+      Math.abs(currentProgress - latest) < 0.001 ? currentProgress : latest
     );
+  });
 
-    return {
-      startWidth: Math.round(startWidth),
-      startHeight: Math.round(startHeight),
-      fullWidth: Math.round(width),
-      fullHeight: Math.round(height),
+  const frameScale = useTransform(scrollYProgress, [0, 0.88, 1], [0.45, 1, 1]);
+  const frameRadius = useTransform(scrollYProgress, [0, 0.88], [32, 0]);
+  const maskOpacity = Math.min(1, Math.max(0, (scrollProgress - 0.65) / 0.25));
+
+  const updatePinState = useCallback(() => {
+    const section = outerRef.current;
+    if (!section) return;
+
+    const rect = section.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+
+    const nextState: PinState =
+      rect.top > 0 ? 'before' : rect.bottom <= viewportHeight ? 'after' : 'active';
+
+    setPinState((currentState) =>
+      currentState === nextState ? currentState : nextState
+    );
+  }, []);
+
+  useEffect(() => {
+    updatePinState();
+    window.addEventListener('scroll', updatePinState, { passive: true });
+    window.addEventListener('resize', updatePinState);
+
+    return () => {
+      window.removeEventListener('scroll', updatePinState);
+      window.removeEventListener('resize', updatePinState);
     };
-  }, [viewport]);
-
-  const frameWidth = useTransform(scrollYProgress, [0, 0.58, 1], [frameSize.startWidth, frameSize.fullWidth, frameSize.fullWidth]);
-  const frameHeight = useTransform(scrollYProgress, [0, 0.58, 1], [frameSize.startHeight, frameSize.fullHeight, frameSize.fullHeight]);
-  const frameRadius = useTransform(scrollYProgress, [0, 0.55], [32, 0]);
-  const maskOpacity = useTransform(scrollYProgress, [0.46, 0.72], [0, 1]);
-  const sideOverlayOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.22, 0.5],
-    [1, 1, 0]
-  );
+  }, [updatePinState]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!stickyRef.current) return;
@@ -63,25 +69,6 @@ const ScrollScaleVideo = () => {
   const handleMouseLeave = () => {
     setCursor((prev) => ({ ...prev, visible: false }));
   };
-
-  useEffect(() => {
-    const updateViewport = () => {
-      const visualViewport = window.visualViewport;
-      setViewport({
-        width: visualViewport?.width ?? window.innerWidth,
-        height: visualViewport?.height ?? window.innerHeight,
-      });
-    };
-
-    updateViewport();
-    window.addEventListener('resize', updateViewport);
-    window.visualViewport?.addEventListener('resize', updateViewport);
-
-    return () => {
-      window.removeEventListener('resize', updateViewport);
-      window.visualViewport?.removeEventListener('resize', updateViewport);
-    };
-  }, []);
 
   const openFullscreen = () => setIsFullscreen(true);
   const closeFullscreen = useCallback(() => setIsFullscreen(false), []);
@@ -102,21 +89,27 @@ const ScrollScaleVideo = () => {
     };
   }, [isFullscreen, closeFullscreen]);
 
+  const stagePositionClass =
+    pinState === 'active'
+      ? 'fixed inset-0 z-30'
+      : pinState === 'after'
+        ? 'absolute inset-x-0 bottom-0 z-10'
+        : 'absolute inset-x-0 top-0 z-10';
+
   return (
-    <section ref={outerRef} className="relative w-full h-[240svh] bg-black">
+    <section ref={outerRef} className="relative w-full h-[260svh] bg-black">
       <div
         ref={stickyRef}
         onClick={openFullscreen}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="sticky top-0 h-[100svh] w-full flex items-center justify-center overflow-hidden cursor-none"
+        className={`${stagePositionClass} h-[100svh] w-full flex items-center justify-center overflow-hidden cursor-none bg-black`}
       >
         {/* Side Text Overlays */}
         <motion.div
-          style={{ opacity: sideOverlayOpacity }}
-          className="absolute left-0 top-0 bottom-0 z-20 hidden min-[1800px]:flex w-[min(24vw,28rem)] items-center pl-[clamp(2rem,4vw,5rem)] pr-6 bg-gradient-to-r from-black/80 via-black/45 to-transparent pointer-events-none"
+          className="absolute left-0 top-0 bottom-0 w-[45%] z-20 hidden xl:flex items-center pl-[4%] pr-32 bg-gradient-to-r from-black/70 via-black/40 to-transparent pointer-events-none"
         >
-          <h2 className="max-w-[28rem] text-white text-[clamp(2.4rem,3.2vw,4.5rem)] font-light leading-[1.08] tracking-tight font-sora">
+          <h2 className="text-white text-6xl font-light leading-[1.1] tracking-tight font-sora">
             A place where <br />
             <span className="text-[#74C044] font-semibold">education</span> and <br />
             <span className="text-[#74C044] font-semibold">innovation</span> connect.
@@ -124,10 +117,9 @@ const ScrollScaleVideo = () => {
         </motion.div>
 
         <motion.div
-          style={{ opacity: sideOverlayOpacity }}
-          className="absolute right-0 top-0 bottom-0 z-20 hidden min-[1800px]:flex w-[min(25vw,29rem)] flex-col justify-center items-end pr-[clamp(2rem,4vw,5rem)] pl-6 bg-gradient-to-l from-black/85 via-black/45 to-transparent pointer-events-none"
+          className="absolute right-0 top-0 bottom-0 w-[45%] z-20 hidden xl:flex flex-col justify-center items-end pr-[4%] pl-32 bg-gradient-to-l from-black/75 via-black/40 to-transparent pointer-events-none"
         >
-          <div className="flex flex-col items-end gap-6 max-w-[25rem]">
+          <div className="flex flex-col items-end gap-6 max-w-md">
             {/* Address card */}
             <div className="relative w-full">
               <div className="absolute -left-4 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#74C044] to-transparent" />
@@ -136,10 +128,10 @@ const ScrollScaleVideo = () => {
                   <span className="text-[#74C044] text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-sora">
                     Address
                   </span>
-                  <p className="text-white text-[clamp(1.25rem,1.45vw,1.5rem)] font-light leading-snug font-sora tracking-tight">
+                  <p className="text-white text-2xl font-light leading-snug font-sora tracking-tight">
                     Sundarharaicha-4, Dulari
                   </p>
-                  <p className="text-white/70 text-[clamp(1rem,1.2vw,1.25rem)] font-light font-sora">
+                  <p className="text-white/70 text-xl font-light font-sora">
                     Morang, Nepal
                   </p>
                 </div>
@@ -183,7 +175,7 @@ const ScrollScaleVideo = () => {
                   Visit Hours
                 </span>
                 <p className="text-white text-base font-light font-sora tracking-tight">
-                  Sun – Fri · 8:00 AM – 5:00 PM
+                  Sun – Fri · 9:00 AM – 5:00 PM
                 </p>
               </div>
               <div className="shrink-0 w-11 h-11 rounded-full bg-white/5 border border-white/15 flex items-center justify-center backdrop-blur-sm">
@@ -197,12 +189,8 @@ const ScrollScaleVideo = () => {
         </motion.div>
 
         <motion.div
-          style={{
-            width: frameWidth,
-            height: frameHeight,
-            borderRadius: frameRadius,
-          }}
-          className="relative z-10 overflow-hidden group bg-black shadow-[0_40px_120px_rgba(0,0,0,0.45)]"
+          style={{ scale: frameScale, borderRadius: frameRadius }}
+          className="relative w-full h-full overflow-hidden group origin-center"
         >
 
           <video
@@ -447,7 +435,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
               {/* Branding */}
               <div className="hidden md:flex items-center gap-4 opacity-40">
                 <div className="w-[1px] h-4 bg-white" />
-                <span className="text-[10px] font-bold tracking-[0.3em] uppercase">Itahari International College Campus Film</span>
+                <span className="text-[10px] font-bold tracking-[0.3em] uppercase">IIC Campus Film</span>
               </div>
             </div>
           </div>
