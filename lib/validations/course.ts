@@ -1,12 +1,17 @@
 import { z } from 'zod';
+import { IMAGE_SOURCE_ERROR, isSafeImageSrc } from '../image-source';
+
+const imageSourceSchema = z.string().trim().refine(isSafeImageSrc, IMAGE_SOURCE_ERROR);
+const optionalImageSourceSchema = imageSourceSchema.optional().or(z.literal(''));
 
 export const courseSchema = z.object({
   title: z.string().min(5).max(100),
+  slug: z.string().min(1).optional(),
   subtitle: z.string().optional(),
   category: z.string().min(1),
   duration: z.string().min(1),
   description: z.string().min(10),
-  image: z.string().url(),
+  image: imageSourceSchema,
   level: z.string().optional(),
   featured: z.boolean().default(false),
   overview: z.string().optional(),
@@ -34,7 +39,7 @@ export const courseSchema = z.object({
     name: z.string(),
     role: z.string(),
     description: z.string().optional(),
-    image: z.string().optional(),
+    image: optionalImageSourceSchema,
     color: z.string().optional()
   })).optional(),
   quote: z.object({
@@ -44,12 +49,17 @@ export const courseSchema = z.object({
   projects: z.array(z.object({
     title: z.string(),
     cohort: z.string().optional(),
-    image: z.string().url().optional()
+    image: optionalImageSourceSchema
   })).optional(),
   faqs: z.array(z.object({
     question: z.string(),
     answer: z.string()
   })).optional()
+});
+
+export const courseUpdateSchema = courseSchema.omit({ featured: true }).partial().extend({
+  featured: z.boolean().optional(),
+  id: z.string().optional()
 });
 
 export type CourseInput = z.infer<typeof courseSchema>;

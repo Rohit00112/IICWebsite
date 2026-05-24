@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { toSafeImageSrc } from '@/lib/image-source';
 
 interface NewsItem {
   id: string;
@@ -55,12 +56,15 @@ export default function NewsTable({ initialNews }: { initialNews: NewsItem[] }) 
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-50">
-          {news.map((item) => (
+          {news.map((item) => {
+            const imageSrc = toSafeImageSrc(item.image);
+
+            return (
             <tr key={item.id} className="hover:bg-gray-50/50 group">
               <td className="px-8 py-6">
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-12 rounded-xl overflow-hidden shadow-sm flex-shrink-0 bg-gray-100">
-                    {item.image && <Image src={item.image} alt={item.title} fill sizes="(max-width: 768px) 100vw, 64px" className="object-cover" />}
+                    {imageSrc && <Image src={imageSrc} alt={item.title} fill sizes="(max-width: 768px) 100vw, 64px" className="object-cover" />}
                   </div>
                   <div>
                     <p className="font-bold text-[#1A2B56] line-clamp-1">{item.title}</p>
@@ -108,7 +112,8 @@ export default function NewsTable({ initialNews }: { initialNews: NewsItem[] }) 
                 </div>
               </td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </div>

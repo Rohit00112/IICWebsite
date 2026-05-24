@@ -113,19 +113,15 @@ const Footer = () => {
                   News & Events
                 </Link>
               </li>
-              <li>
-                <Link href="/portal" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
-                  Student Portal
-                </Link>
-              </li>
-              <li>
-                <Link href="/alumni" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
-                  Alumni Network
-                </Link>
-              </li>
+             
               <li>
                 <Link href="/contact" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
-                  Contact Support
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="https://innovation.iic.edu.np" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                  Innovation Lab
                 </Link>
               </li>
             </ul>

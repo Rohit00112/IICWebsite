@@ -1,5 +1,6 @@
 import dbConnect from './db';
 import News from '../models/News';
+import { toSafeImageSrc } from './image-source';
 
 // Helper to generate a slug from a title
 function generateSlug(title: string): string {
@@ -31,6 +32,37 @@ export interface NewsItem {
   author?: NewsAuthor;
 }
 
+interface NewsDocument {
+  _id: { toString(): string } | string;
+  category: NewsItem['category'];
+  date: string;
+  time?: string;
+  location?: string;
+  title: string;
+  description: string;
+  content: string;
+  image: string;
+  slug?: string;
+  featured: boolean;
+  author?: Partial<NewsAuthor>;
+}
+
+type NewsQuery = {
+  category?: string;
+  $or?: Array<{
+    title?: { $regex: string; $options: string };
+    description?: { $regex: string; $options: string };
+  }>;
+};
+
+interface ArchiveDocument {
+  _id: {
+    y: number;
+    m: number;
+  };
+  count: number;
+}
+
 import { revalidateTag } from 'next/cache';
 
 function safeRevalidateTag(tag: string) {
@@ -42,9 +74,11 @@ function safeRevalidateTag(tag: string) {
 }
 
 // Helper to convert Mongo document to clean plain object
-function mapNewsItem(doc: any): NewsItem {
+function mapNewsItem(doc: NewsDocument): NewsItem {
+  const id = doc._id.toString();
+
   return {
-    id: doc._id.toString(),
+    id,
     category: doc.category,
     date: doc.date,
     time: doc.time,
@@ -52,13 +86,13 @@ function mapNewsItem(doc: any): NewsItem {
     title: doc.title,
     description: doc.description,
     content: doc.content,
-    image: doc.image,
-    slug: doc.slug || doc._id.toString(),
+    image: toSafeImageSrc(doc.image, '/images/home/tower_block.png'),
+    slug: doc.slug || id,
     featured: doc.featured,
     author: {
       name: doc.author?.name || '',
       role: doc.author?.role || '',
-      avatar: doc.author?.avatar || ''
+      avatar: toSafeImageSrc(doc.author?.avatar)
     },
   };
 }
@@ -74,7 +108,7 @@ export async function getNewsById(id: string): Promise<NewsItem | null> {
   try {
     const item = await News.findById(id);
     return item ? mapNewsItem(item) : null;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -93,7 +127,7 @@ export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
       }
     }
     return item ? mapNewsItem(item) : null;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -135,7 +169,7 @@ export async function updateNews(id: string, data: Partial<NewsItem>): Promise<N
   if (data.content) {
     data.content = sanitizeHtml(data.content);
   }
-  const updatedItem = await News.findByIdAndUpdate(id, data, { new: true });
+  const updatedItem = await News.findByIdAndUpdate(id, data, { new: true, runValidators: true });
   safeRevalidateTag('news');
   return updatedItem ? mapNewsItem(updatedItem) : null;
 }
@@ -150,7 +184,7 @@ export async function deleteNews(id: string): Promise<boolean> {
 export async function filterNews(category: string, search: string): Promise<NewsItem[]> {
   await dbConnect();
   
-  let query: any = {};
+  const query: NewsQuery = {};
   
   // Category mapping
   if (category !== 'All') {
@@ -190,13 +224,14 @@ export async function getUpcomingEvents(limit = 4): Promise<UpcomingEvent[]> {
   const monthShort = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   return events
-    .map((doc: any) => {
+    .map((doc: NewsDocument) => {
       const d = new Date(doc.date);
+      const id = doc._id.toString();
       return {
         raw: d,
         item: {
-          id: doc._id.toString(),
-          slug: doc.slug || doc._id.toString(),
+          id,
+          slug: doc.slug || id,
           title: doc.title,
           time: doc.time,
           date: doc.date,
@@ -224,7 +259,7 @@ export async function getNewsArchive(limit = 6): Promise<ArchiveEntry[]> {
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December',
   ];
-  const docs = await News.aggregate([
+  const docs = await News.aggregate<ArchiveDocument>([
     {
       $group: {
         _id: {
@@ -237,7 +272,7 @@ export async function getNewsArchive(limit = 6): Promise<ArchiveEntry[]> {
     { $sort: { '_id.y': -1, '_id.m': -1 } },
     { $limit: limit },
   ]);
-  return docs.map((d: any) => ({
+  return docs.map((d) => ({
     monthIndex: d._id.m - 1,
     year: d._id.y,
     month: `${monthNames[d._id.m - 1]} ${d._id.y}`,
@@ -256,4 +291,3 @@ export async function getRelatedNews(category: string, currentId: string, limit 
   
   return news.map(mapNewsItem);
 }
-

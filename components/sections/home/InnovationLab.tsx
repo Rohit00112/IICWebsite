@@ -95,12 +95,10 @@ growth."
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             <div className="absolute bottom-10 left-10 right-10">
               <RevealText
-                text="Clubs & Societies"
+                text="Student Led Communities"
                 className="text-xl md:text-2xl font-bold text-white mb-2 font-sora"
               />
-              <p className="text-white/80 text-sm md:text-base">
-                Join over 20 active student-led organizations.
-              </p>
+              
             </div>
           </motion.div>
 
@@ -125,7 +123,7 @@ growth."
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-6 left-6 right-6">
                   <h4 className="text-base md:text-lg font-bold text-white font-sora">
-                    State-of-art Library
+                    Entrepreneurship & Research Support
                   </h4>
                 </div>
               </motion.div>
@@ -173,11 +171,9 @@ growth."
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-8 left-8 right-8">
                 <h4 className="text-lg md:text-xl font-bold text-white mb-1 font-sora">
-                  Cafeteria & Social Hub
+                  Learning Zones
                 </h4>
-                <p className="text-white/70 text-xs md:text-sm">
-                  The perfect place to unwind and network between classes.
-                </p>
+              
               </div>
             </motion.div>
           </div>

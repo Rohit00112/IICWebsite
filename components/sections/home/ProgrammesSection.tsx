@@ -31,7 +31,7 @@ const ProgrammesSection = () => {
       image: '/images/home/course1.png',
       bgColor: 'bg-[#126DA2]',
       tagColor: 'bg-[#0e567f]',
-      tags: ['Artificial Intelligence', 'Application Development', 'IoT'],
+      tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and Internet of Things'],
       parallax: y1
     },
     {
@@ -227,7 +227,7 @@ const ProgrammesSection = () => {
         <div className="max-w-3xl text-center flex flex-col items-center">
           <RevealText
             text="Starting your college journey is a meaningful experience shaped by growth, and we’re
-here to support you every step of the way, helping you feel confident and connected as
+here to support you in every step of the way, helping you feel confident and connected as
 you begin this new chapter."
             className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-10 px-4 justify-center"
           />

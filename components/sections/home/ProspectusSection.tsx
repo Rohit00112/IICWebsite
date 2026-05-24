@@ -101,30 +101,21 @@ const ProspectusSection = () => {
                 <select className="w-full bg-white/10 border border-white/10 rounded-2xl px-6 py-4 text-white/50 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all appearance-none cursor-pointer">
                   <option>Select a Program</option>
                   <option>BSc (Hons) Computing</option>
-                  <option>BBA (Hons)</option>
-                  <option>BSc (Hons) AI</option>
+                  <option>BBA (Hons) Business Administration</option>
                 </select>
               </div>
 
-              {/* Checklist */}
-              <div className="space-y-3 pt-2">
-                <div className="flex items-center gap-3 text-white/70">
-                  <div className="w-5 h-5 rounded-full bg-[#007a5e]/30 flex items-center justify-center text-[#2dd4bf]">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-sm md:text-base font-medium">Detailed module descriptions</span>
-                </div>
-                <div className="flex items-center gap-3 text-white/70">
-                  <div className="w-5 h-5 rounded-full bg-[#007a5e]/30 flex items-center justify-center text-[#2dd4bf]">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-sm md:text-base font-medium">Fee structures and scholarship info</span>
-                </div>
+              {/* add contact number  */}
+              <div className="space-y-2">
+                <label className="text-white/80 text-sm font-bold uppercase tracking-wider ml-1">Contact Number</label>
+                <input 
+                  type="tel" 
+                  placeholder="+977 9800000000"
+                  className="w-full bg-white/10 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all"
+                />
               </div>
+
+              
 
               {/* Submit Button */}
               <button 

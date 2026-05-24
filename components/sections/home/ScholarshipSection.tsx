@@ -39,11 +39,10 @@ const pillars = [
 interface EligibilityProps {
   intro: string;
   items: string[];
-  finePrint: string;
   defaultOpen?: boolean;
 }
 
-const EligibilityAccordion: React.FC<EligibilityProps> = ({ intro, items, finePrint, defaultOpen = false }) => {
+const EligibilityAccordion: React.FC<EligibilityProps> = ({ intro, items, defaultOpen = false }) => {
   const [open, setOpen] = useState(defaultOpen);
 
   return (
@@ -112,9 +111,7 @@ const EligibilityAccordion: React.FC<EligibilityProps> = ({ intro, items, finePr
                   </motion.li>
                 ))}
               </ul>
-              <p className="text-white/50 text-sm italic border-t border-[#5B8DEF]/20 pt-4">
-                {finePrint}
-              </p>
+             
             </div>
           </motion.div>
         )}
@@ -181,7 +178,7 @@ const ScholarshipSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-[#7FB3FF] text-[12px] md:text-[14px] font-bold tracking-[0.4em] uppercase mb-8 font-sora"
         >
-          Scholarships in Nepal
+          Scholarships at Itahari International College
         </motion.span>
 
         {/* Huge AAA letters */}
@@ -233,7 +230,7 @@ const ScholarshipSection = () => {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="text-2xl md:text-5xl font-black text-white tracking-tight uppercase font-sora text-center mb-6"
         >
-          Triple A Scholarships at Itahari International College
+          Triple A Scholarship at Itahari International College
         </motion.h2>
 
         <RevealText
@@ -300,10 +297,8 @@ const ScholarshipSection = () => {
           items={[
             'Good academic standing.',
             'At least 80% attendance in each module.',
-            'Timely payment of all the financial dues.',
             'Clean disciplinary record and exemplary behaviour.',
           ]}
-          finePrint="All applications must be made in the same year of an applicant's graduation date."
         />
 
         {/* ── DIVIDER ── */}
@@ -421,6 +416,8 @@ gradutae study at ING Colleges in Nepal."
           <p className="text-white/75 text-base md:text-[17px] leading-relaxed text-center">
             We aim to facilitate our student&apos;s <span className="text-white font-bold">professional and personal growth</span>.
           </p>
+          <p className="text-white/40 italic text-sm text-center mt-4">*Job Placement at one of the ING Companies</p>
+
         </motion.div>
 
         {/* ING Eligibility */}
@@ -431,7 +428,6 @@ gradutae study at ING Colleges in Nepal."
             'Completed and obtained a London Metropolitan University Undergraduate Degree with FIRST CLASS HONOURS from Itahari International College.',
             'Applying to pursue a full-time residential Postgraduate Degree at London Metropolitan University, UK.',
           ]}
-          finePrint="All applications must be made in the same year of an applicant's graduation date."
         />
       </div>
     </section>

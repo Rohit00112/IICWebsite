@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getNewsById, updateNews, deleteNews } from '../../../../lib/news';
-import { newsSchema } from '../../../../lib/validations/news';
+import { newsUpdateSchema } from '../../../../lib/validations/news';
 import { ZodError } from 'zod';
 import { getSession } from '../../../../lib/auth';
 
@@ -29,7 +29,7 @@ export async function PATCH(
   let session;
   try {
     session = await getSession();
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
   }
 
@@ -42,7 +42,7 @@ export async function PATCH(
     const body = await request.json();
     
     // Validate partial update with Zod
-    const validatedData = newsSchema.partial().parse(body);
+    const validatedData = newsUpdateSchema.parse(body);
     
     const updatedItem = await updateNews(id, validatedData);
     
@@ -71,7 +71,7 @@ export async function DELETE(
   let session;
   try {
     session = await getSession();
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
   }
 

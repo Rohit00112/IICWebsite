@@ -1,10 +1,10 @@
 import React from 'react';
-import { getAllNews } from '../../lib/news';
 import News from '../../models/News';
 import Course from '../../models/Course';
 import dbConnect from '../../lib/db';
 import Link from 'next/link';
 import NextImage from 'next/image';
+import { toSafeImageSrc } from '../../lib/image-source';
 
 const AdminDashboard = async () => {
   await dbConnect();
@@ -21,7 +21,7 @@ const AdminDashboard = async () => {
     <div className="space-y-12">
       <div>
         <h1 className="text-4xl font-black text-[#1A2B56] font-sora tracking-tight mb-2">Dashboard</h1>
-        <p className="text-gray-500 font-medium">Welcome back, Administrator. Here's what's happening at Itahari International College.</p>
+        <p className="text-gray-500 font-medium">Welcome back, Administrator. Here&apos;s what&apos;s happening at Itahari International College.</p>
       </div>
 
       {/* Stats Cards */}
@@ -68,23 +68,27 @@ const AdminDashboard = async () => {
             <Link href="/admin/news" className="text-sm font-bold text-[#21409A] hover:underline">View All</Link>
           </div>
           <div className="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden">
-            {latestNews.map((item, idx) => (
-              <div key={item._id.toString()} className={`p-6 flex items-center gap-6 ${idx !== latestNews.length - 1 ? 'border-b border-gray-50' : ''}`}>
-                <div className="w-16 h-12 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0 relative">
-                  {item.image && <NextImage src={item.image} alt="" fill sizes="64px" className="object-cover" />}
+            {latestNews.map((item, idx) => {
+              const imageSrc = toSafeImageSrc(item.image, '/images/home/tower_block.png');
+
+              return (
+                <div key={item._id.toString()} className={`p-6 flex items-center gap-6 ${idx !== latestNews.length - 1 ? 'border-b border-gray-50' : ''}`}>
+                  <div className="w-16 h-12 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0 relative">
+                    {imageSrc && <NextImage src={imageSrc} alt="" fill sizes="64px" className="object-cover" />}
+                  </div>
+                  <div className="flex-grow">
+                    <h3 className="font-bold text-[#1A2B56] text-sm mb-1">{item.title}</h3>
+                    <p className="text-xs text-gray-400 font-medium">{item.date} • {item.category}</p>
+                  </div>
+                  <Link 
+                    href={`/admin/news/${item._id}`}
+                    className="px-4 py-2 bg-gray-50 text-gray-400 text-xs font-bold rounded-lg hover:bg-[#21409A] hover:text-white"
+                  >
+                    Edit
+                  </Link>
                 </div>
-                <div className="flex-grow">
-                  <h3 className="font-bold text-[#1A2B56] text-sm mb-1">{item.title}</h3>
-                  <p className="text-xs text-gray-400 font-medium">{item.date} • {item.category}</p>
-                </div>
-                <Link 
-                  href={`/admin/news/${item._id}`}
-                  className="px-4 py-2 bg-gray-50 text-gray-400 text-xs font-bold rounded-lg hover:bg-[#21409A] hover:text-white"
-                >
-                  Edit
-                </Link>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

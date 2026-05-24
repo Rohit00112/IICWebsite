@@ -1,4 +1,7 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
+import { IMAGE_SOURCE_ERROR, isSafeImageSrc } from '../lib/image-source';
+
+const optionalImageSrc = (value?: string) => !value || isSafeImageSrc(value);
 
 const CourseSchema = new Schema({
   title: {
@@ -14,7 +17,13 @@ const CourseSchema = new Schema({
   category: String,
   duration: String,
   description: String,
-  image: String,
+  image: {
+    type: String,
+    validate: {
+      validator: optionalImageSrc,
+      message: IMAGE_SOURCE_ERROR,
+    },
+  },
   level: String,
   featured: {
     type: Boolean,
@@ -45,7 +54,13 @@ const CourseSchema = new Schema({
     name: String,
     role: String,
     description: String,
-    image: String,
+    image: {
+      type: String,
+      validate: {
+        validator: optionalImageSrc,
+        message: IMAGE_SOURCE_ERROR,
+      },
+    },
     color: String,
   }],
   quote: {
@@ -55,7 +70,13 @@ const CourseSchema = new Schema({
   projects: [{
     title: String,
     cohort: String,
-    image: String,
+    image: {
+      type: String,
+      validate: {
+        validator: optionalImageSrc,
+        message: IMAGE_SOURCE_ERROR,
+      },
+    },
   }],
   faqs: [{
     question: String,

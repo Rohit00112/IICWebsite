@@ -145,7 +145,7 @@ const ScrollScaleVideo = () => {
                   Visit Hours
                 </span>
                 <p className="text-white text-base font-light font-sora tracking-tight">
-                  Sun – Fri · 9:00 AM – 5:00 PM
+                  Sun – Fri · 8:00 AM – 5:00 PM
                 </p>
               </div>
               <div className="shrink-0 w-11 h-11 rounded-full bg-white/5 border border-white/15 flex items-center justify-center backdrop-blur-sm">

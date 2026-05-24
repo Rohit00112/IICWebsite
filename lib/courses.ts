@@ -1,5 +1,6 @@
 import dbConnect from './db';
 import Course from '../models/Course';
+import { toSafeImageSrc } from './image-source';
 
 export interface CourseItem {
   id: string;
@@ -55,6 +56,12 @@ export interface CourseItem {
   }[];
 }
 
+type CourseDocument = Partial<Omit<CourseItem, 'id'>> & {
+  _id?: unknown;
+  toObject?: (options: Record<string, boolean>) => CourseDocument;
+  learningOutcomes?: unknown[];
+};
+
 import { revalidateTag } from 'next/cache';
 
 function safeRevalidateTag(tag: string) {
@@ -65,21 +72,21 @@ function safeRevalidateTag(tag: string) {
   }
 }
 
-function mapCourse(doc: any): CourseItem {
+function mapCourse(doc: CourseDocument): CourseItem {
   const plain = typeof doc.toObject === 'function'
     ? doc.toObject({ depopulate: true, virtuals: false, flattenObjectIds: true, versionKey: false })
     : doc;
   const d = plain.details || {};
   const q = plain.quote || {};
   return {
-    id: plain._id?.toString?.() ?? String(plain._id),
-    title: plain.title,
+    id: String(plain._id ?? ''),
+    title: plain.title || '',
     subtitle: plain.subtitle || '',
-    slug: plain.slug,
-    category: plain.category,
-    duration: plain.duration,
-    description: plain.description,
-    image: plain.image,
+    slug: plain.slug || '',
+    category: plain.category || '',
+    duration: plain.duration || d.duration || '',
+    description: plain.description || '',
+    image: toSafeImageSrc(plain.image, '/images/courses/course-hero.png'),
     level: plain.level,
     featured: !!plain.featured,
     overview: plain.overview || '',
@@ -89,34 +96,34 @@ function mapCourse(doc: any): CourseItem {
       intake: d.intake || '',
       awardingBody: d.awardingBody || '',
     },
-    curriculum: (plain.curriculum || []).map((y: any) => ({
+    curriculum: (plain.curriculum || []).map((y) => ({
       title: y.title || '',
-      modules: (y.modules || []).map((m: any) => ({
+      modules: (y.modules || []).map((m) => ({
         name: m.name || '',
         description: m.description || '',
         credits: m.credits || '',
       })),
     })),
-    learningOutcomes: (plain.learningOutcomes || []).map((s: any) => String(s)),
-    careerOpportunities: (plain.careerOpportunities || []).map((c: any) => ({
+    learningOutcomes: (plain.learningOutcomes || []).map((s) => String(s)),
+    careerOpportunities: (plain.careerOpportunities || []).map((c) => ({
       title: c.title || '',
       description: c.description || '',
       color: c.color || '',
     })),
-    faculty: (plain.faculty || []).map((f: any) => ({
+    faculty: (plain.faculty || []).map((f) => ({
       name: f.name || '',
       role: f.role || '',
       description: f.description || '',
-      image: f.image || '',
+      image: toSafeImageSrc(f.image, '/images/common/iic_logo.png'),
       color: f.color || '',
     })),
     quote: { text: q.text || '', author: q.author || '' },
-    projects: (plain.projects || []).map((p: any) => ({
+    projects: (plain.projects || []).map((p) => ({
       title: p.title || '',
       cohort: p.cohort || '',
-      image: p.image || '',
+      image: toSafeImageSrc(p.image, '/images/course-details/course-details-hero.png'),
     })),
-    faqs: (plain.faqs || []).map((f: any) => ({
+    faqs: (plain.faqs || []).map((f) => ({
       question: f.question || '',
       answer: f.answer || '',
     })),
@@ -140,7 +147,7 @@ export async function getCourseById(id: string): Promise<CourseItem | null> {
   try {
     const item = await Course.findById(id);
     return item ? mapCourse(item) : null;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -162,7 +169,7 @@ export async function updateCourse(id: string, data: Partial<CourseItem>): Promi
   if (data.overview) {
     data.overview = sanitizeHtml(data.overview);
   }
-  const updatedItem = await Course.findByIdAndUpdate(id, data, { new: true });
+  const updatedItem = await Course.findByIdAndUpdate(id, data, { new: true, runValidators: true });
   safeRevalidateTag('courses');
   return updatedItem ? mapCourse(updatedItem) : null;
 }

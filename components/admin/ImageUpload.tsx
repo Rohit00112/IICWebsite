@@ -3,6 +3,7 @@
 import React from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
+import { toSafeImageSrc } from '@/lib/image-source';
 
 interface ImageUploadProps {
   value: string;
@@ -10,6 +11,12 @@ interface ImageUploadProps {
   onRemove: () => void;
   label?: string;
 }
+
+type CloudinaryUploadResult = {
+  info?: {
+    secure_url?: unknown;
+  };
+};
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   value,
@@ -19,6 +26,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 }) => {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const previewSrc = toSafeImageSrc(value);
 
   const restoreScroll = () => {
     if (typeof document === 'undefined') return;
@@ -29,8 +37,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     document.body.style.width = '';
   };
 
-  const onSuccess = (result: any) => {
-    const url = result?.info?.secure_url;
+  const onSuccess = (result: unknown) => {
+    const url = (result as CloudinaryUploadResult)?.info?.secure_url;
     if (typeof url === 'string') {
       onChange(url);
     } else {
@@ -84,11 +92,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       </div>
 
       <div className="flex items-center gap-4">
-        {value ? (
+        {previewSrc ? (
           <div className="relative w-40 h-40 rounded-2xl overflow-hidden border-2 border-[#eef2f6]">
             <Image
               fill
-              src={value}
+              src={previewSrc}
               alt="Uploaded image"
               className="object-cover"
             />

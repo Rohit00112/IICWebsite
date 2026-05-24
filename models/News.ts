@@ -1,4 +1,7 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
+import { IMAGE_SOURCE_ERROR, isSafeImageSrc } from '../lib/image-source';
+
+const optionalImageSrc = (value?: string) => !value || isSafeImageSrc(value);
 
 const NewsSchema = new Schema({
   category: {
@@ -35,6 +38,10 @@ const NewsSchema = new Schema({
   image: {
     type: String,
     required: [true, 'Please provide an image URL'],
+    validate: {
+      validator: isSafeImageSrc,
+      message: IMAGE_SOURCE_ERROR,
+    },
   },
   featured: {
     type: Boolean,
@@ -43,7 +50,13 @@ const NewsSchema = new Schema({
   author: {
     name: String,
     role: String,
-    avatar: String,
+    avatar: {
+      type: String,
+      validate: {
+        validator: optionalImageSrc,
+        message: IMAGE_SOURCE_ERROR,
+      },
+    },
   },
 }, {
   timestamps: true,
