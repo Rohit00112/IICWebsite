@@ -83,18 +83,18 @@ const Navbar = () => {
               animate={{ height: 'auto', opacity: 1, y: 0 }}
               exit={{ height: 0, opacity: 0, y: 20 }}
               transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-              className="pointer-events-auto bg-[#141414]/75 backdrop-blur-[32px] border border-white/10 shadow-2xl w-[min(360px,calc(100vw-1.5rem))] max-h-[min(76svh,640px)] rounded-[28px] overflow-hidden flex flex-col mb-3"
+              className="pointer-events-auto bg-[#141414]/75 backdrop-blur-[32px] border border-white/10 shadow-2xl w-[min(360px,calc(100vw-1.5rem))] max-h-[calc(100svh_-_6.5rem_-_env(safe-area-inset-bottom))] rounded-[28px] overflow-hidden flex flex-col mb-3"
             >
-              <div className="px-6 sm:px-8 pt-7 sm:pt-8 pb-5 sm:pb-6 flex min-h-0 flex-col overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-5 sm:pb-6 flex min-h-0 max-h-[calc(100svh_-_6.5rem_-_env(safe-area-inset-bottom))] flex-col overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {/* Header Label */}
-                <div className="text-white/30 text-[7px] font-bold uppercase tracking-[0.4em] mb-5 sm:mb-6">
+                <div className="text-white/30 text-[7px] font-bold uppercase tracking-[0.4em] mb-4 sm:mb-6">
                   Menu
                 </div>
 
                 <ul
                   id="main-menu"
                   role="menu"
-                  className="flex flex-col gap-0 items-start mb-6 sm:mb-8"
+                  className="flex flex-col gap-1 items-start mb-5 sm:mb-7"
                 >
                   {navLinks.map((link, index) => (
                     <motion.li
@@ -110,35 +110,21 @@ const Navbar = () => {
                         href={link.href}
                         role="menuitem"
                         onClick={() => setIsMenuOpen(false)}
-                        className="group relative block py-0.5 overflow-hidden focus-visible:outline-none"
+                        className="group relative block py-0.5 focus-visible:outline-none"
                       >
-                        <div className="relative h-[38px] overflow-hidden">
-                          <motion.div
-                            animate={{
-                              y: hoveredIndex === index ? '-38px' : '0px'
-                            }}
-                            transition={{
-                              duration: 0.4,
-                              ease: [0.76, 0, 0.24, 1]
-                            }}
-                            className="flex flex-col h-[76px]"
-                          >
-                            <span className={`text-[22px] sm:text-[24px] font-medium tracking-tight h-[38px] flex items-center transition-all duration-300 ${hoveredIndex !== null && hoveredIndex !== index ? 'text-white/20' : 'text-white'
-                              }`}>
-                              {link.name}
-                            </span>
-                            <span className="text-[22px] sm:text-[24px] font-medium tracking-tight h-[38px] flex items-center text-white">
-                              {link.name}
-                            </span>
-                          </motion.div>
-                        </div>
+                        <span
+                          className={`block text-[clamp(20px,4.2svh,24px)] font-medium leading-[1.25] tracking-tight transition-all duration-300 group-hover:translate-x-1 ${hoveredIndex !== null && hoveredIndex !== index ? 'text-white/20' : 'text-white'
+                            }`}
+                        >
+                          {link.name}
+                        </span>
                       </Link>
                     </motion.li>
                   ))}
                 </ul>
 
                 {/* Footer Info Section */}
-                <div className="flex flex-col gap-1 mb-6 sm:mb-8">
+                <div className="flex flex-col gap-1 mb-5 sm:mb-7">
                   <div className="flex justify-between items-center">
                     <span className="text-white/30 text-[10px] font-medium">News</span>
                     <span className="text-white/80 text-[10px] font-medium">Events & Updates</span>
@@ -150,8 +136,8 @@ const Navbar = () => {
                 </div>
 
                 {/* CTA Button */}
-                <button className="w-full py-3 bg-[#21409A] border border-white/5 rounded-lg text-white text-[9px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
-                  <span>Schedule a Campus tour</span>
+                <button className="w-full min-h-11 shrink-0 px-4 py-3 bg-[#21409A] border border-white/5 rounded-lg text-white text-[9px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
+                  <span className="truncate">Schedule a Campus tour</span>
                   <span className="text-base opacity-40">→</span>
                 </button>
               </div>
@@ -237,4 +223,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
