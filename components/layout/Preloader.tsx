@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { animate, motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
 const Preloader = () => {
@@ -9,24 +9,18 @@ const Preloader = () => {
   const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
-    // Percentage counter logic
-    const interval = setInterval(() => {
-      setPercentage((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 1;
-      });
-    }, 20);
+    const ctrl = animate(0, 100, {
+      duration: 0.9,
+      ease: [0.4, 0, 0.2, 1],
+      onUpdate: (v) => setPercentage(Math.round(v)),
+    });
 
-    // Auto-hide after animation completes
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 4000);
+    }, 1600);
 
     return () => {
-      clearInterval(interval);
+      ctrl.stop();
       clearTimeout(timer);
     };
   }, []);
@@ -41,20 +35,20 @@ const Preloader = () => {
           key="preloader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, delay: 1.3 }}
+          transition={{ duration: 0.3, delay: 0.7 }}
           className="fixed inset-0 z-[9999] bg-white flex items-center justify-center overflow-hidden"
         >
           {/* Split panels — invisible during load, slide apart on exit */}
           <motion.div
             initial={{ x: 0 }}
             exit={{ x: '-101%' }}
-            transition={{ duration: 1.4, ease: [0.83, 0, 0.17, 1], delay: 0.1 }}
+            transition={{ duration: 0.7, ease: [0.83, 0, 0.17, 1] }}
             className="absolute inset-y-0 left-0 w-1/2 z-10 bg-white will-change-transform"
           />
           <motion.div
             initial={{ x: 0 }}
             exit={{ x: '101%' }}
-            transition={{ duration: 1.4, ease: [0.83, 0, 0.17, 1], delay: 0.1 }}
+            transition={{ duration: 0.7, ease: [0.83, 0, 0.17, 1] }}
             className="absolute inset-y-0 right-0 w-1/2 z-10 bg-white will-change-transform"
           />
 
@@ -119,9 +113,9 @@ const Preloader = () => {
                         key={cIdx}
                         initial={{ y: '100%' }}
                         animate={{ y: 0 }}
-                        transition={{ 
-                          duration: 0.5, 
-                          delay: 1 + (wIdx * 0.1) + (cIdx * 0.03),
+                        transition={{
+                          duration: 0.3,
+                          delay: 0.15 + (wIdx * 0.06) + (cIdx * 0.015),
                           ease: "easeOut"
                         }}
                         className="text-[#21409A] text-[10px] md:text-xs font-black tracking-[0.2em] uppercase"

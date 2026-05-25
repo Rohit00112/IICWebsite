@@ -89,7 +89,6 @@ export default function PageTransition({ children }: { children: ReactNode }) {
           style={{
             backfaceVisibility: 'hidden',
             transformOrigin: 'center top',
-            willChange: 'transform',
           }}
         >
           <FrozenRoute>{children}</FrozenRoute>
