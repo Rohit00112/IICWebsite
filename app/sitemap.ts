@@ -14,6 +14,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/news',
     '/life-at-iic',
     '/admissions',
+    '/privacy-policy',
+    '/terms-of-service',
   ];
 
   const staticEntries = staticRoutes.map((route) => ({
@@ -50,4 +52,3 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return staticEntries;
   }
 }
-

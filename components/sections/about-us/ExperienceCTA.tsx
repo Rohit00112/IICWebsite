@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
@@ -33,20 +34,22 @@ const ExperienceCTA = () => {
             translateY={24}
             duration={700}
           >
-            <motion.button
+            <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-10 py-5 bg-white text-[#004225] font-bold rounded-xl shadow-xl transition-all duration-300 font-sora w-full sm:w-auto"
             >
-              Schedule a Campus Tour
-            </motion.button>
-            <motion.button
+              <Link href="/contact" className="inline-flex justify-center px-10 py-5 bg-white text-[#004225] font-bold rounded-xl shadow-xl transition-all duration-300 font-sora w-full sm:w-auto">
+                Schedule a Campus Tour
+              </Link>
+            </motion.div>
+            <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-10 py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white/10 transition-all duration-300 font-sora w-full sm:w-auto"
             >
-              Start Your Application
-            </motion.button>
+              <Link href="/admissions" className="inline-flex justify-center px-10 py-5 bg-transparent border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white/10 transition-all duration-300 font-sora w-full sm:w-auto">
+                Start Your Application
+              </Link>
+            </motion.div>
           </AnimeStagger>
         </motion.div>
       </div>

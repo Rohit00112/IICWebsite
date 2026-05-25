@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import NewsDetailHero from '../../../components/sections/news/NewsDetailHero';
 import NewsDetailContent from '../../../components/sections/news/NewsDetailContent';
-import PageTransition from '../../../components/layout/PageTransition';
 import { getNewsBySlug, getRelatedNews } from '../../../lib/news';
 import { notFound } from 'next/navigation';
 import RelatedNews from '../../../components/sections/news/RelatedNews';
@@ -94,7 +93,7 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
   ];
 
   return (
-    <PageTransition>
+    <>
       <BreadcrumbSchema items={breadcrumbs} />
       <script
         type="application/ld+json"
@@ -105,7 +104,7 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
         <NewsDetailContent item={item} />
         <RelatedNews items={relatedNews} />
       </main>
-    </PageTransition>
+    </>
   );
 };
 

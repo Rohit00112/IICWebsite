@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import Magnetic from '../../effects/Magnetic';
 import Tilt from '../../effects/Tilt';
 
@@ -42,8 +43,8 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
   const [openAccordion, setOpenAccordion] = useState<string | null>('requirements');
 
   const resources = [
-    { name: 'Download Offline Form (PDF)', icon: <DownloadIcon />, gated: false },
-    { name: 'Download College Brochure', icon: <BookIcon />, gated: true },
+    { name: 'Download Offline Form (PDF)', icon: <DownloadIcon />, gated: false, href: 'mailto:admissions@iic.edu.np?subject=Offline%20application%20form%20request' },
+    { name: 'Download College Brochure', icon: <BookIcon />, gated: true, href: 'https://iic.edu.np/pdf/iic_brochure.pdf' },
   ];
 
   const sidebarLinks = [
@@ -78,18 +79,13 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
           <div className="flex flex-col gap-3">
             {resources.map((res) => {
               const locked = res.gated && !isSubmitted;
-              return (
-                <button
-                  key={res.name}
-                  disabled={locked}
-                  aria-disabled={locked}
-                  title={locked ? 'Submit your application to unlock the brochure' : undefined}
-                  className={`group w-full flex items-center justify-between p-4 border rounded-2xl transition-all duration-300 ${
-                    locked
-                      ? 'bg-gray-50/50 border-transparent cursor-not-allowed opacity-60'
-                      : 'bg-gray-50/50 hover:bg-white border-transparent hover:border-gray-100'
-                  }`}
-                >
+              const resourceClassName = `group w-full flex items-center justify-between p-4 border rounded-2xl transition-all duration-300 ${
+                locked
+                  ? 'bg-gray-50/50 border-transparent cursor-not-allowed opacity-60'
+                  : 'bg-gray-50/50 hover:bg-white border-transparent hover:border-gray-100'
+              }`;
+              const resourceContent = (
+                <>
                   <div className="flex items-center gap-3">
                     <span className={`transition-all ${locked ? 'opacity-40' : 'opacity-40 group-hover:opacity-100 group-hover:text-[#21409A]'}`}>{res.icon}</span>
                     <span className={`text-[13px] font-bold transition-colors ${locked ? 'text-gray-400' : 'text-gray-600 group-hover:text-[#1a1a1a]'}`}>{res.name}</span>
@@ -100,7 +96,34 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
                       Locked
                     </span>
                   )}
-                </button>
+                </>
+              );
+
+              if (locked) {
+                return (
+                  <button
+                    key={res.name}
+                    type="button"
+                    disabled
+                    aria-disabled="true"
+                    title="Submit your application to unlock the brochure"
+                    className={resourceClassName}
+                  >
+                    {resourceContent}
+                  </button>
+                );
+              }
+
+              return (
+                <a
+                  key={res.name}
+                  href={res.href}
+                  target={res.href.startsWith('http') ? '_blank' : undefined}
+                  rel={res.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className={resourceClassName}
+                >
+                  {resourceContent}
+                </a>
               );
             })}
           </div>
@@ -143,9 +166,9 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
                           </li>
                         ))}
                       </ul>
-                      <a href="#" className="text-[12px] font-bold text-[#21409A] flex items-center gap-2 mt-4 hover:translate-x-1 transition-transform">
+                      <Link href="/courses" className="text-[12px] font-bold text-[#21409A] flex items-center gap-2 mt-4 hover:translate-x-1 transition-transform">
                         View detailed program requirements →
-                      </a>
+                      </Link>
                     </div>
                   </motion.div>
                 )}
@@ -191,20 +214,20 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
 
             <div className="flex flex-col gap-3">
               <Magnetic strength={0.1}>
-                <button className="w-full py-3.5 bg-[#21409A] text-white rounded-xl text-[13px] font-bold flex items-center justify-center gap-3 shadow-xl shadow-blue-900/10 hover:brightness-110 transition-all">
+                <a href="tel:+9779869258083" className="w-full py-3.5 bg-[#21409A] text-white rounded-xl text-[13px] font-bold flex items-center justify-center gap-3 shadow-xl shadow-blue-900/10 hover:brightness-110 transition-all">
                   <span className="text-white/70">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                   </span>
                   <span>Request a Callback</span>
-                </button>
+                </a>
               </Magnetic>
               <Magnetic strength={0.1}>
-                <button className="w-full py-3.5 bg-white text-[#21409A] border border-gray-100 rounded-xl text-[13px] font-bold flex items-center justify-center gap-3 hover:bg-gray-50 transition-all">
+                <a href="mailto:admissions@iic.edu.np" className="w-full py-3.5 bg-white text-[#21409A] border border-gray-100 rounded-xl text-[13px] font-bold flex items-center justify-center gap-3 hover:bg-gray-50 transition-all">
                   <span className="text-[#21409A]/60">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                   </span>
                   <span>Email Admissions</span>
-                </button>
+                </a>
               </Magnetic>
             </div>
           </div>

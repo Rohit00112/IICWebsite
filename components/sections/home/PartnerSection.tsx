@@ -155,7 +155,9 @@ our university and city."
           />
           <Magnetic strength={0.2}>
             <a
-              href="#"
+              href="https://www.londonmet.ac.uk/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-[#74C044] font-bold text-base md:text-lg underline underline-offset-8 decoration-2 hover:opacity-80 transition-colors inline-block"
             >
               Learn More
@@ -168,4 +170,3 @@ our university and city."
 };
 
 export default PartnerSection;
-

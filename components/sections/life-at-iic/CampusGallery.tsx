@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
 import Image from 'next/image';
 
 const sections = [
@@ -51,7 +51,7 @@ const sections = [
   }
 ];
 
-const Slide = ({ section, index, scrollYProgress }: { section: typeof sections[0], index: number, scrollYProgress: any }) => {
+const Slide = ({ section, index, scrollYProgress }: { section: typeof sections[0], index: number, scrollYProgress: MotionValue<number> }) => {
   // Slide 0 is always at y=0.
   // Slide 1 comes in from 100% to 0% between progress 0.2 and 0.5.
   // Slide 2 comes in from 100% to 0% between progress 0.6 and 0.9.
@@ -120,6 +120,7 @@ const CampusGallery = () => {
 
   return (
     <section 
+      id="campus-gallery"
       ref={containerRef} 
       className="relative w-full h-[300vh] bg-[#1a1a1a]"
       style={{ isolation: 'isolate' }}

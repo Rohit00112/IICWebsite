@@ -5,7 +5,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useReducedMotion } from 'framer-motion';
 
-function GridParticles({ count = 1000, shouldReduceMotion }: { count?: number; shouldReduceMotion: boolean | null }) {
+function GridParticles({ count = 400, shouldReduceMotion }: { count?: number; shouldReduceMotion: boolean | null }) {
   const points = useRef<THREE.Points>(null!);
 
   // Create static particle positions in a grid-like structure but with noise
@@ -69,7 +69,11 @@ export default function TechGrid() {
 
   return (
     <div className="absolute inset-0 -z-10 pointer-events-none opacity-30">
-      <Canvas camera={{ position: [0, 0, 2], fov: 75 }}>
+      <Canvas
+        camera={{ position: [0, 0, 2], fov: 75 }}
+        dpr={[1, 1.25]}
+        gl={{ antialias: false, powerPreference: 'high-performance' }}
+      >
         <GridParticles shouldReduceMotion={shouldReduceMotion} />
       </Canvas>
     </div>

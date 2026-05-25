@@ -83,6 +83,9 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
     return sanitizeHtml(overviewHtml);
   }, [course.overview, course.title]);
 
+  const admissionsHref = `/admissions?program=${encodeURIComponent(course.title)}`;
+  const brochureHref = 'https://iic.edu.np/pdf/iic_brochure.pdf';
+
   return (
     <main className="bg-white">
       {/* Hero Section */}
@@ -130,17 +133,18 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           </motion.p>
 
           <Magnetic strength={0.25}>
-            <motion.button
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8 }}
-              className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#21409A] text-white font-bold rounded-xl shadow-2xl hover:bg-[#1a337e] transition-all"
             >
-              <span className="text-sm">Apply Now</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </motion.button>
+              <Link href={admissionsHref} className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#21409A] text-white font-bold rounded-xl shadow-2xl hover:bg-[#1a337e] transition-all">
+                <span className="text-sm">Apply Now</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+            </motion.div>
           </Magnetic>
         </div>
       </section>
@@ -324,16 +328,16 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
 
               <div className="space-y-4">
                 <Magnetic strength={0.2}>
-                  <button className="w-full py-4 bg-[#21409A] text-white font-bold rounded-2xl shadow-xl hover:bg-[#1a337e] transition-all transform hover:-y-1">
+                  <Link href={admissionsHref} className="block w-full py-4 bg-[#21409A] text-white text-center font-bold rounded-2xl shadow-xl hover:bg-[#1a337e] transition-all transform hover:-y-1">
                     Apply for this Program
-                  </button>
+                  </Link>
                 </Magnetic>
-                <button className="w-full py-4 bg-white text-[#1a1a1a] font-bold rounded-2xl shadow-md border border-gray-100 flex items-center justify-center gap-3 hover:bg-gray-50 transition-all">
+                <a href={brochureHref} target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-white text-[#1a1a1a] font-bold rounded-2xl shadow-md border border-gray-100 flex items-center justify-center gap-3 hover:bg-gray-50 transition-all">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M7 10l5 5m0 0l5-5m-5 5V3" />
                   </svg>
                   Download Brochure
-                </button>
+                </a>
               </div>
             </div>
           </div>

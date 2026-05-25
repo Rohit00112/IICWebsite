@@ -6,6 +6,13 @@ import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
 
 const ProspectusSection = () => {
+  const brochureUrl = 'https://iic.edu.np/pdf/iic_brochure.pdf';
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    window.open(brochureUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <section id="admission" className="relative w-full py-24 md:py-32 bg-[#0a1931] overflow-hidden">
       <AnimeStagger
@@ -77,7 +84,7 @@ const ProspectusSection = () => {
             </div>
 
             {/* Form Fields */}
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="space-y-2">
                 <label className="text-white/80 text-sm font-bold uppercase tracking-wider ml-1">Full Name</label>
                 <input 

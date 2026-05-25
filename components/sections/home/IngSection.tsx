@@ -51,7 +51,9 @@ const IngSection = () => {
               Transforming Lives Through Innovation & Education with ingenuity at the forefront of all our decisions, we strive to become a contributive factor in the betterment of Nepal and society in general by providing practical career centric education and innovations in technology. ING houses state-of-the-art organizations in a variety of industries which include Tech, Education and More.
             </p>
             <a
-              href="#"
+              href="https://ing.com.np/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-[#76bc43] text-lg font-bold border-b-2 border-[#76bc43] pb-1 hover:text-[#007a5e] hover:border-[#007a5e] transition-colors font-sora"
             >
               Learn More

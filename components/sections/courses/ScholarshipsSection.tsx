@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
@@ -52,12 +53,12 @@ const ScholarshipsSection = () => {
                   <p className="text-gray-400 text-xs leading-relaxed mb-10 font-medium">
                     Awarded to top performers in their previous academic qualifications.
                   </p>
-                  <button className="mt-auto w-full py-4 bg-[#1a1a1a] text-white rounded-xl font-bold text-[12px] hover:bg-[#21409A] transition-colors flex items-center justify-center gap-2">
+                  <Link href="/admissions" className="mt-auto w-full py-4 bg-[#1a1a1a] text-white rounded-xl font-bold text-[12px] hover:bg-[#21409A] transition-colors flex items-center justify-center gap-2">
                     Learn More
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                     </svg>
-                  </button>
+                  </Link>
                 </div>
               </Tilt>
             </motion.div>
@@ -79,9 +80,9 @@ const ScholarshipsSection = () => {
                     Not sure which program is right for you? Our admissions team is here to help
                     you navigate your options.
                   </p>
-                  <button className="mt-auto w-full py-4 border-2 border-[#1a1a1a]/10 bg-white/80 text-[#1a1a1a] rounded-xl font-bold text-[12px] hover:border-[#21409A] hover:text-[#21409A] transition-all">
+                  <Link href="/contact" className="mt-auto w-full py-4 border-2 border-[#1a1a1a]/10 bg-white/80 text-[#1a1a1a] text-center rounded-xl font-bold text-[12px] hover:border-[#21409A] hover:text-[#21409A] transition-all">
                     Contact Admissions
-                  </button>
+                  </Link>
                 </div>
               </Tilt>
             </motion.div>

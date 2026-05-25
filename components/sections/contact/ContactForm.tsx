@@ -496,7 +496,7 @@ const ContactForm = () => {
                 </Magnetic>
 
                 <p className="text-[11px] text-gray-400 text-center font-medium leading-relaxed">
-                  By submitting, you agree to our <Link href="#" className="underline hover:text-[#21409A]">Privacy Policy</Link>. We never share your data.
+                  By submitting, you agree to our <Link href="/privacy-policy" className="underline hover:text-[#21409A]">Privacy Policy</Link>. We never share your data.
                 </p>
               </form>
             </motion.div>

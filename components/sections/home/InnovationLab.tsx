@@ -62,7 +62,10 @@ growth."
             />
           </div>
           <Magnetic strength={0.25}>
-            <motion.button
+            <motion.a
+              href="https://innovation.iic.edu.np"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-[#74C044] text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-3 hover:opacity-90 transition-all shadow-lg hover:shadow-xl shrink-0"
@@ -71,7 +74,7 @@ growth."
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
-            </motion.button>
+            </motion.a>
           </Magnetic>
         </div>
 
@@ -184,4 +187,3 @@ growth."
 };
 
 export default InnovationLab;
-

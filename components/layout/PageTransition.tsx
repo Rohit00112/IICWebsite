@@ -1,13 +1,13 @@
 'use client';
 
-import { motion, AnimatePresence, Transition } from 'framer-motion';
+import { AnimatePresence, motion, Transition, useReducedMotion, Variants } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { ReactNode, useContext, useRef, useState, useEffect } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { LayoutRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 function FrozenRoute({ children }: { children: ReactNode }) {
   const context = useContext(LayoutRouterContext);
-  const frozen = useRef(context).current;
+  const [frozen] = useState(context);
 
   return (
     <LayoutRouterContext.Provider value={frozen}>
@@ -16,97 +16,89 @@ function FrozenRoute({ children }: { children: ReactNode }) {
   );
 }
 
-const transition: Transition = { 
-  duration: 0.7, 
-  ease: [0.33, 1, 0.68, 1] 
+const pageTransition: Transition = {
+  duration: 0.98,
+  ease: [0.77, 0, 0.175, 1],
+};
+
+const shadeTransition: Transition = {
+  duration: 0.98,
+  ease: [0.645, 0.045, 0.355, 1],
+};
+
+const pageVariants: Variants = {
+  enter: {
+    y: '100svh',
+    scale: 1,
+    opacity: 1,
+    zIndex: 2,
+  },
+  center: {
+    y: 0,
+    scale: 1,
+    opacity: 1,
+    zIndex: 2,
+    transition: pageTransition,
+  },
+  exit: {
+    y: '-8svh',
+    scale: 0.985,
+    opacity: 1,
+    zIndex: 0,
+    transition: pageTransition,
+  },
+};
+
+const shadeVariants: Variants = {
+  enter: {
+    opacity: 0,
+  },
+  center: {
+    opacity: 0,
+    transition: { duration: 0.35, ease: 'linear' },
+  },
+  exit: {
+    opacity: 0.34,
+    transition: shadeTransition,
+  },
 };
 
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const nbOfSlices = 20;
-  const [isFirstMount, setIsFirstMount] = useState(true);
+  const shouldReduceMotion = useReducedMotion();
+  const isHomeRoute = pathname === '/';
 
-  useEffect(() => {
-    setIsFirstMount(false);
-  }, []);
-
-  // Skip transitions for home page - only preloader there
-  if (pathname === '/') {
-    return <FrozenRoute>{children}</FrozenRoute>;
+  if (shouldReduceMotion) {
+    return (
+      <div key={pathname} className="relative min-h-screen bg-white overflow-x-clip">
+        <FrozenRoute>{children}</FrozenRoute>
+      </div>
+    );
   }
 
   return (
-    <AnimatePresence mode="wait">
-      <div key={pathname} className="relative min-h-screen bg-white">
-        
-        {/* Content: Digital Distortion Reveal */}
+    <div className="relative isolate min-h-screen bg-white overflow-x-clip">
+      <AnimatePresence mode="popLayout" initial={false}>
         <motion.div
-          initial={{ opacity: 0, scale: 1.1, filter: 'blur(10px) contrast(1.5)' }}
-          animate={{ opacity: 1, scale: 1, filter: 'blur(0px) contrast(1)' }}
-          exit={{ opacity: 0, scale: 0.9, filter: 'blur(10px) contrast(1.5)' }}
-          transition={transition}
+          key={pathname}
+          variants={pageVariants}
+          initial={isHomeRoute ? false : 'enter'}
+          animate="center"
+          exit="exit"
+          className="relative min-h-screen bg-white overflow-x-clip"
+          style={{
+            backfaceVisibility: 'hidden',
+            transformOrigin: 'center top',
+            willChange: 'transform',
+          }}
         >
           <FrozenRoute>{children}</FrozenRoute>
+          <motion.div
+            variants={shadeVariants}
+            className="pointer-events-none absolute inset-0 z-50 bg-black"
+          />
         </motion.div>
-
-        {/* The Barcode Shutter: 20 Thin Vertical Slices */}
-        <div className="fixed inset-0 z-[9999] pointer-events-none flex w-screen h-screen overflow-hidden">
-          {[...Array(nbOfSlices)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: 0 }}
-              exit={{ scaleY: 1 }}
-              transition={{
-                ...transition,
-                delay: Math.sin(i * 0.2) * 0.15 + 0.1,
-              }}
-              className="relative h-full w-full bg-white border-x border-gray-100/30"
-              style={{
-                backdropFilter: 'blur(20px)',
-                boxShadow: '0 0 40px rgba(0,0,0,0.05)',
-                transformOrigin: i % 2 === 0 ? 'top' : 'bottom'
-              }}
-            >
-              {/* Inner Accent Line */}
-              <div className="absolute inset-x-0 top-0 h-1 bg-[#21409A]/10" />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Entrance Wave: Reverse Shutter */}
-        <div className="fixed inset-0 z-[9999] pointer-events-none flex w-screen h-screen overflow-hidden">
-          {[...Array(nbOfSlices)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={isFirstMount ? { scaleY: 0 } : { scaleY: 1 }}
-              animate={{ scaleY: 0 }}
-              exit={{ scaleY: 0 }}
-              transition={{
-                ...transition,
-                delay: Math.cos(i * 0.2) * 0.15 + 0.1,
-              }}
-              className="relative h-full w-full bg-white border-x border-gray-100/30"
-              style={{
-                backdropFilter: 'blur(20px)',
-                boxShadow: '0 0 40px rgba(0,0,0,0.05)',
-                transformOrigin: i % 2 === 0 ? 'bottom' : 'top'
-              }}
-            >
-              <div className="absolute inset-x-0 bottom-0 h-1 bg-[#76bc43]/10" />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Flash Burst */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.4, 0] }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
-          className="fixed inset-0 z-[10000] bg-[#21409A]/5 pointer-events-none mix-blend-color-burn"
-        />
-      </div>
-    </AnimatePresence>
+      </AnimatePresence>
+    </div>
   );
 }

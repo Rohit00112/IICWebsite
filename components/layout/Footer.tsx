@@ -49,14 +49,16 @@ const Footer = () => {
             {/* Social Icons */}
             <div className="flex gap-4">
               {[
-                { name: 'facebook', path: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z' },
-                { name: 'twitter', path: 'M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z' },
-                { name: 'instagram', path: 'M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z M17.5 6.5h.01M7.5 2h9A5.5 5.5 0 0122 7.5v9a5.5 5.5 0 01-5.5 5.5h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2z' },
-                { name: 'linkedin', path: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z M2 9h4v12H2z M4 2a2 2 0 110 4 2 2 0 010-4z' }
+                { name: 'facebook', href: 'https://www.facebook.com/IICNepal/', path: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z' },
+                { name: 'instagram', href: 'https://www.instagram.com/iic.nepal/', path: 'M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z M17.5 6.5h.01M7.5 2h9A5.5 5.5 0 0122 7.5v9a5.5 5.5 0 01-5.5 5.5h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2z' },
+                { name: 'linkedin', href: 'https://np.linkedin.com/school/itahari-international-college/', path: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z M2 9h4v12H2z M4 2a2 2 0 110 4 2 2 0 010-4z' }
               ].map((social) => (
                 <Magnetic key={social.name} strength={0.4}>
                   <Link
-                    href="#"
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    prefetch={false}
                     className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#007a5e] hover:border-[#007a5e] transition-all duration-300 group"
                   >
                     <span className="sr-only">{social.name}</span>
@@ -120,7 +122,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="https://innovation.iic.edu.np" className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
+                <Link href="https://innovation.iic.edu.np" target="_blank" rel="noopener noreferrer" prefetch={false} className="text-white/60 hover:text-[#007a5e] transition-colors text-base font-medium inline-block">
                   Innovation Lab
                 </Link>
               </li>
@@ -153,8 +155,8 @@ const Footer = () => {
             © 2026 Itahari International College. All rights reserved.
           </p>
           <div className="flex gap-8">
-            <Link href="#" className="text-white/40 hover:text-white transition-colors text-sm font-sora">Privacy Policy</Link>
-            <Link href="#" className="text-white/40 hover:text-white transition-colors text-sm font-sora">Terms of Service</Link>
+            <Link href="/privacy-policy" className="text-white/40 hover:text-white transition-colors text-sm font-sora">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="text-white/40 hover:text-white transition-colors text-sm font-sora">Terms of Service</Link>
           </div>
         </div>
       </div>

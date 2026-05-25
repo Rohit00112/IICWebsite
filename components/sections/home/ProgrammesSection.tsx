@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
@@ -31,6 +32,7 @@ const ProgrammesSection = () => {
       bgColor: 'bg-[#126DA2]',
       tagColor: 'bg-[#0e567f]',
       tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and Internet of Things'],
+      href: '/courses/bsc-hons-computing',
       parallax: y1
     },
     {
@@ -45,6 +47,7 @@ const ProgrammesSection = () => {
       bgColor: 'bg-[#00BBCC]',
       tagColor: 'bg-[#0095a3]',
       tags: ['Project Management', 'Marketing'],
+      href: '/courses',
       parallax: y1
     },
   ];
@@ -80,23 +83,24 @@ const ProgrammesSection = () => {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 w-full mb-20 max-w-[1440px] 2xl:max-w-[1600px]">
           {programmes.map((prog, index) => (
             <Tilt key={index} strength={4} className="h-full min-w-0">
-              <motion.div
-                initial={{
-                  y: 60,
-                  opacity: 0
-                }}
-                whileInView={{
-                  y: 0,
-                  opacity: 1
-                }}
-                viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.15 }}
-                transition={{
-                  delay: index * 0.1,
-                  duration: 1,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-                className={`${prog.bgColor} rounded-[32px] sm:rounded-[40px] md:rounded-[48px] p-6 sm:p-8 md:p-10 2xl:p-12 relative overflow-hidden flex h-full min-h-[520px] sm:min-h-[500px] md:min-h-[520px] xl:min-h-[500px] 2xl:min-h-[540px] flex-col justify-between shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] group cursor-pointer border border-white/5 transition-shadow duration-500 hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)]`}
-              >
+              <Link href={prog.href} className="block h-full">
+                <motion.div
+                  initial={{
+                    y: 60,
+                    opacity: 0
+                  }}
+                  whileInView={{
+                    y: 0,
+                    opacity: 1
+                  }}
+                  viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.15 }}
+                  transition={{
+                    delay: index * 0.1,
+                    duration: 1,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  className={`${prog.bgColor} rounded-[32px] sm:rounded-[40px] md:rounded-[48px] p-6 sm:p-8 md:p-10 2xl:p-12 relative overflow-hidden flex h-full min-h-[520px] sm:min-h-[500px] md:min-h-[520px] xl:min-h-[500px] 2xl:min-h-[540px] flex-col justify-between shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] group cursor-pointer border border-white/5 transition-shadow duration-500 hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)]`}
+                >
                 <div className="relative z-10 flex flex-col h-full">
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
@@ -216,7 +220,8 @@ const ProgrammesSection = () => {
 
                 {/* Decorative background glow */}
                 <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
-              </motion.div>
+                </motion.div>
+              </Link>
             </Tilt>
           ))}
         </div>
@@ -229,9 +234,9 @@ you begin this new chapter."
             className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-10 px-4 justify-center"
           />
           <Magnetic strength={0.3}>
-            <button className="bg-[#21409A] text-white px-12 py-4 rounded-lg font-bold text-lg shadow-2xl hover:opacity-90 transition-all active:scale-95">
+            <Link href="/admissions" className="inline-flex bg-[#21409A] text-white px-12 py-4 rounded-lg font-bold text-lg shadow-2xl hover:opacity-90 transition-all active:scale-95">
               Enroll Now
-            </button>
+            </Link>
           </Magnetic>
         </div>
       </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const AboutCTA = () => {
@@ -17,15 +18,15 @@ const AboutCTA = () => {
             Experience it yourself.
           </h2>
           <p className="text-white/70 text-lg md:text-xl font-medium mb-12 max-w-2xl font-sora">
-            Join a community that's shaping the future. Apply now or visit our campus to see innovation in action.
+            Join a community that&apos;s shaping the future. Apply now or visit our campus to see innovation in action.
           </p>
           <div className="flex flex-col sm:flex-row gap-6">
-            <button className="px-10 py-5 bg-white text-[#0A2520] font-black rounded-xl hover:bg-gray-100 transition-colors uppercase tracking-widest text-sm">
+            <Link href="/admissions" className="px-10 py-5 bg-white text-[#0A2520] font-black rounded-xl hover:bg-gray-100 transition-colors uppercase tracking-widest text-sm">
               Apply Now
-            </button>
-            <button className="px-10 py-5 border border-white text-white font-black rounded-xl hover:bg-white/10 transition-colors uppercase tracking-widest text-sm">
+            </Link>
+            <Link href="/contact" className="px-10 py-5 border border-white text-white font-black rounded-xl hover:bg-white/10 transition-colors uppercase tracking-widest text-sm">
               Visit Campus
-            </button>
+            </Link>
           </div>
         </motion.div>
       </div>

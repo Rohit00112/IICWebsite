@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useSpring, useMotionValue, useScroll } from "framer-motion";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -22,14 +22,9 @@ export default function ClientLayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isAdminPage = mounted && (pathname?.startsWith('/admin') || pathname === '/login');
-  const isHomePage = mounted && pathname === '/';
+  const isAdminPage = pathname?.startsWith('/admin') || pathname === '/login';
+  const isHomePage = pathname === '/';
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -39,27 +34,45 @@ export default function ClientLayoutWrapper({
   const cursorY = useSpring(mouseY, springConfig);
 
   const [isHovered, setIsHovered] = useState(false);
+  const isHoveredRef = useRef(false);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX - 16);
-      mouseY.set(e.clientY - 16);
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    if (!hasFinePointer) return;
+
+    let frame: number | null = null;
+    let latestX = 0;
+    let latestY = 0;
+
+    const handlePointerMove = (e: PointerEvent) => {
+      latestX = e.clientX - 16;
+      latestY = e.clientY - 16;
+
+      if (frame !== null) return;
+
+      frame = window.requestAnimationFrame(() => {
+        mouseX.set(latestX);
+        mouseY.set(latestY);
+        frame = null;
+      });
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
+    const handlePointerOver = (e: PointerEvent) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
-        setIsHovered(true);
-      } else {
-        setIsHovered(false);
+      const nextHovered = Boolean(target.closest('a, button'));
+
+      if (isHoveredRef.current !== nextHovered) {
+        isHoveredRef.current = nextHovered;
+        setIsHovered(nextHovered);
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerover", handlePointerOver, { passive: true });
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseover", handleMouseOver);
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerover", handlePointerOver);
     };
   }, [mouseX, mouseY]);
 
@@ -75,7 +88,7 @@ export default function ClientLayoutWrapper({
 
   return (
     <div className={`relative flex flex-col font-sora ${isAdminPage ? 'cursor-default' : 'cursor-none'}`}>
-      {mounted && !isAdminPage && (
+      {!isAdminPage && (
         <>
           <motion.div
             className="fixed top-0 left-0 right-0 h-1 bg-[#74C044] origin-left z-[10000]"
@@ -111,7 +124,7 @@ export default function ClientLayoutWrapper({
           <PageTransition>
             {children}
           </PageTransition>
-          {mounted && <Footer />}
+          <Footer />
         </SmoothScroll>
       ) : (
         <div key={pathname} className="flex-grow">

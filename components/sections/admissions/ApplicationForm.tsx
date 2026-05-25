@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Magnetic from '../../effects/Magnetic';
 
@@ -108,12 +109,12 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
           Thank you for applying to Itahari International College. Our admissions team will review your application and contact you within 2-3 business days.
         </p>
         <Magnetic strength={0.2}>
-          <button
-            onClick={() => window.location.href = '/'}
+          <Link
+            href="/"
             className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold shadow-xl shadow-blue-900/10"
           >
             Back to Home
-          </button>
+          </Link>
         </Magnetic>
       </div>
     );

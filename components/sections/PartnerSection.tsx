@@ -143,10 +143,12 @@ const PartnerSection = () => {
           className="max-w-4xl text-center px-6"
         >
           <p className="text-gray-500 text-sm md:text-[16px] font-medium leading-relaxed mb-4">
-            London Metropolitan University's Mission Is To Transform Lives Through The Power Of Education – And It Does That By Welcoming Students From All Kinds Of Backgrounds And Supporting Them To Achieve Success. Each And Every One Of Them Belongs There And Uniquely Contributes To The University And The City Around Them.
+            London Metropolitan University&apos;s Mission Is To Transform Lives Through The Power Of Education – And It Does That By Welcoming Students From All Kinds Of Backgrounds And Supporting Them To Achieve Success. Each And Every One Of Them Belongs There And Uniquely Contributes To The University And The City Around Them.
           </p>
           <a
-            href="#"
+            href="https://www.londonmet.ac.uk/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-[#74C044] font-bold text-base md:text-lg underline underline-offset-8 decoration-2 hover:opacity-80 transition-colors"
           >
             Learn More

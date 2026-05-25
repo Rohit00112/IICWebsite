@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -66,12 +67,12 @@ export default function Error({
               </button>
             </Magnetic>
             <Magnetic strength={0.2}>
-              <button
-                onClick={() => window.location.href = '/'}
+              <Link
+                href="/"
                 className="px-10 py-4 bg-white text-[#003B2E] border border-gray-100 rounded-xl font-bold hover:bg-gray-50 transition-all text-base inline-block"
               >
                 Go to Homepage
-              </button>
+              </Link>
             </Magnetic>
           </motion.div>
 

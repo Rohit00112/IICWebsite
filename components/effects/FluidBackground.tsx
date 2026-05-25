@@ -135,7 +135,11 @@ export default function FluidBackground() {
 
   return (
     <div className="fixed inset-0 -z-20 bg-[#f4f7fa]">
-      <Canvas camera={{ position: [0, 0, 1] }}>
+      <Canvas
+        camera={{ position: [0, 0, 1] }}
+        dpr={[1, 1.25]}
+        gl={{ antialias: false, powerPreference: 'high-performance' }}
+      >
         <FluidPlane shouldReduceMotion={shouldReduceMotion} />
       </Canvas>
     </div>

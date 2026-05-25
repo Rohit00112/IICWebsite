@@ -29,16 +29,19 @@ const Navbar = () => {
     { name: 'About', href: '/about-us' },
     { name: 'Courses', href: '/courses' },
     { name: 'Admission', href: '/admissions' },
-    { name: 'Innovation Lab', href: '/#innovation-lab' },
+    { name: 'Innovation Lab', href: 'https://innovation.iic.edu.np', external: true },
     { name: 'Life at IIC', href: '/life-at-iic' },
     { name: 'News & Events', href: '/news' },
     { name: 'Contact', href: '/contact' },
   ];
 
   const getActivePageName = () => {
-    const activeLink = navLinks.find(link => link.href === pathname);
+    const activeLink = navLinks.find(link => !link.external && link.href === pathname);
     return activeLink ? activeLink.name : 'Home';
   };
+
+  const getAbsoluteUrl = (href: string) =>
+    href.startsWith('http') ? href : `https://iic.edu.np${href}`;
 
   const navigationJsonLd = {
     '@context': 'https://schema.org',
@@ -47,7 +50,7 @@ const Navbar = () => {
       '@type': 'SiteNavigationElement',
       position: index + 1,
       name: link.name,
-      url: `https://iic.edu.np${link.href}`
+      url: getAbsoluteUrl(link.href)
     }))
   };
 
@@ -109,6 +112,9 @@ const Navbar = () => {
                       <Link
                         href={link.href}
                         role="menuitem"
+                        target={link.external ? '_blank' : undefined}
+                        rel={link.external ? 'noopener noreferrer' : undefined}
+                        prefetch={link.external ? false : undefined}
                         onClick={() => setIsMenuOpen(false)}
                         className="group relative block py-0.5 focus-visible:outline-none"
                       >
@@ -136,10 +142,10 @@ const Navbar = () => {
                 </div>
 
                 {/* CTA Button */}
-                <button className="w-full min-h-11 shrink-0 px-4 py-3 bg-[#21409A] border border-white/5 rounded-lg text-white text-[9px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
+                <Link href="/contact" onClick={() => setIsMenuOpen(false)} className="w-full min-h-11 shrink-0 px-4 py-3 bg-[#21409A] border border-white/5 rounded-lg text-white text-[9px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
                   <span className="truncate">Schedule a Campus tour</span>
                   <span className="text-base opacity-40">→</span>
-                </button>
+                </Link>
               </div>
             </motion.div>
           )}

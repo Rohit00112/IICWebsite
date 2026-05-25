@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
@@ -53,15 +54,20 @@ const ContactMap = () => {
 
             <AnimeStagger className="space-y-4" selector=":scope > *" staggerDelay={120} translateY={20} duration={700}>
               <Magnetic strength={0.2}>
-                <button className="w-full py-4 bg-[#1a1a1a] text-white font-bold rounded-xl shadow-lg hover:bg-black transition-all">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Itahari%20International%20College"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-4 bg-[#1a1a1a] text-white text-center font-bold rounded-xl shadow-lg hover:bg-black transition-all"
+                >
                   Get Directions
-                </button>
+                </a>
               </Magnetic>
               
-              <button className="w-full py-4 bg-white text-[#1a1a1a] font-bold rounded-xl border border-gray-100 hover:bg-gray-50 transition-all flex items-center justify-center gap-2 group">
+              <Link href="/life-at-iic" className="w-full py-4 bg-white text-[#1a1a1a] font-bold rounded-xl border border-gray-100 hover:bg-gray-50 transition-all flex items-center justify-center gap-2 group">
                 <span>Explore Campus Life</span>
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </button>
+              </Link>
             </AnimeStagger>
           </motion.div>
 
