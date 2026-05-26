@@ -78,7 +78,7 @@ const StatsStrip = () => {
   ];
 
   return (
-    <div className="bg-[#007a5e] py-10 md:py-14 relative z-10 w-full overflow-hidden">
+    <div className="bg-[#007a5e] py-6 sm:py-8 md:py-14 relative z-10 w-full overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/20">
         {stats.map((stat, index) => (
           <motion.div
@@ -87,12 +87,12 @@ const StatsStrip = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="flex flex-col items-center justify-center text-white py-6 md:py-0 px-4"
+            className="flex flex-col items-center justify-center text-white py-5 sm:py-6 md:py-0 px-4"
           >
-            <span className="text-5xl md:text-6xl font-extrabold tracking-tighter mb-1 font-sora">
+            <span className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight md:tracking-tighter mb-1 font-sora">
               <AnimatedNumber value={stat.value} suffix={stat.suffix} />
             </span>
-            <span className="text-base md:text-lg font-medium opacity-80 text-center uppercase tracking-widest">
+            <span className="text-xs sm:text-sm md:text-lg font-medium opacity-80 text-center uppercase tracking-[0.22em] md:tracking-widest leading-snug">
               {stat.label}
             </span>
           </motion.div>

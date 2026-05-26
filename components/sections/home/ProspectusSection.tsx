@@ -14,9 +14,9 @@ const ProspectusSection = () => {
   };
 
   return (
-    <section id="admission" className="relative w-full py-24 md:py-32 bg-[#0a1931] overflow-hidden">
+    <section id="admission" className="relative w-full py-16 sm:py-24 md:py-32 bg-[#0a1931] overflow-hidden">
       <AnimeStagger
-        className="max-w-[1440px] mx-auto px-6 flex flex-col lg:flex-row gap-16 lg:gap-24 items-center"
+        className="max-w-[1440px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-10 sm:gap-16 lg:gap-24 items-center"
         selector=".prospectus-panel"
         staggerDelay={160}
         translateY={44}
@@ -28,20 +28,20 @@ const ProspectusSection = () => {
           <AnimeReveal
             as="h2"
             text="Student Success Stories"
-            className="text-4xl md:text-[56px] font-bold text-white mb-6 font-sora"
+            className="text-3xl sm:text-4xl md:text-[56px] font-bold text-white mb-4 md:mb-6 font-sora"
             staggerFrom="first"
           />
-          <p className="text-white/70 text-lg md:text-xl font-medium leading-relaxed mb-12 max-w-xl">
+          <p className="text-white/70 text-base md:text-xl font-medium leading-relaxed mb-8 md:mb-12 max-w-xl">
             Hear directly from those who have walked our halls and gone on to achieve remarkable things.
           </p>
 
           {/* Testimonial Card */}
-          <div className="bg-white rounded-[32px] p-8 md:p-12 relative shadow-2xl">
-            <div className="text-6xl text-[#0a1931] font-black absolute top-8 left-8 opacity-20 font-serif">
+          <div className="bg-white rounded-[24px] md:rounded-[32px] p-6 sm:p-8 md:p-12 relative shadow-2xl">
+            <div className="text-5xl md:text-6xl text-[#0a1931] font-black absolute top-6 left-6 md:top-8 md:left-8 opacity-20 font-serif">
               &ldquo;
             </div>
             <div className="relative z-10">
-              <p className="text-gray-700 text-lg md:text-xl font-medium leading-relaxed italic mb-10 pt-4">
+              <p className="text-gray-700 text-base md:text-xl font-medium leading-relaxed italic mb-8 md:mb-10 pt-4">
                 &ldquo;The practical approach to learning at Itahari International College completely transformed my understanding of software development. The facilities and the faculty support are truly world-class, preparing me perfectly for my current role.&rdquo;
               </p>
               <div className="flex items-center gap-4">
@@ -55,8 +55,8 @@ const ProspectusSection = () => {
                   />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-[#1a1a1a] font-sora">Aarav Sharma</h4>
-                  <p className="text-gray-500 font-medium">BSc Computing Alumni, Software Engineer at TechCorp</p>
+                  <h4 className="text-base sm:text-xl font-bold text-[#1a1a1a] font-sora">Aarav Sharma</h4>
+                  <p className="text-sm sm:text-base text-gray-500 font-medium">BSc Computing Alumni, Software Engineer at TechCorp</p>
                 </div>
               </div>
             </div>
@@ -65,47 +65,47 @@ const ProspectusSection = () => {
 
         {/* Right Side: Prospectus Form */}
         <div className="prospectus-panel w-full lg:w-1/2" style={{ willChange: 'transform, opacity' }}>
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[40px] p-8 md:p-12 shadow-2xl relative">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[24px] md:rounded-[40px] p-5 sm:p-8 md:p-12 shadow-2xl relative">
             {/* Form Header */}
-            <div className="flex items-start gap-6 mb-10">
-              <div className="w-16 h-16 rounded-2xl bg-[#007a5e]/20 flex items-center justify-center text-[#2dd4bf] shrink-0">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-start gap-4 sm:gap-6 mb-8 md:mb-10">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-[#007a5e]/20 flex items-center justify-center text-[#2dd4bf] shrink-0">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
               </div>
               <div>
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 font-sora">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 font-sora">
                   Get the Prospectus
                 </h3>
-                <p className="text-white/60 text-base">
+                <p className="text-white/60 text-sm sm:text-base">
                   Download comprehensive details about our programs, campus, and fees.
                 </p>
               </div>
             </div>
 
             {/* Form Fields */}
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit}>
               <div className="space-y-2">
-                <label className="text-white/80 text-sm font-bold uppercase tracking-wider ml-1">Full Name</label>
+                <label className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-wider ml-1">Full Name</label>
                 <input 
                   type="text" 
                   placeholder="John Doe"
-                  className="w-full bg-white/10 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all"
+                  className="w-full bg-white/10 border border-white/10 rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-white/80 text-sm font-bold uppercase tracking-wider ml-1">Email Address</label>
+                <label className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-wider ml-1">Email Address</label>
                 <input 
                   type="email" 
                   placeholder="john@example.com"
-                  className="w-full bg-white/10 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all"
+                  className="w-full bg-white/10 border border-white/10 rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-white/80 text-sm font-bold uppercase tracking-wider ml-1">Program of Interest</label>
-                <select className="w-full bg-white/10 border border-white/10 rounded-2xl px-6 py-4 text-white/50 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all appearance-none cursor-pointer">
+                <label className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-wider ml-1">Program of Interest</label>
+                <select className="w-full bg-white/10 border border-white/10 rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base text-white/50 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all appearance-none cursor-pointer">
                   <option>Select a Program</option>
                   <option>BSc (Hons) Computing</option>
                   <option>BBA (Hons) Business Administration</option>
@@ -114,11 +114,11 @@ const ProspectusSection = () => {
 
               {/* add contact number  */}
               <div className="space-y-2">
-                <label className="text-white/80 text-sm font-bold uppercase tracking-wider ml-1">Contact Number</label>
+                <label className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-wider ml-1">Contact Number</label>
                 <input 
                   type="tel" 
                   placeholder="+977 9800000000"
-                  className="w-full bg-white/10 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all"
+                  className="w-full bg-white/10 border border-white/10 rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007a5e]/50 transition-all"
                 />
               </div>
 
@@ -127,7 +127,7 @@ const ProspectusSection = () => {
               {/* Submit Button */}
               <button 
                 type="submit"
-                className="w-full bg-[#1e40af] hover:bg-[#1d4ed8] text-white font-bold py-5 rounded-2xl shadow-xl transition-all hover:shadow-[0_0_30px_rgba(30,64,175,0.3)] mt-6 text-lg"
+                className="w-full bg-[#1e40af] hover:bg-[#1d4ed8] text-white font-bold py-4 sm:py-5 rounded-2xl shadow-xl transition-all hover:shadow-[0_0_30px_rgba(30,64,175,0.3)] mt-5 sm:mt-6 text-base sm:text-lg"
               >
                 Download Prospectus Now
               </button>

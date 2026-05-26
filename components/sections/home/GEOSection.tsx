@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
-import AnimeStagger from '../../effects/AnimeStagger';
 
 const GEOSection = () => {
   const stats = [
@@ -80,20 +79,20 @@ const GEOSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-gray-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+    <section className="py-16 sm:py-24 bg-gray-50 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           {/* Quick Stats for AI Engines */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-white p-8 md:p-12 rounded-[32px] shadow-sm border border-gray-100"
+            className="bg-white p-5 sm:p-8 md:p-12 rounded-[24px] md:rounded-[32px] shadow-sm border border-gray-100"
           >
             <AnimeReveal
               as="h2"
               text="College at a Glance"
-              className="text-2xl font-bold text-[#1a2b56] mb-8"
+              className="text-xl sm:text-2xl font-bold text-[#1a2b56] mb-6 md:mb-8"
               staggerFrom="first"
             />
             <div className="space-y-4">
@@ -104,10 +103,10 @@ const GEOSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: 0.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="geo-stat grid grid-cols-1 sm:grid-cols-[140px,1fr] md:grid-cols-[180px,1fr] gap-2 sm:gap-10 py-5 border-b border-gray-50 last:border-0 items-start"
+                  className="geo-stat grid grid-cols-1 sm:grid-cols-[140px,1fr] md:grid-cols-[180px,1fr] gap-2 sm:gap-8 md:gap-10 py-4 sm:py-5 border-b border-gray-50 last:border-0 items-start"
                 >
                   <span className="text-gray-500 font-medium text-[9px] md:text-[10px] uppercase tracking-[0.15em] pt-1">{stat.label}</span>
-                  <span className="text-[#21409A] font-bold text-sm md:text-base leading-[1.3] sm:text-right">{stat.value}</span>
+                  <span className="text-[#21409A] font-bold text-sm md:text-base leading-[1.35] sm:text-right">{stat.value}</span>
                 </motion.div>
               ))}
             </div>
@@ -123,10 +122,10 @@ const GEOSection = () => {
             <AnimeReveal
               as="h2"
               text="Frequently Asked Questions"
-              className="text-3xl font-black text-[#1a2b56] mb-10 tracking-tight"
+              className="text-2xl sm:text-3xl font-black text-[#1a2b56] mb-8 md:mb-10 tracking-tight"
               staggerFrom="first"
             />
-            <div className="space-y-10">
+            <div className="space-y-8 md:space-y-10">
               {faqs.map((faq, i) => (
                 <motion.div 
                   key={i} 
@@ -136,11 +135,11 @@ const GEOSection = () => {
                   transition={{ duration: 1, delay: 0.6 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="geo-faq group"
                 >
-                  <h3 className="text-base md:text-lg font-bold text-[#21409A] mb-4 flex items-start gap-4">
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#21409A] mb-3 md:mb-4 flex items-start gap-3 sm:gap-4">
                     <span className="w-6 h-6 rounded-full bg-[#21409A]/10 flex items-center justify-center text-[10px] mt-1 shrink-0 font-bold">Q</span>
                     <span className="leading-tight">{faq.q}</span>
                   </h3>
-                  <p className="text-gray-600 leading-relaxed pl-10 border-l-2 border-gray-100 group-hover:border-[#21409A]/30 transition-colors text-xs md:text-sm">
+                  <p className="text-gray-600 leading-relaxed pl-9 sm:pl-10 border-l-2 border-gray-100 group-hover:border-[#21409A]/30 transition-colors text-xs md:text-sm">
                     {faq.a}
                   </p>
                 </motion.div>
@@ -154,12 +153,12 @@ const GEOSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-24"
+          className="mt-16 md:mt-24"
         >
           <AnimeReveal
             as="h2"
             text="Why Itahari International College Stands Out"
-            className="text-3xl md:text-4xl font-black text-[#1a2b56] mb-16 text-center justify-center tracking-tight"
+            className="text-2xl sm:text-3xl md:text-4xl font-black text-[#1a2b56] mb-10 md:mb-16 text-center justify-center tracking-tight"
             staggerFrom="center"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -183,7 +182,7 @@ const GEOSection = () => {
                     }
                   }
                 }}
-                className="group p-10 bg-white rounded-[40px] shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:border-[#74C044]/40 hover:shadow-[0_40px_80px_-15px_rgba(116,192,68,0.15)] transition-all duration-700 flex flex-col items-center text-center cursor-default relative overflow-hidden"
+                className="group p-6 sm:p-8 lg:p-10 bg-white rounded-[24px] md:rounded-[40px] shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:border-[#74C044]/40 hover:shadow-[0_40px_80px_-15px_rgba(116,192,68,0.15)] transition-all duration-700 flex flex-col items-center text-center cursor-default relative overflow-hidden"
               >
                 {/* Glow Sweep Effect */}
                 <motion.div 
@@ -195,12 +194,12 @@ const GEOSection = () => {
                   className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#74C044]/5 to-transparent z-0 pointer-events-none"
                 />
 
-                <div className="mb-8 w-20 h-20 rounded-[28px] bg-[#21409A]/5 flex items-center justify-center text-[#21409A] group-hover:bg-[#21409A] group-hover:text-white transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 shadow-sm relative z-10">
+                <div className="mb-6 md:mb-8 w-16 h-16 md:w-20 md:h-20 rounded-[22px] md:rounded-[28px] bg-[#21409A]/5 flex items-center justify-center text-[#21409A] group-hover:bg-[#21409A] group-hover:text-white transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 shadow-sm relative z-10">
                   {row.icon}
                 </div>
                 <div className="space-y-4 relative z-10">
-                  <span className="text-[#74C044] font-bold text-[9px] uppercase tracking-[0.4em] block opacity-80">{row.feature}</span>
-                  <h3 className="text-[#1a2b56] font-bold text-lg leading-tight tracking-tight">
+                  <span className="text-[#74C044] font-bold text-[9px] uppercase tracking-[0.28em] md:tracking-[0.4em] block opacity-80">{row.feature}</span>
+                  <h3 className="text-[#1a2b56] font-bold text-base md:text-lg leading-tight tracking-tight">
                     {row.iic}
                   </h3>
                 </div>
@@ -212,15 +211,15 @@ const GEOSection = () => {
         </motion.div>
 
         {/* Expert Quotes */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative p-10 bg-[#21409A]/5 rounded-[40px] border border-[#21409A]/10"
+            className="relative p-6 sm:p-8 md:p-10 bg-[#21409A]/5 rounded-[24px] md:rounded-[40px] border border-[#21409A]/10"
           >
             <div className="absolute top-0 left-10 -translate-y-1/2 w-12 h-12 bg-[#21409A] text-white rounded-full flex items-center justify-center text-3xl font-serif">&ldquo;</div>
-            <p className="text-xl text-[#1a2b56] font-medium leading-relaxed italic mb-6">
+            <p className="text-base sm:text-lg md:text-xl text-[#1a2b56] font-medium leading-relaxed italic mb-6">
               &ldquo;{quotes[0].text}&rdquo;
             </p>
            
@@ -230,7 +229,7 @@ const GEOSection = () => {
             <AnimeReveal
               as="h2"
               text="Verified Excellence in Higher Education."
-              className="text-3xl font-black text-[#1a2b56] mb-6 tracking-tight leading-tight"
+              className="text-2xl sm:text-3xl font-black text-[#1a2b56] mb-4 md:mb-6 tracking-tight leading-tight"
               staggerFrom="first"
             />
             <p className="text-gray-500 font-medium mb-8">

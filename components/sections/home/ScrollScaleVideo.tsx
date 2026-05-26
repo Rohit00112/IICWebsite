@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const VIDEO_SRC = '/videos/iic.mp4';
 const POSTER_SRC = '/images/home/tower_block.png';
@@ -12,6 +13,7 @@ const ScrollScaleVideo = () => {
   const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false });
   const [pinState, setPinState] = useState<PinState>('before');
   const [scrollProgress, setScrollProgress] = useState(0);
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const outerRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
 
@@ -26,8 +28,8 @@ const ScrollScaleVideo = () => {
     );
   });
 
-  const frameScale = useTransform(scrollYProgress, [0, 0.88, 1], [0.45, 1, 1]);
-  const frameRadius = useTransform(scrollYProgress, [0, 0.88], [32, 0]);
+  const frameScale = useTransform(scrollYProgress, [0, 0.88, 1], isMobile ? [0.82, 1, 1] : [0.45, 1, 1]);
+  const frameRadius = useTransform(scrollYProgress, [0, 0.88], isMobile ? [18, 0] : [32, 0]);
   const maskOpacity = Math.min(1, Math.max(0, (scrollProgress - 0.65) / 0.25));
 
   const updatePinState = useCallback(() => {
@@ -97,13 +99,13 @@ const ScrollScaleVideo = () => {
         : 'absolute inset-x-0 top-0 z-10';
 
   return (
-    <section ref={outerRef} className="relative w-full h-[260svh] bg-black">
+    <section ref={outerRef} className="relative w-full h-[170svh] md:h-[260svh] bg-black">
       <div
         ref={stickyRef}
         onClick={openFullscreen}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`${stagePositionClass} h-[100svh] w-full flex items-center justify-center overflow-hidden cursor-none bg-black`}
+        className={`${stagePositionClass} h-[100svh] w-full flex items-center justify-center overflow-hidden cursor-pointer md:cursor-none bg-black`}
       >
         {/* Side Text Overlays */}
         <motion.div
@@ -357,7 +359,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         onClick={onClose}
-        className="absolute top-8 right-8 z-[110] p-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white transition-colors border border-white/10"
+        className="absolute top-4 right-4 md:top-8 md:right-8 z-[110] p-3 md:p-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white transition-colors border border-white/10"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -369,11 +371,11 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: showControls ? 1 : 0, y: showControls ? 0 : 20 }}
-        className="absolute bottom-0 left-0 w-full p-8 md:p-12 z-[110] bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+        className="absolute bottom-0 left-0 w-full p-4 sm:p-6 md:p-12 z-[110] bg-gradient-to-t from-black/80 via-black/40 to-transparent"
       >
         <div className="max-w-7xl mx-auto">
           {/* Progress Bar */}
-          <div className="relative w-full h-1 bg-white/20 rounded-full mb-8 group cursor-pointer">
+          <div className="relative w-full h-1 bg-white/20 rounded-full mb-5 md:mb-8 group cursor-pointer">
             <div
               className="absolute top-0 left-0 h-full bg-[#74C044] rounded-full transition-all duration-100"
               style={{ width: `${progress}%` }}
@@ -392,8 +394,8 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
             />
           </div>
 
-          <div className="flex items-center justify-between text-white">
-            <div className="flex items-center gap-8">
+          <div className="flex items-center justify-between text-white gap-4">
+            <div className="flex items-center gap-4 md:gap-8">
               {/* Play/Pause */}
               <button onClick={togglePlay} className="hover:text-[#74C044] transition-colors">
                 {isPlaying ? (
@@ -409,12 +411,12 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
               </button>
 
               {/* Time */}
-              <div className="text-[12px] font-mono tracking-wider opacity-60">
+              <div className="text-[10px] sm:text-[12px] font-mono tracking-wider opacity-60">
                 {formatTime(currentTime)} / {formatTime(duration)}
               </div>
             </div>
 
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-4 md:gap-8">
               {/* Mute/Unmute */}
               <button onClick={toggleMute} className="hover:text-[#74C044] transition-colors">
                 {isMuted ? (

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import AnimeReveal from '../../effects/AnimeReveal';
 import Tilt from '../../effects/Tilt';
@@ -77,13 +77,13 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
         duration: 1,
         ease: [0.34, 1.56, 0.64, 1]
       }}
-      className="story-card flex-none w-[320px] md:w-[450px] snap-center"
+      className="story-card flex-none w-[min(320px,86vw)] md:w-[450px] snap-center"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
       <Tilt strength={4}>
         <div
-          className={`relative overflow-hidden p-8 md:p-12 rounded-[24px] md:rounded-[32px] transition-all duration-300 h-full ${item.featured
+          className={`relative overflow-hidden p-6 sm:p-8 md:p-12 rounded-[24px] md:rounded-[32px] transition-all duration-300 h-full ${item.featured
             ? 'bg-[#0a3285] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]'
             : 'bg-white text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] border border-gray-100'
             }`}
@@ -130,20 +130,20 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
             className="relative z-10"
           >
             {/* Quote Icon */}
-            <div className={`text-5xl md:text-6xl font-bold mb-6 leading-none ${item.featured ? 'text-white/40' : 'text-blue-200'} font-serif`}>
+            <div className={`text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 leading-none ${item.featured ? 'text-white/40' : 'text-blue-200'} font-serif`}>
               &ldquo;
             </div>
 
             {/* Quote Text */}
             <RevealText
               text={item.quote}
-              className={`text-base md:text-lg font-medium leading-relaxed italic mb-8 ${item.featured ? 'text-white/90' : 'text-gray-700'
+              className={`text-sm sm:text-base md:text-lg font-medium leading-relaxed italic mb-6 sm:mb-8 ${item.featured ? 'text-white/90' : 'text-gray-700'
                 }`}
               delay={0.4}
             />
 
             {/* Achievement Tag */}
-            <div className="mb-10">
+            <div className="mb-8 sm:mb-10">
               <span className={`px-4 py-1.5 rounded-full text-xs md:text-sm font-medium border ${item.featured
                 ? 'bg-white/10 border-white/20 text-white'
                 : 'bg-blue-50 border-blue-100 text-blue-600'
@@ -204,23 +204,23 @@ const StudentStories = () => {
 
   return (
     <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-[#f8fafc] overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
-        <div className="flex flex-col items-center text-center mb-16">
-          <span className="text-[#007a5e] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 font-sora">
+        <div className="flex flex-col items-center text-center mb-10 md:mb-16">
+          <span className="text-[#007a5e] text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase mb-4 font-sora">
             Insights
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
             Success Stories From
           </h2>
           <AnimeReveal
             as="h2"
             text="STUDENTS"
-            className="text-5xl md:text-7xl font-black text-[#007a5e] leading-[0.8] tracking-tight mb-10 font-sora justify-center"
+            className="text-[40px] sm:text-5xl md:text-7xl font-black text-[#007a5e] leading-[0.9] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-sora justify-center"
             staggerFrom="center"
             delay={0.1}
           />
-          <p className="max-w-2xl text-gray-500 text-base md:text-lg font-medium leading-relaxed">
+          <p className="max-w-2xl text-gray-500 text-sm sm:text-base md:text-lg font-medium leading-relaxed">
             Hear Directly From Our Students About How The Itahari International College Campus Environment Shaped Their Academic And Social Lives.
           </p>
         </div>

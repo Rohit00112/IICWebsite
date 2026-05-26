@@ -20,15 +20,15 @@ const InnovationLab = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section id="innovation-lab" ref={containerRef} className="relative w-full py-24 md:py-32 overflow-hidden bg-[#f4f7fa]">
+    <section id="innovation-lab" ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 overflow-hidden bg-[#f4f7fa]">
       <TechGrid />
-      <div className="max-w-[1440px] mx-auto px-6 relative z-10">
-        <div className="flex flex-col items-center text-center mb-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10">
+        <div className="flex flex-col items-center text-center mb-10 md:mb-16">
           <Magnetic strength={0.1}>
             <motion.h2
               initial={{ opacity: 0, y: 10 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              className="text-2xl md:text-4xl font-bold text-[#1a1a1a] mb-2 font-sora"
+              className="text-xl sm:text-2xl md:text-4xl font-bold text-[#1a1a1a] mb-2 font-sora"
             >
               Life Beyond The
             </motion.h2>
@@ -39,7 +39,7 @@ const InnovationLab = () => {
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: 0 } : {}}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-5xl md:text-8xl font-black text-[#74C044] leading-[0.9] tracking-tighter font-sora"
+                className="text-[40px] sm:text-5xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter font-sora"
               >
                 Classroom
               </motion.h1>
@@ -47,10 +47,10 @@ const InnovationLab = () => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-stretch md:items-end mb-10 md:mb-12 gap-6 md:gap-8">
           <div className="max-w-2xl">
             <Magnetic strength={0.1}>
-              <h3 className="text-4xl md:text-[56px] font-bold text-[#21409A] mb-6 font-sora">
+              <h3 className="text-3xl sm:text-4xl md:text-[56px] font-bold text-[#21409A] mb-4 md:mb-6 font-sora">
                 Innovation Lab
               </h3>
             </Magnetic>
@@ -58,7 +58,7 @@ const InnovationLab = () => {
               text="Beyond Academics, Innovation Lab at Itahari International
 College offers a dynamic environment fostering creativity, leadership, and personal
 growth."
-              className="text-gray-500 text-lg md:text-xl font-medium leading-relaxed"
+              className="text-gray-500 text-base md:text-xl font-medium leading-relaxed"
             />
           </div>
           <Magnetic strength={0.25}>
@@ -68,7 +68,7 @@ growth."
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-[#74C044] text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center gap-3 hover:opacity-90 transition-all shadow-lg hover:shadow-xl shrink-0"
+              className="w-full justify-center md:w-auto bg-[#74C044] text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg flex items-center gap-3 hover:opacity-90 transition-all shadow-lg hover:shadow-xl shrink-0"
             >
               Explore Innovation Lab
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +84,7 @@ growth."
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative group aspect-[4/3] md:aspect-auto h-full rounded-[32px] md:rounded-[40px] overflow-hidden shadow-2xl"
+            className="relative group aspect-[4/3] md:aspect-auto h-full rounded-[24px] md:rounded-[40px] overflow-hidden shadow-2xl"
           >
             <motion.div style={{ y: y1 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
               <Image
@@ -96,23 +96,23 @@ growth."
               />
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-            <div className="absolute bottom-10 left-10 right-10">
+            <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10">
               <RevealText
                 text="Student Led Communities"
-                className="text-xl md:text-2xl font-bold text-white mb-2 font-sora"
+                className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 font-sora"
               />
               
             </div>
           </motion.div>
 
           <div className="flex flex-col gap-8">
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
               <motion.div
                 initial={{ opacity: 0, y: 40, scale: 0.95 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: 0.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                className="relative group aspect-square rounded-[24px] md:rounded-[32px] overflow-hidden shadow-xl"
+                className="relative group aspect-[4/3] sm:aspect-square rounded-[24px] md:rounded-[32px] overflow-hidden shadow-xl"
               >
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
@@ -124,8 +124,8 @@ growth."
                   />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <h4 className="text-base md:text-lg font-bold text-white font-sora">
+                <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
+                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-sora">
                     Entrepreneurship & Research Support
                   </h4>
                 </div>
@@ -135,7 +135,7 @@ growth."
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: 0.3, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                className="relative group aspect-square rounded-[24px] md:rounded-[32px] overflow-hidden shadow-xl"
+                className="relative group aspect-[4/3] sm:aspect-square rounded-[24px] md:rounded-[32px] overflow-hidden shadow-xl"
               >
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
@@ -147,8 +147,8 @@ growth."
                   />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                <div className="absolute bottom-6 left-6 right-6">
-                  <h4 className="text-base md:text-lg font-bold text-white font-sora">
+                <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
+                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-sora">
                     Tech Events & Hackathons
                   </h4>
                 </div>
@@ -160,7 +160,7 @@ growth."
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative group aspect-[21/9] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-xl"
+              className="relative group aspect-[16/9] sm:aspect-[21/9] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-xl"
             >
               <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
                 <Image
@@ -172,8 +172,8 @@ growth."
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-              <div className="absolute bottom-8 left-8 right-8">
-                <h4 className="text-lg md:text-xl font-bold text-white mb-1 font-sora">
+              <div className="absolute bottom-5 left-5 right-5 sm:bottom-8 sm:left-8 sm:right-8">
+                <h4 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 font-sora">
                   Learning Zones
                 </h4>
               
