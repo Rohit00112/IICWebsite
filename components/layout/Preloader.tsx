@@ -58,26 +58,28 @@ const Preloader = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: -10 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-20 flex flex-col items-center"
+            className="relative z-20 flex w-full max-w-sm flex-col items-center px-6 sm:max-w-md"
           >
             {/* Logo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="relative w-64 md:w-80 h-24 mb-12"
+              className="relative mb-8 h-10 w-48 sm:w-56 md:mb-12 md:h-14 md:w-72"
             >
               <Image
                 src="/images/common/iic_logo.png"
                 alt="Itahari International College Logo"
                 fill
+                sizes="(max-width: 768px) 224px, 288px"
                 className="object-contain"
-                priority
+                loading="eager"
+                fetchPriority="high"
               />
             </motion.div>
 
             {/* Progress Wrapper */}
-            <div className="w-full max-w-[240px] md:max-w-[320px]">
+            <div className="w-full max-w-[220px] sm:max-w-[240px] md:max-w-[320px]">
               {/* Thin Progress Bar with Percentage Inside */}
               <div className="relative h-6 w-full bg-blue-50/50 rounded-full overflow-hidden border border-blue-100/10">
                 
@@ -96,7 +98,7 @@ const Preloader = () => {
                   className="absolute inset-0 bg-[#21409A] origin-left z-10"
                 >
                   {/* Foreground Text (White) - Only visible where bar exists */}
-                  <div className="absolute inset-0 w-[240px] md:w-[320px] flex items-center justify-center">
+                  <div className="absolute inset-0 w-[220px] sm:w-[240px] md:w-[320px] flex items-center justify-center">
                     <span className="text-white text-[10px] md:text-xs font-black font-sora tabular-nums uppercase tracking-widest">
                       {percentage}%
                     </span>
@@ -105,7 +107,7 @@ const Preloader = () => {
               </div>
 
               {/* Tagline below the bar */}
-              <div className="flex justify-center gap-1.5 mt-6 overflow-hidden">
+              <div className="flex flex-wrap justify-center gap-x-1.5 gap-y-1 mt-5 md:mt-6 overflow-hidden">
                 {words.map((word, wIdx) => (
                   <div key={wIdx} className="flex overflow-hidden">
                     {word.split('').map((char, cIdx) => (
@@ -118,7 +120,7 @@ const Preloader = () => {
                           delay: 0.15 + (wIdx * 0.06) + (cIdx * 0.015),
                           ease: "easeOut"
                         }}
-                        className="text-[#21409A] text-[10px] md:text-xs font-black tracking-[0.2em] uppercase"
+                        className="text-[#21409A] text-[9px] sm:text-[10px] md:text-xs font-black tracking-[0.16em] sm:tracking-[0.2em] uppercase"
                       >
                         {char}
                       </motion.span>

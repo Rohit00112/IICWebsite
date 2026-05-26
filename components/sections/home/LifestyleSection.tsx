@@ -64,7 +64,7 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
         <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 lg:bottom-10 lg:left-10 flex items-center gap-3">
-          <span className="text-white text-xl sm:text-2xl lg:text-3xl font-bold font-sora leading-tight">{title}</span>
+          <span className="text-white text-lg sm:text-2xl lg:text-3xl font-bold font-sora leading-tight">{title}</span>
         </div>
       </motion.div>
 
@@ -86,14 +86,14 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
           <span className="inline-block text-white/80 text-[10px] sm:text-xs xl:text-sm font-bold tracking-[0.18em] uppercase mb-3 font-sora">
             Explore
           </span>
-          <h3 className="text-white text-2xl sm:text-3xl xl:text-4xl font-black font-sora leading-tight mb-3">{title}</h3>
-          <p className="text-white/90 text-sm xl:text-base leading-relaxed font-sora">{description}</p>
+          <h3 className="text-white text-xl sm:text-3xl xl:text-4xl font-black font-sora leading-tight mb-2 sm:mb-3">{title}</h3>
+          <p className="text-white/90 text-[13px] sm:text-sm xl:text-base leading-relaxed font-sora">{description}</p>
         </div>
 
         <div className="flex flex-wrap gap-4 sm:gap-6 mt-auto">
           {stats.map((s, i) => (
             <div key={i}>
-              <div className="text-white text-xl sm:text-2xl xl:text-3xl font-black font-sora">{s.value}</div>
+              <div className="text-white text-lg sm:text-2xl xl:text-3xl font-black font-sora">{s.value}</div>
               <div className="text-white/80 text-xs xl:text-sm font-medium font-sora">{s.label}</div>
             </div>
           ))}
@@ -136,15 +136,15 @@ const LifestyleSection = () => {
   const y3 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-x-clip overflow-y-visible">
+    <section ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 bg-white overflow-x-clip overflow-y-visible">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
-        <div className="flex flex-col items-center text-center mb-20">
-          <span className="text-[#74C044] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 font-sora">
+        <div className="flex flex-col items-center text-center mb-12 md:mb-20">
+          <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase mb-4 font-sora">
             Discover
           </span>
           <Magnetic strength={0.1}>
-            <h2 className="text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
               Student Lifestyle at
             </h2>
           </Magnetic>
@@ -152,21 +152,21 @@ const LifestyleSection = () => {
             <AnimeReveal
               text="ITAHARI INTERNATIONAL COLLEGE"
               as="h2"
-              className="text-6xl md:text-8xl font-black text-[#74C044] leading-[0.8] tracking-tight mb-10 font-sora justify-center"
+              className="text-[32px] sm:text-5xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-sora justify-center"
               staggerFrom="center"
               delay={0.2}
             />
           </Magnetic>
           <RevealText
             text="Beyond Academics, A Vibrant Campus, Diverse Student Community, And State-Of-The-Art Facilities Designed For Holistic Growth."
-            className="max-w-3xl text-gray-500 text-base md:text-lg font-medium leading-relaxed justify-center"
+            className="max-w-3xl text-gray-500 text-sm sm:text-base md:text-lg font-medium leading-relaxed justify-center"
           />
         </div>
 
         {/* Lifestyle Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 h-auto lg:min-h-[720px] xl:min-h-[800px]">
           {/* Main Large Card (Left) */}
-          <div className="lg:col-span-2 relative h-[460px] sm:h-[560px] lg:h-full">
+          <div className="lg:col-span-2 relative h-[380px] sm:h-[560px] lg:h-full">
             <motion.div
               initial={{ y: 70, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
@@ -199,7 +199,7 @@ const LifestyleSection = () => {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.18 }}
               transition={{ delay: 0.15, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="h-[340px] sm:h-[380px] lg:h-auto lg:flex-1 lg:min-h-0"
+              className="h-[300px] sm:h-[380px] lg:h-auto lg:flex-1 lg:min-h-0"
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 1.png"
@@ -222,7 +222,7 @@ const LifestyleSection = () => {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.18 }}
               transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="h-[340px] sm:h-[380px] lg:h-auto lg:flex-1 lg:min-h-0"
+              className="h-[300px] sm:h-[380px] lg:h-auto lg:flex-1 lg:min-h-0"
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 2.png"

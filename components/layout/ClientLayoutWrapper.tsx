@@ -8,6 +8,7 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import SmoothScroll from "@/components/effects/SmoothScroll";
 import PageTransition from "@/components/layout/PageTransition";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const FluidBackground = dynamic(() => import("@/components/effects/FluidBackground"), {
   ssr: false,
@@ -25,6 +26,7 @@ export default function ClientLayoutWrapper({
 
   const isAdminPage = pathname?.startsWith('/admin') || pathname === '/login';
   const isHomePage = pathname === '/';
+  const hasDesktopViewport = useMediaQuery('(min-width: 768px)');
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -113,8 +115,8 @@ export default function ClientLayoutWrapper({
               marginTop: 12,
             }}
           />
-          <FluidBackground />
-          {isHomePage && <CloudBackground />}
+          {hasDesktopViewport && <FluidBackground />}
+          {isHomePage && hasDesktopViewport && <CloudBackground />}
         </>
       )}
 

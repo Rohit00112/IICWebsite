@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
-import AnimeStagger from '../../effects/AnimeStagger';
 import AnimeReveal from '../../effects/AnimeReveal';
 
 const PartnerSection = () => {
@@ -28,13 +27,13 @@ const PartnerSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-hidden">
+    <section ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 bg-white overflow-hidden">
       <div className="w-full flex flex-col items-center">
         <div className="text-center mb-12 px-6 max-w-[1200px]">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-[#1a1a1a] text-lg md:text-xl font-bold font-sora block mb-2"
+            className="text-[#1a1a1a] text-base sm:text-lg md:text-xl font-bold font-sora block mb-2"
           >
             Partner
           </motion.span>
@@ -43,7 +42,7 @@ const PartnerSection = () => {
               <AnimeReveal
                 text="UNIVERSITY"
                 as="h2"
-                className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora"
+                className="text-[40px] sm:text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora justify-center"
                 staggerFrom="center"
                 delay={0.2}
               />
@@ -51,12 +50,12 @@ const PartnerSection = () => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10 mb-14 px-6 max-w-[1200px]">
+        <div className="flex w-full flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-10 md:mb-14 px-4 sm:px-6 max-w-[1200px]">
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.5 }}
-            className="relative h-16 md:h-20 w-80 md:w-[400px]"
+            className="relative h-14 sm:h-16 md:h-20 w-full max-w-[300px] sm:max-w-[320px] md:max-w-[400px]"
           >
             <Image
               src="/images/home/lmu brand 2.png"
@@ -71,7 +70,7 @@ const PartnerSection = () => {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.7 }}
-            className="relative h-28 md:h-36 w-[460px] md:w-[640px]"
+            className="relative h-20 sm:h-28 md:h-36 w-full max-w-[340px] sm:max-w-[460px] md:max-w-[640px]"
           >
             <Image
               src="/images/home/lmu brand 1.png"
@@ -83,7 +82,7 @@ const PartnerSection = () => {
           </motion.div>
         </div>
 
-        <div className="relative w-full mb-16">
+        <div className="relative w-full mb-10 md:mb-16">
           <div className="relative w-full aspect-[16/9] md:aspect-[21/6] overflow-hidden">
             <motion.div style={{ y: yBuilding }} className="absolute inset-0 w-full h-[130%] -top-[15%]">
               <Image
@@ -119,7 +118,7 @@ const PartnerSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-8 w-full mb-14 px-6 max-w-[1300px]">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-8 w-full mb-10 md:mb-14 px-4 sm:px-6 max-w-[1300px]">
           {rankingCards.map((card, index) => (
             <motion.div
               key={index}
