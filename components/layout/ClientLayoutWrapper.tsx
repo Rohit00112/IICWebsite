@@ -13,9 +13,6 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 const FluidBackground = dynamic(() => import("@/components/effects/FluidBackground"), {
   ssr: false,
 });
-const CloudBackground = dynamic(() => import("@/components/effects/CloudBackground"), {
-  ssr: false,
-});
 
 export default function ClientLayoutWrapper({
   children,
@@ -25,7 +22,6 @@ export default function ClientLayoutWrapper({
   const pathname = usePathname();
 
   const isAdminPage = pathname?.startsWith('/admin') || pathname === '/login';
-  const isHomePage = pathname === '/';
   const hasDesktopViewport = useMediaQuery('(min-width: 768px)');
 
   const mouseX = useMotionValue(0);
@@ -116,7 +112,6 @@ export default function ClientLayoutWrapper({
             }}
           />
           {hasDesktopViewport && <FluidBackground />}
-          {isHomePage && hasDesktopViewport && <CloudBackground />}
         </>
       )}
 

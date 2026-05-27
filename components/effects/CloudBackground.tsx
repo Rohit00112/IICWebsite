@@ -8,64 +8,89 @@ interface BirdProps {
   delay: number;
   duration: number;
   top: string;
+  left: string;
   scale: number;
   reverse?: boolean;
 }
 
-const Bird: React.FC<BirdProps> = ({ delay, duration, top, scale, reverse = false }) => {
+const Bird: React.FC<BirdProps> = ({ delay, duration, top, left, scale, reverse = false }) => {
   return (
     <motion.div
-      initial={{ x: reverse ? '-10vw' : '110vw', y: 0 }}
+      initial={false}
       animate={{
-        x: reverse ? '110vw' : '-10vw',
+        x: reverse ? ['-20vw', '110vw'] : ['110vw', '-20vw'],
         y: [0, -30, 15, -20, 5, 0],
+        scale,
       }}
       transition={{
         x: { duration, delay, ease: 'linear', repeat: Infinity, repeatType: 'loop' },
         y: { duration: duration * 0.3, delay, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' },
+        scale: { duration: 0 },
       }}
-      style={{ top, transform: `scale(${scale})` }}
-      className="absolute pointer-events-none will-change-transform"
+      style={{ top, left }}
+      className="absolute z-[2] pointer-events-none will-change-transform"
     >
-      <div style={{ transform: reverse ? undefined : 'scaleX(-1)', width: 56, height: 32 }}>
-        <svg width="56" height="32" viewBox="0 0 56 32" fill="none">
-          {/* body */}
-          <ellipse cx="28" cy="20" rx="6" ry="2.5" fill="#1a2f6e" />
-          {/* head */}
-          <ellipse cx="34" cy="18.5" rx="2.5" ry="2" fill="#1a2f6e" />
-          {/* beak */}
-          <path d="M36 18 L38.5 18.2 L36.2 19" fill="#d4a017" />
-          {/* tail */}
-          <path d="M22 20 L18 18 L18 22 Z" fill="#1a2f6e" />
-
-          {/* wings flap via animateTransform */}
+      <div style={{ transform: reverse ? undefined : 'scaleX(-1)', width: 72, height: 42 }}>
+        <svg width="72" height="42" viewBox="0 0 72 42" fill="none" style={{ filter: 'drop-shadow(0 2px 2px rgba(26,47,110,0.18))' }}>
           <g>
-            <motion.path
-              d="M28 19 Q22 8, 8 6 Q18 16, 28 19 Z"
-              fill="#21409A"
-              animate={{
-                d: [
-                  'M28 19 Q22 8, 8 6 Q18 16, 28 19 Z',
-                  'M28 19 Q22 16, 6 22 Q18 22, 28 19 Z',
-                  'M28 19 Q22 12, 10 12 Q18 18, 28 19 Z',
-                  'M28 19 Q22 8, 8 6 Q18 16, 28 19 Z',
-                ],
-              }}
-              transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut' }}
+            <path d="M36 25 C30 13 18 3 7 5 C17 16 28 22 36 25 Z" fill="#21409A">
+              <animate
+                attributeName="d"
+                values="M36 25 C30 13 18 3 7 5 C17 16 28 22 36 25 Z; M36 25 C27 27 15 34 5 36 C17 38 30 31 36 25 Z; M36 25 C29 20 18 15 9 16 C20 23 30 26 36 25 Z; M36 25 C30 13 18 3 7 5 C17 16 28 22 36 25 Z"
+                keyTimes="0;0.34;0.68;1"
+                keySplines="0.32 0 0.67 0; 0.22 1 0.36 1; 0.32 0 0.67 0"
+                calcMode="spline"
+                dur="0.86s"
+                repeatCount="indefinite"
+              />
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values="-10 36 25; 24 36 25; -24 36 25; -10 36 25"
+                keyTimes="0;0.34;0.68;1"
+                keySplines="0.32 0 0.67 0; 0.22 1 0.36 1; 0.32 0 0.67 0"
+                calcMode="spline"
+                dur="0.86s"
+                repeatCount="indefinite"
+              />
+            </path>
+            <path d="M36 25 C42 13 54 3 65 5 C55 16 44 22 36 25 Z" fill="#2950b8">
+              <animate
+                attributeName="d"
+                values="M36 25 C42 13 54 3 65 5 C55 16 44 22 36 25 Z; M36 25 C45 27 57 34 67 36 C55 38 42 31 36 25 Z; M36 25 C43 20 54 15 63 16 C52 23 42 26 36 25 Z; M36 25 C42 13 54 3 65 5 C55 16 44 22 36 25 Z"
+                keyTimes="0;0.34;0.68;1"
+                keySplines="0.32 0 0.67 0; 0.22 1 0.36 1; 0.32 0 0.67 0"
+                calcMode="spline"
+                dur="0.86s"
+                repeatCount="indefinite"
+              />
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values="10 36 25; -24 36 25; 24 36 25; 10 36 25"
+                keyTimes="0;0.34;0.68;1"
+                keySplines="0.32 0 0.67 0; 0.22 1 0.36 1; 0.32 0 0.67 0"
+                calcMode="spline"
+                dur="0.86s"
+                repeatCount="indefinite"
+              />
+            </path>
+          </g>
+          <g>
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              values="0 0; 0 1.2; 0 -0.7; 0 0"
+              keyTimes="0;0.34;0.68;1"
+              keySplines="0.32 0 0.67 0; 0.22 1 0.36 1; 0.32 0 0.67 0"
+              calcMode="spline"
+              dur="0.86s"
+              repeatCount="indefinite"
             />
-            <motion.path
-              d="M28 19 Q34 8, 48 6 Q38 16, 28 19 Z"
-              fill="#2950b8"
-              animate={{
-                d: [
-                  'M28 19 Q34 8, 48 6 Q38 16, 28 19 Z',
-                  'M28 19 Q34 16, 50 22 Q38 22, 28 19 Z',
-                  'M28 19 Q34 12, 46 12 Q38 18, 28 19 Z',
-                  'M28 19 Q34 8, 48 6 Q38 16, 28 19 Z',
-                ],
-              }}
-              transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut' }}
-            />
+            <ellipse cx="36" cy="26" rx="7.5" ry="3.2" fill="#142b68" />
+            <ellipse cx="43.5" cy="24" rx="3.2" ry="2.5" fill="#142b68" />
+            <path d="M46.5 23.5 L50 23.8 L46.8 24.8" fill="#d4a017" />
+            <path d="M28.5 26 L22 23 L22 29 Z" fill="#142b68" />
           </g>
         </svg>
       </div>
@@ -96,6 +121,7 @@ interface CloudProps {
   delay: number;
   duration: number;
   top: string;
+  left: string;
   width: string;
   opacity: number;
   blur: number;
@@ -103,13 +129,13 @@ interface CloudProps {
   reverse?: boolean;
 }
 
-const Cloud: React.FC<CloudProps> = ({ delay, duration, top, width, opacity, blur, tint, reverse = false }) => {
+const Cloud: React.FC<CloudProps> = ({ delay, duration, top, left, width, opacity, blur, tint, reverse = false }) => {
   const yOffset = reverse ? -15 : 15;
 
   return (
     <motion.div
-      initial={{ x: reverse ? '-30vw' : '110vw', y: 0 }}
-      animate={{ x: reverse ? '110vw' : '-30vw', y: [0, yOffset, 0] }}
+      initial={false}
+      animate={{ x: reverse ? ['-35vw', '110vw'] : ['110vw', '-35vw'], y: [0, yOffset, 0] }}
       transition={{
         x: {
           duration,
@@ -126,8 +152,8 @@ const Cloud: React.FC<CloudProps> = ({ delay, duration, top, width, opacity, blu
           repeatType: 'reverse',
         },
       }}
-      style={{ top, width, opacity, filter: `blur(${blur}px)` }}
-      className="absolute pointer-events-none will-change-transform"
+      style={{ top, left, width, opacity, filter: `blur(${blur}px)` }}
+      className="absolute z-[1] pointer-events-none will-change-transform"
     >
       <svg viewBox="0 0 240 100" fill="none" preserveAspectRatio="xMidYMid meet" className="w-full h-auto">
         <defs>
@@ -162,24 +188,24 @@ const Cloud: React.FC<CloudProps> = ({ delay, duration, top, width, opacity, blu
   );
 };
 
-const CloudBackground = () => {
+const CloudBackground = ({ className = "fixed inset-0 -z-10 overflow-hidden pointer-events-none select-none" }: { className?: string }) => {
   const clouds = useMemo(() => [
-    // sparse: 1 cloud per lane, fewer lanes
-    { delay: 0, duration: 60, top: '10%', width: '260px', opacity: 1, blur: 2, tint: 'B8C8E0', reverse: false },
-    { delay: -10, duration: 70, top: '38%', width: '300px', opacity: 1, blur: 1.5, tint: 'C8D4E8', reverse: true },
-    { delay: -25, duration: 80, top: '62%', width: '280px', opacity: 1, blur: 2, tint: 'A8BCD8', reverse: false },
+    { delay: -8, duration: 46, top: '8%', left: '0', width: '300px', opacity: 0.82, blur: 0.4, tint: 'B8C8E0', reverse: false },
+    { delay: -23, duration: 58, top: '28%', left: '0', width: '360px', opacity: 0.7, blur: 0.8, tint: 'C8D4E8', reverse: true },
+    { delay: -41, duration: 64, top: '52%', left: '0', width: '320px', opacity: 0.62, blur: 0.6, tint: 'A8BCD8', reverse: false },
+    { delay: -31, duration: 52, top: '16%', left: '0', width: '240px', opacity: 0.68, blur: 0.2, tint: 'D7E0EF', reverse: true },
   ], []);
 
   const birds = useMemo(() => [
-    { delay: 0, duration: 35, top: '18%', scale: 1, reverse: false },
-    { delay: -8, duration: 40, top: '22%', scale: 0.7, reverse: false },
-    { delay: -3, duration: 38, top: '20%', scale: 0.85, reverse: false },
-    { delay: -20, duration: 45, top: '28%', scale: 0.6, reverse: true },
-    { delay: -50, duration: 50, top: '32%', scale: 0.8, reverse: false },
+    { delay: -4, duration: 24, top: '17%', left: '0', scale: 1, reverse: false },
+    { delay: -11, duration: 28, top: '22%', left: '0', scale: 0.72, reverse: false },
+    { delay: -18, duration: 26, top: '19%', left: '0', scale: 0.86, reverse: false },
+    { delay: -25, duration: 32, top: '30%', left: '0', scale: 0.62, reverse: true },
+    { delay: -33, duration: 34, top: '35%', left: '0', scale: 0.78, reverse: false },
   ], []);
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none select-none">
+    <div className={className}>
       <div className="absolute inset-0 bg-gradient-to-b from-[#D4E2F7] via-[#E8F0FB] to-transparent" />
       <Sun />
       {clouds.map((cloud, i) => (
@@ -193,4 +219,3 @@ const CloudBackground = () => {
 };
 
 export default CloudBackground;
-

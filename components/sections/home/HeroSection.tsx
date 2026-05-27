@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import StatsStrip from './StatsStrip';
 import RevealText from '../../effects/RevealText';
+import CloudBackground from '../../effects/CloudBackground';
 
 const HeroSection = () => {
   const containerRef = useRef(null);
@@ -24,6 +25,8 @@ const HeroSection = () => {
 
   return (
     <section ref={containerRef} className="relative w-full flex flex-col items-center overflow-hidden min-h-[100svh] bg-white">
+      <CloudBackground className="absolute inset-0 z-0 hidden overflow-hidden pointer-events-none select-none md:block" />
+
       {/* Decorative Floating Blobs */}
       <motion.div
         style={{ y: yBlob1 }}
