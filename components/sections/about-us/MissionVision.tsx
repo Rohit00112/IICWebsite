@@ -6,9 +6,9 @@ import { motion } from 'framer-motion';
 
 const MissionVision = () => {
   return (
-    <section className="py-24 bg-[#F8FAFF] overflow-hidden">
+    <section className="py-16 sm:py-20 md:py-24 bg-[#F8FAFF] overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6">
-        <div className="text-center mb-24">
+        <div className="text-center mb-14 md:mb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -25,7 +25,7 @@ const MissionVision = () => {
             </div>
 
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#2D2D5F] font-sora leading-tight tracking-tight mb-6">
-              "Developing impactful <br className="hidden md:block" /> industry ready graduates"
+              &ldquo;Developing impactful <br className="hidden md:block" /> industry ready graduates&rdquo;
             </h2>
 
             <p className="text-gray-400 font-bold tracking-[0.2em] text-xs md:text-sm uppercase font-sora">
@@ -34,23 +34,23 @@ const MissionVision = () => {
           </motion.div>
         </div>
 
-        <div className="flex flex-col gap-20 md:gap-32 max-w-6xl mx-auto">
+        <div className="flex flex-col gap-14 md:gap-32 max-w-6xl mx-auto">
           {/* Row 1: Mission */}
-          <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-center justify-center">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-24 items-center justify-center">
             {/* Left Image */}
             <motion.div
-              initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0, scale: 1.1 }}
-              whileInView={{ clipPath: 'inset(0 0 0% 0)', opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full md:w-[55%] aspect-square md:aspect-[4/3] relative rounded-[2.5rem] overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, y: 36, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-60px", amount: 0.2 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full md:w-[55%] h-[300px] sm:h-[380px] md:h-auto md:aspect-[4/3] relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl"
             >
               <Image
                 src="/images/about/mission.png"
                 alt="Students at Itahari International College"
                 fill
                 className="object-cover transition-transform duration-1000 hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 55vw"
+                sizes="(max-width: 768px) calc(100vw - 48px), 55vw"
               />
             </motion.div>
 
@@ -60,7 +60,7 @@ const MissionVision = () => {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: 0.2, duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
-              className="w-full md:w-[45%] bg-[#1A2B6D] p-12 md:p-16 rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(26,43,109,0.3)] relative flex flex-col items-start"
+              className="w-full md:w-[45%] bg-[#1A2B6D] p-8 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(26,43,109,0.3)] relative flex flex-col items-start"
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-inner">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A2B6D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -82,21 +82,21 @@ impact in the industry.
           </div>
 
           {/* Row 2: Vision */}
-          <div className="flex flex-col md:flex-row-reverse gap-12 md:gap-24 items-center justify-center">
+          <div className="flex flex-col md:flex-row-reverse gap-8 md:gap-24 items-center justify-center">
             {/* Right Image */}
             <motion.div
-              initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0, scale: 1.1 }}
-              whileInView={{ clipPath: 'inset(0 0 0% 0)', opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full md:w-[55%] aspect-square md:aspect-[4/3] relative rounded-[2.5rem] overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, y: 36, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-60px", amount: 0.2 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full md:w-[55%] h-[300px] sm:h-[380px] md:h-auto md:aspect-[4/3] relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl"
             >
               <Image
                 src="/images/about/vision.png"
                 alt="Campus Life"
                 fill
                 className="object-cover transition-transform duration-1000 hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 55vw"
+                sizes="(max-width: 768px) calc(100vw - 48px), 55vw"
               />
             </motion.div>
 
@@ -106,7 +106,7 @@ impact in the industry.
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: 0.2, duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
-              className="w-full md:w-[45%] bg-[#AF1D1D] p-12 md:p-16 rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(175,29,29,0.3)] relative flex flex-col items-start"
+              className="w-full md:w-[45%] bg-[#AF1D1D] p-8 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(175,29,29,0.3)] relative flex flex-col items-start"
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-inner">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#AF1D1D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

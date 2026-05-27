@@ -3,7 +3,6 @@
 import React from 'react';
 import Image from 'next/image';
 import AnimeReveal from '../../effects/AnimeReveal';
-import AnimeStagger from '../../effects/AnimeStagger';
 import { motion } from 'framer-motion';
 
 const IngSection = () => {
@@ -19,10 +18,10 @@ const IngSection = () => {
 
         {/* Main Green Card */}
         <motion.div
-          initial={{ clipPath: 'inset(100% 0 0 0)', y: 100, opacity: 0 }}
-          whileInView={{ clipPath: 'inset(0% 0 0 0)', y: 0, opacity: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ y: 48, opacity: 0, scale: 0.98 }}
+          whileInView={{ y: 0, opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-60px", amount: 0.15 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="bg-[#568E33] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row items-stretch p-6 md:p-16 max-w-7xl mx-auto gap-8 lg:gap-12"
         >
           {/* Left Content */}

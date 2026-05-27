@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, MotionValue, cubicBezier } from 'framer-motion';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useTransform, MotionValue, cubicBezier } from 'framer-motion';
 
 const historyItems = [
   {
@@ -42,68 +42,77 @@ interface PanelProps {
 
 const easeInOut = cubicBezier(0.65, 0, 0.35, 1);
 const easeOut = cubicBezier(0.22, 1, 0.36, 1);
+type PinState = 'before' | 'active' | 'after';
 
 const Panel = ({ item, index, total, progress }: PanelProps) => {
-  const segment = 1 / total;
-  const start = index * segment;
-  const mid = start + segment / 2;
-  const end = start + segment;
+  const step = total > 1 ? 1 / (total - 1) : 1;
+  const center = total > 1 ? index * step : 0;
   const isLast = index === total - 1;
   const isFirst = index === 0;
+  const enterStart = isFirst ? 0 : Math.max(0, center - step * 0.55);
+  const enterEnd = isFirst ? 0 : Math.max(0, center - step * 0.18);
+  const exitStart = isLast ? 1 : Math.min(1, center + step * 0.18);
+  const exitEnd = isLast ? 1 : Math.min(1, center + step * 0.55);
 
-  const fadeIn = isFirst ? -0.0001 : start + segment * 0.15;
-  const holdStart = isFirst ? -0.0001 : start + segment * 0.3;
-  const holdEnd = isLast ? 1.0001 : end - segment * 0.15;
-  const fadeOut = isLast ? 1.0001 : end - segment * 0.02;
+  const visibilityInput = isFirst
+    ? [0, exitStart, exitEnd]
+    : isLast
+      ? [enterStart, enterEnd, 1]
+      : [enterStart, enterEnd, exitStart, exitEnd];
+  const visibilityOutput = isFirst
+    ? [1, 1, 0]
+    : isLast
+      ? [0, 1, 1]
+      : [0, 1, 1, 0];
+  const yInput = isFirst
+    ? [0, exitStart, exitEnd]
+    : isLast
+      ? [enterStart, enterEnd, 1]
+      : [enterStart, center, exitEnd];
+  const titleYOutput = isFirst
+    ? [0, 0, -60]
+    : isLast
+      ? [60, 0, 0]
+      : [60, 0, -60];
+  const descYOutput = isFirst
+    ? [0, 0, -40]
+    : isLast
+      ? [40, 0, 0]
+      : [40, 0, -40];
+  const giantYOutput = isFirst
+    ? [0, 0, -100]
+    : isLast
+      ? [100, 0, 0]
+      : [100, 0, -100];
+  const scaleOutput = isFirst
+    ? [1, 1, 1.04]
+    : isLast
+      ? [0.96, 1, 1]
+      : [0.96, 1, 1.04];
+  const statScaleOutput = isFirst
+    ? [1, 1, 1.08]
+    : isLast
+      ? [0.85, 1, 1]
+      : [0.85, 1, 1.08];
 
-  const opacity = useTransform(
-    progress,
-    [fadeIn, holdStart, holdEnd, fadeOut],
-    [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0],
-    { ease: easeInOut }
-  );
+  const opacity = useTransform(progress, visibilityInput, visibilityOutput, { ease: easeInOut });
   const blurValue = useTransform(
     progress,
-    [fadeIn, holdStart, holdEnd, fadeOut],
-    [isFirst ? 0 : 4, 0, 0, isLast ? 0 : 4],
+    visibilityInput,
+    visibilityOutput.map((value) => (value === 1 ? 0 : 4)),
     { ease: easeInOut }
   );
   const itemFilter = useTransform(blurValue, (b) => `blur(${b}px)`);
 
-  const titleY = useTransform(
-    progress,
-    [fadeIn, mid, fadeOut],
-    [isFirst ? 0 : 60, 0, isLast ? 0 : -60],
-    { ease: easeOut }
-  );
-  const descY = useTransform(
-    progress,
-    [fadeIn, mid, fadeOut],
-    [isFirst ? 0 : 40, 0, isLast ? 0 : -40],
-    { ease: easeOut }
-  );
-  const statScale = useTransform(
-    progress,
-    [fadeIn, mid, fadeOut],
-    [isFirst ? 1 : 0.85, 1, isLast ? 1 : 1.08],
-    { ease: easeOut }
-  );
-  const contentScale = useTransform(
-    progress,
-    [fadeIn, mid, fadeOut],
-    [isFirst ? 1 : 0.96, 1, isLast ? 1 : 1.04],
-    { ease: easeOut }
-  );
-  const giantYearY = useTransform(
-    progress,
-    [fadeIn, mid, fadeOut],
-    [isFirst ? 0 : 100, 0, isLast ? 0 : -100],
-    { ease: easeOut }
-  );
+  const titleY = useTransform(progress, yInput, titleYOutput, { ease: easeOut });
+  const descY = useTransform(progress, yInput, descYOutput, { ease: easeOut });
+  const statScale = useTransform(progress, yInput, statScaleOutput, { ease: easeOut });
+  const contentScale = useTransform(progress, yInput, scaleOutput, { ease: easeOut });
+  const giantYearY = useTransform(progress, yInput, giantYOutput, { ease: easeOut });
   const giantOpacity = useTransform(
     progress,
-    [fadeIn, holdStart, holdEnd, fadeOut],
-    [isFirst ? 0.18 : 0, 0.18, 0.18, isLast ? 0.18 : 0],
+    visibilityInput,
+    visibilityOutput.map((value) => (value === 1 ? 0.18 : 0)),
     { ease: easeInOut }
   );
 
@@ -181,18 +190,17 @@ const Panel = ({ item, index, total, progress }: PanelProps) => {
 };
 
 const Marker = ({ item, index, total, progress }: { item: typeof historyItems[0], index: number, total: number, progress: MotionValue<number> }) => {
-  const segment = 1 / total;
-  const mid = index * segment + segment / 2;
-  const dotScale = useTransform(
-    progress,
-    [mid - segment / 2, mid, mid + segment / 2],
-    [0.7, 1.4, 0.7]
-  );
-  const labelOpacity = useTransform(
-    progress,
-    [mid - segment / 2, mid, mid + segment / 2],
-    [0.4, 1, 0.4]
-  );
+  const step = total > 1 ? 1 / (total - 1) : 1;
+  const center = total > 1 ? index * step : 0;
+  const isFirst = index === 0;
+  const isLast = index === total - 1;
+  const range = isFirst
+    ? [0, step * 0.5]
+    : isLast
+      ? [1 - step * 0.5, 1]
+      : [center - step * 0.5, center, center + step * 0.5];
+  const dotScale = useTransform(progress, range, isFirst ? [1.4, 0.7] : isLast ? [0.7, 1.4] : [0.7, 1.4, 0.7]);
+  const labelOpacity = useTransform(progress, range, isFirst ? [1, 0.4] : isLast ? [0.4, 1] : [0.4, 1, 0.4]);
 
   return (
     <div className="relative flex flex-col items-center">
@@ -211,30 +219,58 @@ const Marker = ({ item, index, total, progress }: { item: typeof historyItems[0]
 };
 
 const ExcellenceJourney = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 60,
-    damping: 22,
-    mass: 0.6,
-    restDelta: 0.0005,
-  });
+  const containerRef = useRef<HTMLElement>(null);
+  const [pinState, setPinState] = useState<PinState>('before');
+  const journeyProgress = useMotionValue(0);
 
   const total = historyItems.length;
-  const railFill = useTransform(smoothProgress, [0, 1], ['0%', '100%']);
+  const railFill = useTransform(journeyProgress, [0, 1], ['0%', '100%']);
+
+  const updatePinState = useCallback(() => {
+    const section = containerRef.current;
+    if (!section) return;
+
+    const rect = section.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const scrollableDistance = Math.max(1, rect.height - viewportHeight);
+    const nextState: PinState =
+      rect.top > 0 ? 'before' : rect.bottom <= viewportHeight ? 'after' : 'active';
+    const nextProgress =
+      nextState === 'before'
+        ? 0
+        : nextState === 'after'
+          ? 1
+          : Math.min(1, Math.max(0, -rect.top / scrollableDistance));
+
+    journeyProgress.set(nextProgress);
+    setPinState((currentState) => currentState === nextState ? currentState : nextState);
+  }, [journeyProgress]);
+
+  useEffect(() => {
+    updatePinState();
+    window.addEventListener('scroll', updatePinState, { passive: true });
+    window.addEventListener('resize', updatePinState);
+
+    return () => {
+      window.removeEventListener('scroll', updatePinState);
+      window.removeEventListener('resize', updatePinState);
+    };
+  }, [updatePinState]);
+
+  const stagePositionClass =
+    pinState === 'active'
+      ? 'fixed inset-0 z-30'
+      : pinState === 'after'
+        ? 'absolute inset-x-0 bottom-0 z-10'
+        : 'absolute inset-x-0 top-0 z-10';
 
   return (
     <section
       ref={containerRef}
       className="relative bg-[#FAFAFA]"
-      style={{ height: `${total * 130}vh` }}
+      style={{ height: `${(total + 1) * 100}svh` }}
     >
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className={`${stagePositionClass} h-[100svh] w-full overflow-hidden bg-[#FAFAFA]`}>
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -258,7 +294,7 @@ const ExcellenceJourney = () => {
               item={item}
               index={i}
               total={total}
-              progress={smoothProgress}
+              progress={journeyProgress}
             />
           ))}
         </div>
@@ -280,7 +316,7 @@ const ExcellenceJourney = () => {
                     item={item}
                     index={i}
                     total={total}
-                    progress={smoothProgress}
+                    progress={journeyProgress}
                   />
                 ))}
               </div>
