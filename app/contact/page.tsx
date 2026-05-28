@@ -21,7 +21,7 @@ export default function ContactPage() {
     mainEntity: {
       '@type': 'CollegeOrUniversity',
       name: 'Itahari International College',
-      telephone: '+977-1-12345678',
+      telephone: '+977-9801003030',
       email: 'info@iic.edu.np',
       address: {
         '@type': 'PostalAddress',

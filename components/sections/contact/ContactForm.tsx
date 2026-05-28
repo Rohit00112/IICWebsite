@@ -121,43 +121,14 @@ const ContactForm = () => {
                   <div>
                     <h3 className="text-xl font-bold text-[#1a1a1a] mb-2 font-sora">Admissions WhatsApp</h3>
                     <p className="text-gray-400 text-sm mb-4 leading-relaxed font-medium">Need immediate answers? Chat with our admissions counsellors instantly.</p>
-                    <a href="https://wa.me/9779801234567" target="_blank" rel="noopener noreferrer" className="text-[#25D366] font-bold text-xs uppercase tracking-wider flex items-center gap-2 hover:gap-3 transition-all">
+                    <a href="https://wa.me/9779801003030" target="_blank" rel="noopener noreferrer" className="text-[#25D366] font-bold text-xs uppercase tracking-wider flex items-center gap-2 hover:gap-3 transition-all">
                       Chat with Admissions <span>→</span>
                     </a>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Admissions Office */}
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-white p-8 rounded-[24px] shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-gray-100 group hover:border-[#21409A]/20 transition-all"
-              >
-                <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-[#21409A]/5 rounded-xl flex items-center justify-center text-[#21409A] shrink-0">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 14l9-5-9-5-9 5 9 5z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-[#1a1a1a] mb-2 font-sora">Admissions Office</h3>
-                    <p className="text-gray-400 text-sm mb-5 leading-relaxed font-medium">For inquiries regarding applications, entry requirements, and scholarships.</p>
-                    <div className="space-y-3 mb-5">
-                      <div className="flex items-center gap-3 text-sm text-[#1a1a1a] font-bold">
-                        <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                        admissions@iic.edu.np
-                      </div>
-                      <div className="flex items-center gap-3 text-sm text-[#1a1a1a] font-bold">
-                        <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                        +977-1-12345678
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              
 
               {/* General Enquiries */}
               <motion.div 
@@ -183,7 +154,7 @@ const ContactForm = () => {
                       </div>
                       <div className="flex items-center gap-3 text-sm text-[#1a1a1a] font-bold">
                         <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                        +977-1-12345679
+                        +977-9801003030
                       </div>
                     </div>
                   </div>
