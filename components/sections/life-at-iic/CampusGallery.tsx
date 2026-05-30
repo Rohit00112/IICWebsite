@@ -142,6 +142,20 @@ const StoryPanel = ({
 }) => {
   const hasImage = Boolean(side.image);
   const isRight = position === 'right';
+  const mobilePlacement = hasImage
+    ? isRight
+      ? 'top-[58%] h-[42%]'
+      : 'top-0 h-[42%]'
+    : isRight
+      ? 'top-[42%] h-[58%]'
+      : 'top-0 h-[58%]';
+  const desktopPlacement = isRight
+    ? hasImage
+      ? 'md:left-[56%] md:w-[44%] 2xl:left-1/2 2xl:w-1/2'
+      : 'md:left-[44%] md:w-[56%] 2xl:left-1/2 2xl:w-1/2'
+    : hasImage
+      ? 'md:left-0 md:w-[44%] 2xl:w-1/2'
+      : 'md:left-0 md:w-[56%] 2xl:w-1/2';
 
   return (
     <motion.div
@@ -151,9 +165,7 @@ const StoryPanel = ({
       animate="center"
       exit="exit"
       transition={{ duration: 0.92, ease: [0.76, 0, 0.24, 1] }}
-      className={`absolute h-1/2 w-full overflow-hidden md:top-0 md:h-full md:w-1/2 ${
-        isRight ? 'top-1/2 md:left-1/2' : 'left-0 top-0'
-      }`}
+      className={`absolute left-0 w-full overflow-hidden md:top-0 md:h-full ${mobilePlacement} ${desktopPlacement}`}
     >
       {hasImage ? (
         <div className="group relative h-full w-full overflow-hidden bg-[#07100d]">
@@ -171,7 +183,7 @@ const StoryPanel = ({
               fill
               loading={index === 0 ? 'eager' : 'lazy'}
               className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1536px) 44vw, 50vw"
             />
           </motion.div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/12 to-black/20" />
@@ -181,7 +193,7 @@ const StoryPanel = ({
           />
         </div>
       ) : (
-        <div className="relative flex h-full w-full items-center bg-[#070b12] px-7 py-10 md:px-14 lg:px-20">
+        <div className="relative flex h-full w-full items-center bg-[#070b12] px-6 py-9 sm:px-8 md:px-10 lg:px-12 xl:px-16 2xl:px-20">
           <div
             className="pointer-events-none absolute inset-0 opacity-85"
             style={{
@@ -200,9 +212,9 @@ const StoryPanel = ({
               animate="center"
               exit="exit"
               transition={{ duration: 0.58, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 max-w-xl"
+              className="relative z-10 max-w-full lg:max-w-xl"
             >
-              <h3 className="mb-5 font-sora text-4xl font-black leading-[1.02] tracking-tight text-white md:text-6xl lg:text-7xl">
+              <h3 className="mb-5 break-words font-sora text-4xl font-black leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl 2xl:text-7xl">
                 {side.content.title}
               </h3>
               <p className="max-w-md text-base leading-relaxed text-white/72 md:text-lg">
@@ -255,6 +267,31 @@ const CampusGallery = () => {
     }, SLIDE_DURATION_MS);
   }, []);
 
+  const setBoundaryPage = useCallback((nextIndex: number, nextDirection: 1 | -1) => {
+    if (activeIndexRef.current === nextIndex) return;
+
+    activeIndexRef.current = nextIndex;
+    setDirection(nextDirection);
+    setActiveIndex(nextIndex);
+  }, []);
+
+  const syncBoundaryPage = useCallback(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const rect = section.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    if (rect.top >= viewportHeight) {
+      setBoundaryPage(0, 1);
+      return;
+    }
+
+    if (rect.bottom <= 0) {
+      setBoundaryPage(storyPages.length - 1, -1);
+    }
+  }, [setBoundaryPage]);
+
   const setPage = useCallback(
     (nextIndex: number, nextDirection: 1 | -1) => {
       const boundedIndex = Math.min(storyPages.length - 1, Math.max(0, nextIndex));
@@ -303,6 +340,8 @@ const CampusGallery = () => {
   );
 
   useEffect(() => {
+    syncBoundaryPage();
+
     const handleWheel = (event: WheelEvent) => {
       const nextDirection: 1 | -1 = event.deltaY >= 0 ? 1 : -1;
       handleStep(event, nextDirection);
@@ -335,6 +374,7 @@ const CampusGallery = () => {
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+    window.addEventListener('scroll', syncBoundaryPage, { passive: true });
     window.addEventListener('touchstart', handleTouchStart, {
       passive: true,
       capture: true,
@@ -347,6 +387,7 @@ const CampusGallery = () => {
 
     return () => {
       window.removeEventListener('wheel', handleWheel, { capture: true });
+      window.removeEventListener('scroll', syncBoundaryPage);
       window.removeEventListener('touchstart', handleTouchStart, { capture: true });
       window.removeEventListener('touchmove', handleTouchMove, { capture: true });
       window.removeEventListener('keydown', handleKeyDown, { capture: true });
@@ -355,7 +396,7 @@ const CampusGallery = () => {
         window.clearTimeout(cooldownTimerRef.current);
       }
     };
-  }, [handleStep]);
+  }, [handleStep, syncBoundaryPage]);
 
   if (prefersReducedMotion) {
     return (

@@ -1,35 +1,26 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import RevealText from '../../effects/RevealText';
 import GlassSurprise from '../../effects/GlassSurprise';
 
 const LifeHero = () => {
-  const containerRef = useRef(null);
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 1000], [0, 200]);
-  const opacityProgress = useTransform(scrollY, [0, 200, 400], [1, 1, 0]);
-  const yTranslate = useTransform(scrollY, [0, 500], [0, -150]);
-
   return (
-    <section ref={containerRef} className="relative min-h-[85svh] w-full overflow-hidden bg-white flex items-center justify-center pt-24 pb-12 px-4 md:px-8">
-      {/* Background Image with Parallax */}
-      <motion.div
-        style={{ y }}
-        className="absolute inset-0 w-full h-[110%] -top-[5%]"
-      >
+    <section className="relative flex min-h-[85svh] w-full items-center justify-center overflow-hidden bg-white px-4 pb-12 pt-24 md:px-8">
+      {/* Background Image */}
+      <div className="absolute inset-0 h-full w-full">
         <Image
           src="/images/lifestyle/lifestyle-hero.png"
           alt="Life at IIC"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           sizes="100vw"
           priority
         />
-      </motion.div>
+      </div>
 
       {/* Light overlay */}
       <div className="absolute inset-0 bg-white/10" />
@@ -39,11 +30,7 @@ const LifeHero = () => {
         initial={{ opacity: 0, y: 100, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-        style={{
-          opacity: opacityProgress,
-          y: yTranslate
-        }}
-        className="relative z-10 w-full max-w-[1100px] mt-12 md:mt-0"
+        className="relative z-10 w-full max-w-[1100px]"
       >
         <GlassSurprise>
           {/* Top Badge */}

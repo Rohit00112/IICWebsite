@@ -78,6 +78,16 @@ const StudentExperience = () => {
                           <p className="text-white/70 text-lg leading-relaxed pl-4 max-w-2xl pb-4">
                             {exp.description}
                           </p>
+                          <div className="relative ml-4 mt-5 aspect-[16/10] max-w-3xl overflow-hidden rounded-lg lg:hidden">
+                            <Image
+                              src={exp.image}
+                              alt={exp.title}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 1024px) calc(100vw - 96px), 100vw"
+                            />
+                            <div className="absolute inset-0 bg-black/20" />
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -88,7 +98,7 @@ const StudentExperience = () => {
           </div>
 
           {/* Image Display */}
-          <div className="w-full relative aspect-[4/5] md:aspect-[3/4] lg:aspect-square rounded-[40px] overflow-hidden">
+          <div className="hidden w-full lg:relative lg:block lg:aspect-square lg:overflow-hidden lg:rounded-[40px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
