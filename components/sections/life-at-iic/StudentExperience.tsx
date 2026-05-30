@@ -25,7 +25,7 @@ const experiences = [
   },
   {
     id: "04",
-    title: "creator",
+    title: "Creator",
     description: "Where innovation meets creativity. This community lives at the intersection of technology and digital culture — building brands, creating content, and driving engagement through smart marketing and creative campaigns. Members use the innovation lab as their playground to experiment, create, and make noise in the digital world.",
     image: "/images/home/ivlab2.png"
   }

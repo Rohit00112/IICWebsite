@@ -1,354 +1,461 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, type Variants, useReducedMotion } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import Image from 'next/image';
 
-const sections = [
+type StoryContent = {
+  title: string;
+  description: string;
+};
+
+type StorySide = {
+  image?: string;
+  alt?: string;
+  content?: StoryContent;
+};
+
+type StoryPage = {
+  id: string;
+  accent: string;
+  left: StorySide;
+  right: StorySide;
+};
+
+const storyPages: StoryPage[] = [
   {
-    id: 1,
-    image: '/images/home/iic-lifestyle 3.png',
-    title: 'The Knowledge Hub',
-    text: "Our state-of-the-art library offers a serene environment for deep work and collaborative study. Equipped with extensive digital archives, quiet reading zones, and dedicated group study pods, it's designed to support your academic journey.",
-    bgColor: '#0A2520',
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-6 opacity-80">
-        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-      </svg>
-    ),
-    reverse: false
+    id: 'knowledge-hub',
+    accent: '#0A2520',
+    left: {
+      image: '/images/home/iic-lifestyle 3.png',
+      alt: 'The Knowledge Hub at IIC',
+    },
+    right: {
+      content: {
+        title: 'The Knowledge Hub',
+        description:
+          "Our state-of-the-art library offers a serene environment for deep work and collaborative study. Equipped with extensive digital archives, quiet reading zones, and dedicated group study pods, it's designed to support your academic journey.",
+      },
+    },
   },
   {
-    id: 2,
-    image: '/images/home/iic-lifestyle 2.png',
-    title: 'Advanced Technology Labs',
-    text: "Experience hands-on learning in our dedicated computing and IT laboratories. Outfitted with the latest hardware and enterprise software, these spaces allow you to innovate, code, and build the technologies of tomorrow.",
-    bgColor: '#0B1120',
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-6 opacity-80">
-        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-        <line x1="8" y1="21" x2="16" y2="21" />
-        <line x1="12" y1="17" x2="12" y2="21" />
-      </svg>
-    ),
-    reverse: true
+    id: 'technology-labs',
+    accent: '#0B1120',
+    left: {
+      content: {
+        title: 'Advanced Technology Labs',
+        description:
+          'Experience hands-on learning in our dedicated computing and IT laboratories. Outfitted with the latest hardware and enterprise software, these spaces allow you to innovate, code, and build the technologies of tomorrow.',
+      },
+    },
+    right: {
+      image: '/images/home/iic-lifestyle 2.png',
+      alt: 'Advanced Technology Labs at IIC',
+    },
   },
   {
-    id: 3,
-    image: '/images/lifestyle/lifestyle.png',
-    title: 'Recreation & Wellness',
-    text: "Balance is key to success. Our campus features modern recreational facilities, including a multi-purpose sports hall, fitness center, and vibrant student lounges, ensuring you stay active and refreshed.",
-    bgColor: '#2E401B',
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="mb-6 opacity-80">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-    reverse: false
-  }
+    id: 'recreation-wellness',
+    accent: '#2E401B',
+    left: {
+      image: '/images/lifestyle/lifestyle.png',
+      alt: 'Recreation and wellness spaces at IIC',
+    },
+    right: {
+      content: {
+        title: 'Recreation & Wellness',
+        description:
+          'Balance is key to success. Our campus features modern recreational facilities, including a multi-purpose sports hall, fitness center, and vibrant student lounges, ensuring you stay active and refreshed.',
+      },
+    },
+  },
 ];
 
-const Slide = ({ section }: { section: typeof sections[0] }) => {
+const SLIDE_DURATION_MS = 900;
+const SNAP_TOLERANCE = 24;
+const TOUCH_THRESHOLD = 42;
+
+const leftPanelVariants: Variants = {
+  enter: (direction: 1 | -1) => ({
+    y: direction > 0 ? '100%' : '-100%',
+  }),
+  center: {
+    y: '0%',
+  },
+  exit: (direction: 1 | -1) => ({
+    y: direction > 0 ? '-100%' : '100%',
+  }),
+};
+
+const rightPanelVariants: Variants = {
+  enter: (direction: 1 | -1) => ({
+    y: direction > 0 ? '-100%' : '100%',
+  }),
+  center: {
+    y: '0%',
+  },
+  exit: (direction: 1 | -1) => ({
+    y: direction > 0 ? '100%' : '-100%',
+  }),
+};
+
+const contentVariants: Variants = {
+  enter: {
+    opacity: 0,
+    y: 28,
+    filter: 'blur(10px)',
+  },
+  center: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+  },
+  exit: {
+    opacity: 0,
+    y: -18,
+    filter: 'blur(8px)',
+  },
+};
+
+const preventPageScroll = (event: Event) => {
+  if (event.cancelable) event.preventDefault();
+  event.stopPropagation();
+  event.stopImmediatePropagation();
+};
+
+const StoryPanel = ({
+  accent,
+  direction,
+  index,
+  page,
+  side,
+  variants,
+  position,
+}: {
+  accent: string;
+  direction: 1 | -1;
+  index: number;
+  page: StoryPage;
+  side: StorySide;
+  variants: Variants;
+  position: 'left' | 'right';
+}) => {
+  const hasImage = Boolean(side.image);
+  const isRight = position === 'right';
+
   return (
     <motion.div
-      className="absolute inset-0 flex flex-col md:flex-row overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
+      custom={direction}
+      variants={variants}
+      initial="enter"
+      animate="center"
+      exit="exit"
+      transition={{ duration: 0.92, ease: [0.76, 0, 0.24, 1] }}
+      className={`absolute h-1/2 w-full overflow-hidden md:top-0 md:h-full md:w-1/2 ${
+        isRight ? 'top-1/2 md:left-1/2' : 'left-0 top-0'
+      }`}
     >
-      <div
-        className={`w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center px-10 md:px-24 lg:px-32 text-white ${section.reverse ? 'md:order-1' : 'md:order-2'}`}
-        style={{ backgroundColor: section.bgColor }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1], delay: 0.1 }}
-        >
-          {section.icon}
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 font-sora">
-            {section.title}
-          </h2>
-          <p className="text-white/80 text-base md:text-lg leading-relaxed max-w-md font-sora">
-            {section.text}
-          </p>
-        </motion.div>
-      </div>
-
-      <div className={`w-full md:w-1/2 h-1/2 md:h-full relative overflow-hidden ${section.reverse ? 'md:order-2' : 'md:order-1'}`}>
-        <motion.div
-          initial={{ scale: 1.08 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.9, ease: [0.33, 1, 0.68, 1] }}
-          className="w-full h-full"
-        >
-          <Image
-            src={section.image}
-            alt={section.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
+      {hasImage ? (
+        <div className="group relative h-full w-full overflow-hidden bg-[#07100d]">
+          <motion.div
+            key={`${page.id}-${position}-image`}
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 1.04 }}
+            transition={{ duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={side.image as string}
+              alt={side.alt ?? ''}
+              fill
+              loading={index === 0 ? 'eager' : 'lazy'}
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/12 to-black/20" />
+          <div
+            className="absolute inset-x-0 top-0 h-1"
+            style={{ backgroundColor: accent }}
           />
-        </motion.div>
-      </div>
+        </div>
+      ) : (
+        <div className="relative flex h-full w-full items-center bg-[#070b12] px-7 py-10 md:px-14 lg:px-20">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-85"
+            style={{
+              background: `radial-gradient(circle at ${
+                isRight ? '18% 20%' : '82% 20%'
+              }, ${accent}44, transparent 38%), linear-gradient(135deg, #050706 0%, #0d1413 48%, #060915 100%)`,
+            }}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04),transparent_32%,transparent_68%,rgba(255,255,255,0.04))]" />
+
+          {side.content && (
+            <motion.div
+              key={`${page.id}-${position}-content`}
+              variants={contentVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.58, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+              className="relative z-10 max-w-xl"
+            >
+              <h3 className="mb-5 font-sora text-4xl font-black leading-[1.02] tracking-tight text-white md:text-6xl lg:text-7xl">
+                {side.content.title}
+              </h3>
+              <p className="max-w-md text-base leading-relaxed text-white/72 md:text-lg">
+                {side.content.description}
+              </p>
+            </motion.div>
+          )}
+        </div>
+      )}
     </motion.div>
   );
 };
 
-const SLIDE_COOLDOWN_MS = 700;
-const WHEEL_THRESHOLD = 30;
-const TOUCH_THRESHOLD = 40;
-const SNAP_TOLERANCE = 4;
-
 const CampusGallery = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const activeIndexRef = useRef(0);
-  const lockedRef = useRef(false);
   const cooldownRef = useRef(false);
-  const isExitingRef = useRef(false);
-  const exitTimerRef = useRef<number | null>(null);
-  const wheelAccumRef = useRef(0);
+  const cooldownTimerRef = useRef<number | null>(null);
   const touchStartYRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
-
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const lenis = useLenis();
 
-  const setIndex = useCallback((next: number) => {
-    activeIndexRef.current = next;
-    setActiveIndex(next);
-  }, []);
+  const activePage = storyPages[activeIndex];
 
-  const lastScrollYRef = useRef(0);
+  const scrollToSectionTop = useCallback(() => {
+    const section = sectionRef.current;
+    if (!section) return;
 
-  const lockScroll = useCallback(
-    (entryDirection: 1 | -1) => {
-      if (lockedRef.current || !lenis || !sectionRef.current) return;
-      lockedRef.current = true;
-      isExitingRef.current = false;
-      wheelAccumRef.current = 0;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const target = window.scrollY + rect.top;
-      lenis.stop();
-      lenis.scrollTo(target, { immediate: true, force: true, lock: true });
-      const resetIndex = entryDirection > 0 ? 0 : sections.length - 1;
-      if (activeIndexRef.current !== resetIndex) {
-        activeIndexRef.current = resetIndex;
-        setActiveIndex(resetIndex);
-      }
-    },
-    [lenis]
-  );
+    const sectionTop = window.scrollY + section.getBoundingClientRect().top;
 
-  const unlockScroll = useCallback(
-    (nudgeDirection: 1 | -1 | 0 = 0) => {
-      if (!lockedRef.current || !lenis) return;
-      lockedRef.current = false;
-      isExitingRef.current = nudgeDirection !== 0;
-      lenis.start();
-      if (nudgeDirection !== 0 && sectionRef.current) {
-        if (exitTimerRef.current !== null) {
-          window.clearTimeout(exitTimerRef.current);
-        }
+    if (lenis) {
+      lenis.scrollTo(sectionTop, { immediate: true, force: true });
+    } else {
+      window.scrollTo(0, sectionTop);
+    }
+  }, [lenis]);
 
-        const rect = sectionRef.current.getBoundingClientRect();
-        const sectionTop = window.scrollY + rect.top;
-        const nudge = nudgeDirection > 0 ? sectionTop + rect.height + 1 : sectionTop - 1;
-        lenis.scrollTo(nudge, { duration: 0.4 });
-        exitTimerRef.current = window.setTimeout(() => {
-          isExitingRef.current = false;
-          exitTimerRef.current = null;
-        }, 700);
-      }
-    },
-    [lenis]
-  );
-
-  const triggerCooldown = useCallback(() => {
+  const lockCooldown = useCallback(() => {
     cooldownRef.current = true;
-    window.setTimeout(() => {
+
+    if (cooldownTimerRef.current !== null) {
+      window.clearTimeout(cooldownTimerRef.current);
+    }
+
+    cooldownTimerRef.current = window.setTimeout(() => {
       cooldownRef.current = false;
-    }, SLIDE_COOLDOWN_MS);
+      cooldownTimerRef.current = null;
+    }, SLIDE_DURATION_MS);
   }, []);
 
-  const advance = useCallback(
-    (direction: 1 | -1) => {
-      const current = activeIndexRef.current;
-      const next = current + direction;
+  const setPage = useCallback(
+    (nextIndex: number, nextDirection: 1 | -1) => {
+      const boundedIndex = Math.min(storyPages.length - 1, Math.max(0, nextIndex));
 
-      if (next < 0) {
-        unlockScroll(-1);
-        wheelAccumRef.current = 0;
+      activeIndexRef.current = boundedIndex;
+      setDirection(nextDirection);
+      setActiveIndex(boundedIndex);
+      lockCooldown();
+    },
+    [lockCooldown]
+  );
+
+  const handleStep = useCallback(
+    (event: Event, nextDirection: 1 | -1) => {
+      if (prefersReducedMotion) return false;
+
+      const section = sectionRef.current;
+      if (!section) return false;
+
+      const rect = section.getBoundingClientRect();
+      const isPinned = Math.abs(rect.top) <= SNAP_TOLERANCE;
+
+      if (!isPinned) {
         return false;
       }
-      if (next > sections.length - 1) {
-        unlockScroll(1);
-        wheelAccumRef.current = 0;
-        return false;
-      }
 
-      setIndex(next);
-      triggerCooldown();
-      wheelAccumRef.current = 0;
+      const currentIndex = activeIndexRef.current;
+      const nextIndex = currentIndex + nextDirection;
+      const canMovePanels = nextIndex >= 0 && nextIndex < storyPages.length;
+
+      if (!canMovePanels) return false;
+
+      preventPageScroll(event);
+
+      if (cooldownRef.current) return true;
+
+      scrollToSectionTop();
+      setPage(nextIndex, nextDirection);
       return true;
     },
-    [setIndex, triggerCooldown, unlockScroll]
+    [
+      prefersReducedMotion,
+      scrollToSectionTop,
+      setPage,
+    ]
   );
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section || !lenis) return;
-
-    const tryLockOnEntry = (direction: 1 | -1) => {
-      if (lockedRef.current || !sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const enteredSection = direction > 0
-        ? rect.top <= SNAP_TOLERANCE && rect.bottom > SNAP_TOLERANCE
-        : rect.bottom >= window.innerHeight - SNAP_TOLERANCE && rect.top < window.innerHeight - SNAP_TOLERANCE;
-
-      if (!enteredSection) {
-        isExitingRef.current = false;
-        return;
-      }
-      if (isExitingRef.current) return;
-      lockScroll(direction);
+    const handleWheel = (event: WheelEvent) => {
+      const nextDirection: 1 | -1 = event.deltaY >= 0 ? 1 : -1;
+      handleStep(event, nextDirection);
     };
 
-    const shouldCaptureIncomingScroll = (direction: 1 | -1) => {
-      if (lockedRef.current || isExitingRef.current || !sectionRef.current) return false;
-
-      const rect = sectionRef.current.getBoundingClientRect();
-
-      if (direction > 0) {
-        return rect.top < window.innerHeight - SNAP_TOLERANCE && rect.bottom > SNAP_TOLERANCE;
-      }
-
-      return rect.bottom > SNAP_TOLERANCE && rect.top < window.innerHeight - SNAP_TOLERANCE;
+    const handleTouchStart = (event: TouchEvent) => {
+      touchStartYRef.current = event.touches[0]?.clientY ?? 0;
     };
 
-    const onScroll = (data?: { scroll?: number }) => {
-      const currentY = data?.scroll ?? window.scrollY;
-      const direction: 1 | -1 = currentY >= lastScrollYRef.current ? 1 : -1;
-      lastScrollYRef.current = currentY;
-      tryLockOnEntry(direction);
-    };
+    const handleTouchMove = (event: TouchEvent) => {
+      const currentY = event.touches[0]?.clientY ?? touchStartYRef.current;
+      const deltaY = touchStartYRef.current - currentY;
+      if (Math.abs(deltaY) < TOUCH_THRESHOLD) return;
 
-    const onWheel = (e: WheelEvent) => {
-      const incomingDirection: 1 | -1 = e.deltaY >= 0 ? 1 : -1;
+      const nextDirection: 1 | -1 = deltaY >= 0 ? 1 : -1;
 
-      if (!lockedRef.current) {
-        if (shouldCaptureIncomingScroll(incomingDirection)) {
-          e.preventDefault();
-          e.stopPropagation();
-          lockScroll(incomingDirection);
-          return;
-        }
-
-        tryLockOnEntry(incomingDirection);
-        if (!lockedRef.current) return;
-      }
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (cooldownRef.current) return;
-
-      wheelAccumRef.current += e.deltaY;
-      if (Math.abs(wheelAccumRef.current) < WHEEL_THRESHOLD) return;
-
-      const direction: 1 | -1 = wheelAccumRef.current > 0 ? 1 : -1;
-      advance(direction);
-    };
-
-    const onTouchStart = (e: TouchEvent) => {
-      touchStartYRef.current = e.touches[0]?.clientY ?? 0;
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      if (!lockedRef.current) {
-        const currentY = e.touches[0]?.clientY ?? touchStartYRef.current;
-        const dir: 1 | -1 = touchStartYRef.current - currentY >= 0 ? 1 : -1;
-        tryLockOnEntry(dir);
-        if (!lockedRef.current) return;
-      }
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (cooldownRef.current) return;
-
-      const currentY = e.touches[0]?.clientY ?? touchStartYRef.current;
-      const delta = touchStartYRef.current - currentY;
-      if (Math.abs(delta) < TOUCH_THRESHOLD) return;
-
-      const direction: 1 | -1 = delta > 0 ? 1 : -1;
-      if (advance(direction)) {
+      if (handleStep(event, nextDirection)) {
         touchStartYRef.current = currentY;
       }
     };
 
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (!lockedRef.current) return;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-        e.preventDefault();
-        if (!cooldownRef.current) advance(1);
-      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        e.preventDefault();
-        if (!cooldownRef.current) advance(-1);
-      }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const downKeys = ['ArrowDown', 'PageDown', ' '];
+      const upKeys = ['ArrowUp', 'PageUp'];
+
+      if (!downKeys.includes(event.key) && !upKeys.includes(event.key)) return;
+
+      const nextDirection: 1 | -1 = downKeys.includes(event.key) ? 1 : -1;
+      handleStep(event, nextDirection);
     };
 
-    lenis.on('scroll', onScroll);
-    window.addEventListener('wheel', onWheel, { passive: false, capture: true });
-    window.addEventListener('touchstart', onTouchStart, { passive: true, capture: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: false, capture: true });
-    window.addEventListener('keydown', onKeyDown);
-
-    onScroll();
+    window.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+    window.addEventListener('touchstart', handleTouchStart, {
+      passive: true,
+      capture: true,
+    });
+    window.addEventListener('touchmove', handleTouchMove, {
+      passive: false,
+      capture: true,
+    });
+    window.addEventListener('keydown', handleKeyDown, { capture: true });
 
     return () => {
-      lenis.off('scroll', onScroll);
-      window.removeEventListener('wheel', onWheel, { capture: true });
-      window.removeEventListener('touchstart', onTouchStart, { capture: true });
-      window.removeEventListener('touchmove', onTouchMove, { capture: true });
-      window.removeEventListener('keydown', onKeyDown);
-      if (lockedRef.current) {
-        lockedRef.current = false;
-        lenis.start();
-      }
-      if (exitTimerRef.current !== null) {
-        window.clearTimeout(exitTimerRef.current);
+      window.removeEventListener('wheel', handleWheel, { capture: true });
+      window.removeEventListener('touchstart', handleTouchStart, { capture: true });
+      window.removeEventListener('touchmove', handleTouchMove, { capture: true });
+      window.removeEventListener('keydown', handleKeyDown, { capture: true });
+
+      if (cooldownTimerRef.current !== null) {
+        window.clearTimeout(cooldownTimerRef.current);
       }
     };
-  }, [lenis, advance, lockScroll]);
+  }, [handleStep]);
 
-  const activeSection = sections[activeIndex];
+  if (prefersReducedMotion) {
+    return (
+      <section
+        id="campus-gallery"
+        ref={sectionRef}
+        className="bg-[#f7faf8] px-6 py-24 text-[#111827] md:py-32"
+      >
+        <div className="mx-auto max-w-[1440px]">
+          <div className="mb-12 max-w-3xl">
+            <p className="mb-4 font-sora text-sm font-bold uppercase tracking-[0.2em] text-[#007a5e]">
+              Campus Gallery
+            </p>
+            <h2 className="font-sora text-4xl font-black leading-tight tracking-tight md:text-6xl">
+              Life moves differently here.
+            </h2>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {storyPages.map((page) => {
+              const content = page.left.content ?? page.right.content;
+              const image = page.left.image ?? page.right.image;
+
+              return (
+                <article
+                  key={page.id}
+                  className="relative aspect-[4/5] overflow-hidden rounded-lg bg-black text-white"
+                >
+                  {image && (
+                    <Image
+                      src={image}
+                      alt={page.left.alt ?? page.right.alt ?? ''}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                  {content && (
+                    <div className="absolute inset-x-0 bottom-0 p-5">
+                      <h3 className="font-sora text-2xl font-bold leading-tight">
+                        {content.title}
+                      </h3>
+                    </div>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
       id="campus-gallery"
       ref={sectionRef}
-      className="relative h-[100svh] w-full overflow-hidden bg-[#1a1a1a]"
+      className="relative h-[100svh] overflow-hidden bg-[#060908] text-white"
       style={{ isolation: 'isolate' }}
     >
-      <AnimatePresence initial={false} mode="sync">
-        <Slide key={activeSection.id} section={activeSection} />
+      <div className="pointer-events-none absolute inset-0 z-20 bg-[linear-gradient(180deg,rgba(0,0,0,0.28),transparent_18%,transparent_72%,rgba(0,0,0,0.48))]" />
+
+      <AnimatePresence initial={false} mode="sync" custom={direction}>
+        <div key={activePage.id} className="absolute inset-0">
+          <StoryPanel
+            accent={activePage.accent}
+            direction={direction}
+            index={activeIndex}
+            page={activePage}
+            side={activePage.left}
+            variants={leftPanelVariants}
+            position="left"
+          />
+          <StoryPanel
+            accent={activePage.accent}
+            direction={direction}
+            index={activeIndex}
+            page={activePage}
+            side={activePage.right}
+            variants={rightPanelVariants}
+            position="right"
+          />
+        </div>
       </AnimatePresence>
 
-      <div className="pointer-events-none absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-        {sections.map((s, i) => (
-          <span
-            key={s.id}
-            className="h-1.5 rounded-full transition-all duration-500"
+      <div className="pointer-events-none absolute left-6 top-8 z-30 md:left-10 md:top-10">
+        <p className="mb-3 font-sora text-xs font-bold uppercase tracking-[0.26em] text-[#74C044] md:text-sm">
+          Campus Gallery
+        </p>
+        <div className="h-[2px] w-28 overflow-hidden bg-white/18">
+          <div
+            className="h-full origin-left bg-[#74C044] transition-transform duration-700"
             style={{
-              width: i === activeIndex ? 28 : 8,
-              backgroundColor: i === activeIndex ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)'
+              transform: `scaleX(${(activeIndex + 1) / storyPages.length})`,
             }}
           />
-        ))}
+        </div>
       </div>
+
     </section>
   );
 };
