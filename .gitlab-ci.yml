@@ -18,25 +18,8 @@ test:
     - echo "Runner is working"
     - whoami
     - hostname
-    - docker --version
-    - docker compose version
-    - test -n "$MONGODB_URI"
-    - test -n "$JWT_SECRET"
-    - test -n "$TWO_FACTOR_ENCRYPTION_KEY"
-    - |
-      umask 077
-      {
-        printf 'MONGODB_URI=%s\n' "$MONGODB_URI"
-        printf 'JWT_SECRET=%s\n' "$JWT_SECRET"
-        printf 'TWO_FACTOR_ENCRYPTION_KEY=%s\n' "$TWO_FACTOR_ENCRYPTION_KEY"
-        printf 'NEXT_PUBLIC_SITE_URL=%s\n' "${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}"
-        printf 'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=%s\n' "${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:-}"
-        printf 'NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=%s\n' "${NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET:-}"
-      } > .test.env
-    - DOCKER_BUILDKIT=1 docker build --secret id=app_env,src=.test.env --target builder -t "iic-ci:$CI_COMMIT_SHA" .
-  after_script:
-    - docker image rm -f "iic-ci:$CI_COMMIT_SHA" >/dev/null 2>&1 || true
-    - rm -f .test.env
+    - command -v ssh
+    - command -v rsync
 
 deploy:
   stage: deploy

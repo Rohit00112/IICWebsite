@@ -5,7 +5,6 @@
 node_modules
 .env*
 .deploy.env
-.test.env
 coverage
 npm-debug.log*
 Dockerfile*
