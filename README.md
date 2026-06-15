@@ -107,3 +107,22 @@ This project pins **Next.js 16.2** with React 19. APIs, file conventions, and so
 ## Deployment
 
 Deployable to any Node 20+ host (Vercel, Fly, self-hosted). Set `MONGODB_URI`, `JWT_SECRET`, `TWO_FACTOR_ENCRYPTION_KEY`, and `NEXT_PUBLIC_SITE_URL` in the platform's environment variables.
+
+### GitLab CI/CD
+
+The GitLab pipeline builds every commit and deploys the default branch to
+`deploy@192.168.20.145:/home/deploy/apps/iic` with Docker Compose.
+
+Configure these protected GitLab CI/CD variables:
+
+- `SSH_PRIVATE_KEY`: File-type variable containing the deploy user's private key.
+- `SSH_KNOWN_HOSTS`: File-type variable containing the server's trusted host key.
+- `MONGODB_URI`
+- `JWT_SECRET`
+- `TWO_FACTOR_ENCRYPTION_KEY`
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` (optional)
+- `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` (optional)
+
+The deploy server must have Docker Engine, Docker Compose, and the deploy user's
+public SSH key installed. The application is exposed on port `3000`.

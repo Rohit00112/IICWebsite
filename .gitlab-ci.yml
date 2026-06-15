@@ -1,19 +1,85 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/user/application_security/sast/#available-cicd-variables
-# Secret Detection customization: https://docs.gitlab.com/user/application_security/secret_detection/pipeline/configure/
-# Dependency Scanning customization: https://docs.gitlab.com/user/application_security/dependency_scanning/dependency_scanning_sbom/#customizing-analyzer-behavior
-# Container Scanning customization: https://docs.gitlab.com/user/application_security/container_scanning/#customizing-analyzer-behavior
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ci/variables/#cicd-variable-precedence
 stages:
-- test
-- secret-detection
-sast:
-  stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
-- template: Security/Secret-Detection.gitlab-ci.yml
+  - test
+  - deploy
+
+default:
+  tags:
+    - deploy
+
 variables:
-  SECRET_DETECTION_ENABLED: 'true'
-secret_detection:
-  stage: secret-detection
+  NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/.npm"
+  NEXT_TELEMETRY_DISABLED: "1"
+  DEPLOY_HOST: "192.168.20.145"
+  DEPLOY_USER: "deploy"
+  DEPLOY_PATH: "/home/deploy/apps/iic"
+
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+
+test:
+  stage: test
+  script:
+    - echo "Runner is working"
+    - whoami
+    - hostname
+    - node --version
+    - npm --version
+    - npm ci
+    - npm run build
+
+deploy:
+  stage: deploy
+  environment:
+    name: production
+    url: "http://192.168.20.145:3000"
+  resource_group: production
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+  before_script:
+    - test -f "$SSH_PRIVATE_KEY"
+    - test -f "$SSH_KNOWN_HOSTS"
+    - eval "$(ssh-agent -s)"
+    - chmod 400 "$SSH_PRIVATE_KEY"
+    - ssh-add "$SSH_PRIVATE_KEY"
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - test -n "$MONGODB_URI"
+    - test -n "$JWT_SECRET"
+    - test -n "$TWO_FACTOR_ENCRYPTION_KEY"
+    - test -n "$NEXT_PUBLIC_SITE_URL"
+    - |
+      umask 077
+      {
+        printf 'MONGODB_URI=%s\n' "$MONGODB_URI"
+        printf 'JWT_SECRET=%s\n' "$JWT_SECRET"
+        printf 'TWO_FACTOR_ENCRYPTION_KEY=%s\n' "$TWO_FACTOR_ENCRYPTION_KEY"
+        printf 'NEXT_PUBLIC_SITE_URL=%s\n' "$NEXT_PUBLIC_SITE_URL"
+        printf 'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=%s\n' "${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:-}"
+        printf 'NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=%s\n' "${NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET:-}"
+      } > .deploy.env
+    - ssh "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p '$DEPLOY_PATH'"
+    - >
+      rsync -az --delete
+      --exclude='.git/'
+      --exclude='.next/'
+      --exclude='.npm/'
+      --exclude='node_modules/'
+      --exclude='.env*'
+      --exclude='.deploy.env'
+      ./ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+    - rsync -az .deploy.env "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/.env.production"
+    - >
+      ssh "$DEPLOY_USER@$DEPLOY_HOST"
+      "cd '$DEPLOY_PATH' &&
+      chmod 600 .env.production &&
+      DOCKER_BUILDKIT=1 docker compose up -d --build --remove-orphans &&
+      docker image prune -f"
+  after_script:
+    - rm -f .deploy.env

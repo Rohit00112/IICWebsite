@@ -1,0 +1,12 @@
+.git
+.gitlab
+.next
+.npm
+node_modules
+.env*
+.deploy.env
+coverage
+npm-debug.log*
+Dockerfile*
+docker-compose*.yml
+README.md
