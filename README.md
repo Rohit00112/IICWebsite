@@ -4,13 +4,13 @@ Marketing and admissions site for Itahari International College, built with Next
 
 ## Tech Stack
 
-- **Framework:** Next.js 16.2 (App Router, server components)
+- **Framework:** Next.js 16.2.9 (App Router, server components)
 - **Language:** TypeScript 5
 - **UI:** React 19, Tailwind CSS 4, Framer Motion, anime.js
 - **3D / FX:** three.js + @react-three/fiber + drei (`TechGrid`, etc.)
 - **Smooth scroll:** Lenis
 - **Database:** MongoDB via Mongoose 9
-- **Auth:** JWT (`jose`) + bcryptjs for admin password hashing
+- **Auth:** JWT (`jose`) + bcryptjs + authenticator-app TOTP 2FA
 - **Validation / Sanitization:** Zod, isomorphic-dompurify
 - **Rich text:** react-quill-new (admin), react-markdown + rehype-raw + remark-gfm (rendering)
 
@@ -57,8 +57,14 @@ proxy.ts              # Edge proxy / middleware helper
    ```env
    MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/iic_website
    JWT_SECRET=<long-random-string>
+   TWO_FACTOR_ENCRYPTION_KEY=<separate-long-random-string>
    NEXT_PUBLIC_SITE_URL=http://localhost:3000
    ```
+
+   Generate the two auth secrets independently, for example with
+   `openssl rand -base64 32`. Keep `TWO_FACTOR_ENCRYPTION_KEY` stable after
+   admins enroll, because it encrypts their authenticator secrets and protects
+   recovery-code hashes.
 
 3. (Optional) Seed the database with initial news, courses, and an admin user:
 
@@ -90,6 +96,9 @@ proxy.ts              # Edge proxy / middleware helper
 - Route: `/login` → `/admin`
 - Backed by `models/Admin.ts` with bcrypt-hashed passwords.
 - JWT issued by `lib/auth.ts`; verified in `proxy.ts` / API routes.
+- Admins can enroll an authenticator app at `/admin/security`.
+- Enabled accounts complete a short-lived 2FA challenge before a session is issued.
+- Recovery codes are shown once, stored as keyed hashes, and consumed after use.
 
 ## Notes on This Next.js Build
 
@@ -97,4 +106,4 @@ This project pins **Next.js 16.2** with React 19. APIs, file conventions, and so
 
 ## Deployment
 
-Deployable to any Node 20+ host (Vercel, Fly, self-hosted). Set `MONGODB_URI`, `JWT_SECRET`, and `NEXT_PUBLIC_SITE_URL` in the platform's environment variables.
+Deployable to any Node 20+ host (Vercel, Fly, self-hosted). Set `MONGODB_URI`, `JWT_SECRET`, `TWO_FACTOR_ENCRYPTION_KEY`, and `NEXT_PUBLIC_SITE_URL` in the platform's environment variables.

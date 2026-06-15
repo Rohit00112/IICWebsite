@@ -2,12 +2,23 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import dbConnect from '../../../../lib/db';
 import Admin from '../../../../models/Admin';
-import { login } from '../../../../lib/auth';
+import {
+  clearTwoFactorChallenge,
+  createTwoFactorChallenge,
+  login,
+} from '../../../../lib/auth';
 import { rateLimit } from '../../../../lib/rate-limit';
+import { z } from 'zod';
+
+const loginSchema = z.object({
+  email: z.string().trim().toLowerCase().email(),
+  password: z.string().min(1).max(200),
+});
 
 export async function POST(request: Request) {
-  // Brute force protection (5 attempts per 15 minutes per IP)
-  const ip = request.headers.get('x-forwarded-for') || 'anonymous';
+  const ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    'anonymous';
   const { success } = await rateLimit(`login-attempt-${ip}`, 5, 15 * 60 * 1000);
 
   if (!success) {
@@ -17,11 +28,15 @@ export async function POST(request: Request) {
   }
 
   try {
+    await clearTwoFactorChallenge();
     await dbConnect();
-    const { email, password } = await request.json();
-    const cleanEmail = String(email);
+    const parsed = loginSchema.safeParse(await request.json());
+    if (!parsed.success) {
+      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+    }
 
-    const admin = await Admin.findOne({ email: cleanEmail });
+    const { email, password } = parsed.data;
+    const admin = await Admin.findOne({ email }).select('+twoFactorSecret');
 
     if (!admin) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
@@ -33,10 +48,29 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    // Create session
-    await login({ id: admin._id, email: admin.email, name: admin.name });
+    if (admin.twoFactorEnabled) {
+      if (!admin.twoFactorSecret) {
+        console.error('Two-factor authentication is enabled without a secret');
+        return NextResponse.json(
+          { error: 'Two-factor authentication is unavailable' },
+          { status: 500 },
+        );
+      }
 
-    return NextResponse.json({ message: 'Logged in successfully' });
+      await createTwoFactorChallenge(admin._id.toString());
+      return NextResponse.json({ requiresTwoFactor: true });
+    }
+
+    await login({
+      id: admin._id.toString(),
+      email: admin.email,
+      name: admin.name,
+    });
+
+    return NextResponse.json({
+      message: 'Logged in successfully',
+      requiresTwoFactor: false,
+    });
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

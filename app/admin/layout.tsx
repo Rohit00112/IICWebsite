@@ -45,6 +45,15 @@ export default function AdminLayout({
         </svg>
       )
     },
+    {
+      label: 'Security',
+      href: '/admin/security',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c1.657 0 3-1.343 3-3V6a3 3 0 10-6 0v2c0 1.657 1.343 3 3 3zm0 0v4m-7 6h14a2 2 0 002-2v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2z" />
+        </svg>
+      )
+    },
   ];
 
   return (
@@ -79,12 +88,14 @@ export default function AdminLayout({
         </nav>
 
         <div className="p-8 border-t border-white/10">
-          <Link href="/" className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-400 text-sm font-bold hover:bg-red-500/10">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            Logout
-          </Link>
+          <form action="/api/auth/logout" method="post">
+            <button type="submit" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-400 text-sm font-bold hover:bg-red-500/10">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Logout
+            </button>
+          </form>
         </div>
       </aside>
 

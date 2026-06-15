@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 const AdminSchema = new Schema({
   email: {
@@ -14,6 +14,28 @@ const AdminSchema = new Schema({
   name: {
     type: String,
     required: [true, 'Please provide a name'],
+  },
+  twoFactorEnabled: {
+    type: Boolean,
+    default: false,
+  },
+  twoFactorSecret: {
+    type: String,
+    select: false,
+  },
+  twoFactorPendingSecret: {
+    type: String,
+    select: false,
+  },
+  twoFactorRecoveryCodes: {
+    type: [String],
+    default: [],
+    select: false,
+  },
+  twoFactorLastUsedCounter: {
+    type: Number,
+    default: -1,
+    select: false,
   },
 }, {
   timestamps: true,

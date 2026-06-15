@@ -25,7 +25,7 @@
       "post": {
         "tags": ["Auth"],
         "summary": "Admin login",
-        "description": "Authenticate an admin user with email and password. Rate-limited to 5 attempts per 15 minutes per IP.",
+        "description": "Authenticate an admin user with email and password. Accounts with 2FA enabled receive a short-lived challenge and must call POST /auth/2fa/verify before a session is issued. Rate-limited to 5 attempts per 15 minutes per IP.",
         "requestBody": {
           "required": true,
           "content": {
@@ -40,11 +40,11 @@
         },
         "responses": {
           "200": {
-            "description": "Login successful — session cookie is set",
+            "description": "Login successful, or a two-factor challenge is required",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/MessageResponse" },
-                "example": { "message": "Logged in successfully" }
+                "schema": { "$ref": "#/components/schemas/LoginResponse" },
+                "example": { "requiresTwoFactor": true }
               }
             }
           },
@@ -67,6 +67,153 @@
             }
           },
           "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    },
+    "/auth/2fa/verify": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Complete a two-factor login challenge",
+        "description": "Verify a six-digit TOTP or one-time recovery code. Requires the challenge cookie created by POST /auth/login.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TwoFactorCodeRequest" },
+              "example": { "code": "123456" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification successful and session cookie set",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MessageResponse" }
+              }
+            }
+          },
+          "401": { "description": "Challenge expired or code invalid" },
+          "429": { "description": "Rate limit exceeded" },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    },
+    "/auth/2fa/setup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Start authenticator enrollment",
+        "security": [{ "cookieAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["password"],
+                "properties": {
+                  "password": { "type": "string", "format": "password" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Enrollment QR code and manual setup secret",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "qrCodeDataUrl": { "type": "string" },
+                    "secret": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "409": { "description": "Two-factor authentication is already enabled" },
+          "429": { "description": "Rate limit exceeded" },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    },
+    "/auth/2fa/enable": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Confirm authenticator enrollment",
+        "security": [{ "cookieAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TwoFactorCodeRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Two-factor authentication enabled and recovery codes issued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "recoveryCodes": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized or invalid code" },
+          "409": { "description": "Setup has not started or 2FA is already enabled" },
+          "429": { "description": "Rate limit exceeded" },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    },
+    "/auth/2fa": {
+      "delete": {
+        "tags": ["Auth"],
+        "summary": "Disable two-factor authentication",
+        "security": [{ "cookieAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DisableTwoFactorRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Two-factor authentication disabled",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MessageResponse" }
+              }
+            }
+          },
+          "401": { "description": "Unauthorized or invalid credentials" },
+          "409": { "description": "Two-factor authentication is not enabled" },
+          "429": { "description": "Rate limit exceeded" },
+          "500": { "$ref": "#/components/responses/InternalServerError" }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Log out",
+        "description": "Clear the admin session and any pending two-factor challenge, then redirect to /login.",
+        "responses": {
+          "303": { "description": "Redirect to the login page" }
         }
       }
     },
@@ -427,6 +574,32 @@
         "properties": {
           "email": { "type": "string", "format": "email" },
           "password": { "type": "string", "format": "password" }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "requiresTwoFactor": { "type": "boolean" }
+        },
+        "required": ["requiresTwoFactor"]
+      },
+      "TwoFactorCodeRequest": {
+        "type": "object",
+        "required": ["code"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Six-digit TOTP or a one-time recovery code"
+          }
+        }
+      },
+      "DisableTwoFactorRequest": {
+        "type": "object",
+        "required": ["password", "code"],
+        "properties": {
+          "password": { "type": "string", "format": "password" },
+          "code": { "type": "string" }
         }
       },
       "MessageResponse": {
