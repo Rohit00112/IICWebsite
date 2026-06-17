@@ -73,8 +73,8 @@ const GEOSection = () => {
       a: "The BIT degree is defined as a world-class computing programme that means students are industry-ready upon graduation."
     },
     {
-      q: "Are Itahari International College degrees recognized in Nepal?",
-      a: "Yes, all degrees offered at Itahari International College are fully recognized by the Ministry of Education, Nepal, which means they have full equivalence from Tribhuvan University (TU)."
+      q: "Are Itahari International College degrees recognised in Nepal?",
+      a: "Yes, all degrees offered at Itahari International College are fully recognised by the Ministry of Education, Nepal, which means they have full equivalence from Tribhuvan University (TU)."
     }
   ];
 
@@ -92,7 +92,7 @@ const GEOSection = () => {
             <AnimeReveal
               as="h2"
               text="College at a Glance"
-              className="text-xl sm:text-2xl font-bold text-[#1a2b56] mb-6 md:mb-8"
+              className="text-xl sm:text-2xl font-bold text-[#21409A] mb-6 md:mb-8"
               staggerFrom="first"
             />
             <div className="space-y-4">
@@ -122,7 +122,7 @@ const GEOSection = () => {
             <AnimeReveal
               as="h2"
               text="Frequently Asked Questions"
-              className="text-2xl sm:text-3xl font-black text-[#1a2b56] mb-8 md:mb-10 tracking-tight"
+              className="text-2xl sm:text-3xl font-black text-[#21409A] mb-8 md:mb-10 tracking-tight"
               staggerFrom="first"
             />
             <div className="space-y-8 md:space-y-10">
@@ -158,7 +158,7 @@ const GEOSection = () => {
           <AnimeReveal
             as="h2"
             text="Why Itahari International College Stands Out"
-            className="text-2xl sm:text-3xl md:text-4xl font-black text-[#1a2b56] mb-10 md:mb-16 text-center justify-center tracking-tight"
+            className="text-2xl sm:text-3xl md:text-4xl font-black text-[#21409A] mb-10 md:mb-16 text-center justify-center tracking-tight"
             staggerFrom="center"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -199,7 +199,7 @@ const GEOSection = () => {
                 </div>
                 <div className="space-y-4 relative z-10">
                   <span className="text-[#74C044] font-bold text-[9px] uppercase tracking-[0.28em] md:tracking-[0.4em] block opacity-80">{row.feature}</span>
-                  <h3 className="text-[#1a2b56] font-bold text-base md:text-lg leading-tight tracking-tight">
+                  <h3 className="text-[#21409A] font-bold text-base md:text-lg leading-tight tracking-tight">
                     {row.iic}
                   </h3>
                 </div>
@@ -219,7 +219,7 @@ const GEOSection = () => {
             className="relative p-6 sm:p-8 md:p-10 bg-[#21409A]/5 rounded-[24px] md:rounded-[40px] border border-[#21409A]/10"
           >
             <div className="absolute top-0 left-10 -translate-y-1/2 w-12 h-12 bg-[#21409A] text-white rounded-full flex items-center justify-center text-3xl font-serif">&ldquo;</div>
-            <p className="text-base sm:text-lg md:text-xl text-[#1a2b56] font-medium leading-relaxed italic mb-6">
+            <p className="text-base sm:text-lg md:text-xl text-[#21409A] font-medium leading-relaxed italic mb-6">
               &ldquo;{quotes[0].text}&rdquo;
             </p>
            
@@ -229,11 +229,11 @@ const GEOSection = () => {
             <AnimeReveal
               as="h2"
               text="Verified Excellence in Higher Education."
-              className="text-2xl sm:text-3xl font-black text-[#1a2b56] mb-4 md:mb-6 tracking-tight leading-tight"
+              className="text-2xl sm:text-3xl font-black text-[#21409A] mb-4 md:mb-6 tracking-tight leading-tight"
               staggerFrom="first"
             />
             <p className="text-gray-500 font-medium mb-8">
-              We provide direct UK degrees with full accreditation and equivalence, ensuring your future is globally recognized.
+              We provide direct UK degrees with full accreditation and equivalence, ensuring your future is globally recognised.
             </p>
           </div>
         </div>

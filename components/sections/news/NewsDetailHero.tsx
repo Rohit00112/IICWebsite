@@ -65,7 +65,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
           <AnimeReveal
             as="h1"
             text={item.title}
-            className="text-4xl md:text-6xl lg:text-7xl font-black text-white font-sora leading-tight mb-8"
+            className="text-4xl md:text-6xl lg:text-7xl font-black text-white font-iic leading-tight mb-8"
             staggerFrom="first"
             delay={0.2}
           />

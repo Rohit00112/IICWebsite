@@ -34,7 +34,7 @@ const HeroSection = () => {
       />
       <motion.div
         style={{ y: yBlob2 }}
-        className="absolute bottom-40 -right-20 hidden w-96 h-96 bg-[#007a5e]/10 rounded-full blur-3xl z-0 md:block"
+        className="absolute bottom-40 -right-20 hidden w-96 h-96 bg-[#74C044]/10 rounded-full blur-3xl z-0 md:block"
       />
 
       {/* Hero Content Layer */}
@@ -62,14 +62,14 @@ const HeroSection = () => {
         <div className="pt-2 md:pt-4 text-center flex flex-col items-center">
           <RevealText
             as="h1"
-            text="UK Degrees in Itahari"
-            className="text-[32px] sm:text-[42px] md:text-[84px] font-black text-[#21409A] leading-[1.05] sm:leading-[1.1] mb-4 md:mb-6 tracking-tight md:tracking-tighter uppercase font-sora justify-center"
+            text="Developing Impactful Industry Ready Graduates"
+            className="text-[32px] sm:text-[42px] md:text-[84px] font-black text-[#21409A] leading-[1.05] sm:leading-[1.1] mb-4 md:mb-6 tracking-tight md:tracking-tighter uppercase font-iic justify-center"
             delay={0.4}
           />
           <RevealText
             as="p"
-            text="Launch your global career with IT and Business programmes from London Metropolitan University."
-            className="text-base sm:text-lg md:text-[24px] font-medium text-gray-500 leading-[1.55] md:leading-[1.6] mb-8 md:mb-12 max-w-3xl px-2 sm:px-4 font-sora justify-center"
+            text="Study world-class IT and Business degrees in Itahari through our direct partnership with London Metropolitan University, UK."
+            className="text-base sm:text-lg md:text-[24px] font-medium text-gray-500 leading-[1.55] md:leading-[1.6] mb-8 md:mb-12 max-w-3xl px-2 sm:px-4 font-iic justify-center"
             delay={0.7}
           />
 
@@ -86,7 +86,7 @@ const HeroSection = () => {
                 aria-label="Schedule a campus visit"
                 className="w-full sm:w-auto px-6 sm:px-10 py-3.5 sm:py-4 bg-[#21409A] text-white rounded-xl font-bold text-sm sm:text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:brightness-110 transition-all focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
               >
-                <span>Schedule A Visit</span>
+                <span>Schedule a Visit</span>
               </Link>
             </motion.div>
 
@@ -102,7 +102,7 @@ const HeroSection = () => {
                 aria-label="Explore our academic programmes"
                 className="w-full sm:w-auto px-6 sm:px-10 py-3.5 sm:py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-sm sm:text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:outline-none"
               >
-                Browse degrees
+                Explore Programmes
               </Link>
             </motion.div>
           </div>

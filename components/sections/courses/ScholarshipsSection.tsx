@@ -77,7 +77,7 @@ const ScholarshipsSection = () => {
                     Need Guidance?
                   </h3>
                   <p className="text-gray-500 text-xs leading-relaxed mb-10 font-medium">
-                    Not sure which program is right for you? Our admissions team is here to help
+                    Not sure which programme is right for you? Our admissions team is here to help
                     you navigate your options.
                   </p>
                   <Link href="/contact" className="mt-auto w-full py-4 border-2 border-[#1a1a1a]/10 bg-white/80 text-[#1a1a1a] text-center rounded-xl font-bold text-[12px] hover:border-[#21409A] hover:text-[#21409A] transition-all">

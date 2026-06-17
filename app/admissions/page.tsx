@@ -3,11 +3,11 @@ import AdmissionsClient from '@/components/sections/admissions/AdmissionsClient'
 
 export const metadata: Metadata = {
   title: 'Apply Now | Admissions 2026',
-  description: 'Join Itahari International College. Apply online for our BIT and BBA programs in partnership with London Metropolitan University, UK. Start your global journey today.',
+  description: 'Apply to Itahari International College for UK-awarded IT and Business programmes delivered in partnership with London Metropolitan University.',
   keywords: ['Apply to Itahari International College', 'College Admission Nepal', 'IT Admission Itahari', 'BBA Admission Nepal', 'Online Application Itahari International College'],
   openGraph: {
     title: 'Apply Now | Admissions - Itahari International College',
-    description: 'Start your application for world-class UK degrees in IT and Business at Itahari International College.',
+    description: 'Start your application for globally connected UK degrees in IT and Business at Itahari International College.',
     images: [
       {
         url: '/api/og?title=Admissions 2026&subtitle=Start Your Global Journey&section=Apply Now',
@@ -49,7 +49,7 @@ export default function AdmissionsPage() {
               {
                 "@type": "EducationalOccupationalProgram",
                 "name": "BSc (Hons) Computing",
-                "description": "A 3-year undergraduate degree in Information Technology in partnership with London Metropolitan University.",
+                "description": "A 3-year undergraduate degree in Information Technology awarded through IIC's partnership with London Metropolitan University.",
                 "provider": {
                   "@id": "https://iic.edu.np/#college"
                 },
@@ -62,7 +62,7 @@ export default function AdmissionsPage() {
               {
                 "@type": "EducationalOccupationalProgram",
                 "name": "BBA (Hons) Business Administration",
-                "description": "A comprehensive 3-year business degree focusing on modern management and entrepreneurship.",
+                "description": "A 3-year business degree focused on international standards, modern management, and entrepreneurship.",
                 "provider": {
                   "@id": "https://iic.edu.np/#college"
                 },
@@ -80,12 +80,12 @@ export default function AdmissionsPage() {
                     "name": "What are the entry requirements for Itahari International College?",
                     "acceptedAnswer": {
                       "@type": "Answer",
-                      "text": "The minimum entry requirement for our undergraduate programs is a 2.0 CGPA in +2/NEB or equivalent, along with proficiency in English."
+                      "text": "The minimum entry requirement for our undergraduate programmes is a 2.0 CGPA in +2/NEB or equivalent, along with proficiency in English."
                     }
                   },
                   {
                     "@type": "Question",
-                    "name": "Which degree programs does Itahari International College offer?",
+                    "name": "Which degree programmes does Itahari International College offer?",
                     "acceptedAnswer": {
                       "@type": "Answer",
                       "text": "Itahari International College offers BSc (Hons) Computing and BBA (Hons) Business Administration in partnership with London Metropolitan University, UK."
@@ -93,10 +93,10 @@ export default function AdmissionsPage() {
                   },
                   {
                     "@type": "Question",
-                    "name": "Are the degrees offered at Itahari International College internationally recognized?",
+                    "name": "Are the degrees offered at Itahari International College internationally recognised?",
                     "acceptedAnswer": {
                       "@type": "Answer",
-                      "text": "Yes, our programs are awarded by London Metropolitan University, UK, and are fully recognized by the Ministry of Education, Nepal and globally."
+                      "text": "Yes, our programmes are awarded by London Metropolitan University, UK, and are recognised by the Ministry of Education, Nepal and internationally."
                     }
                   }
                 ]

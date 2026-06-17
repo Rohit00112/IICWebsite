@@ -106,9 +106,9 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2.5 px-5 py-2 border border-[#008767]/60 rounded-full mb-10 bg-transparent backdrop-blur-sm"
+            className="inline-flex items-center gap-2.5 px-5 py-2 border border-[#74C044]/60 rounded-full mb-10 bg-transparent backdrop-blur-sm"
           >
-            <svg className="w-4 h-4 text-[#008767]" fill="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-[#74C044]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2.055l-10 5.445 10 5.445 10-5.445-10-5.445zm0 13.09l-8.03-4.373-1.97 1.073 10 5.445 10-5.445-1.97-1.073-8.03 4.373z" />
               <path d="M12 21.945l-10-5.445 1.97-1.073 8.03 4.373 8.03-4.373 1.97 1.073-10 5.445z" />
             </svg>
@@ -138,7 +138,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8 }}
             >
-              <Link href={admissionsHref} className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#21409A] text-white font-bold rounded-xl shadow-2xl hover:bg-[#1a337e] transition-all">
+              <Link href={admissionsHref} className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#21409A] text-white font-bold rounded-xl shadow-2xl hover:bg-[#21409A] transition-all">
                 <span className="text-sm">Apply Now</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -208,9 +208,9 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
             </AnimatePresence>
           </div>
           
-          {/* Program Details Card */}
+          {/* Programme Details Card */}
           <div className="lg:col-span-5 bg-white p-12 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-white/50">
-            <h3 className="text-2xl font-bold text-[#1a1a1a] mb-10">Program Details</h3>
+            <h3 className="text-2xl font-bold text-[#1a1a1a] mb-10">Programme Details</h3>
             
             <AnimeStagger className="space-y-8" selector=":scope > div" staggerDelay={110} translateY={22} duration={720}>
               {[
@@ -328,8 +328,8 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
 
               <div className="space-y-4">
                 <Magnetic strength={0.2}>
-                  <Link href={admissionsHref} className="block w-full py-4 bg-[#21409A] text-white text-center font-bold rounded-2xl shadow-xl hover:bg-[#1a337e] transition-all transform hover:-y-1">
-                    Apply for this Program
+                  <Link href={admissionsHref} className="block w-full py-4 bg-[#21409A] text-white text-center font-bold rounded-2xl shadow-xl hover:bg-[#21409A] transition-all transform hover:-y-1">
+                    Apply for this Programme
                   </Link>
                 </Magnetic>
                 <a href={brochureHref} target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-white text-[#1a1a1a] font-bold rounded-2xl shadow-md border border-gray-100 flex items-center justify-center gap-3 hover:bg-gray-50 transition-all">
@@ -349,7 +349,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12 text-center">
             <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Eligibility</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] font-sora tracking-tight leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] font-iic tracking-tight leading-tight">
               Entry <span className="text-[#21409A]">Requirements</span>
             </h2>
           </div>
@@ -398,7 +398,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="text-center mb-20">
               <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Future Prospects</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white font-sora tracking-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-white font-iic tracking-tight">
                 Your <span className="text-[#21409A]">Career</span> Path
               </h2>
             </div>
@@ -440,7 +440,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
               <div>
                 <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Hands-on Learning</span>
-                <h2 className="text-4xl font-bold text-[#1a1a1a] font-sora tracking-tight">
+                <h2 className="text-4xl font-bold text-[#1a1a1a] font-iic tracking-tight">
                   Innovation <span className="text-[#21409A]">Gallery</span>
                 </h2>
               </div>
@@ -495,10 +495,10 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
               return (
                 <div 
                   key={i} 
-                  className={`faculty-card ${isFirst ? 'bg-[#483d73] text-white' : 'bg-white border border-gray-100 text-[#1a1a1a]'} p-10 rounded-[32px] shadow-sm flex flex-col items-center text-center`}
+                  className={`faculty-card ${isFirst ? 'bg-[#58595B] text-white' : 'bg-white border border-gray-100 text-[#1a1a1a]'} p-10 rounded-[32px] shadow-sm flex flex-col items-center text-center`}
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  <div className={`relative w-28 h-28 rounded-full mb-8 flex items-center justify-center ${isFirst ? 'bg-[#f8d7da]/20' : 'bg-[#f0f4f8]'}`}>
+                  <div className={`relative w-28 h-28 rounded-full mb-8 flex items-center justify-center ${isFirst ? 'bg-[#F4F7FA]/20' : 'bg-[#f0f4f8]'}`}>
                     <div className="relative w-24 h-24 rounded-full overflow-hidden shadow-inner">
                       <Image 
                         src={member.image || '/images/common/avatar-placeholder.png'} 
@@ -540,7 +540,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   onClick={() => setActiveFAQ(activeFAQ === i ? -1 : i)}
                   className={`w-full px-8 py-6 flex items-center justify-between transition-all rounded-2xl ${
                     activeFAQ === i 
-                    ? 'bg-[#004d40] text-white shadow-lg' 
+                    ? 'bg-[#21409A] text-white shadow-lg' 
                     : 'bg-white text-[#1a1a1a] border border-gray-100 hover:bg-gray-50'
                   }`}
                 >
@@ -582,7 +582,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-20">
             <div className="max-w-2xl">
               <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Student Outcomes</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white font-sora tracking-tight leading-[1.1]">
+              <h2 className="text-4xl md:text-5xl font-bold text-white font-iic tracking-tight leading-[1.1]">
                 Where Our <span className="text-[#21409A]">Graduates</span> Shine
               </h2>
             </div>

@@ -38,7 +38,7 @@ const NewsletterSignup: React.FC = () => {
 
   return (
     <div className="bg-[#DDE5F0] p-10 rounded-[24px] shadow-sm">
-      <h5 className="text-xl font-bold font-sora mb-3 text-[#1a1a1a] tracking-tight">Stay Informed</h5>
+      <h5 className="text-xl font-bold font-iic mb-3 text-[#1a1a1a] tracking-tight">Stay Informed</h5>
       <p className="text-gray-600 text-[14px] mb-8 leading-relaxed font-medium">
         Get the latest news and event updates delivered directly to your inbox.
       </p>
@@ -51,12 +51,12 @@ const NewsletterSignup: React.FC = () => {
           placeholder="Your email address"
           aria-label="Email address"
           disabled={status === 'loading'}
-          className="w-full bg-white border border-transparent rounded-lg py-4 px-5 outline-none focus:border-[#21409A]/40 focus:ring-2 focus:ring-[#21409A]/15 transition-all text-sm text-[#1A2B56] font-medium placeholder:text-gray-400 disabled:opacity-60"
+          className="w-full bg-white border border-transparent rounded-lg py-4 px-5 outline-none focus:border-[#21409A]/40 focus:ring-2 focus:ring-[#21409A]/15 transition-all text-sm text-[#21409A] font-medium placeholder:text-gray-400 disabled:opacity-60"
         />
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="w-full py-4 bg-[#1F3E97] text-white font-bold rounded-lg text-sm hover:shadow-xl hover:bg-[#1a3580] transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-4 bg-[#21409A] text-white font-bold rounded-lg text-sm hover:shadow-xl hover:bg-[#21409A] transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {status === 'loading' ? (
             <>
@@ -78,8 +78,8 @@ const NewsletterSignup: React.FC = () => {
             role="status"
             className={`mt-4 px-4 py-3 rounded-lg text-[12px] font-bold ${
               status === 'success'
-                ? 'bg-[#74C044]/15 text-[#3a7a1f]'
-                : 'bg-[#dc2626]/10 text-[#b91c1c]'
+                ? 'bg-[#74C044]/15 text-[#21409A]'
+                : 'bg-[#ED1C24]/10 text-[#ED1C24]'
             }`}
           >
             {message}

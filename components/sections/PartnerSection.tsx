@@ -33,7 +33,7 @@ const PartnerSection = () => {
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-[#1a1a1a] text-lg md:text-xl font-bold font-sora block mb-2"
+            className="text-[#1a1a1a] text-lg md:text-xl font-bold font-iic block mb-2"
           >
             Partner
           </motion.span>
@@ -42,7 +42,7 @@ const PartnerSection = () => {
               initial={{ y: "100%" }}
               animate={isInView ? { y: 0 } : {}}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora"
+              className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic"
             >
               UNIVERSITY
             </motion.h2>

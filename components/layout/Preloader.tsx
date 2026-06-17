@@ -25,7 +25,7 @@ const Preloader = () => {
     };
   }, []);
 
-  const tagline = 'Unleashing Your Potential';
+  const tagline = 'Developing Impactful Graduates';
   const words = tagline.split(' ');
 
   return (
@@ -81,11 +81,11 @@ const Preloader = () => {
             {/* Progress Wrapper */}
             <div className="w-full max-w-[220px] sm:max-w-[240px] md:max-w-[320px]">
               {/* Thin Progress Bar with Percentage Inside */}
-              <div className="relative h-6 w-full bg-blue-50/50 rounded-full overflow-hidden border border-blue-100/10">
+              <div className="relative h-6 w-full bg-[#21409A]/5 rounded-full overflow-hidden border border-[#21409A]/10">
                 
                 {/* Background Text (Blue) */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[#21409A] text-[10px] md:text-xs font-black font-sora tabular-nums uppercase tracking-widest">
+                  <span className="text-[#21409A] text-[10px] md:text-xs font-black font-iic tabular-nums uppercase tracking-widest">
                     {percentage}%
                   </span>
                 </div>
@@ -99,7 +99,7 @@ const Preloader = () => {
                 >
                   {/* Foreground Text (White) - Only visible where bar exists */}
                   <div className="absolute inset-0 w-[220px] sm:w-[240px] md:w-[320px] flex items-center justify-center">
-                    <span className="text-white text-[10px] md:text-xs font-black font-sora tabular-nums uppercase tracking-widest">
+                    <span className="text-white text-[10px] md:text-xs font-black font-iic tabular-nums uppercase tracking-widest">
                       {percentage}%
                     </span>
                   </div>

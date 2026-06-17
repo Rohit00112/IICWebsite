@@ -111,7 +111,7 @@ const ScrollScaleVideo = () => {
         <motion.div
           className="absolute left-0 top-0 bottom-0 w-[45%] z-20 hidden xl:flex items-center pl-[4%] pr-32 bg-gradient-to-r from-black/70 via-black/40 to-transparent pointer-events-none"
         >
-          <h2 className="text-white text-6xl font-light leading-[1.1] tracking-tight font-sora">
+          <h2 className="text-white text-6xl font-light leading-[1.1] tracking-tight font-iic">
             A place where <br />
             <span className="text-[#74C044] font-semibold">education</span> and <br />
             <span className="text-[#74C044] font-semibold">innovation</span> connect.
@@ -127,13 +127,13 @@ const ScrollScaleVideo = () => {
               <div className="absolute -left-4 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#74C044] to-transparent" />
               <div className="flex items-start gap-4 justify-end">
                 <div className="text-right">
-                  <span className="text-[#74C044] text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-sora">
+                  <span className="text-[#74C044] text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-iic">
                     Address
                   </span>
-                  <p className="text-white text-2xl font-light leading-snug font-sora tracking-tight">
+                  <p className="text-white text-2xl font-light leading-snug font-iic tracking-tight">
                     Sundarharaicha-4, Dulari
                   </p>
-                  <p className="text-white/70 text-xl font-light font-sora">
+                  <p className="text-white/70 text-xl font-light font-iic">
                     Morang, Nepal
                   </p>
                 </div>
@@ -152,13 +152,13 @@ const ScrollScaleVideo = () => {
             {/* Contact + Hours stack */}
             <div className="flex items-start gap-4 justify-end w-full">
               <div className="text-right">
-                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-sora">
+                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-iic">
                   Contact
                 </span>
-                <p className="text-white text-base font-light font-sora tracking-tight">
+                <p className="text-white text-base font-light font-iic tracking-tight">
                   +977 9801003030
                 </p>
-                <p className="text-white/70 text-base font-light font-sora">
+                <p className="text-white/70 text-base font-light font-iic">
                   info@iic.edu.np
                 </p>
               </div>
@@ -173,10 +173,10 @@ const ScrollScaleVideo = () => {
 
             <div className="flex items-start gap-4 justify-end w-full">
               <div className="text-right">
-                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-sora">
+                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-iic">
                   Visit Hours
                 </span>
-                <p className="text-white text-base font-light font-sora tracking-tight">
+                <p className="text-white text-base font-light font-iic tracking-tight">
                   Sun – Fri · 9:00 AM – 5:00 PM
                 </p>
               </div>

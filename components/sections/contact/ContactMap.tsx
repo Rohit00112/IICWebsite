@@ -43,7 +43,7 @@ const ContactMap = () => {
             <AnimeReveal
               as="h2"
               text="Visit Our Campus"
-              className="text-3xl font-bold text-[#1a1a1a] mb-4 font-sora tracking-tight"
+              className="text-3xl font-bold text-[#1a1a1a] mb-4 font-iic tracking-tight"
               staggerFrom="first"
             />
             <p className="text-gray-500 font-medium mb-10 leading-relaxed">

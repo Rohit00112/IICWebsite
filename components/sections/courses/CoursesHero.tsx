@@ -35,13 +35,13 @@ const CoursesHero = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-center pt-24 md:pt-36 pb-4">
         <div className="text-center flex flex-col items-center">
           <RevealText 
-            text="Discover Our"
+            text="Learn Locally"
             className="text-[#333333] text-xl md:text-[32px] font-bold mb-2 block tracking-tight justify-center"
           />
 
           <AnimeReveal
             as="h1"
-            text="Academic Programmes"
+            text="Compete Globally"
             className="text-4xl md:text-6xl lg:text-[100px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight uppercase justify-center"
             staggerFrom="center"
             delay={0.2}
@@ -53,7 +53,7 @@ const CoursesHero = () => {
             transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-xs md:text-sm text-[#444444] max-w-2xl mx-auto leading-relaxed font-medium uppercase tracking-widest opacity-70"
           >
-            Expand your horizons with our diverse educational options designed to meet industry demands.
+            Explore UK-awarded IT and Business programmes designed with practical learning, global standards, and career readiness at the centre.
           </motion.p>
         </div>
       </div>

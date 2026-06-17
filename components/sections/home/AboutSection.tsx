@@ -18,7 +18,7 @@ const AboutSection = () => {
           transition={{ duration: 0.8 }}
           className="inline-block px-4 py-1.5 rounded-full bg-[#74C044]/10 text-[#74C044] text-[11px] sm:text-[12px] font-bold tracking-[0.18em] sm:tracking-widest uppercase mb-6 md:mb-8"
         >
-          Who We Are
+          Global Collaboration, Local Impact
         </motion.span>
 
         <motion.h2
@@ -28,22 +28,22 @@ const AboutSection = () => {
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="text-[34px] sm:text-5xl md:text-7xl lg:text-8xl font-bold text-[#1a1a1a] tracking-tight leading-[1.08] md:leading-[1.1] mb-8 md:mb-12"
         >
-          Shape Your <br />
+          Future-Proof <br />
           <div className="inline-block align-bottom">
             <AnimeReveal
-              text="FUTURE"
+              text="EDUCATION"
               as="span"
               className="text-[#74C044]"
               staggerFrom="center"
               delay={0.3}
             />
           </div>
-          <br /> In Nepal
+          <br /> In Itahari
         </motion.h2>
 
         <div className="max-w-3xl">
           <RevealText
-            text="Itahari International College is a flagship institution of Innovate Nepal Group. We offer BSc (Hons) Computing and BA (Hons) Business Administration directly delivered in partnership with London Metropolitan University — right here in Itahari."
+            text="Itahari International College blends international teaching practices, practical learning, and student-centred support to prepare graduates who can contribute locally and compete globally."
             className="text-gray-500 text-base sm:text-lg md:text-xl font-medium leading-relaxed justify-center"
             delay={0.3}
           />

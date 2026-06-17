@@ -9,8 +9,8 @@ export async function GET(req: NextRequest) {
 
     // Dynamic parameters
     const title = searchParams.get('title') || 'Itahari International College';
-    const subtitle = searchParams.get('subtitle') || 'World-Class Education in Nepal';
-    const section = searchParams.get('section') || 'Excellence in IT & Business';
+    const subtitle = searchParams.get('subtitle') || 'Developing Impactful Industry Ready Graduates';
+    const section = searchParams.get('section') || 'UK Degrees in Itahari';
 
     return new ImageResponse(
       (
@@ -22,8 +22,8 @@ export async function GET(req: NextRequest) {
             flexDirection: 'column',
             alignItems: 'flex-start',
             justifyContent: 'center',
-            backgroundColor: '#0a0a0a',
-            backgroundImage: 'radial-gradient(circle at 25% 25%, #21409A 0%, transparent 50%), radial-gradient(circle at 75% 75%, #1a1a1a 0%, transparent 50%)',
+            backgroundColor: '#21409A',
+            backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(116, 192, 68, 0.35) 0%, transparent 45%), radial-gradient(circle at 80% 75%, rgba(88, 89, 91, 0.45) 0%, transparent 48%)',
             padding: '80px',
             position: 'relative',
             fontFamily: 'sans-serif',
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
           {/* Logo Placeholder / Top Bar */}
           <div style={{ position: 'absolute', top: 60, left: 80, display: 'flex', alignItems: 'center' }}>
             <div style={{ width: 40, height: 40, borderRadius: 8, backgroundColor: '#74C044', marginRight: 15 }} />
-            <span style={{ color: '#fff', fontSize: 24, fontWeight: 'bold', letterSpacing: '0.05em' }}>ITAHARI INTERNATIONAL COLLEGE NEPAL</span>
+            <span style={{ color: '#fff', fontSize: 24, fontWeight: 'bold', letterSpacing: '0.05em' }}>ITAHARI INTERNATIONAL COLLEGE</span>
           </div>
 
           {/* Section Tag */}

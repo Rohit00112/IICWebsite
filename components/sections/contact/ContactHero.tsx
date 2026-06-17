@@ -32,8 +32,8 @@ const ContactHero = () => {
             <div className="flex flex-col items-center">
               <RevealText
                 as="h1"
-                text="Let's Start a Conversation"
-                className="text-4xl md:text-6xl font-bold text-[#ffffff] mb-6 font-sora justify-center drop-shadow-md"
+                text="Connect With Itahari International College"
+                className="text-4xl md:text-6xl font-bold text-[#ffffff] mb-6 font-iic justify-center drop-shadow-md"
               />
             </div>
 
@@ -44,7 +44,7 @@ const ContactHero = () => {
               className="flex flex-col items-center"
             >
               <p className="text-white/80 text-sm md:text-base max-w-2xl leading-relaxed font-medium mb-12">
-                Whether you&apos;re a prospective student, a potential industry partner, or just have a general question, our team is here to help you navigate your journey with us.
+                Whether you&apos;re planning your application, exploring a partnership, or visiting campus, our team is ready to guide you with clear and friendly support.
               </p>
               
               {/* Interactive Surprise Indicator */}
@@ -54,7 +54,7 @@ const ContactHero = () => {
                 className="flex flex-col items-center gap-2"
               >
                 <div className="w-[1px] h-12 bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
-                <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-bold">Interact to Explore</span>
+                <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-bold">Reach IIC</span>
               </motion.div>
             </motion.div>
           </div>

@@ -16,8 +16,8 @@ const IngSection = dynamic(() => import("@/components/sections/home/IngSection")
 const ProspectusSection = dynamic(() => import("@/components/sections/home/ProspectusSection"), { ssr: true });
 
 export const metadata: Metadata = {
-  title: "Itahari International College | Excellence in IT & Business",
-  description: "Welcome to Itahari International College. Explore our world-class BIT and BBA programs, state-of-the-art facilities, and vibrant campus life.",
+  title: "Itahari International College | UK Degrees in IT & Business",
+  description: "Developing impactful industry-ready graduates through UK-awarded IT and Business programmes in partnership with London Metropolitan University.",
 };
 
 export default function Home() {

@@ -29,7 +29,7 @@ const testimonials = [
   {
     name: "Emily Watson",
     degree: "BSc (Hons) AI",
-    quote: "The mentorship programs at Itahari International College connected me with industry leaders in Kathmandu's growing tech scene. I had my first internship offer before even graduating.",
+    quote: "The mentorship programmes at Itahari International College connected me with industry leaders in Kathmandu's growing tech scene. I had my first internship offer before even graduating.",
     tag: "AI Research Lead",
     image: "/images/profiles/emily.png",
     video: "/videos/students/emily.mp4",
@@ -84,7 +84,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
       <Tilt strength={4}>
         <div
           className={`relative overflow-hidden p-6 sm:p-8 md:p-12 rounded-[24px] md:rounded-[32px] transition-all duration-300 h-full ${item.featured
-            ? 'bg-[#0a3285] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]'
+            ? 'bg-[#21409A] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]'
             : 'bg-white text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] border border-gray-100'
             }`}
           style={{ willChange: 'transform, opacity' }}
@@ -164,7 +164,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
                 />
               </div>
               <div>
-                <h4 className={`text-base md:text-lg font-bold font-sora ${item.featured ? 'text-white' : 'text-[#1a1a1a]'}`}>
+                <h4 className={`text-base md:text-lg font-bold font-iic ${item.featured ? 'text-white' : 'text-[#1a1a1a]'}`}>
                   {item.name}
                 </h4>
                 <p className={`text-xs md:text-sm font-medium ${item.featured ? 'text-white/60' : 'text-gray-400'}`}>
@@ -188,7 +188,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
                 <span className="inline-block px-3 py-1 rounded-full text-[11px] md:text-xs font-medium bg-white/15 border border-white/25 backdrop-blur-sm mb-3">
                   {item.tag}
                 </span>
-                <h4 className="text-xl md:text-2xl font-bold font-sora">{item.name}</h4>
+                <h4 className="text-xl md:text-2xl font-bold font-iic">{item.name}</h4>
                 <p className="text-xs md:text-sm font-medium text-white/70">{item.degree}</p>
               </motion.div>
             )}
@@ -207,16 +207,16 @@ const StudentStories = () => {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
-          <span className="text-[#007a5e] text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase mb-4 font-sora">
+          <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase mb-4 font-iic">
             Insights
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-iic">
             Success Stories From
           </h2>
           <AnimeReveal
             as="h2"
             text="STUDENTS"
-            className="text-[40px] sm:text-5xl md:text-7xl font-black text-[#007a5e] leading-[0.9] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-sora justify-center"
+            className="text-[40px] sm:text-5xl md:text-7xl font-black text-[#74C044] leading-[0.9] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
             staggerFrom="center"
             delay={0.1}
           />

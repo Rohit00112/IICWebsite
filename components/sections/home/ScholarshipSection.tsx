@@ -57,10 +57,10 @@ const EligibilityAccordion: React.FC<EligibilityProps> = ({ intro, items, defaul
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="w-full flex items-center justify-between gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-[#5B8DEF]/15 to-[#21409A]/15 backdrop-blur-xl border border-[#5B8DEF]/40 hover:border-[#5B8DEF]/70 transition-all duration-300 group"
+        className="w-full flex items-center justify-between gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-[#21409A]/15 to-[#21409A]/15 backdrop-blur-xl border border-[#21409A]/40 hover:border-[#21409A]/70 transition-all duration-300 group"
       >
-        <span className="flex items-center gap-2.5 sm:gap-3 text-white font-bold text-sm sm:text-base md:text-lg font-sora tracking-wide">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7FB3FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <span className="flex items-center gap-2.5 sm:gap-3 text-white font-bold text-sm sm:text-base md:text-lg font-iic tracking-wide">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#74C044" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 12l2 2 4-4" />
             <circle cx="12" cy="12" r="10" />
           </svg>
@@ -73,7 +73,7 @@ const EligibilityAccordion: React.FC<EligibilityProps> = ({ intro, items, defaul
           height="22"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#7FB3FF"
+          stroke="#74C044"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -93,7 +93,7 @@ const EligibilityAccordion: React.FC<EligibilityProps> = ({ intro, items, defaul
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <div className="mt-3 px-4 sm:px-6 py-5 sm:py-6 rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-[#5B8DEF]/20">
+            <div className="mt-3 px-4 sm:px-6 py-5 sm:py-6 rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-[#21409A]/20">
               <p className="text-white/80 text-sm sm:text-[15px] md:text-base mb-4 leading-relaxed">
                 {intro}
               </p>
@@ -106,7 +106,7 @@ const EligibilityAccordion: React.FC<EligibilityProps> = ({ intro, items, defaul
                     transition={{ delay: i * 0.08, duration: 0.4 }}
                     className="flex gap-3 text-white/75 text-sm sm:text-[15px] leading-relaxed"
                   >
-                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#7FB3FF] shrink-0 shadow-[0_0_8px_rgba(127,179,255,0.8)]" />
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#74C044] shrink-0 shadow-[0_0_8px_rgba(116,192,68,0.55)]" />
                     <span>{item}</span>
                   </motion.li>
                 ))}
@@ -137,12 +137,12 @@ const ScholarshipSection = () => {
   return (
     <section
       ref={containerRef}
-      className="relative w-full bg-[#0a1733] overflow-hidden py-16 sm:py-24 md:py-32"
+      className="relative w-full bg-[#21409A] overflow-hidden py-16 sm:py-24 md:py-32"
     >
       {/* Radial blue glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-[radial-gradient(ellipse_at_center,#5B8DEF_0%,transparent_60%)] opacity-20" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse_at_center,#3B6FD9_0%,transparent_70%)] opacity-15" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-[radial-gradient(ellipse_at_center,#21409A_0%,transparent_60%)] opacity-20" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[radial-gradient(ellipse_at_center,#21409A_0%,transparent_70%)] opacity-15" />
       </div>
 
       {/* Decorative floating sparkles */}
@@ -150,7 +150,7 @@ const ScholarshipSection = () => {
         style={{ y: ySparkle1 }}
         className="absolute top-32 left-[8%] w-3 h-3 pointer-events-none"
       >
-        <svg viewBox="0 0 24 24" fill="#7FB3FF" className="w-full h-full opacity-70">
+        <svg viewBox="0 0 24 24" fill="#74C044" className="w-full h-full opacity-70">
           <path d="M12 2l1.5 6.5L20 10l-6.5 1.5L12 18l-1.5-6.5L4 10l6.5-1.5L12 2z" />
         </svg>
       </motion.div>
@@ -158,7 +158,7 @@ const ScholarshipSection = () => {
         style={{ y: ySparkle2 }}
         className="absolute top-1/2 right-[10%] w-4 h-4 pointer-events-none"
       >
-        <svg viewBox="0 0 24 24" fill="#A8C9FF" className="w-full h-full opacity-60">
+        <svg viewBox="0 0 24 24" fill="#74C044" className="w-full h-full opacity-60">
           <path d="M12 2l1.5 6.5L20 10l-6.5 1.5L12 18l-1.5-6.5L4 10l6.5-1.5L12 2z" />
         </svg>
       </motion.div>
@@ -166,7 +166,7 @@ const ScholarshipSection = () => {
         style={{ y: ySparkle1 }}
         className="absolute bottom-40 left-[18%] w-2 h-2 pointer-events-none"
       >
-        <svg viewBox="0 0 24 24" fill="#7FB3FF" className="w-full h-full opacity-80">
+        <svg viewBox="0 0 24 24" fill="#74C044" className="w-full h-full opacity-80">
           <path d="M12 2l1.5 6.5L20 10l-6.5 1.5L12 18l-1.5-6.5L4 10l6.5-1.5L12 2z" />
         </svg>
       </motion.div>
@@ -176,14 +176,14 @@ const ScholarshipSection = () => {
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          className="text-[#7FB3FF] text-[10px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.24em] sm:tracking-[0.32em] md:tracking-[0.4em] uppercase mb-6 md:mb-8 font-sora text-center leading-relaxed"
+          className="text-[#74C044] text-[10px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.24em] sm:tracking-[0.32em] md:tracking-[0.4em] uppercase mb-6 md:mb-8 font-iic text-center leading-relaxed"
         >
           Scholarships at Itahari International College
         </motion.span>
 
         {/* Huge AAA letters */}
         <div className="flex items-end justify-center gap-3 sm:gap-4 md:gap-10 mb-5 md:mb-10 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(91,141,239,0.3)_0%,transparent_60%)] blur-2xl pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(33,64,154,0.32)_0%,transparent_60%)] blur-2xl pointer-events-none" />
           {letters.map((letter, i) => (
             <motion.svg
               key={i}
@@ -196,12 +196,12 @@ const ScholarshipSection = () => {
                 ease: [0.16, 1, 0.3, 1],
               }}
               viewBox="0 0 100 130"
-              className="w-[62px] sm:w-[80px] md:w-[180px] h-auto drop-shadow-[0_10px_40px_rgba(91,141,239,0.6)] overflow-visible"
+              className="w-[62px] sm:w-[80px] md:w-[180px] h-auto drop-shadow-[0_10px_40px_rgba(33,64,154,0.55)] overflow-visible"
             >
               <defs>
                 <linearGradient id={`aaa-grad-${i}`} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#A8C9FF" />
-                  <stop offset="50%" stopColor="#5B8DEF" />
+                  <stop offset="0%" stopColor="#74C044" />
+                  <stop offset="50%" stopColor="#21409A" />
                   <stop offset="100%" stopColor="#21409A" />
                 </linearGradient>
               </defs>
@@ -211,7 +211,7 @@ const ScholarshipSection = () => {
                 textAnchor="middle"
                 fill={`url(#aaa-grad-${i})`}
                 style={{
-                  fontFamily: 'var(--font-sora), sans-serif',
+                  fontFamily: 'var(--font-iic), sans-serif',
                   fontWeight: 900,
                   fontSize: '140px',
                   letterSpacing: '-4px',
@@ -228,7 +228,7 @@ const ScholarshipSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="text-xl sm:text-2xl md:text-5xl font-black text-white tracking-tight uppercase font-sora text-center mb-4 md:mb-6 leading-tight"
+          className="text-xl sm:text-2xl md:text-5xl font-black text-white tracking-tight uppercase font-iic text-center mb-4 md:mb-6 leading-tight"
         >
           Triple A Scholarship at Itahari International College
         </motion.h2>
@@ -248,12 +248,12 @@ const ScholarshipSection = () => {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: 0.3 + i * 0.12, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -6 }}
-              className="relative bg-white/[0.04] backdrop-blur-xl border border-[#5B8DEF]/30 rounded-2xl p-5 sm:p-7 md:p-8 overflow-hidden group transition-all duration-500 hover:border-[#5B8DEF]/60 hover:bg-white/[0.06]"
+              className="relative bg-white/[0.04] backdrop-blur-xl border border-[#21409A]/30 rounded-2xl p-5 sm:p-7 md:p-8 overflow-hidden group transition-all duration-500 hover:border-[#21409A]/60 hover:bg-white/[0.06]"
             >
-              <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#5B8DEF]/10 rounded-full blur-2xl group-hover:bg-[#5B8DEF]/25 transition-colors duration-500" />
+              <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#21409A]/10 rounded-full blur-2xl group-hover:bg-[#21409A]/25 transition-colors duration-500" />
               <div className="relative z-10">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 mb-4 sm:mb-5 text-[#7FB3FF]">{pillar.icon}</div>
-                <h3 className="text-white text-lg sm:text-xl md:text-2xl font-black tracking-tight uppercase font-sora mb-2">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 mb-4 sm:mb-5 text-[#74C044]">{pillar.icon}</div>
+                <h3 className="text-white text-lg sm:text-xl md:text-2xl font-black tracking-tight uppercase font-iic mb-2">
                   {pillar.label}
                 </h3>
                 <p className="text-white/60 text-sm md:text-[15px] font-medium leading-relaxed">
@@ -269,10 +269,10 @@ const ScholarshipSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="text-center text-sm sm:text-base md:text-lg font-bold mb-8 md:mb-10 font-sora"
+          className="text-center text-sm sm:text-base md:text-lg font-bold mb-8 md:mb-10 font-iic"
         >
           <span className="text-white/80">Hit all 3 pillars → </span>
-          <span className="bg-gradient-to-r from-[#A8C9FF] to-[#5B8DEF] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#74C044] to-[#21409A] bg-clip-text text-transparent">
             up to 100% tuition off
           </span>
         </motion.p>
@@ -286,7 +286,7 @@ const ScholarshipSection = () => {
           className="w-full max-w-3xl mb-6"
         >
           <p className="text-white/75 text-sm sm:text-base md:text-[17px] leading-relaxed text-center">
-            The <span className="text-[#A8C9FF] font-semibold">AAA (Academics, Attendance, and Attitude) Scholarship Award</span> is awarded to <span className="text-white font-bold">10% of students</span> who excelled during the calendar year in academics, discipline, and active participation. It provides students with an incentive to have <span className="text-white font-bold">100% of their tuition fees waived</span> for the calendar year.
+            The <span className="text-[#74C044] font-semibold">AAA (Academics, Attendance, and Attitude) Scholarship Award</span> is awarded to <span className="text-white font-bold">10% of students</span> who excelled during the calendar year in academics, discipline, and active participation. It provides students with an incentive to have <span className="text-white font-bold">100% of their tuition fees waived</span> for the calendar year.
           </p>
           <p className="text-white/40 italic text-sm text-center mt-4">*Excluding University Fee</p>
         </motion.div>
@@ -303,11 +303,11 @@ const ScholarshipSection = () => {
 
         {/* ── DIVIDER ── */}
         <div className="w-full max-w-3xl flex items-center gap-4 my-14 sm:my-20 md:my-24">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#5B8DEF]/40 to-transparent" />
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="#7FB3FF" className="opacity-70">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#21409A]/40 to-transparent" />
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#74C044" className="opacity-70">
             <path d="M12 2l1.5 6.5L20 10l-6.5 1.5L12 18l-1.5-6.5L4 10l6.5-1.5L12 2z" />
           </svg>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#5B8DEF]/40 to-transparent" />
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#21409A]/40 to-transparent" />
         </div>
 
         {/* ── BLOCK 2: POSTGRADUATE SCHOLARSHIP ── */}
@@ -315,7 +315,7 @@ const ScholarshipSection = () => {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-[#7FB3FF] text-[10px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.28em] md:tracking-[0.4em] uppercase mb-5 md:mb-6 font-sora"
+          className="text-[#74C044] text-[10px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.28em] md:tracking-[0.4em] uppercase mb-5 md:mb-6 font-iic"
         >
           Postgraduate Award
         </motion.span>
@@ -327,7 +327,7 @@ const ScholarshipSection = () => {
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="relative flex items-center justify-center w-full"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(91,141,239,0.3)_0%,transparent_60%)] blur-2xl pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(33,64,154,0.32)_0%,transparent_60%)] blur-2xl pointer-events-none" />
 
           <div className="relative flex items-center justify-center gap-4 md:gap-8">
             {/* Left laurel */}
@@ -335,7 +335,7 @@ const ScholarshipSection = () => {
               className="w-8 sm:w-12 md:w-20 h-auto opacity-70 shrink-0"
               viewBox="0 0 24 48"
               fill="none"
-              stroke="#7FB3FF"
+              stroke="#74C044"
               strokeWidth="1.5"
             >
               <path d="M20 4 C 8 12, 4 24, 12 44" strokeLinecap="round" />
@@ -346,12 +346,12 @@ const ScholarshipSection = () => {
             {/* 100% */}
             <svg
               viewBox="0 0 360 140"
-              className="w-[210px] sm:w-[280px] md:w-[560px] h-auto drop-shadow-[0_15px_50px_rgba(91,141,239,0.6)] overflow-visible"
+              className="w-[210px] sm:w-[280px] md:w-[560px] h-auto drop-shadow-[0_15px_50px_rgba(33,64,154,0.55)] overflow-visible"
             >
               <defs>
                 <linearGradient id="hundred-grad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#A8C9FF" />
-                  <stop offset="50%" stopColor="#5B8DEF" />
+                  <stop offset="0%" stopColor="#74C044" />
+                  <stop offset="50%" stopColor="#21409A" />
                   <stop offset="100%" stopColor="#21409A" />
                 </linearGradient>
               </defs>
@@ -361,7 +361,7 @@ const ScholarshipSection = () => {
                 textAnchor="middle"
                 fill="url(#hundred-grad)"
                 style={{
-                  fontFamily: 'var(--font-sora), sans-serif',
+                  fontFamily: 'var(--font-iic), sans-serif',
                   fontWeight: 900,
                   fontSize: '150px',
                   letterSpacing: '-6px',
@@ -376,7 +376,7 @@ const ScholarshipSection = () => {
               className="w-8 sm:w-12 md:w-20 h-auto opacity-70 scale-x-[-1] shrink-0"
               viewBox="0 0 24 48"
               fill="none"
-              stroke="#7FB3FF"
+              stroke="#74C044"
               strokeWidth="1.5"
             >
               <path d="M20 4 C 8 12, 4 24, 12 44" strokeLinecap="round" />
@@ -391,14 +391,13 @@ const ScholarshipSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-xl sm:text-2xl md:text-5xl font-black text-white tracking-tight uppercase font-sora text-center mt-4 mb-4 md:mb-6 leading-tight"
+          className="text-xl sm:text-2xl md:text-5xl font-black text-white tracking-tight uppercase font-iic text-center mt-4 mb-4 md:mb-6 leading-tight"
         >
           Fully Funded Masters Degree
         </motion.h2>
 
         <RevealText
-          text="A special scholarship opportunity for one eligible graduate to persue quality post
-gradutae study at ING Colleges in Nepal."
+          text="A special scholarship opportunity for one eligible graduate to pursue quality postgraduate study at ING colleges in Nepal."
           className="text-white/70 text-sm sm:text-base md:text-xl font-medium leading-relaxed text-center max-w-2xl mb-10 md:mb-12 justify-center"
         />
 
@@ -411,10 +410,10 @@ gradutae study at ING Colleges in Nepal."
           className="w-full max-w-3xl mb-8 space-y-4"
         >
           <p className="text-white/75 text-sm sm:text-base md:text-[17px] leading-relaxed text-center">
-            Upon completion of <span className="text-[#A8C9FF] font-semibold">London Metropolitan University&apos;s Bachelor&apos;s Degree</span>, our students will be awarded postgraduate scholarships within ING colleges. We hope our assistance will inspire future generations, so that they may as well get similar opportunities to better their future.
+            Upon completion of <span className="text-[#74C044] font-semibold">London Metropolitan University&apos;s Bachelor&apos;s Degree</span>, eligible students may receive postgraduate scholarship opportunities within ING colleges. We hope this support inspires future generations to pursue meaningful opportunities and build stronger futures.
           </p>
           <p className="text-white/75 text-sm sm:text-base md:text-[17px] leading-relaxed text-center">
-            We aim to facilitate our student&apos;s <span className="text-white font-bold">professional and personal growth</span>.
+            We aim to support each student&apos;s <span className="text-white font-bold">professional and personal growth</span>.
           </p>
           <p className="text-white/40 italic text-sm text-center mt-4">*Job Placement at one of the ING Companies</p>
 

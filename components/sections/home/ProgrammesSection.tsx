@@ -29,9 +29,9 @@ const ProgrammesSection = () => {
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/home/course1.png',
-      bgColor: 'bg-[#126DA2]',
-      tagColor: 'bg-[#0e567f]',
-      tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and Internet of Things'],
+      bgColor: 'bg-[#21409A]',
+      tagColor: 'bg-[#58595B]',
+      tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and IoT'],
       href: '/courses/bsc-hons-computing',
       parallax: y1
     },
@@ -44,9 +44,9 @@ const ProgrammesSection = () => {
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/home/course2.png',
-      bgColor: 'bg-[#00BBCC]',
-      tagColor: 'bg-[#0095a3]',
-      tags: ['Project Management', 'Marketing'],
+      bgColor: 'bg-[#58595B]',
+      tagColor: 'bg-[#21409A]',
+      tags: ['Global Business', 'Digital Management'],
       href: '/courses',
       parallax: y1
     },
@@ -58,21 +58,21 @@ const ProgrammesSection = () => {
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          className="text-[#74C044] text-[11px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.22em] md:tracking-[0.3em] uppercase mb-4 md:mb-6 font-sora"
+          className="text-[#74C044] text-[11px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.22em] md:tracking-[0.3em] uppercase mb-4 md:mb-6 font-iic"
         >
-          Our Programmes
+          UK Degree Programmes
         </motion.span>
 
         <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-sora">
-            Nepal&apos;s First Direct UK Degree in
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-iic">
+            Learn Locally, Compete Globally in
           </h2>
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
               <AnimeReveal
                 text="ITAHARI"
                 as="h2"
-                className="text-[34px] sm:text-5xl md:text-7xl font-black text-[#74C044] tracking-tight leading-none font-sora justify-center"
+                className="text-[34px] sm:text-5xl md:text-7xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center"
                 staggerFrom="center"
                 delay={0.2}
               />
@@ -126,10 +126,10 @@ const ProgrammesSection = () => {
                       }}
                       transition={{ delay: index * 0.1 + 0.7, duration: 0.8 }}
                     >
-                      <h3 className="text-white/60 text-base sm:text-lg md:text-xl font-medium mb-1 font-sora tracking-tight">
+                      <h3 className="text-white/60 text-base sm:text-lg md:text-xl font-medium mb-1 font-iic tracking-tight">
                         {prog.title}
                       </h3>
-                      <h3 className="text-white text-[25px] sm:text-4xl md:text-[42px] xl:text-4xl 2xl:text-[44px] font-black leading-[1.05] mb-6 sm:mb-8 font-sora uppercase">
+                      <h3 className="text-white text-[25px] sm:text-4xl md:text-[42px] xl:text-4xl 2xl:text-[44px] font-black leading-[1.05] mb-6 sm:mb-8 font-iic uppercase">
                         {prog.subtitle}
                       </h3>
                     </motion.div>
@@ -228,14 +228,12 @@ const ProgrammesSection = () => {
 
         <div className="max-w-3xl text-center flex flex-col items-center">
           <RevealText
-            text="Starting your college journey is a meaningful experience shaped by growth, and we’re
-here to support you in every step of the way, helping you feel confident and connected as
-you begin this new chapter."
+            text="Each programme blends London Metropolitan University standards with practical learning, industry exposure, and the support students need to build a globally competitive career from Itahari."
             className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-8 md:mb-10 px-2 sm:px-4 justify-center"
           />
           <Magnetic strength={0.3}>
             <Link href="/admissions" className="inline-flex bg-[#21409A] text-white px-8 sm:px-12 py-3.5 sm:py-4 rounded-lg font-bold text-base sm:text-lg shadow-2xl hover:opacity-90 transition-all active:scale-95">
-              Enroll Now
+              Apply Now
             </Link>
           </Magnetic>
         </div>

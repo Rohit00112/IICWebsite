@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Contact Us | Admissions & Directions in Itahari | Itahari International College',
-  description: 'Get in touch with Itahari International College. Find our location in Itahari, contact admissions for UK degree programs, or send us a message.',
+  description: 'Contact IIC for admissions guidance, campus visits, partnerships, and support for UK-awarded IT and Business programmes in Itahari.',
 };
 
 export default function ContactLayout({

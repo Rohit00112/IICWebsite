@@ -223,49 +223,49 @@ const CoursesList = () => {
       title: "Bachelor In Information Technology",
       category: "BSc (Hons) Computing",
       duration: "3 Years",
-      bg: "#1a2b5e",
-      description: "A programme built for the next generation of innovators. Covering software engineering, application development, artificial intelligence, and systems analysis, this program combines strong theory with hands-on, industry-relevant learning. Graduate with more than a degree — leave with the technical depth, real-world experience, and problem-solving mindset that top employers are looking for.",
+      bg: "#21409A",
+      description: "A programme for future-ready technologists. Study software engineering, application development, artificial intelligence, and systems analysis through practical projects that connect theory with real industry expectations.",
       credits: "360 Credits",
       modules: "17 Modules",
       image: "/images/courses/bit.png",
       slug: "bsc-hons-computing",
-      features: ["SOFTWARE ENGINEERING", "AI"],
+      features: ["Software Engineering", "AI"],
     },
     {
       title: "Digital Business Management",
       category: "Business & Management",
       duration: "3 Years",
-      bg: "#06332d",
-      description: "A comprehensive program covering software engineering, databases, and systems analysis, designed to build a strong foundation in modern computing.",
+      bg: "#58595B",
+      description: "Build the skills to lead digital transformation, manage technology-enabled teams, and connect business strategy with modern tools, data, and customer expectations.",
       credits: "360 Credits",
       modules: "17 Modules",
       image: "/images/courses/bba2.png",
       slug: "digital-business-management",
-      features: ["SOFTWARE ENGINEERING", "AI"],
+      features: ["Digital Strategy", "Management"],
     },
     {
       title: "International Business",
       category: "Business & Management",
       duration: "3 Years",
-      bg: "#5c1616",
-      description: "A comprehensive program covering software engineering, databases, and systems analysis, designed to build a strong foundation in modern computing.",
+      bg: "#58595B",
+      description: "Prepare for global markets with a business degree shaped by international standards, cross-cultural collaboration, and practical decision-making.",
       credits: "360 Credits",
       modules: "17 Modules",
       image: "/images/courses/bba1.png",
       slug: "international-business",
-      features: ["SOFTWARE ENGINEERING", "AI"],
+      features: ["Global Markets", "Leadership"],
     },
     {
       title: "Advertising & Marketing",
       category: "Business & Management",
       duration: "3 Years",
-      bg: "#2b3b16",
-      description: "A comprehensive program covering software engineering, databases, and systems analysis, designed to build a strong foundation in modern computing.",
+      bg: "#21409A",
+      description: "Develop the creative, analytical, and strategic skills to build brands, understand audiences, and deliver campaigns that make a measurable impact.",
       credits: "360 Credits",
       modules: "17 Modules",
       image: "/images/courses/bba3.png",
       slug: "advertising-marketing",
-      features: ["SOFTWARE ENGINEERING", "AI"],
+      features: ["Brand Strategy", "Marketing"],
     }
   ];
 
@@ -274,14 +274,13 @@ const CoursesList = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center text-center mb-14 md:mb-24">
           <p className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold text-[#74C044] mb-4">
-            Programmes &middot; UK Affiliated
+            UK Degrees &middot; Local Impact
           </p>
           <h2 className="text-3xl md:text-5xl lg:text-[64px] font-black text-[#21409A] mb-6 leading-[1.05] tracking-tight uppercase">
-            Browse our degrees
+            Industry-ready pathways
           </h2>
           <p className="text-[#444444] text-sm md:text-lg max-w-2xl leading-relaxed font-medium">
-            Choose from our range of UK-affiliated IT and Business programmes,
-            designed to prepare you for the global job market.
+            Choose a London Metropolitan University awarded programme that combines international standards, hands-on learning, and career-focused support in Itahari.
           </p>
         </div>
 

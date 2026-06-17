@@ -38,10 +38,10 @@ const StudentExperience = () => {
     <section className="py-24 md:py-32 bg-[#1a1a1a] text-white overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6">
         <div className="text-center mb-20">
-          <span className="text-[#74C044] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 block font-sora">
+          <span className="text-[#74C044] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 block font-iic">
             Student Life
           </span>
-          <h2 className="text-4xl md:text-6xl font-black leading-tight font-sora">
+          <h2 className="text-4xl md:text-6xl font-black leading-tight font-iic">
             Vibrant & Diverse <br className="hidden md:block"/>
             <span className="text-[#21409A]">Community</span>
           </h2>
@@ -59,11 +59,11 @@ const StudentExperience = () => {
               >
                 <div className={`w-full h-[2px] mb-6 transition-colors duration-500 ${activeIndex === index ? 'bg-[#74C044]' : 'bg-white/10 group-hover:bg-white/30'}`} />
                 <div className="flex gap-6 md:gap-10 items-start">
-                  <span className={`text-2xl md:text-4xl font-light font-sora transition-colors duration-500 ${activeIndex === index ? 'text-[#74C044]' : 'text-white/30 group-hover:text-white/50'}`}>
+                  <span className={`text-2xl md:text-4xl font-light font-iic transition-colors duration-500 ${activeIndex === index ? 'text-[#74C044]' : 'text-white/30 group-hover:text-white/50'}`}>
                     {exp.id}
                   </span>
                   <div className="min-w-0">
-                    <h3 className={`text-3xl md:text-5xl font-bold font-sora mb-4 transition-all duration-500 ${activeIndex === index ? 'text-white translate-x-4' : 'text-white/50 group-hover:text-white/70'}`}>
+                    <h3 className={`text-3xl md:text-5xl font-bold font-iic mb-4 transition-all duration-500 ${activeIndex === index ? 'text-white translate-x-4' : 'text-white/50 group-hover:text-white/70'}`}>
                       {exp.title}
                     </h3>
                     <AnimatePresence>

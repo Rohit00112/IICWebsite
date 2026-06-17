@@ -23,7 +23,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
             <AnimeReveal
               as="h2"
               text="Related Stories"
-              className="text-3xl md:text-4xl font-bold text-[#1a1a1a] font-sora mb-4"
+              className="text-3xl md:text-4xl font-bold text-[#1a1a1a] font-iic mb-4"
               staggerFrom="first"
             />
             <p className="text-gray-500 max-w-md">Continue exploring the latest updates, events, and announcements from Itahari International College.</p>
@@ -67,7 +67,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
                 </div>
                 <div className="p-8 flex flex-col flex-grow">
                   <div className="text-[10px] font-bold text-gray-400 uppercase mb-3">{item.date}</div>
-                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 font-sora leading-tight line-clamp-2 group-hover:text-[#21409A] transition-colors">
+                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 font-iic leading-tight line-clamp-2 group-hover:text-[#21409A] transition-colors">
                     {item.title}
                   </h4>
                   <p className="text-gray-500 text-sm line-clamp-2 mb-6">

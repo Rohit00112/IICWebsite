@@ -74,7 +74,7 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
             <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#21409A]">
               <FileIcon />
             </div>
-            <h3 className="font-black text-[#1a1a1a] text-[17px] font-sora">Application Resources</h3>
+            <h3 className="font-black text-[#1a1a1a] text-[17px] font-iic">Application Resources</h3>
           </div>
           <div className="flex flex-col gap-3">
             {resources.map((res) => {
@@ -143,7 +143,7 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${openAccordion === item.id ? 'bg-blue-50 text-[#21409A]' : 'bg-gray-50 text-gray-400'}`}>
                     {item.icon}
                   </div>
-                  <h3 className="font-bold text-[#1a1a1a] text-[14px] font-sora">{item.title}</h3>
+                  <h3 className="font-bold text-[#1a1a1a] text-[14px] font-iic">{item.title}</h3>
                 </div>
                 <span className={`text-gray-300 transition-transform duration-300 ${openAccordion === item.id ? 'rotate-90 text-[#21409A]' : ''}`}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
@@ -161,13 +161,13 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
                       <ul className="flex flex-col gap-4">
                         {item.content.map((point, idx) => (
                           <li key={idx} className="flex gap-3 text-[13px] text-gray-500 leading-relaxed font-medium">
-                            <span className="text-[#76bc43] mt-1.5 w-1.5 h-1.5 rounded-full bg-[#76bc43] flex-shrink-0" />
+                            <span className="text-[#74C044] mt-1.5 w-1.5 h-1.5 rounded-full bg-[#74C044] flex-shrink-0" />
                             {point}
                           </li>
                         ))}
                       </ul>
                       <Link href="/courses" className="text-[12px] font-bold text-[#21409A] flex items-center gap-2 mt-4 hover:translate-x-1 transition-transform">
-                        View detailed program requirements →
+                        View detailed programme requirements →
                       </Link>
                     </div>
                   </motion.div>
@@ -190,7 +190,7 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
               <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#21409A]">
                 <HelpIcon />
               </div>
-              <h3 className="font-black text-[#1a1a1a] text-[17px] font-sora">Need Help?</h3>
+              <h3 className="font-black text-[#1a1a1a] text-[17px] font-iic">Need Help?</h3>
             </div>
             <p className="text-gray-500 text-[13px] font-medium leading-relaxed mb-8">
               Our admissions team is here to guide you through every step of the process.

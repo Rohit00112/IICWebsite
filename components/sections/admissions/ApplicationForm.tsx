@@ -100,18 +100,18 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-20 h-20 rounded-full bg-green-50 text-[#76bc43] flex items-center justify-center mb-8"
+          className="w-20 h-20 rounded-full bg-[#74C044]/10 text-[#74C044] flex items-center justify-center mb-8"
         >
           <CheckCircleIcon />
         </motion.div>
-        <h2 className="text-3xl font-black text-[#1a1a1a] mb-4 font-sora">Application Submitted!</h2>
+        <h2 className="text-3xl font-black text-[#1a1a1a] mb-4 font-iic">Application Submitted!</h2>
         <p className="text-gray-500 max-w-md mb-10 leading-relaxed">
           Thank you for applying to Itahari International College. Our admissions team will review your application and contact you within 2-3 business days.
         </p>
         <Magnetic strength={0.2}>
           <Link
             href="/"
-            className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold shadow-xl shadow-blue-900/10"
+            className="px-10 py-4 bg-[#21409A] text-white rounded-xl font-bold shadow-xl shadow-[#21409A]/10"
           >
             Back to Home
           </Link>
@@ -125,7 +125,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
   return (
     <div className="w-full h-full bg-white rounded-3xl p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col">
       <div className="flex flex-col mb-10">
-        <h2 className="text-2xl md:text-3xl font-black text-[#1a1a1a] mb-2 font-sora tracking-tight">
+        <h2 className="text-2xl md:text-3xl font-black text-[#1a1a1a] mb-2 font-iic tracking-tight">
           Application Form
         </h2>
         <p className="text-gray-500 text-sm md:text-base font-medium">
@@ -143,7 +143,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
           <h3 className="text-[11px] font-black text-[#21409A] uppercase tracking-[0.2em] mb-6">Personal</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="md:col-span-2 flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Full Name <span className="text-red-500">*</span></label>
+              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Full Name <span className="text-[#ED1C24]">*</span></label>
               <input
                 type="text"
                 name="fullName"
@@ -154,7 +154,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Email Address <span className="text-red-500">*</span></label>
+              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Email Address <span className="text-[#ED1C24]">*</span></label>
               <input
                 type="email"
                 name="email"
@@ -166,7 +166,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
               <span className="text-[10px] text-gray-400 italic ml-1">We'll use this for all official correspondence</span>
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Phone Number <span className="text-red-500">*</span></label>
+              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Phone Number <span className="text-[#ED1C24]">*</span></label>
               <div ref={countryRef} className="relative">
                 <button
                   type="button"
@@ -248,7 +248,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
               </div>
             </div>
             <div className="md:col-span-2 flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Address <span className="text-red-500">*</span></label>
+              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Address <span className="text-[#ED1C24]">*</span></label>
               <input
                 type="text"
                 name="address"
@@ -269,7 +269,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
         >
           <h3 className="text-[11px] font-black text-[#21409A] uppercase tracking-[0.2em] mb-6">Academic</h3>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">School / College Name <span className="text-red-500">*</span></label>
+            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">School / College Name <span className="text-[#ED1C24]">*</span></label>
             <input
               type="text"
               name="schoolName"
@@ -281,15 +281,15 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
           </div>
         </motion.section>
 
-        {/* Program Section */}
+        {/* Programme Section */}
         <motion.section
           initial={sectionInitial}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h3 className="text-[11px] font-black text-[#21409A] uppercase tracking-[0.2em] mb-6">Program</h3>
+          <h3 className="text-[11px] font-black text-[#21409A] uppercase tracking-[0.2em] mb-6">Programme</h3>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Interested Program <span className="text-red-500">*</span></label>
+            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Interested Programme <span className="text-[#ED1C24]">*</span></label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
                 type="button"
@@ -298,8 +298,8 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
                   setFormData(prev => ({ ...prev, program: 'BIT' }));
                 }}
                 className={`p-6 border-2 rounded-2xl text-left transition-all ${selectedProgram === 'BIT'
-                    ? 'border-[#21409A] bg-blue-50/50'
-                    : 'border-gray-100 bg-gray-50 hover:border-blue-200'
+                    ? 'border-[#21409A] bg-[#21409A]/5'
+                    : 'border-gray-100 bg-gray-50 hover:border-[#21409A]/20'
                   }`}
               >
                 <div className={`font-bold mb-1 ${selectedProgram === 'BIT' ? 'text-[#21409A]' : 'text-gray-700'}`}>BSc (Hons) Computing</div>
@@ -312,8 +312,8 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
                   setFormData(prev => ({ ...prev, program: 'BBA' }));
                 }}
                 className={`p-6 border-2 rounded-2xl text-left transition-all ${selectedProgram === 'BBA'
-                    ? 'border-[#21409A] bg-blue-50/50'
-                    : 'border-gray-100 bg-gray-50 hover:border-blue-200'
+                    ? 'border-[#21409A] bg-[#21409A]/5'
+                    : 'border-gray-100 bg-gray-50 hover:border-[#21409A]/20'
                   }`}
               >
                 <div className={`font-bold mb-1 ${selectedProgram === 'BBA' ? 'text-[#21409A]' : 'text-gray-700'}`}>BA (Hons) Business Administration</div>
@@ -329,7 +329,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
         <Magnetic strength={0.2} maxDistance={15}>
           <button
             type="button"
-            className="px-10 py-3.5 bg-[#21409A] text-white rounded-xl font-bold text-[14px] flex items-center gap-3 shadow-xl shadow-blue-900/10 hover:brightness-110 transition-all active:scale-[0.98]"
+            className="px-10 py-3.5 bg-[#21409A] text-white rounded-xl font-bold text-[14px] flex items-center gap-3 shadow-xl shadow-[#21409A]/10 hover:brightness-110 transition-all active:scale-[0.98]"
             onClick={() => setIsSubmitted(true)}
           >
             Submit Application <span className="text-lg">→</span>

@@ -8,11 +8,11 @@ import CampusPictures from '@/components/sections/life-at-iic/CampusPictures';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export const metadata = {
-  title: 'Vibrant Campus Life in Itahari | Student Experience | Itahari International College',
-  description: 'Discover the vibrant community, modern facilities, and unique student experiences at Itahari International College.',
+  title: 'Life at IIC | Student Experience | Itahari International College',
+  description: 'Discover student life at IIC, from campus events and practical learning to the supportive community behind #LifeAtIIC.',
   openGraph: {
-    title: 'Life At Itahari International College - Experience Vibrant Campus Life',
-    description: 'Experience the vibrant campus life at Itahari International College.',
+    title: 'Life at Itahari International College',
+    description: 'Experience the student community, events, and campus culture behind #LifeAtIIC.',
     images: [
       {
         url: '/api/og?title=Life At Itahari International College&subtitle=Experience Vibrant Campus Life&section=Student Life',

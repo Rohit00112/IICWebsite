@@ -33,7 +33,7 @@ const PartnerSection = () => {
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-[#1a1a1a] text-base sm:text-lg md:text-xl font-bold font-sora block mb-2"
+            className="text-[#1a1a1a] text-base sm:text-lg md:text-xl font-bold font-iic block mb-2"
           >
             Partner
           </motion.span>
@@ -42,7 +42,7 @@ const PartnerSection = () => {
               <AnimeReveal
                 text="UNIVERSITY"
                 as="h2"
-                className="text-[40px] sm:text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora justify-center"
+                className="text-[40px] sm:text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center"
                 staggerFrom="center"
                 delay={0.2}
               />
