@@ -113,7 +113,7 @@ const ProgrammesSection = () => {
                     transition={{ delay: index * 0.1 + 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="flex flex-wrap items-center gap-2 mb-8 sm:mb-10 max-w-full sm:max-w-[64%] xl:max-w-[58%] relative z-20"
                   >
-                    <span className={`${prog.tagColor} max-w-full truncate text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-4 py-2 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap`}>
+                    <span className={`${prog.tagColor} max-w-full truncate text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-4 py-2 rounded-full font-bold tracking-wider border border-white/10 shadow-lg whitespace-nowrap`}>
                       {prog.type}
                     </span>
                     <span className={`${prog.pillColor} text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-3.5 py-2 rounded-full font-bold border border-white/15 flex items-center gap-1.5 whitespace-nowrap shrink-0`}>
@@ -184,12 +184,12 @@ const ProgrammesSection = () => {
                     >
                       <div className="flex max-w-[66%] gap-2 flex-wrap min-w-0 sm:max-w-[58%] lg:max-w-[62%]">
                         {prog.tags?.map((item, i) => (
-                          <span key={i} className={`${prog.featurePillColor} max-w-full text-[7px] sm:text-[9px] font-black uppercase tracking-[0.1em] sm:tracking-widest leading-snug text-white/60 px-2.5 sm:px-3 py-1.5 rounded-md border border-white/10`}>
+                          <span key={i} className={`${prog.featurePillColor} max-w-full text-[7px] sm:text-[9px] font-black tracking-[0.1em] sm:tracking-widest leading-snug text-white/60 px-2.5 sm:px-3 py-1.5 rounded-md border border-white/10`}>
                             {item}
                           </span>
                         ))}
                       </div>
-                      <div className="flex shrink-0 items-center gap-4 self-start text-[11px] font-black uppercase tracking-widest text-white group/btn">
+                      <div className="flex shrink-0 items-center gap-4 self-start text-[11px] font-black tracking-widest text-white group/btn">
                         Explore
                         <div className="w-10 h-10 rounded-full border-2 border-white/10 flex items-center justify-center group-hover/btn:border-[#74C044] group-hover/btn:bg-[#74C044] transition-all duration-500">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

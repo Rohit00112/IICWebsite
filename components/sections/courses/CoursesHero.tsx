@@ -35,14 +35,14 @@ const CoursesHero = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-center pt-24 md:pt-36 pb-4">
         <div className="text-center flex flex-col items-center">
           <RevealText 
-            text="Learn Locally"
+            text="Learn locally"
             className="text-[#333333] text-xl md:text-[32px] font-bold mb-2 block tracking-tight justify-center"
           />
 
           <AnimeReveal
             as="h1"
-            text="Compete Globally"
-            className="text-4xl md:text-6xl lg:text-[100px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight uppercase justify-center"
+            text="Compete globally"
+            className="text-4xl md:text-6xl lg:text-[100px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight justify-center"
             staggerFrom="center"
             delay={0.2}
           />
@@ -51,7 +51,7 @@ const CoursesHero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs md:text-sm text-[#444444] max-w-2xl mx-auto leading-relaxed font-medium uppercase tracking-widest opacity-70"
+            className="text-xs md:text-sm text-[#444444] max-w-2xl mx-auto leading-relaxed font-medium tracking-widest opacity-70"
           >
             Explore UK-awarded IT and Business programmes designed with practical learning, global standards, and career readiness at the centre.
           </motion.p>

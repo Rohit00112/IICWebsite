@@ -348,7 +348,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12 text-center">
-            <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Eligibility</span>
+            <span className="text-[#21409A] font-bold text-xs tracking-[0.2em] mb-4 block">Eligibility</span>
             <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] font-iic tracking-tight leading-tight">
               Entry <span className="text-[#21409A]">Requirements</span>
             </h2>
@@ -397,7 +397,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-[#21409A]/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/4" />
           <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="text-center mb-20">
-              <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Future Prospects</span>
+              <span className="text-[#21409A] font-bold text-xs tracking-[0.2em] mb-4 block">Future Prospects</span>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-iic tracking-tight">
                 Your <span className="text-[#21409A]">Career</span> Path
               </h2>
@@ -439,7 +439,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
               <div>
-                <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Hands-on Learning</span>
+                <span className="text-[#21409A] font-bold text-xs tracking-[0.2em] mb-4 block">Hands-on Learning</span>
                 <h2 className="text-4xl font-bold text-[#1a1a1a] font-iic tracking-tight">
                   Innovation <span className="text-[#21409A]">Gallery</span>
                 </h2>
@@ -463,7 +463,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute bottom-0 left-0 p-10 translate-y-10 group-hover:translate-y-0 transition-transform duration-500">
-                    <span className="text-[#21409A] font-bold text-xs uppercase tracking-widest mb-3 block">{project.cohort}</span>
+                    <span className="text-[#21409A] font-bold text-xs tracking-widest mb-3 block">{project.cohort}</span>
                     <h4 className="text-2xl font-bold text-white">{project.title}</h4>
                   </div>
                 </motion.div>
@@ -581,7 +581,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-20">
             <div className="max-w-2xl">
-              <span className="text-[#21409A] font-bold text-xs uppercase tracking-[0.2em] mb-4 block">Student Outcomes</span>
+              <span className="text-[#21409A] font-bold text-xs tracking-[0.2em] mb-4 block">Student Outcomes</span>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-iic tracking-tight leading-[1.1]">
                 Where Our <span className="text-[#21409A]">Graduates</span> Shine
               </h2>
@@ -626,7 +626,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   </div>
                   <div>
                     <h4 className="text-white font-bold text-lg">{testi.name}</h4>
-                    <p className="text-[#21409A] text-xs font-bold uppercase tracking-wider">{testi.role}</p>
+                    <p className="text-[#21409A] text-xs font-bold tracking-wider">{testi.role}</p>
                   </div>
                 </div>
                 <p className="text-gray-300 font-medium leading-relaxed italic">
@@ -675,7 +675,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                     />
                   </div>
                   <div className="p-8">
-                    <span className="text-[12px] font-bold text-[#21409A] uppercase tracking-wider mb-3 block">
+                    <span className="text-[12px] font-bold text-[#21409A] tracking-wider mb-3 block">
                       {relCourse.category}
                     </span>
                     <h3 className="text-xl font-bold text-[#1a1a1a] mb-4 group-hover:text-[#21409A] transition-colors">

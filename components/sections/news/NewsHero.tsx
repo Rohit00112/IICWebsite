@@ -11,7 +11,7 @@ const NewsHero = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center px-6 py-2 bg-[#21409A] text-white rounded-full text-[10px] font-bold uppercase tracking-widest mb-10 shadow-lg shadow-[#21409A]/20"
+          className="inline-flex items-center px-6 py-2 bg-[#21409A] text-white rounded-full text-[10px] font-bold tracking-widest mb-10 shadow-lg shadow-[#21409A]/20"
         >
           IIC Newsroom
         </motion.div>

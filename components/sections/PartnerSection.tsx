@@ -24,7 +24,7 @@ const PartnerSection = () => {
     '/images/lmu rank 5.png',
   ];
 
-  const words = "UNIVERSITY".split("");
+  const words = "University".split("");
 
   return (
     <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-hidden">
@@ -44,7 +44,7 @@ const PartnerSection = () => {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic"
             >
-              UNIVERSITY
+              University
             </motion.h2>
           </div>
         </div>

@@ -105,7 +105,7 @@ const GEOSection = () => {
                   transition={{ duration: 1, delay: 0.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="geo-stat grid grid-cols-1 sm:grid-cols-[140px,1fr] md:grid-cols-[180px,1fr] gap-2 sm:gap-8 md:gap-10 py-4 sm:py-5 border-b border-gray-50 last:border-0 items-start"
                 >
-                  <span className="text-gray-500 font-medium text-[9px] md:text-[10px] uppercase tracking-[0.15em] pt-1">{stat.label}</span>
+                  <span className="text-gray-500 font-medium text-[9px] md:text-[10px] tracking-[0.15em] pt-1">{stat.label}</span>
                   <span className="text-[#21409A] font-bold text-sm md:text-base leading-[1.35] sm:text-right">{stat.value}</span>
                 </motion.div>
               ))}
@@ -198,7 +198,7 @@ const GEOSection = () => {
                   {row.icon}
                 </div>
                 <div className="space-y-4 relative z-10">
-                  <span className="text-[#74C044] font-bold text-[9px] uppercase tracking-[0.28em] md:tracking-[0.4em] block opacity-80">{row.feature}</span>
+                  <span className="text-[#74C044] font-bold text-[9px] tracking-[0.28em] md:tracking-[0.4em] block opacity-80">{row.feature}</span>
                   <h3 className="text-[#21409A] font-bold text-base md:text-lg leading-tight tracking-tight">
                     {row.iic}
                   </h3>

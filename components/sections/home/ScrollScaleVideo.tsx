@@ -127,7 +127,7 @@ const ScrollScaleVideo = () => {
               <div className="absolute -left-4 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-[#74C044] to-transparent" />
               <div className="flex items-start gap-4 justify-end">
                 <div className="text-right">
-                  <span className="text-[#74C044] text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-iic">
+                  <span className="text-[#74C044] text-[11px] font-bold tracking-[0.4em] block mb-2 font-iic">
                     Address
                   </span>
                   <p className="text-white text-2xl font-light leading-snug font-iic tracking-tight">
@@ -152,7 +152,7 @@ const ScrollScaleVideo = () => {
             {/* Contact + Hours stack */}
             <div className="flex items-start gap-4 justify-end w-full">
               <div className="text-right">
-                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-iic">
+                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] block mb-2 font-iic">
                   Contact
                 </span>
                 <p className="text-white text-base font-light font-iic tracking-tight">
@@ -173,7 +173,7 @@ const ScrollScaleVideo = () => {
 
             <div className="flex items-start gap-4 justify-end w-full">
               <div className="text-right">
-                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] uppercase block mb-2 font-iic">
+                <span className="text-[#74C044]/90 text-[11px] font-bold tracking-[0.4em] block mb-2 font-iic">
                   Visit Hours
                 </span>
                 <p className="text-white text-base font-light font-iic tracking-tight">
@@ -437,7 +437,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
               {/* Branding */}
               <div className="hidden md:flex items-center gap-4 opacity-40">
                 <div className="w-[1px] h-4 bg-white" />
-                <span className="text-[10px] font-bold tracking-[0.3em] uppercase">IIC Campus Film</span>
+                <span className="text-[10px] font-bold tracking-[0.3em]">IIC Campus Film</span>
               </div>
             </div>
           </div>

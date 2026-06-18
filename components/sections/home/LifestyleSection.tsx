@@ -83,7 +83,7 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
         }}
       >
         <div>
-          <span className="inline-block text-white/80 text-[10px] sm:text-xs xl:text-sm font-bold tracking-[0.18em] uppercase mb-3 font-iic">
+          <span className="inline-block text-white/80 text-[10px] sm:text-xs xl:text-sm font-bold tracking-[0.18em] mb-3 font-iic">
             Explore
           </span>
           <h3 className="text-white text-xl sm:text-3xl xl:text-4xl font-black font-iic leading-tight mb-2 sm:mb-3">{title}</h3>

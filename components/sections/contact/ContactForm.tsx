@@ -121,7 +121,7 @@ const ContactForm = () => {
                   <div>
                     <h3 className="text-xl font-bold text-[#1a1a1a] mb-2 font-iic">Admissions WhatsApp</h3>
                     <p className="text-gray-400 text-sm mb-4 leading-relaxed font-medium">Need immediate answers? Chat with our admissions counsellors instantly.</p>
-                    <a href="https://wa.me/9779801003030" target="_blank" rel="noopener noreferrer" className="text-[#25D366] font-bold text-xs uppercase tracking-wider flex items-center gap-2 hover:gap-3 transition-all">
+                    <a href="https://wa.me/9779801003030" target="_blank" rel="noopener noreferrer" className="text-[#25D366] font-bold text-xs tracking-wider flex items-center gap-2 hover:gap-3 transition-all">
                       Chat with Admissions <span>→</span>
                     </a>
                   </div>
@@ -180,7 +180,7 @@ const ContactForm = () => {
                   </div>
                   <div className="flex justify-between text-[13px] md:text-sm font-bold">
                     <span className="text-gray-400">Saturday</span>
-                    <span className="text-[#ED1C24] uppercase tracking-wide">Closed</span>
+                    <span className="text-[#ED1C24] tracking-wide">Closed</span>
                   </div>
                 </div>
               </motion.div>
@@ -228,7 +228,7 @@ const ContactForm = () => {
                     <span className="absolute inline-flex w-full h-full bg-[#74C044] rounded-full opacity-75 animate-ping" />
                     <span className="relative inline-flex w-2 h-2 bg-[#74C044] rounded-full" />
                   </span>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#21409A]">Avg. reply in 4 hours</span>
+                  <span className="text-[11px] font-bold tracking-wider text-[#21409A]">Avg. reply in 4 hours</span>
                 </div>
 
                 <AnimeReveal

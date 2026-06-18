@@ -54,7 +54,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   if (!cloudName || !uploadPreset) {
     return (
       <div className="space-y-4 w-full">
-        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">
+        <label className="text-[10px] font-bold tracking-widest text-gray-700">
           {label} (Cloudinary not configured)
         </label>
         <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
@@ -77,14 +77,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   return (
     <div className="space-y-4 w-full">
       <div className="flex items-center justify-between">
-        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">
+        <label className="text-[10px] font-bold tracking-widest text-gray-700">
           {label}
         </label>
         {value && (
           <button
             type="button"
             onClick={onRemove}
-            className="text-[10px] font-bold uppercase tracking-widest text-red-500 hover:text-red-600 transition-colors"
+            className="text-[10px] font-bold tracking-widest text-red-500 hover:text-red-600 transition-colors"
           >
             Remove
           </button>
@@ -117,7 +117,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   <svg className="w-8 h-8 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
                   </svg>
-                  <span className="text-[10px] font-bold uppercase tracking-widest">Select File</span>
+                  <span className="text-[10px] font-bold tracking-widest">Select File</span>
                 </button>
               );
             }}

@@ -18,7 +18,7 @@ const Leadership = () => {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <span className="text-[#74C044] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
+            <span className="text-[#74C044] font-bold tracking-[0.2em] text-sm mb-6 block">
               Message from the
             </span>
             <AnimeReveal
@@ -34,7 +34,7 @@ const Leadership = () => {
             </AnimeStagger>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Sulav Budhathoki</p>
-              <p className="text-[#74C044] font-bold uppercase tracking-widest text-sm mt-1">Chairman, ING Group</p>
+              <p className="text-[#74C044] font-bold tracking-widest text-sm mt-1">Chairman, ING Group</p>
             </div>
           </motion.div>
 
@@ -65,7 +65,7 @@ const Leadership = () => {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <span className="text-[#21409A] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
+            <span className="text-[#21409A] font-bold tracking-[0.2em] text-sm mb-6 block">
               Message from the
             </span>
             <AnimeReveal
@@ -80,7 +80,7 @@ const Leadership = () => {
             </AnimeStagger>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Satyabrat Koirala</p>
-              <p className="text-[#21409A] font-bold uppercase tracking-widest text-sm mt-1">CEO, Itahari International College</p>
+              <p className="text-[#21409A] font-bold tracking-widest text-sm mt-1">CEO, Itahari International College</p>
             </div>
           </motion.div>
 
@@ -113,7 +113,7 @@ const Leadership = () => {
         className="bg-[#21409A] py-32 px-6 text-center"
       >
         <div className="max-w-[1200px] mx-auto text-white">
-          <span className="text-white/40 font-bold tracking-[0.3em] uppercase text-xs mb-10 block font-iic">
+          <span className="text-white/40 font-bold tracking-[0.3em] text-xs mb-10 block font-iic">
             The Itahari International College Experience
           </span>
           <AnimeReveal

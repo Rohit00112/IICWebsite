@@ -64,7 +64,7 @@ const EventsHighlights = () => {
           </p>
           <AnimeReveal
             as="h2"
-            text="EVENTS & FESTS"
+            text="Events & Fests"
             className="text-5xl md:text-7xl lg:text-[100px] font-black text-white font-iic leading-none tracking-tight justify-center mt-4"
             staggerFrom="center"
             delay={0.15}

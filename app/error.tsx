@@ -80,7 +80,7 @@ export default function Error({
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
-              className="mt-12 text-[10px] uppercase tracking-widest text-gray-400 font-bold"
+              className="mt-12 text-[10px] tracking-widest text-gray-400 font-bold"
             >
               Error ID: {error.digest}
             </motion.p>

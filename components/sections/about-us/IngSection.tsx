@@ -65,7 +65,7 @@ const IngSection = () => {
           {/* Right Content */}
           <div className="lg:w-[50%] flex flex-col gap-5 md:gap-8">
             <div className="text-white">
-              <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-4 md:mb-6 opacity-80">ACADEMIC PARTNERS & ACCREDITATIONS</p>
+              <p className="text-[10px] font-bold tracking-[0.2em] mb-4 md:mb-6 opacity-80">Academic partners & accreditations</p>
 
               <div className="rounded-2xl md:rounded-[1.5rem] border-2 border-dashed border-white/85 p-4 md:p-6 flex flex-col md:flex-row items-center gap-4 md:gap-5">
                 {/* Left — Degree Awarded By + LMU */}
@@ -73,7 +73,7 @@ const IngSection = () => {
                   <h4 className="text-white text-base md:text-lg font-black font-iic mb-0.5 leading-tight">
                     Degree Awarded By
                   </h4>
-                  <p className="text-white/80 text-[8px] md:text-[9px] font-bold tracking-[0.2em] uppercase mb-2 font-iic">
+                  <p className="text-white/80 text-[8px] md:text-[9px] font-bold tracking-[0.2em] mb-2 font-iic">
                     University Partner
                   </p>
                   <div className="relative h-8 md:h-9 w-full max-w-[160px] mx-auto md:mx-0">

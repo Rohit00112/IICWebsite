@@ -90,7 +90,7 @@ const Navbar = () => {
             >
               <div className="px-6 sm:px-8 pt-6 sm:pt-8 pb-5 sm:pb-6 flex min-h-0 max-h-[calc(100svh_-_6.5rem_-_env(safe-area-inset-bottom))] flex-col overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {/* Header Label */}
-                <div className="text-white/30 text-[7px] font-bold uppercase tracking-[0.4em] mb-4 sm:mb-6">
+                <div className="text-white/30 text-[7px] font-bold tracking-[0.4em] mb-4 sm:mb-6">
                   Menu
                 </div>
 
@@ -142,7 +142,7 @@ const Navbar = () => {
                 </div>
 
                 {/* CTA Button */}
-                <Link href="/contact" onClick={() => setIsMenuOpen(false)} className="w-full min-h-11 shrink-0 px-4 py-3 bg-[#21409A] border border-white/5 rounded-lg text-white text-[9px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
+                <Link href="/contact" onClick={() => setIsMenuOpen(false)} className="w-full min-h-11 shrink-0 px-4 py-3 bg-[#21409A] border border-white/5 rounded-lg text-white text-[9px] font-bold tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
                   <span className="truncate">Schedule a Campus tour</span>
                   <span className="text-base opacity-40">→</span>
                 </Link>
@@ -205,7 +205,7 @@ const Navbar = () => {
 
                     <div className="flex min-w-0 items-center gap-3 sm:gap-4">
                       <div className="h-4 w-[1px] shrink-0 bg-white/20" />
-                      <span className="min-w-0 max-w-[82px] truncate text-right text-[8px] font-bold uppercase tracking-[0.18em] text-white/70 sm:max-w-[110px] sm:tracking-[0.2em]">
+                      <span className="min-w-0 max-w-[82px] truncate text-right text-[8px] font-bold tracking-[0.18em] text-white/70 sm:max-w-[110px] sm:tracking-[0.2em]">
                         {getActivePageName()}
                       </span>
                       <div

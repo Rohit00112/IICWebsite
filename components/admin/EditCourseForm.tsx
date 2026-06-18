@@ -176,26 +176,26 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
               <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4">
                 <div className="grid grid-cols-2 gap-8">
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Course Title</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Course Title</label>
                     <input type="text" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} className="form-input-admin" placeholder="e.g. BSc (Hons) Computing" required />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Slug (URL)</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Slug (URL)</label>
                     <input type="text" value={formData.slug} onChange={(e) => setFormData({...formData, slug: e.target.value})} className="form-input-admin" placeholder="bsc-computing" required />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-8">
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Category</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Category</label>
                     <input type="text" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})} className="form-input-admin" placeholder="Technology" />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Duration</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Duration</label>
                     <input type="text" value={formData.details.duration} onChange={(e) => setFormData({...formData, details: {...formData.details, duration: e.target.value}})} className="form-input-admin" placeholder="3 Years" />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Awarding Body</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Awarding Body</label>
                     <input type="text" value={formData.details.awardingBody} onChange={(e) => setFormData({...formData, details: {...formData.details, awardingBody: e.target.value}})} className="form-input-admin" placeholder="London Metropolitan University" />
                   </div>
                 </div>
@@ -210,7 +210,7 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Detailed Overview</label>
+                  <label className="text-[10px] font-bold tracking-widest text-gray-700">Detailed Overview</label>
                   <RichTextEditor 
                     value={formData.overview} 
                     onChange={(val) => setFormData({...formData, overview: val})} 
@@ -234,7 +234,7 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
                         newCurr[yIdx].title = e.target.value;
                         setFormData({...formData, curriculum: newCurr});
                       }} className="bg-transparent border-b-2 border-gray-200 font-bold text-lg outline-none focus:border-[#21409A] text-[#1A2B56]" />
-                      <button type="button" onClick={() => addModule(yIdx)} className="text-xs font-bold uppercase tracking-widest text-[#21409A]">+ Add Module</button>
+                      <button type="button" onClick={() => addModule(yIdx)} className="text-xs font-bold tracking-widest text-[#21409A]">+ Add Module</button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {year.modules.map((mod, mIdx) => (

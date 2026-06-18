@@ -18,9 +18,9 @@ const AboutHero = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[#74C044] font-bold tracking-[0.25em] uppercase text-xs md:text-sm mb-6 block font-iic"
+            className="text-[#74C044] font-bold tracking-[0.25em] text-xs md:text-sm mb-6 block font-iic"
           >
-            EMPOWERING FUTURE LEADERS
+            Empowering future leaders
           </motion.span>
 
           <RevealText
@@ -29,9 +29,9 @@ const AboutHero = () => {
           />
 
           <AnimeReveal
-            text="LOCAL IMPACT"
+            text="Local impact"
             as="h1"
-            className="text-5xl md:text-7xl lg:text-[100px] font-black text-[#21409A] leading-none mb-6 font-iic tracking-tighter justify-center uppercase"
+            className="text-5xl md:text-7xl lg:text-[100px] font-black text-[#21409A] leading-none mb-6 font-iic tracking-tighter justify-center"
             delay={0.2}
             staggerFrom="center"
           />

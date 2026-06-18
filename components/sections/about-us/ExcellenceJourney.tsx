@@ -180,7 +180,7 @@ const Panel = ({ item, index, total, progress }: PanelProps) => {
           >
             {item.stat}
           </span>
-          <span className="text-xs md:text-sm uppercase tracking-widest font-bold text-gray-500 font-iic">
+          <span className="text-xs md:text-sm tracking-widest font-bold text-gray-500 font-iic">
             {item.statLabel}
           </span>
         </motion.div>
@@ -278,7 +278,7 @@ const ExcellenceJourney = () => {
           viewport={{ once: true }}
           className="absolute top-12 md:top-16 left-0 right-0 text-center z-20 pointer-events-none px-6"
         >
-          <p className="text-xs md:text-sm uppercase tracking-[0.4em] font-bold text-gray-400 font-iic mb-3">
+          <p className="text-xs md:text-sm tracking-[0.4em] font-bold text-gray-400 font-iic mb-3">
             Our Journey
           </p>
           <h2 className="text-2xl md:text-4xl font-black text-[#1a1a1a] font-iic">
@@ -321,7 +321,7 @@ const ExcellenceJourney = () => {
                 ))}
               </div>
             </div>
-            <p className="mt-12 text-center text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-400 font-iic font-semibold">
+            <p className="mt-12 text-center text-[10px] md:text-xs tracking-[0.3em] text-gray-400 font-iic font-semibold">
               Scroll to journey
             </p>
           </div>

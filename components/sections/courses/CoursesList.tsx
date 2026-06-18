@@ -108,7 +108,7 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
           {/* Index marker, sits in the photo's outer corner */}
           <div className={`absolute top-5 ${isEven ? 'left-5 md:left-6' : 'right-5 md:right-6'} z-20`}>
             <div className="flex items-center gap-2 text-white/85">
-              <span className="text-[10px] font-bold tracking-[0.3em] uppercase">
+              <span className="text-[10px] font-bold tracking-[0.3em]">
                 {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
               </span>
               <span className="w-8 h-px bg-white/40" />
@@ -126,10 +126,10 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
             }}
             className="flex flex-wrap items-center gap-2.5 mb-6"
           >
-            <span className="px-3.5 py-1.5 border border-white/25 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase bg-white/[0.06] backdrop-blur-sm">
+            <span className="px-3.5 py-1.5 border border-white/25 rounded-full text-[10px] font-bold tracking-[0.2em] bg-white/[0.06] backdrop-blur-sm">
               {course.category}
             </span>
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white/[0.08] border border-white/10 rounded-full text-[10px] font-bold tracking-[0.15em] uppercase">
+            <div className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white/[0.08] border border-white/10 rounded-full text-[10px] font-bold tracking-[0.15em]">
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -144,7 +144,7 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
               visible: { opacity: 1, y: 0 }
             }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[28px] sm:text-4xl md:text-[42px] lg:text-[48px] font-black mb-7 leading-[1.05] tracking-tight uppercase"
+            className="text-[28px] sm:text-4xl md:text-[42px] lg:text-[48px] font-black mb-7 leading-[1.05] tracking-tight"
           >
             {course.title}
           </motion.h3>
@@ -158,11 +158,11 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
             className="grid grid-cols-2 gap-0 mb-7 border-y border-white/10 divide-x divide-white/10"
           >
             <div className="py-3.5 pr-4">
-              <div className="text-[9px] font-bold tracking-[0.25em] uppercase text-white/50 mb-1">Modules</div>
+              <div className="text-[9px] font-bold tracking-[0.25em] text-white/50 mb-1">Modules</div>
               <div className="text-lg md:text-xl font-black text-white">{course.modules.replace(/\s*Modules?$/i, '')}</div>
             </div>
             <div className="py-3.5 pl-4">
-              <div className="text-[9px] font-bold tracking-[0.25em] uppercase text-white/50 mb-1">Credits</div>
+              <div className="text-[9px] font-bold tracking-[0.25em] text-white/50 mb-1">Credits</div>
               <div className="text-lg md:text-xl font-black text-white">{course.credits.replace(/\s*Credits?$/i, '')}</div>
             </div>
           </motion.div>
@@ -188,14 +188,14 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
           >
             <div className="flex flex-wrap gap-2">
               {course.features.slice(0, 2).map((feature: string, i: number) => (
-                <span key={i} className="px-3 py-1.5 bg-white/[0.04] rounded-md text-[9px] font-bold uppercase tracking-[0.2em] text-white/50 border border-white/10">
+                <span key={i} className="px-3 py-1.5 bg-white/[0.04] rounded-md text-[9px] font-bold tracking-[0.2em] text-white/50 border border-white/10">
                   {feature}
                 </span>
               ))}
             </div>
             <Link
               href={`/courses/${course.slug}`}
-              className="inline-flex items-center gap-3 self-start sm:self-auto text-[11px] font-black uppercase tracking-[0.25em] group/btn"
+              className="inline-flex items-center gap-3 self-start sm:self-auto text-[11px] font-black tracking-[0.25em] group/btn"
             >
               <span className="relative transition-colors duration-300 group-hover/btn:text-[#74C044]">
                 Explore
@@ -220,7 +220,7 @@ const CourseCard = ({ course, index, total }: { course: any, index: number, tota
 const CoursesList = () => {
   const courses = [
     {
-      title: "Bachelor In Information Technology",
+      title: "Bachelor in Information Technology",
       category: "BSc (Hons) Computing",
       duration: "3 Years",
       bg: "#21409A",
@@ -273,10 +273,10 @@ const CoursesList = () => {
     <section className="relative w-full py-16 md:py-32 bg-[#f3f6fb] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center text-center mb-14 md:mb-24">
-          <p className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold text-[#74C044] mb-4">
+          <p className="text-xs md:text-sm tracking-[0.3em] font-bold text-[#74C044] mb-4">
             UK Degrees &middot; Local Impact
           </p>
-          <h2 className="text-3xl md:text-5xl lg:text-[64px] font-black text-[#21409A] mb-6 leading-[1.05] tracking-tight uppercase">
+          <h2 className="text-3xl md:text-5xl lg:text-[64px] font-black text-[#21409A] mb-6 leading-[1.05] tracking-tight">
             Industry-ready pathways
           </h2>
           <p className="text-[#444444] text-sm md:text-lg max-w-2xl leading-relaxed font-medium">

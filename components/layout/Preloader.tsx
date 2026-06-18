@@ -85,7 +85,7 @@ const Preloader = () => {
                 
                 {/* Background Text (Blue) */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[#21409A] text-[10px] md:text-xs font-black font-iic tabular-nums uppercase tracking-widest">
+                  <span className="text-[#21409A] text-[10px] md:text-xs font-black font-iic tabular-nums tracking-widest">
                     {percentage}%
                   </span>
                 </div>
@@ -99,7 +99,7 @@ const Preloader = () => {
                 >
                   {/* Foreground Text (White) - Only visible where bar exists */}
                   <div className="absolute inset-0 w-[220px] sm:w-[240px] md:w-[320px] flex items-center justify-center">
-                    <span className="text-white text-[10px] md:text-xs font-black font-iic tabular-nums uppercase tracking-widest">
+                    <span className="text-white text-[10px] md:text-xs font-black font-iic tabular-nums tracking-widest">
                       {percentage}%
                     </span>
                   </div>
@@ -120,7 +120,7 @@ const Preloader = () => {
                           delay: 0.15 + (wIdx * 0.06) + (cIdx * 0.015),
                           ease: "easeOut"
                         }}
-                        className="text-[#21409A] text-[9px] sm:text-[10px] md:text-xs font-black tracking-[0.16em] sm:tracking-[0.2em] uppercase"
+                        className="text-[#21409A] text-[9px] sm:text-[10px] md:text-xs font-black tracking-[0.16em] sm:tracking-[0.2em]"
                       >
                         {char}
                       </motion.span>

@@ -60,13 +60,13 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-[#21409A] text-[10px] font-bold uppercase tracking-wider rounded-full shadow-sm">
+                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-[#21409A] text-[10px] font-bold tracking-wider rounded-full shadow-sm">
                       {item.category}
                     </span>
                   </div>
                 </div>
                 <div className="p-8 flex flex-col flex-grow">
-                  <div className="text-[10px] font-bold text-gray-400 uppercase mb-3">{item.date}</div>
+                  <div className="text-[10px] font-bold text-gray-400 mb-3">{item.date}</div>
                   <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 font-iic leading-tight line-clamp-2 group-hover:text-[#21409A] transition-colors">
                     {item.title}
                   </h4>

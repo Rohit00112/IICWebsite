@@ -28,8 +28,8 @@ const MissionVision = () => {
               &ldquo;Developing impactful <br className="hidden md:block" /> industry ready graduates&rdquo;
             </h2>
 
-            <p className="text-gray-400 font-bold tracking-[0.2em] text-xs md:text-sm uppercase font-iic">
-              ITAHARI INTERNATIONAL COLLEGE
+            <p className="text-gray-400 font-bold tracking-[0.2em] text-xs md:text-sm font-iic">
+              Itahari International College
             </p>
           </motion.div>
         </div>
@@ -106,10 +106,10 @@ impact in industry.
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: 0.2, duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
-              className="w-full md:w-[45%] bg-[#58595B] p-8 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(88,89,91,0.3)] relative flex flex-col items-start"
+              className="w-full md:w-[45%] bg-[#ED1C24] p-8 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(237,28,36,0.3)] relative flex flex-col items-start"
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-inner">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#58595B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ED1C24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 8v8M8 12h8" />
                   <path d="M15 15l-6-6M9 15l6-6" />

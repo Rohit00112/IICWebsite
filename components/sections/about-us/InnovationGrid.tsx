@@ -50,7 +50,7 @@ const InnovationGrid = () => {
             </p>
             <AnimeReveal
               as="h2"
-              text="INNOVATION"
+              text="Innovation"
               className="text-6xl md:text-8xl lg:text-[120px] font-black text-white font-iic leading-none tracking-tight justify-center"
               staggerFrom="center"
               delay={0.15}

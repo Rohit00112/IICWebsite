@@ -86,7 +86,7 @@ const ProspectusSection = () => {
             {/* Form Fields */}
             <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit}>
               <div className="space-y-2">
-                <label className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-wider ml-1">Full Name</label>
+                <label className="text-white/80 text-xs sm:text-sm font-bold tracking-wider ml-1">Full Name</label>
                 <input 
                   type="text" 
                   placeholder="John Doe"
@@ -95,7 +95,7 @@ const ProspectusSection = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-wider ml-1">Email Address</label>
+                <label className="text-white/80 text-xs sm:text-sm font-bold tracking-wider ml-1">Email Address</label>
                 <input 
                   type="email" 
                   placeholder="john@example.com"
@@ -104,7 +104,7 @@ const ProspectusSection = () => {
               </div>
 
               <div className="space-y-2">
-                <label className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-wider ml-1">Programme of Interest</label>
+                <label className="text-white/80 text-xs sm:text-sm font-bold tracking-wider ml-1">Programme of Interest</label>
                 <select className="w-full bg-white/10 border border-white/10 rounded-2xl px-4 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base text-white/50 focus:outline-none focus:ring-2 focus:ring-[#74C044]/50 transition-all appearance-none cursor-pointer">
                   <option>Select a Programme</option>
                   <option>BSc (Hons) Computing</option>
@@ -114,7 +114,7 @@ const ProspectusSection = () => {
 
               {/* add contact number  */}
               <div className="space-y-2">
-                <label className="text-white/80 text-xs sm:text-sm font-bold uppercase tracking-wider ml-1">Contact Number</label>
+                <label className="text-white/80 text-xs sm:text-sm font-bold tracking-wider ml-1">Contact Number</label>
                 <input 
                   type="tel" 
                   placeholder="+977 9800000000"

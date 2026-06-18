@@ -66,7 +66,7 @@ const WhyChooseIIC = () => {
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-24"
         >
-          <p className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold text-[#21409A] mb-3 md:mb-4 font-iic">
+          <p className="text-xs md:text-sm tracking-[0.3em] font-bold text-[#21409A] mb-3 md:mb-4 font-iic">
             What Sets Us Apart
           </p>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#1a1a1a] font-iic leading-tight">

@@ -43,7 +43,7 @@ const ScholarshipsSection = () => {
             >
               <Tilt strength={10} className="w-full h-full">
                 <div className="scholarship-card h-full bg-white p-10 rounded-[32px] shadow-xl shadow-[#21409A]/5 border border-white flex flex-col">
-                  <span className="text-[12px] font-bold text-[#1a1a1a] mb-6 uppercase tracking-wider block">
+                  <span className="text-[12px] font-bold text-[#1a1a1a] mb-6 tracking-wider block">
                     Academic <br /> Excellence
                   </span>
                   <h3 className="text-[24px] font-black text-[#21409A] mb-4 leading-tight">

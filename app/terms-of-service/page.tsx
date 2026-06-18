@@ -33,7 +33,7 @@ export default function TermsOfServicePage() {
           Back to home
         </Link>
         <div className="mt-10">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#74C044]">
+          <p className="mb-4 text-xs font-bold tracking-[0.24em] text-[#74C044]">
             Website Terms
           </p>
           <h1 className="font-iic text-4xl font-black tracking-tight text-[#1a1a1a] md:text-6xl">

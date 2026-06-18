@@ -42,13 +42,13 @@ const NewsLoader = () => {
 
         <div className="w-48 md:w-64">
           <div className="flex justify-between items-end mb-2">
-            <span className="text-[#21409A] text-[10px] font-black tracking-widest uppercase opacity-50">
+            <span className="text-[#21409A] text-[10px] font-black tracking-widest opacity-50">
               Fetching News
             </span>
             <motion.span 
               animate={{ opacity: [0, 1, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-[#21409A] text-[10px] font-black tracking-widest uppercase"
+              className="text-[#21409A] text-[10px] font-black tracking-widest"
             >
               Loading
             </motion.span>
@@ -71,7 +71,7 @@ const NewsLoader = () => {
         </div>
 
         {/* Subtle Text below */}
-        <p className="mt-6 text-[#21409A]/40 text-[9px] font-bold uppercase tracking-[0.3em]">
+        <p className="mt-6 text-[#21409A]/40 text-[9px] font-bold tracking-[0.3em]">
           Itahari International College
         </p>
       </motion.div>

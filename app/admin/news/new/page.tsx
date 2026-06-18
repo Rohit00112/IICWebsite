@@ -109,7 +109,7 @@ const NewNewsPage = () => {
           {activeSection === 'metadata' && (
             <div className="space-y-10 animate-in fade-in slide-in-from-right-4 duration-500">
               <div className="space-y-3">
-                <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Article Title</label>
+                <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Article Title</label>
                 <input 
                   type="text" 
                   required
@@ -122,7 +122,7 @@ const NewNewsPage = () => {
 
               <div className="grid grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Category</label>
+                  <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Category</label>
                   <div className="relative">
                     <select 
                       value={formData.category}
@@ -137,7 +137,7 @@ const NewNewsPage = () => {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Publish Date</label>
+                  <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Publish Date</label>
                   <input 
                     type="date" 
                     required
@@ -151,7 +151,7 @@ const NewNewsPage = () => {
               {(formData.category === 'Event' || formData.category === 'Announcement') && (
                 <div className="grid grid-cols-2 gap-8 animate-in fade-in slide-in-from-top-4 duration-500">
                   <div className="space-y-3">
-                    <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Event Time</label>
+                    <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Event Time</label>
                     <input 
                       type="time" 
                       value={formData.time}
@@ -160,7 +160,7 @@ const NewNewsPage = () => {
                     />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Location / Venue</label>
+                    <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Location / Venue</label>
                     <input 
                       type="text" 
                       value={formData.location}
@@ -209,7 +209,7 @@ const NewNewsPage = () => {
               </div>
 
               <div className="space-y-3">
-                <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">SEO Summary (Short Description)</label>
+                <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">SEO Summary (Short Description)</label>
                 <textarea 
                   required
                   rows={4}

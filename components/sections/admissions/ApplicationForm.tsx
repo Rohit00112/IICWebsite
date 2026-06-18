@@ -140,10 +140,10 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h3 className="text-[11px] font-black text-[#21409A] uppercase tracking-[0.2em] mb-6">Personal</h3>
+          <h3 className="text-[11px] font-black text-[#21409A] tracking-[0.2em] mb-6">Personal</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="md:col-span-2 flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Full Name <span className="text-[#ED1C24]">*</span></label>
+              <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Full Name <span className="text-[#ED1C24]">*</span></label>
               <input
                 type="text"
                 name="fullName"
@@ -154,7 +154,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Email Address <span className="text-[#ED1C24]">*</span></label>
+              <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Email Address <span className="text-[#ED1C24]">*</span></label>
               <input
                 type="email"
                 name="email"
@@ -166,7 +166,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
               <span className="text-[10px] text-gray-400 italic ml-1">We'll use this for all official correspondence</span>
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Phone Number <span className="text-[#ED1C24]">*</span></label>
+              <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Phone Number <span className="text-[#ED1C24]">*</span></label>
               <div ref={countryRef} className="relative">
                 <button
                   type="button"
@@ -248,7 +248,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
               </div>
             </div>
             <div className="md:col-span-2 flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Address <span className="text-[#ED1C24]">*</span></label>
+              <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Address <span className="text-[#ED1C24]">*</span></label>
               <input
                 type="text"
                 name="address"
@@ -267,9 +267,9 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h3 className="text-[11px] font-black text-[#21409A] uppercase tracking-[0.2em] mb-6">Academic</h3>
+          <h3 className="text-[11px] font-black text-[#21409A] tracking-[0.2em] mb-6">Academic</h3>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">School / College Name <span className="text-[#ED1C24]">*</span></label>
+            <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">School / College Name <span className="text-[#ED1C24]">*</span></label>
             <input
               type="text"
               name="schoolName"
@@ -287,9 +287,9 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h3 className="text-[11px] font-black text-[#21409A] uppercase tracking-[0.2em] mb-6">Programme</h3>
+          <h3 className="text-[11px] font-black text-[#21409A] tracking-[0.2em] mb-6">Programme</h3>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.15em] ml-1">Interested Programme <span className="text-[#ED1C24]">*</span></label>
+            <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Interested Programme <span className="text-[#ED1C24]">*</span></label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
                 type="button"
@@ -303,7 +303,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
                   }`}
               >
                 <div className={`font-bold mb-1 ${selectedProgram === 'BIT' ? 'text-[#21409A]' : 'text-gray-700'}`}>BSc (Hons) Computing</div>
-                <div className={`text-[10px] uppercase tracking-widest font-bold ${selectedProgram === 'BIT' ? 'text-gray-500' : 'text-gray-400'}`}>BIT - 3 Years</div>
+                <div className={`text-[10px] tracking-widest font-bold ${selectedProgram === 'BIT' ? 'text-gray-500' : 'text-gray-400'}`}>BIT - 3 Years</div>
               </button>
               <button
                 type="button"
@@ -317,7 +317,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
                   }`}
               >
                 <div className={`font-bold mb-1 ${selectedProgram === 'BBA' ? 'text-[#21409A]' : 'text-gray-700'}`}>BA (Hons) Business Administration</div>
-                <div className={`text-[10px] uppercase tracking-widest font-bold ${selectedProgram === 'BBA' ? 'text-gray-500' : 'text-gray-400'}`}>Business - 3 Years</div>
+                <div className={`text-[10px] tracking-widest font-bold ${selectedProgram === 'BBA' ? 'text-gray-500' : 'text-gray-400'}`}>Business - 3 Years</div>
               </button>
             </div>
           </div>

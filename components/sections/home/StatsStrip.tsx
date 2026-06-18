@@ -92,7 +92,7 @@ const StatsStrip = () => {
             <span className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight md:tracking-tighter mb-1 font-iic">
               <AnimatedNumber value={stat.value} suffix={stat.suffix} />
             </span>
-            <span className="text-xs sm:text-sm md:text-lg font-medium opacity-80 text-center uppercase tracking-[0.22em] md:tracking-widest leading-snug">
+            <span className="text-xs sm:text-sm md:text-lg font-medium opacity-80 text-center tracking-[0.22em] md:tracking-widest leading-snug">
               {stat.label}
             </span>
           </motion.div>

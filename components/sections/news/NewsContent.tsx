@@ -104,7 +104,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                 >
                   <div className="md:w-[45%] relative h-72 md:h-auto overflow-hidden">
                     <div className="absolute top-6 left-6 z-10">
-                      <span className="px-4 py-1.5 bg-[#21409A] text-white text-[9px] font-bold uppercase tracking-wider rounded-full shadow-lg">
+                      <span className="px-4 py-1.5 bg-[#21409A] text-white text-[9px] font-bold tracking-wider rounded-full shadow-lg">
                         {featuredPost.category}
                       </span>
                     </div>
@@ -118,7 +118,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                     />
                   </div>
                   <div className="md:w-[55%] p-10 md:p-14 flex flex-col justify-center">
-                    <div className="flex items-center gap-2 text-slate-500 text-[11px] font-bold mb-4 uppercase">
+                    <div className="flex items-center gap-2 text-slate-500 text-[11px] font-bold mb-4">
                       <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                       <span>{featuredPost.date}</span>
                     </div>
@@ -130,11 +130,11 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                     </p>
                     
                     <div className="space-y-4 mb-10">
-                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-500 uppercase">
+                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-500">
                         <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         <span>{featuredPost.time}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-500 uppercase">
+                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-500">
                         <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                         <span>{featuredPost.location}</span>
                       </div>
@@ -172,7 +172,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                       >
                         <div className="relative h-60 overflow-hidden">
                           <div className="absolute top-4 left-4 z-10">
-                            <span className={`px-4 py-1.5 text-[9px] font-bold uppercase tracking-wider rounded-full shadow-md text-white ${
+                            <span className={`px-4 py-1.5 text-[9px] font-bold tracking-wider rounded-full shadow-md text-white ${
                               item.category === 'News' ? 'bg-[#74C044]' : 'bg-[#74C044]'
                             }`}>
                               {item.category}
@@ -187,7 +187,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                         />
                       </div>
                       <div className="p-8 md:p-10 flex flex-col flex-grow">
-                        <div className="flex items-center gap-2 text-slate-500 text-[10px] font-bold mb-4 uppercase">
+                        <div className="flex items-center gap-2 text-slate-500 text-[10px] font-bold mb-4">
                           <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                           <span>{item.date}</span>
                         </div>
@@ -235,7 +235,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                 </div>
                 <button
                   onClick={() => setActiveCategory('Events')}
-                  className="text-[11px] uppercase tracking-wider font-bold text-slate-400 hover:text-[#74C044] transition-colors"
+                  className="text-[11px] tracking-wider font-bold text-slate-400 hover:text-[#74C044] transition-colors"
                 >
                   View All
                 </button>

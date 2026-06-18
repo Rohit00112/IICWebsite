@@ -38,7 +38,7 @@ const StudentExperience = () => {
     <section className="py-24 md:py-32 bg-[#1a1a1a] text-white overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6">
         <div className="text-center mb-20">
-          <span className="text-[#74C044] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 block font-iic">
+          <span className="text-[#74C044] text-sm md:text-base font-bold tracking-[0.2em] mb-4 block font-iic">
             Student Life
           </span>
           <h2 className="text-4xl md:text-6xl font-black leading-tight font-iic">

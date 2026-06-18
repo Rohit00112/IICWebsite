@@ -407,7 +407,7 @@ const CampusGallery = () => {
       >
         <div className="mx-auto max-w-[1440px]">
           <div className="mb-12 max-w-3xl">
-            <p className="mb-4 font-iic text-sm font-bold uppercase tracking-[0.2em] text-[#74C044]">
+            <p className="mb-4 font-iic text-sm font-bold tracking-[0.2em] text-[#74C044]">
               Campus Gallery
             </p>
             <h2 className="font-iic text-4xl font-black leading-tight tracking-tight md:text-6xl">
@@ -484,7 +484,7 @@ const CampusGallery = () => {
       </AnimatePresence>
 
       <div className="pointer-events-none absolute left-6 top-8 z-30 md:left-10 md:top-10">
-        <p className="mb-3 font-iic text-xs font-bold uppercase tracking-[0.26em] text-[#74C044] md:text-sm">
+        <p className="mb-3 font-iic text-xs font-bold tracking-[0.26em] text-[#74C044] md:text-sm">
           Campus Gallery
         </p>
         <div className="h-[2px] w-28 overflow-hidden bg-white/18">

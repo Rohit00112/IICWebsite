@@ -54,7 +54,7 @@ const ContactHero = () => {
                 className="flex flex-col items-center gap-2"
               >
                 <div className="w-[1px] h-12 bg-gradient-to-b from-white/0 via-white/50 to-white/0" />
-                <span className="text-[10px] uppercase tracking-[0.3em] text-white/40 font-bold">Reach IIC</span>
+                <span className="text-[10px] tracking-[0.3em] text-white/40 font-bold">Reach IIC</span>
               </motion.div>
             </motion.div>
           </div>
