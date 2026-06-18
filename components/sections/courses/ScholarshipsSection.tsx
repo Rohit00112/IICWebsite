@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
-import AnimeStagger from '../../effects/AnimeStagger';
 import Tilt from '../../effects/Tilt';
 
 const ScholarshipsSection = () => {
@@ -27,7 +26,7 @@ const ScholarshipsSection = () => {
                 staggerFrom="first"
               />
               <p className="text-gray-500 text-lg md:text-xl max-w-lg leading-relaxed font-medium">
-                Few make it to the top — every year, we proudly celebrate and recognize the top 10% of students who demonstrate true excellence in Academics, Attendance, and Attitude.
+                Few make it to the top — every year, we proudly celebrate and recognise the top 10% of students who demonstrate true excellence in Academics, Attendance, and Attitude.
               </p>
             </motion.div>
           </div>

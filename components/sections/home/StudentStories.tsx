@@ -207,7 +207,7 @@ const StudentStories = () => {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
-          <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase mb-4 font-iic">
+          <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.12em] sm:tracking-[0.14em] mb-4 font-iic">
             Insights
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-iic">
@@ -215,13 +215,13 @@ const StudentStories = () => {
           </h2>
           <AnimeReveal
             as="h2"
-            text="STUDENTS"
+            text="Students"
             className="text-[40px] sm:text-5xl md:text-7xl font-black text-[#74C044] leading-[0.9] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
             staggerFrom="center"
             delay={0.1}
           />
           <p className="max-w-2xl text-gray-500 text-sm sm:text-base md:text-lg font-medium leading-relaxed">
-            Hear Directly From Our Students About How The Itahari International College Campus Environment Shaped Their Academic And Social Lives.
+            Hear directly from our students about how the Itahari International College campus environment shaped their academic and social lives.
           </p>
         </div>
 

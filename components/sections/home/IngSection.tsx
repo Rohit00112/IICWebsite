@@ -14,11 +14,11 @@ const IngSection = () => {
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
           <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#1a1a1a] mb-2 font-iic">
-            Be A Part Of
+            Be a part of
           </h3>
           <AnimeReveal
             as="h2"
-            text="SOMETHING BIGGER"
+            text="Something bigger"
             className="text-[34px] sm:text-4xl md:text-7xl font-black text-[#74C044] leading-[1] tracking-tight font-iic justify-center"
             staggerFrom="center"
           />

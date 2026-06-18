@@ -11,7 +11,7 @@ const AdminCoursesPage = async () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-black text-[#1A2B56] font-sora tracking-tight mb-2">Academic Courses</h1>
-          <p className="text-gray-500 font-medium">Manage your academic programs and curriculum.</p>
+          <p className="text-gray-500 font-medium">Manage your academic programmes and curriculum.</p>
         </div>
         <Link 
           href="/admin/courses/new"

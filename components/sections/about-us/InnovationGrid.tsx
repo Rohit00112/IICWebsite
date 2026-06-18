@@ -16,7 +16,7 @@ const campusItems = [
     image: "/images/about/Image-3.png" 
   },
   { 
-    title: "Lecture Theaters", 
+    title: "Lecture Theatres",
     image: "/images/about/Image-4.png" 
   },
   { 

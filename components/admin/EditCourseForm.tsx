@@ -125,7 +125,7 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
       {/* Header */}
       <div className="mb-12 flex items-end justify-between border-b border-gray-100 pb-10">
         <div>
-          <h1 className="text-5xl font-black text-[#1A2B56] font-sora tracking-tight mb-3">Edit Program</h1>
+          <h1 className="text-5xl font-black text-[#1A2B56] font-sora tracking-tight mb-3">Edit Programme</h1>
           <p className="text-gray-500 font-medium text-lg">Update curriculum, outcomes, and student success data.</p>
         </div>
         <div className="flex items-center gap-8 mb-2">
@@ -157,7 +157,7 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
           ].map((sec) => (
             <button
               key={sec.id}
-              onClick={() => setActiveSection(sec.id as any)}
+              onClick={() => setActiveSection(sec.id as typeof activeSection)}
               className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-extrabold text-sm transition-all ${
                 activeSection === sec.id ? 'bg-[#21409A] text-white shadow-xl' : 'text-gray-700 hover:bg-gray-100 hover:text-[#1A2B56]'
               }`}
@@ -214,7 +214,7 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
                   <RichTextEditor 
                     value={formData.overview} 
                     onChange={(val) => setFormData({...formData, overview: val})} 
-                    placeholder="Provide a comprehensive program summary..." 
+                    placeholder="Provide a comprehensive programme summary..."
                   />
                 </div>
               </div>
@@ -393,7 +393,7 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
             {activeSection === 'faqs' && (
               <div className="space-y-10">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-[#1A2B56]">Program FAQs</h3>
+                  <h3 className="text-xl font-bold text-[#1A2B56]">Programme FAQs</h3>
                   <button type="button" onClick={addFAQ} className="text-sm font-bold text-[#21409A]">+ Add FAQ</button>
                 </div>
                 {formData.faqs?.map((faq, idx) => (

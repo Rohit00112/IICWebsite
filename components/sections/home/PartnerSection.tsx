@@ -40,7 +40,7 @@ const PartnerSection = () => {
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
               <AnimeReveal
-                text="UNIVERSITY"
+                text="University"
                 as="h2"
                 className="text-[40px] sm:text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center"
                 staggerFrom="center"

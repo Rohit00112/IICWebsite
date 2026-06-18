@@ -25,9 +25,9 @@
         ]
       },
       {
-        "title": "Year 2: Specialization",
+        "title": "Year 2: Specialisation",
         "modules": [
-          { "name": "Data Structures & Algorithms", "description": "Optimizing data management and processing.", "credits": "30" },
+          { "name": "Data Structures & Algorithms", "description": "Optimising data management and processing.", "credits": "30" },
           { "name": "Web Application Development", "description": "Building modern, responsive web experiences.", "credits": "30" }
         ]
       }
@@ -35,7 +35,7 @@
     "learningOutcomes": [
       "Design and implement complex software solutions",
       "Apply agile methodologies in team environments",
-      "Analyze and secure network infrastructures"
+      "Analyse and secure network infrastructures"
     ],
     "careerOpportunities": [
       { "title": "Software Engineer", "description": "Build high-scale applications", "color": "#21409A" },

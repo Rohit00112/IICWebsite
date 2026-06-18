@@ -29,8 +29,10 @@ const ProgrammesSection = () => {
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/home/course1.png',
-      bgColor: 'bg-[#21409A]',
-      tagColor: 'bg-[#58595B]',
+      bgColor: 'bg-[#1C86A6]',
+      tagColor: 'bg-[#5C6265]',
+      pillColor: 'bg-[#459DB7]',
+      featurePillColor: 'bg-[#3391AE]',
       tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and IoT'],
       href: '/courses/bsc-hons-computing',
       parallax: y1
@@ -39,13 +41,15 @@ const ProgrammesSection = () => {
       type: 'BA (Hons) Business Administration',
       duration: '3 Years',
       title: 'BBA',
-      subtitle: 'Specialization',
+      subtitle: 'Specialisation',
       list: ['International Business', 'Digital Business Management', 'Advertising And Marketing'],
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/home/course2.png',
-      bgColor: 'bg-[#58595B]',
-      tagColor: 'bg-[#21409A]',
+      bgColor: 'bg-[#1CBEC8]',
+      tagColor: 'bg-[#27439B]',
+      pillColor: 'bg-[#55CDD5]',
+      featurePillColor: 'bg-[#3CC6CF]',
       tags: ['Global Business', 'Digital Management'],
       href: '/courses',
       parallax: y1
@@ -58,7 +62,7 @@ const ProgrammesSection = () => {
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          className="text-[#74C044] text-[11px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.22em] md:tracking-[0.3em] uppercase mb-4 md:mb-6 font-iic"
+          className="text-[#74C044] text-[11px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.12em] md:tracking-[0.16em] mb-4 md:mb-6 font-iic"
         >
           UK Degree Programmes
         </motion.span>
@@ -70,7 +74,7 @@ const ProgrammesSection = () => {
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
               <AnimeReveal
-                text="ITAHARI"
+                text="Itahari"
                 as="h2"
                 className="text-[34px] sm:text-5xl md:text-7xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center"
                 staggerFrom="center"
@@ -109,10 +113,10 @@ const ProgrammesSection = () => {
                     transition={{ delay: index * 0.1 + 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="flex flex-wrap items-center gap-2 mb-8 sm:mb-10 max-w-full sm:max-w-[64%] xl:max-w-[58%] relative z-20"
                   >
-                    <span className={`${prog.tagColor} max-w-full truncate text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-4 py-2 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap `}>
+                    <span className={`${prog.tagColor} max-w-full truncate text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-4 py-2 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap`}>
                       {prog.type}
                     </span>
-                    <span className="bg-white/15 backdrop-blur-xl text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-3.5 py-2 rounded-full font-bold border border-white/10 flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                    <span className={`${prog.pillColor} text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-3.5 py-2 rounded-full font-bold border border-white/15 flex items-center gap-1.5 whitespace-nowrap shrink-0`}>
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                       {prog.duration}
                     </span>
@@ -129,7 +133,7 @@ const ProgrammesSection = () => {
                       <h3 className="text-white/60 text-base sm:text-lg md:text-xl font-medium mb-1 font-iic tracking-tight">
                         {prog.title}
                       </h3>
-                      <h3 className="text-white text-[25px] sm:text-4xl md:text-[42px] xl:text-4xl 2xl:text-[44px] font-black leading-[1.05] mb-6 sm:mb-8 font-iic uppercase">
+                      <h3 className="text-white text-[25px] sm:text-4xl md:text-[42px] xl:text-4xl 2xl:text-[44px] font-black leading-[1.05] mb-6 sm:mb-8 font-iic">
                         {prog.subtitle}
                       </h3>
                     </motion.div>
@@ -162,10 +166,10 @@ const ProgrammesSection = () => {
                       transition={{ delay: index * 0.1 + 0.9, duration: 0.8, ease: "backOut" }}
                       className="flex flex-wrap gap-2.5 sm:gap-4"
                     >
-                      <span className="bg-white/10 backdrop-blur-xl text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/10">
+                      <span className={`${prog.pillColor} text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/15`}>
                         {prog.modules}
                       </span>
-                      <span className="bg-white/10 backdrop-blur-xl text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/10">
+                      <span className={`${prog.pillColor} text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/15`}>
                         {prog.credits}
                       </span>
                     </motion.div>
@@ -180,7 +184,7 @@ const ProgrammesSection = () => {
                     >
                       <div className="flex max-w-[66%] gap-2 flex-wrap min-w-0 sm:max-w-[58%] lg:max-w-[62%]">
                         {prog.tags?.map((item, i) => (
-                          <span key={i} className="max-w-full text-[7px] sm:text-[9px] font-black uppercase tracking-[0.1em] sm:tracking-widest leading-snug text-white/45 px-2.5 sm:px-3 py-1.5 bg-white/5 rounded-md border border-white/5">
+                          <span key={i} className={`${prog.featurePillColor} max-w-full text-[7px] sm:text-[9px] font-black uppercase tracking-[0.1em] sm:tracking-widest leading-snug text-white/60 px-2.5 sm:px-3 py-1.5 rounded-md border border-white/10`}>
                             {item}
                           </span>
                         ))}

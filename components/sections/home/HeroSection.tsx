@@ -25,7 +25,7 @@ const HeroSection = () => {
 
   return (
     <section ref={containerRef} className="relative w-full flex flex-col items-center overflow-hidden min-h-[100svh] bg-white">
-      <CloudBackground className="absolute inset-0 z-0 hidden overflow-hidden pointer-events-none select-none md:block" />
+      <CloudBackground className="absolute inset-x-0 top-0 z-0 h-[100svh] overflow-hidden pointer-events-none select-none" />
 
       {/* Decorative Floating Blobs */}
       <motion.div
@@ -40,19 +40,20 @@ const HeroSection = () => {
       {/* Hero Content Layer */}
       <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 flex flex-col items-center">
         {/* Centered Logo - Specifically for Home Page Hero */}
-        <div className="w-full pt-6 sm:pt-8 md:pt-12 pb-3 md:pb-4 flex items-center justify-center relative z-40">
+        <div className="w-full pt-14 sm:pt-16 md:pt-20 pb-3 md:pb-4 flex items-center justify-center relative z-40">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="relative h-10 w-[230px] sm:h-12 sm:w-[260px] md:h-16 md:w-[440px]"
+            className="w-[375px] max-w-[calc(100vw-2rem)]"
           >
             <Image
               src="/images/common/iic_logo.png"
               alt="Itahari International College Logo"
-              fill
-              sizes="(max-width: 768px) 260px, 440px"
-              className="object-contain"
+              width={375}
+              height={92}
+              sizes="375px"
+              className="h-auto w-[375px] max-w-full object-contain"
               loading="eager"
               fetchPriority="high"
             />
@@ -62,8 +63,8 @@ const HeroSection = () => {
         <div className="pt-2 md:pt-4 text-center flex flex-col items-center">
           <RevealText
             as="h1"
-            text="Developing Impactful Industry Ready Graduates"
-            className="text-[32px] sm:text-[42px] md:text-[84px] font-black text-[#21409A] leading-[1.05] sm:leading-[1.1] mb-4 md:mb-6 tracking-tight md:tracking-tighter uppercase font-iic justify-center"
+            text=""
+            className="text-[32px] sm:text-[42px] md:text-[84px] font-black text-[#21409A] leading-[1.05] sm:leading-[1.1] mb-4 md:mb-6 tracking-tight md:tracking-tighter font-iic justify-center"
             delay={0.4}
           />
           <RevealText

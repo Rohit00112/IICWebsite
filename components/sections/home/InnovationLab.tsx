@@ -30,7 +30,7 @@ const InnovationLab = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               className="text-xl sm:text-2xl md:text-4xl font-bold text-[#1a1a1a] mb-2 font-iic"
             >
-              Life Beyond The
+              Life beyond the
             </motion.h2>
           </Magnetic>
           <div className="overflow-hidden py-2">
@@ -55,7 +55,7 @@ const InnovationLab = () => {
               </h3>
             </Magnetic>
             <RevealText
-              text="Beyond Academics, Innovation Lab at Itahari International
+              text="Beyond academics, Innovation Lab at Itahari International
 College offers a dynamic environment fostering creativity, leadership, and personal
 growth."
               className="text-gray-500 text-base md:text-xl font-medium leading-relaxed"
@@ -117,7 +117,7 @@ growth."
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
                     src="/images/home/ivlab2.png"
-                    alt="Modern State-of-the-Art Library and Research Center at Itahari International College Nepal"
+                    alt="Modern State-of-the-Art Library and Research Centre at Itahari International College Nepal"
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"

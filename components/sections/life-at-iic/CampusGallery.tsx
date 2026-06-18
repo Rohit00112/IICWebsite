@@ -65,7 +65,7 @@ const storyPages: StoryPage[] = [
       content: {
         title: 'Recreation & Wellness',
         description:
-          'Balance is key to success. Our campus features modern recreational facilities, including a multi-purpose sports hall, fitness center, and vibrant student lounges, ensuring you stay active and refreshed.',
+          'Balance is key to success. Our campus features modern recreational facilities, including a multi-purpose sports hall, fitness centre, and vibrant student lounges, ensuring you stay active and refreshed.',
       },
     },
   },

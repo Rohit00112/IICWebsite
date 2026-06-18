@@ -16,7 +16,7 @@ const AboutSection = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="inline-block px-4 py-1.5 rounded-full bg-[#74C044]/10 text-[#74C044] text-[11px] sm:text-[12px] font-bold tracking-[0.18em] sm:tracking-widest uppercase mb-6 md:mb-8"
+          className="inline-block px-4 py-1.5 rounded-full bg-[#74C044]/10 text-[#74C044] text-[11px] sm:text-[12px] font-bold tracking-[0.12em] sm:tracking-[0.14em] mb-6 md:mb-8"
         >
           Global Collaboration, Local Impact
         </motion.span>
@@ -31,7 +31,7 @@ const AboutSection = () => {
           Future-Proof <br />
           <div className="inline-block align-bottom">
             <AnimeReveal
-              text="EDUCATION"
+              text="Education"
               as="span"
               className="text-[#74C044]"
               staggerFrom="center"

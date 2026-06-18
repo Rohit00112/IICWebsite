@@ -140,7 +140,7 @@ const LifestyleSection = () => {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-12 md:mb-20">
-          <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase mb-4 font-iic">
+          <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.12em] sm:tracking-[0.14em] mb-4 font-iic">
             Discover
           </span>
           <Magnetic strength={0.1}>
@@ -150,7 +150,7 @@ const LifestyleSection = () => {
           </Magnetic>
           <Magnetic strength={0.2}>
             <AnimeReveal
-              text="ITAHARI INTERNATIONAL COLLEGE"
+              text="Itahari International College"
               as="h2"
               className="text-[32px] sm:text-5xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
               staggerFrom="center"
@@ -158,7 +158,7 @@ const LifestyleSection = () => {
             />
           </Magnetic>
           <RevealText
-            text="Beyond Academics, A Vibrant Campus, Diverse Student Community, And State-Of-The-Art Facilities Designed For Holistic Growth."
+            text="Beyond academics, a vibrant campus, diverse student community, and state-of-the-art facilities designed for holistic growth."
             className="max-w-3xl text-gray-500 text-sm sm:text-base md:text-lg font-medium leading-relaxed justify-center"
           />
         </div>
@@ -203,8 +203,8 @@ const LifestyleSection = () => {
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 1.png"
-                alt="Equipped Lecture Theater for Engaging Learning at Itahari International College Nepal"
-                title="Lecture Theater"
+                alt="Equipped Lecture Theatre for Engaging Learning at Itahari International College Nepal"
+                title="Lecture Theatre"
                 description="Spacious tiered halls with high-quality AV setups, designed for engaging lectures and dynamic seminars."
                 stats={[
                   { value: '200', label: 'Capacity' },

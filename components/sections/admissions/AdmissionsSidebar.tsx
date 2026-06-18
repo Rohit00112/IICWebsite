@@ -60,7 +60,7 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
     ] },
     { id: 'timeline', title: 'What Happens Next?', icon: <CalendarIcon />, content: [
       '1. Review: Our team reviews your docs (2-3 days).',
-      '2. Interview: A short session with our counselors.',
+      '2. Interview: A short session with our counsellors.',
       '3. Offer: Receive your conditional/unconditional offer.'
     ] },
   ];
@@ -196,7 +196,7 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
               Our admissions team is here to guide you through every step of the process.
             </p>
             
-            {/* Counselor Profile */}
+            {/* Counsellor Profile */}
             <div className="flex items-center gap-4 mb-8">
               <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm bg-gray-100">
                 <Image 
@@ -208,7 +208,7 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
               </div>
               <div className="flex flex-col">
                 <h4 className="font-bold text-[#1a1a1a] text-[14px]">Sarah Sharma</h4>
-                <span className="text-gray-400 text-[11px] font-medium uppercase tracking-wider">Admissions Counselor</span>
+                <span className="text-gray-400 text-[11px] font-medium uppercase tracking-wider">Admissions Counsellor</span>
               </div>
             </div>
 
