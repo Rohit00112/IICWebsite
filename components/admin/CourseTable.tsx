@@ -48,10 +48,10 @@ export default function CourseTable({ initialCourses }: { initialCourses: Course
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="bg-gray-50/50 border-b border-gray-100">
-            <th className="px-8 py-6 text-xs font-bold text-gray-400 uppercase tracking-widest">Course</th>
-            <th className="px-8 py-6 text-xs font-bold text-gray-400 uppercase tracking-widest">Category</th>
-            <th className="px-8 py-6 text-xs font-bold text-gray-400 uppercase tracking-widest">Level</th>
-            <th className="px-8 py-6 text-xs font-bold text-gray-400 uppercase tracking-widest text-right">Actions</th>
+            <th className="px-8 py-6 text-xs font-bold text-gray-400 tracking-widest">Course</th>
+            <th className="px-8 py-6 text-xs font-bold text-gray-400 tracking-widest">Category</th>
+            <th className="px-8 py-6 text-xs font-bold text-gray-400 tracking-widest">Level</th>
+            <th className="px-8 py-6 text-xs font-bold text-gray-400 tracking-widest text-right">Actions</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-50">
@@ -72,7 +72,7 @@ export default function CourseTable({ initialCourses }: { initialCourses: Course
                 </div>
               </td>
               <td className="px-8 py-6">
-                <span className="px-3 py-1 bg-gray-50 text-[#21409A] rounded-full text-[10px] font-bold uppercase tracking-wider border border-gray-100">
+                <span className="px-3 py-1 bg-gray-50 text-[#21409A] rounded-full text-[10px] font-bold tracking-wider border border-gray-100">
                   {item.category}
                 </span>
               </td>

@@ -29,7 +29,7 @@ const testimonials = [
   {
     name: "Emily Watson",
     degree: "BSc (Hons) AI",
-    quote: "The mentorship programs at Itahari International College connected me with industry leaders in Kathmandu's growing tech scene. I had my first internship offer before even graduating.",
+    quote: "The mentorship programmes at Itahari International College connected me with industry leaders in Kathmandu's growing tech scene. I had my first internship offer before even graduating.",
     tag: "AI Research Lead",
     image: "/images/profiles/emily.png",
     video: "/videos/students/emily.mp4",
@@ -77,14 +77,14 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
         duration: 1,
         ease: [0.34, 1.56, 0.64, 1]
       }}
-      className="story-card flex-none w-[min(320px,86vw)] md:w-[450px] snap-center"
+      className="story-card flex-none w-[min(320px,86vw)] h-[560px] snap-center md:w-full md:flex-auto"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
-      <Tilt strength={4}>
+      <Tilt strength={4} className="h-full">
         <div
           className={`relative overflow-hidden p-6 sm:p-8 md:p-12 rounded-[24px] md:rounded-[32px] transition-all duration-300 h-full ${item.featured
-            ? 'bg-[#0a3285] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]'
+            ? 'bg-[#21409A] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]'
             : 'bg-white text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] border border-gray-100'
             }`}
           style={{ willChange: 'transform, opacity' }}
@@ -127,17 +127,17 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
               delay: defaultShown ? 0.45 : 0,
               ease: [0.22, 1, 0.36, 1]
             }}
-            className="relative z-10"
+            className="relative z-10 flex h-full flex-col"
           >
             {/* Quote Icon */}
-            <div className={`text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 leading-none ${item.featured ? 'text-white/40' : 'text-blue-200'} font-serif`}>
+            <div className={`shrink-0 text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 leading-none ${item.featured ? 'text-white/40' : 'text-blue-200'} font-serif`}>
               &ldquo;
             </div>
 
             {/* Quote Text */}
             <RevealText
               text={item.quote}
-              className={`text-sm sm:text-base md:text-lg font-medium leading-relaxed italic mb-6 sm:mb-8 ${item.featured ? 'text-white/90' : 'text-gray-700'
+              className={`min-h-[180px] md:min-h-[196px] content-start text-sm sm:text-base md:text-lg font-medium leading-relaxed italic mb-6 sm:mb-8 ${item.featured ? 'text-white/90' : 'text-gray-700'
                 }`}
               delay={0.4}
             />
@@ -164,7 +164,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
                 />
               </div>
               <div>
-                <h4 className={`text-base md:text-lg font-bold font-sora ${item.featured ? 'text-white' : 'text-[#1a1a1a]'}`}>
+                <h4 className={`text-base md:text-lg font-bold font-iic ${item.featured ? 'text-white' : 'text-[#1a1a1a]'}`}>
                   {item.name}
                 </h4>
                 <p className={`text-xs md:text-sm font-medium ${item.featured ? 'text-white/60' : 'text-gray-400'}`}>
@@ -188,7 +188,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
                 <span className="inline-block px-3 py-1 rounded-full text-[11px] md:text-xs font-medium bg-white/15 border border-white/25 backdrop-blur-sm mb-3">
                   {item.tag}
                 </span>
-                <h4 className="text-xl md:text-2xl font-bold font-sora">{item.name}</h4>
+                <h4 className="text-xl md:text-2xl font-bold font-iic">{item.name}</h4>
                 <p className="text-xs md:text-sm font-medium text-white/70">{item.degree}</p>
               </motion.div>
             )}
@@ -203,30 +203,30 @@ const StudentStories = () => {
   const containerRef = useRef(null);
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-[#f8fafc] overflow-hidden">
+    <section ref={containerRef} className="relative w-full py-16 md:py-24 bg-[#f8fafc] overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
-          <span className="text-[#007a5e] text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase mb-4 font-sora">
+          <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.12em] sm:tracking-[0.14em] mb-4 font-iic">
             Insights
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-iic">
             Success Stories From
           </h2>
           <AnimeReveal
             as="h2"
-            text="STUDENTS"
-            className="text-[40px] sm:text-5xl md:text-7xl font-black text-[#007a5e] leading-[0.9] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-sora justify-center"
+            text="Students"
+            className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.9] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
             staggerFrom="center"
             delay={0.1}
           />
           <p className="max-w-2xl text-gray-500 text-sm sm:text-base md:text-lg font-medium leading-relaxed">
-            Hear Directly From Our Students About How The Itahari International College Campus Environment Shaped Their Academic And Social Lives.
+            Hear directly from our students about how the Itahari International College campus environment shaped their academic and social lives.
           </p>
         </div>
 
         {/* Horizontal Scrollable Row */}
-        <div className="flex gap-6 overflow-x-auto pb-12 pt-4 px-2 no-scrollbar snap-x snap-mandatory scroll-smooth">
+        <div className="flex gap-6 overflow-x-auto pb-12 pt-4 px-2 no-scrollbar snap-x snap-mandatory scroll-smooth md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:snap-none lg:gap-8">
           {testimonials.map((item, index) => (
             <StoryCard key={index} item={item} index={index} />
           ))}

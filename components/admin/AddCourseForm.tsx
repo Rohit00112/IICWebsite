@@ -134,8 +134,8 @@ export default function AddCourseForm() {
       {/* Header */}
       <div className="mb-12 flex items-end justify-between border-b border-gray-100 pb-10">
         <div>
-          <h1 className="text-5xl font-black text-[#1A2B56] font-sora tracking-tight mb-3">Initialize Course</h1>
-          <p className="text-gray-500 font-medium text-lg">Synchronize academic data across the entire platform.</p>
+          <h1 className="text-5xl font-black text-[#1A2B56] font-sora tracking-tight mb-3">Initialise Course</h1>
+          <p className="text-gray-500 font-medium text-lg">Synchronise academic data across the entire platform.</p>
         </div>
         <div className="flex items-center gap-8 mb-2">
           <Link href="/admin/courses" className="text-sm font-bold text-gray-700 hover:text-[#21409A] flex items-center gap-2 group">
@@ -166,7 +166,7 @@ export default function AddCourseForm() {
           ].map((sec) => (
             <button
               key={sec.id}
-              onClick={() => setActiveSection(sec.id as any)}
+              onClick={() => setActiveSection(sec.id as typeof activeSection)}
               className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-extrabold text-sm transition-all ${
                 activeSection === sec.id ? 'bg-[#21409A] text-white shadow-xl' : 'text-gray-700 hover:bg-gray-100 hover:text-[#1A2B56]'
               }`}
@@ -185,26 +185,26 @@ export default function AddCourseForm() {
               <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4">
                 <div className="grid grid-cols-2 gap-8">
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Course Title</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Course Title</label>
                     <input type="text" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} className="form-input-admin" placeholder="e.g. BSc (Hons) Computing" required />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Slug (URL)</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Slug (URL)</label>
                     <input type="text" value={formData.slug} onChange={(e) => setFormData({...formData, slug: e.target.value})} className="form-input-admin" placeholder="bsc-computing" required />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-8">
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Category</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Category</label>
                     <input type="text" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value})} className="form-input-admin" placeholder="Technology" required />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Duration</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Duration</label>
                     <input type="text" value={formData.duration} onChange={(e) => setFormData({...formData, duration: e.target.value, details: {...formData.details, duration: e.target.value}})} className="form-input-admin" placeholder="3 Years" required />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Awarding Body</label>
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Awarding Body</label>
                     <input type="text" value={formData.details.awardingBody} onChange={(e) => setFormData({...formData, details: {...formData.details, awardingBody: e.target.value}})} className="form-input-admin" placeholder="London Metropolitan University" />
                   </div>
                 </div>
@@ -219,7 +219,7 @@ export default function AddCourseForm() {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Short Description</label>
+                  <label className="text-[10px] font-bold tracking-widest text-gray-700">Short Description</label>
                   <textarea
                     rows={3}
                     value={formData.description}
@@ -231,11 +231,11 @@ export default function AddCourseForm() {
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-gray-700">Detailed Overview</label>
+                  <label className="text-[10px] font-bold tracking-widest text-gray-700">Detailed Overview</label>
                   <RichTextEditor 
                     value={formData.overview} 
                     onChange={(val) => setFormData({...formData, overview: val})} 
-                    placeholder="Provide a comprehensive program summary..." 
+                    placeholder="Provide a comprehensive programme summary..."
                   />
                 </div>
               </div>
@@ -255,7 +255,7 @@ export default function AddCourseForm() {
                         newCurr[yIdx].title = e.target.value;
                         setFormData({...formData, curriculum: newCurr});
                       }} className="bg-transparent border-b-2 border-gray-200 font-bold text-lg outline-none focus:border-[#21409A] text-[#1A2B56]" />
-                      <button type="button" onClick={() => addModule(yIdx)} className="text-xs font-bold uppercase tracking-widest text-[#21409A]">+ Add Module</button>
+                      <button type="button" onClick={() => addModule(yIdx)} className="text-xs font-bold tracking-widest text-[#21409A]">+ Add Module</button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {year.modules.map((mod, mIdx) => (
@@ -414,7 +414,7 @@ export default function AddCourseForm() {
             {activeSection === 'faqs' && (
               <div className="space-y-10">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-[#1A2B56]">Program FAQs</h3>
+                  <h3 className="text-xl font-bold text-[#1A2B56]">Programme FAQs</h3>
                   <button type="button" onClick={addFAQ} className="text-sm font-bold text-[#21409A]">+ Add FAQ</button>
                 </div>
                 {formData.faqs.map((faq, idx) => (

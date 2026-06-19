@@ -58,23 +58,23 @@ const features = [
 
 const WhyChooseIIC = () => {
   return (
-    <section className="py-16 md:py-32 bg-[#F8FAFF]">
+    <section className="py-14 md:py-24 bg-[#F8FAFF]">
       <div className="max-w-[1440px] mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12 md:mb-24"
+          className="text-center mb-10 md:mb-16"
         >
-          <p className="text-xs md:text-sm uppercase tracking-[0.3em] font-bold text-[#21409A] mb-3 md:mb-4 font-sora">
+          <p className="text-xs md:text-sm tracking-[0.3em] font-bold text-[#21409A] mb-3 md:mb-4 font-iic">
             What Sets Us Apart
           </p>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#1a1a1a] font-sora leading-tight">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#1a1a1a] font-iic leading-tight">
             Why choose Itahari International College?
           </h2>
         </motion.div>
 
-        <div className="space-y-16 md:space-y-32">
+        <div className="space-y-12 md:space-y-20">
           {features.map((feature, idx) => {
             const reverse = idx % 2 === 1;
             return (
@@ -99,7 +99,7 @@ const WhyChooseIIC = () => {
                   />
                   {/* Number badge — placed on the outer corner so the overlapping card never covers it */}
                   <div className={`absolute top-4 md:top-6 ${reverse ? 'right-4 md:right-6' : 'left-4 md:left-6'} bg-white/95 backdrop-blur-sm rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shadow-lg z-30`}>
-                    <span className="text-[#21409A] font-black text-sm md:text-base font-sora">
+                    <span className="text-[#21409A] font-black text-sm md:text-base font-iic">
                       0{idx + 1}
                     </span>
                   </div>
@@ -117,11 +117,11 @@ const WhyChooseIIC = () => {
                     {feature.icon}
                   </div>
 
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1a1a1a] mb-4 md:mb-5 font-sora tracking-tight leading-tight">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#1a1a1a] mb-4 md:mb-5 font-iic tracking-tight leading-tight">
                     {feature.title}
                   </h3>
 
-                  <p className="text-[#4A5568] text-sm md:text-base lg:text-lg leading-relaxed mb-6 md:mb-8 font-sora">
+                  <p className="text-[#4A5568] text-sm md:text-base lg:text-lg leading-relaxed mb-6 md:mb-8 font-iic">
                     {feature.description}
                   </p>
 
@@ -129,7 +129,7 @@ const WhyChooseIIC = () => {
                     {feature.points.map((point, pIdx) => (
                       <li
                         key={pIdx}
-                        className="flex items-center gap-3 text-sm md:text-base font-semibold text-[#21409A] font-sora"
+                        className="flex items-center gap-3 text-sm md:text-base font-semibold text-[#21409A] font-iic"
                       >
                         <span className="w-6 h-6 rounded-full bg-[#21409A]/10 flex items-center justify-center shrink-0">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">

@@ -29,9 +29,11 @@ const ProgrammesSection = () => {
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/home/course1.png',
-      bgColor: 'bg-[#126DA2]',
-      tagColor: 'bg-[#0e567f]',
-      tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and Internet of Things'],
+      bgColor: 'bg-[#1C86A6]',
+      tagColor: 'bg-[#166D87]',
+      pillColor: 'bg-[#459DB7]',
+      featurePillColor: 'bg-[#3391AE]',
+      tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and IoT'],
       href: '/courses/bsc-hons-computing',
       parallax: y1
     },
@@ -39,40 +41,42 @@ const ProgrammesSection = () => {
       type: 'BA (Hons) Business Administration',
       duration: '3 Years',
       title: 'BBA',
-      subtitle: 'Specialization',
+      subtitle: 'Specialisation',
       list: ['International Business', 'Digital Business Management', 'Advertising And Marketing'],
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/home/course2.png',
-      bgColor: 'bg-[#00BBCC]',
-      tagColor: 'bg-[#0095a3]',
-      tags: ['Project Management', 'Marketing'],
+      bgColor: 'bg-[#1CBEC8]',
+      tagColor: 'bg-[#159AA3]',
+      pillColor: 'bg-[#55CDD5]',
+      featurePillColor: 'bg-[#3CC6CF]',
+      tags: ['Global Business', 'Digital Management'],
       href: '/courses',
       parallax: y1
     },
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 bg-white overflow-x-clip overflow-y-visible">
+    <section ref={containerRef} className="relative w-full py-14 sm:py-20 md:py-24 bg-white overflow-x-clip overflow-y-visible">
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          className="text-[#74C044] text-[11px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.22em] md:tracking-[0.3em] uppercase mb-4 md:mb-6 font-sora"
+          className="text-[#74C044] text-[11px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.12em] md:tracking-[0.16em] mb-4 md:mb-6 font-iic"
         >
           Our Programmes
         </motion.span>
 
         <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-sora">
-            Nepal&apos;s First Direct UK Degree in
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-iic">
+            Nepal&apos;s First <span className="text-[#74C044]">UK Degree</span> Programmes in
           </h2>
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
               <AnimeReveal
-                text="ITAHARI"
+                text="Itahari"
                 as="h2"
-                className="text-[34px] sm:text-5xl md:text-7xl font-black text-[#74C044] tracking-tight leading-none font-sora justify-center"
+                className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center uppercase"
                 staggerFrom="center"
                 delay={0.2}
               />
@@ -80,7 +84,7 @@ const ProgrammesSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 w-full mb-20 max-w-[1440px] 2xl:max-w-[1600px]">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 w-full mb-14 md:mb-16 max-w-[1440px] 2xl:max-w-[1600px]">
           {programmes.map((prog, index) => (
             <Tilt key={index} strength={4} className="h-full min-w-0">
               <Link href={prog.href} className="block h-full">
@@ -109,10 +113,10 @@ const ProgrammesSection = () => {
                     transition={{ delay: index * 0.1 + 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="flex flex-wrap items-center gap-2 mb-8 sm:mb-10 max-w-full sm:max-w-[64%] xl:max-w-[58%] relative z-20"
                   >
-                    <span className={`${prog.tagColor} max-w-full truncate text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-4 py-2 rounded-full font-bold tracking-wider uppercase border border-white/10 shadow-lg whitespace-nowrap `}>
+                    <span className={`${prog.tagColor} max-w-full truncate text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-4 py-2 rounded-full font-bold tracking-wider border border-white/10 shadow-lg whitespace-nowrap`}>
                       {prog.type}
                     </span>
-                    <span className="bg-white/15 backdrop-blur-xl text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-3.5 py-2 rounded-full font-bold border border-white/10 flex items-center gap-1.5 whitespace-nowrap shrink-0">
+                    <span className={`${prog.pillColor} text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-3.5 py-2 rounded-full font-bold border border-white/15 flex items-center gap-1.5 whitespace-nowrap shrink-0`}>
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                       {prog.duration}
                     </span>
@@ -126,10 +130,10 @@ const ProgrammesSection = () => {
                       }}
                       transition={{ delay: index * 0.1 + 0.7, duration: 0.8 }}
                     >
-                      <h3 className="text-white/60 text-base sm:text-lg md:text-xl font-medium mb-1 font-sora tracking-tight">
+                      <h3 className="text-white/60 text-base sm:text-lg md:text-xl font-medium mb-1 font-iic tracking-tight">
                         {prog.title}
                       </h3>
-                      <h3 className="text-white text-[25px] sm:text-4xl md:text-[42px] xl:text-4xl 2xl:text-[44px] font-black leading-[1.05] mb-6 sm:mb-8 font-sora uppercase">
+                      <h3 className="text-white text-[25px] sm:text-4xl md:text-[42px] xl:text-4xl 2xl:text-[44px] font-black leading-[1.05] mb-6 sm:mb-8 font-iic">
                         {prog.subtitle}
                       </h3>
                     </motion.div>
@@ -145,7 +149,7 @@ const ProgrammesSection = () => {
                       >
                         {prog.list.map((item, i) => (
                           <li key={i} className="text-white/80 text-[12px] sm:text-[13px] md:text-[15px] flex items-center gap-2.5 sm:gap-3 font-medium leading-relaxed transition-transform duration-300 hover:translate-x-2">
-                            <span className="w-1.5 h-1.5 bg-[#74C044] rounded-full shrink-0 shadow-[0_0_8px_rgba(116,192,68,0.6)]"></span>
+                            <span className="w-1.5 h-1.5 bg-white rounded-full shrink-0 shadow-[0_0_8px_rgba(255,255,255,0.6)]"></span>
                             {item}
                           </li>
                         ))}
@@ -162,10 +166,10 @@ const ProgrammesSection = () => {
                       transition={{ delay: index * 0.1 + 0.9, duration: 0.8, ease: "backOut" }}
                       className="flex flex-wrap gap-2.5 sm:gap-4"
                     >
-                      <span className="bg-white/10 backdrop-blur-xl text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/10">
+                      <span className={`${prog.pillColor} text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/15`}>
                         {prog.modules}
                       </span>
-                      <span className="bg-white/10 backdrop-blur-xl text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/10">
+                      <span className={`${prog.pillColor} text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/15`}>
                         {prog.credits}
                       </span>
                     </motion.div>
@@ -180,12 +184,12 @@ const ProgrammesSection = () => {
                     >
                       <div className="flex max-w-[66%] gap-2 flex-wrap min-w-0 sm:max-w-[58%] lg:max-w-[62%]">
                         {prog.tags?.map((item, i) => (
-                          <span key={i} className="max-w-full text-[7px] sm:text-[9px] font-black uppercase tracking-[0.1em] sm:tracking-widest leading-snug text-white/45 px-2.5 sm:px-3 py-1.5 bg-white/5 rounded-md border border-white/5">
+                          <span key={i} className={`${prog.featurePillColor} max-w-full text-[7px] sm:text-[9px] font-black tracking-[0.1em] sm:tracking-widest leading-snug text-white/60 px-2.5 sm:px-3 py-1.5 rounded-md border border-white/10`}>
                             {item}
                           </span>
                         ))}
                       </div>
-                      <div className="flex shrink-0 items-center gap-4 self-start text-[11px] font-black uppercase tracking-widest text-white group/btn">
+                      <div className="flex shrink-0 items-center gap-4 self-start text-[11px] font-black tracking-widest text-white group/btn">
                         Explore
                         <div className="w-10 h-10 rounded-full border-2 border-white/10 flex items-center justify-center group-hover/btn:border-[#74C044] group-hover/btn:bg-[#74C044] transition-all duration-500">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,9 +232,7 @@ const ProgrammesSection = () => {
 
         <div className="max-w-3xl text-center flex flex-col items-center">
           <RevealText
-            text="Starting your college journey is a meaningful experience shaped by growth, and we’re
-here to support you in every step of the way, helping you feel confident and connected as
-you begin this new chapter."
+            text="Starting your college journey is a meaningful experience shaped by growth, and we’re here to support you in every step of the way, helping you feel confident and connected as you begin this new chapter."
             className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-8 md:mb-10 px-2 sm:px-4 justify-center"
           />
           <Magnetic strength={0.3}>

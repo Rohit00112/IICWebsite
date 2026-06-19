@@ -20,7 +20,7 @@ const InnovationLab = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section id="innovation-lab" ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 overflow-hidden bg-[#f4f7fa]">
+    <section id="innovation-lab" ref={containerRef} className="relative w-full py-14 sm:py-20 md:py-24 overflow-hidden bg-[#f4f7fa]">
       <TechGrid />
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
@@ -28,9 +28,9 @@ const InnovationLab = () => {
             <motion.h2
               initial={{ opacity: 0, y: 10 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              className="text-xl sm:text-2xl md:text-4xl font-bold text-[#1a1a1a] mb-2 font-sora"
+              className="text-xl sm:text-2xl md:text-4xl font-bold text-[#1a1a1a] mb-2 font-iic"
             >
-              Life Beyond The
+              Life beyond the
             </motion.h2>
           </Magnetic>
           <div className="overflow-hidden py-2">
@@ -39,7 +39,7 @@ const InnovationLab = () => {
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: 0 } : {}}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[40px] sm:text-5xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter font-sora"
+                className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter font-iic"
               >
                 Classroom
               </motion.h1>
@@ -50,12 +50,12 @@ const InnovationLab = () => {
         <div className="flex flex-col md:flex-row justify-between items-stretch md:items-end mb-10 md:mb-12 gap-6 md:gap-8">
           <div className="max-w-2xl">
             <Magnetic strength={0.1}>
-              <h3 className="text-3xl sm:text-4xl md:text-[56px] font-bold text-[#21409A] mb-4 md:mb-6 font-sora">
+              <h3 className="text-3xl sm:text-4xl md:text-[56px] font-bold text-[#21409A] mb-4 md:mb-6 font-iic">
                 Innovation Lab
               </h3>
             </Magnetic>
             <RevealText
-              text="Beyond Academics, Innovation Lab at Itahari International
+              text="Beyond academics, Innovation Lab at Itahari International
 College offers a dynamic environment fostering creativity, leadership, and personal
 growth."
               className="text-gray-500 text-base md:text-xl font-medium leading-relaxed"
@@ -99,7 +99,7 @@ growth."
             <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10">
               <RevealText
                 text="Student Led Communities"
-                className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 font-sora"
+                className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 font-iic"
               />
               
             </div>
@@ -117,7 +117,7 @@ growth."
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
                     src="/images/home/ivlab2.png"
-                    alt="Modern State-of-the-Art Library and Research Center at Itahari International College Nepal"
+                    alt="Modern State-of-the-Art Library and Research Centre at Itahari International College Nepal"
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -125,7 +125,7 @@ growth."
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
-                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-sora">
+                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-iic">
                     Entrepreneurship & Research Support
                   </h4>
                 </div>
@@ -148,7 +148,7 @@ growth."
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
-                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-sora">
+                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-iic">
                     Tech Events & Hackathons
                   </h4>
                 </div>
@@ -173,7 +173,7 @@ growth."
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-5 left-5 right-5 sm:bottom-8 sm:left-8 sm:right-8">
-                <h4 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 font-sora">
+                <h4 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 font-iic">
                   Learning Zones
                 </h4>
               

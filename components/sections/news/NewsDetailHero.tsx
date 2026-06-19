@@ -43,7 +43,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="flex items-center gap-2 text-white/90 text-xs font-bold uppercase tracking-widest mb-6"
+            className="flex items-center gap-2 text-white/90 text-xs font-bold tracking-widest mb-6"
           >
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>/</span>
@@ -57,7 +57,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.7 }}
-            className="px-4 py-1.5 bg-[#21409A] text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-xl mb-6 inline-block"
+            className="px-4 py-1.5 bg-[#21409A] text-white text-[10px] font-bold tracking-wider rounded-full shadow-xl mb-6 inline-block"
           >
             {item.category}
           </motion.span>
@@ -65,7 +65,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
           <AnimeReveal
             as="h1"
             text={item.title}
-            className="text-4xl md:text-6xl lg:text-7xl font-black text-white font-sora leading-tight mb-8"
+            className="text-4xl md:text-6xl lg:text-7xl font-black text-white font-iic leading-tight mb-8"
             staggerFrom="first"
             delay={0.2}
           />
@@ -86,7 +86,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
               </div>
             </div>
             
-            <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-wider">
+            <div className="flex items-center gap-3 text-xs font-bold tracking-wider">
               <svg className="w-4 h-4 text-[#74C044]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
               <span>{item.date}</span>
             </div>

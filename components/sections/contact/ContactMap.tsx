@@ -23,7 +23,7 @@ const ContactMap = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
       </div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 py-24 md:py-32">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
           
           {/* Left: Location Card */}
@@ -43,7 +43,7 @@ const ContactMap = () => {
             <AnimeReveal
               as="h2"
               text="Visit Our Campus"
-              className="text-3xl font-bold text-[#1a1a1a] mb-4 font-sora tracking-tight"
+              className="text-3xl font-bold text-[#1a1a1a] mb-4 font-iic tracking-tight"
               staggerFrom="first"
             />
             <p className="text-gray-500 font-medium mb-10 leading-relaxed">

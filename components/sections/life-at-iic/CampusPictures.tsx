@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 const CampusPictures = () => {
   return (
-    <section className="py-24 md:py-32 bg-[#f8fafc]">
+    <section className="py-16 md:py-24 bg-[#f8fafc]">
       <div className="max-w-[1440px] mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -15,10 +15,10 @@ const CampusPictures = () => {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-4xl md:text-7xl font-black text-[#007a5e] mb-4 font-sora tracking-tight">
+          <h2 className="text-4xl md:text-7xl font-black text-[#74C044] mb-4 font-iic tracking-tight">
             Campus in Pictures
           </h2>
-          <p className="text-gray-500 text-base md:text-xl font-medium font-sora">
+          <p className="text-gray-500 text-base md:text-xl font-medium font-iic">
             A glimpse into the vibrant moments that define the Itahari International College experience.
           </p>
         </motion.div>

@@ -27,13 +27,13 @@ const PartnerSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 bg-white overflow-hidden">
+    <section ref={containerRef} className="relative w-full py-14 sm:py-20 md:py-24 bg-white overflow-hidden">
       <div className="w-full flex flex-col items-center">
-        <div className="text-center mb-12 px-6 max-w-[1200px]">
+        <div className="w-full text-center mb-12 px-6 max-w-[1600px]">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-[#1a1a1a] text-base sm:text-lg md:text-xl font-bold font-sora block mb-2"
+            className="text-[#1a1a1a] text-2xl sm:text-3xl md:text-4xl font-bold font-iic block mb-3"
           >
             Partner
           </motion.span>
@@ -42,7 +42,7 @@ const PartnerSection = () => {
               <AnimeReveal
                 text="UNIVERSITY"
                 as="h2"
-                className="text-[40px] sm:text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora justify-center"
+                className="w-full text-[44px] sm:text-6xl md:text-8xl font-black uppercase text-[#74C044] tracking-tight leading-none font-iic justify-center"
                 staggerFrom="center"
                 delay={0.2}
               />

@@ -165,7 +165,7 @@ export default function TwoFactorSettings({
             <h2 className="text-2xl font-black text-[#1A2B56]">Authenticator app</h2>
             <p className="text-gray-500 mt-2 max-w-2xl">Use Google Authenticator, Microsoft Authenticator, 1Password, or another TOTP-compatible app.</p>
           </div>
-          <span className={`rounded-full px-4 py-2 text-xs font-black uppercase tracking-widest ${enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+          <span className={`rounded-full px-4 py-2 text-xs font-black tracking-widest ${enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
             {enabled ? 'Enabled' : 'Disabled'}
           </span>
         </div>
@@ -173,7 +173,7 @@ export default function TwoFactorSettings({
         {!enabled && !setup && (
           <form onSubmit={startSetup} className="mt-8 max-w-md space-y-4">
             <div>
-              <label htmlFor="setup-password" className="text-xs font-bold uppercase tracking-widest text-gray-400">Confirm current password</label>
+              <label htmlFor="setup-password" className="text-xs font-bold tracking-widest text-gray-400">Confirm current password</label>
               <input
                 id="setup-password"
                 type="password"
@@ -214,7 +214,7 @@ export default function TwoFactorSettings({
                 <code className="mt-3 block break-all rounded-xl bg-gray-50 p-4 text-sm font-bold text-[#1A2B56]">{setup.secret}</code>
               </div>
               <div>
-                <label htmlFor="setup-code" className="text-xs font-bold uppercase tracking-widest text-gray-400">2. Confirm the six-digit code</label>
+                <label htmlFor="setup-code" className="text-xs font-bold tracking-widest text-gray-400">2. Confirm the six-digit code</label>
                 <input
                   id="setup-code"
                   type="text"

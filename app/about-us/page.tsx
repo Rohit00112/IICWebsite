@@ -11,8 +11,8 @@ import ExperienceCTA from '@/components/sections/about-us/ExperienceCTA';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export const metadata = {
-  title: 'Our Mission & UK Partnership | Itahari International College',
-  description: 'Learn about our partnership with London Metropolitan University, our mission for world-class education, and the team driving excellence at Itahari International College.',
+  title: 'Mission, Values & UK Partnership | Itahari International College',
+  description: 'Learn how IIC combines London Metropolitan University standards, practical learning, and student-centred support to develop globally competitive graduates in Itahari.',
 };
 
 export default function AboutUsPage() {
@@ -25,7 +25,7 @@ export default function AboutUsPage() {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     name: 'About Itahari International College',
-    description: 'Learn about our partnership with London Metropolitan University, our mission for world-class education, and the team driving excellence at Itahari International College.',
+    description: 'Learn how IIC combines London Metropolitan University standards, practical learning, and student-centred support to develop globally competitive graduates in Itahari.',
     publisher: {
       '@type': 'CollegeOrUniversity',
       name: 'Itahari International College',

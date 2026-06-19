@@ -11,7 +11,7 @@ const historyItems = [
     description: "Itahari International College was established with a vision to bring world-class British education to the Eastern region of Nepal.",
     stat: "1st",
     statLabel: "British curriculum in Eastern Nepal",
-    color: "#00A69C",
+    color: "#74C044",
   },
   {
     year: "2017",
@@ -29,7 +29,7 @@ const historyItems = [
     description: "Inaugurated the new ING Block — a state-of-the-art facility featuring advanced labs, library, learning zone with lecture theatres, tutorial rooms, and  modern learning environment.",
     stat: "",
     statLabel: "Advanced Learning Environment",
-    color: "#5B4B9C",
+    color: "#58595B",
   },
 ];
 
@@ -134,7 +134,7 @@ const Panel = ({ item, index, total, progress }: PanelProps) => {
         style={{ y: giantYearY, opacity: giantOpacity, color: item.color }}
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
       >
-        <span className="text-[28vw] md:text-[22vw] font-black font-sora leading-none tracking-tighter">
+        <span className="text-[28vw] md:text-[22vw] font-black font-iic leading-none tracking-tighter">
           {item.year}
         </span>
       </motion.div>
@@ -149,7 +149,7 @@ const Panel = ({ item, index, total, progress }: PanelProps) => {
           className="mb-6"
         >
           <span
-            className="inline-block px-5 py-2 rounded-full text-xs font-bold tracking-[0.3em] font-sora text-white shadow-lg"
+            className="inline-block px-5 py-2 rounded-full text-xs font-bold tracking-[0.3em] font-iic text-white shadow-lg"
             style={{ backgroundColor: item.color }}
           >
             {item.year}
@@ -158,14 +158,14 @@ const Panel = ({ item, index, total, progress }: PanelProps) => {
 
         <motion.h3
           style={{ y: titleY }}
-          className="text-4xl md:text-7xl font-black font-sora text-[#1a1a1a] leading-[0.95] tracking-tight mb-8"
+          className="text-4xl md:text-7xl font-black font-iic text-[#1a1a1a] leading-[0.95] tracking-tight mb-8"
         >
           {item.title}
         </motion.h3>
 
         <motion.p
           style={{ y: descY }}
-          className="text-base md:text-xl text-gray-600 font-medium font-sora leading-relaxed max-w-2xl mx-auto mb-10"
+          className="text-base md:text-xl text-gray-600 font-medium font-iic leading-relaxed max-w-2xl mx-auto mb-10"
         >
           {item.description}
         </motion.p>
@@ -175,12 +175,12 @@ const Panel = ({ item, index, total, progress }: PanelProps) => {
           className="inline-flex items-baseline gap-3 px-6 py-3 rounded-2xl bg-white shadow-xl border border-gray-100"
         >
           <span
-            className="text-4xl md:text-5xl font-black font-sora leading-none"
+            className="text-4xl md:text-5xl font-black font-iic leading-none"
             style={{ color: item.color }}
           >
             {item.stat}
           </span>
-          <span className="text-xs md:text-sm uppercase tracking-widest font-bold text-gray-500 font-sora">
+          <span className="text-xs md:text-sm tracking-widest font-bold text-gray-500 font-iic">
             {item.statLabel}
           </span>
         </motion.div>
@@ -210,7 +210,7 @@ const Marker = ({ item, index, total, progress }: { item: typeof historyItems[0]
       />
       <motion.span
         style={{ opacity: labelOpacity, color: item.color }}
-        className="absolute top-5 whitespace-nowrap text-[10px] md:text-[11px] font-bold tracking-widest font-sora"
+        className="absolute top-5 whitespace-nowrap text-[10px] md:text-[11px] font-bold tracking-widest font-iic"
       >
         {item.markerLabel}
       </motion.span>
@@ -278,10 +278,10 @@ const ExcellenceJourney = () => {
           viewport={{ once: true }}
           className="absolute top-12 md:top-16 left-0 right-0 text-center z-20 pointer-events-none px-6"
         >
-          <p className="text-xs md:text-sm uppercase tracking-[0.4em] font-bold text-gray-400 font-sora mb-3">
+          <p className="text-xs md:text-sm tracking-[0.4em] font-bold text-gray-400 font-iic mb-3">
             Our Journey
           </p>
-          <h2 className="text-2xl md:text-4xl font-black text-[#1a1a1a] font-sora">
+          <h2 className="text-2xl md:text-4xl font-black text-[#1a1a1a] font-iic">
             A Legacy of Excellence
           </h2>
         </motion.div>
@@ -305,7 +305,7 @@ const ExcellenceJourney = () => {
             <div className="relative h-[2px] bg-gray-200 rounded-full">
               <motion.div
                 style={{ width: railFill }}
-                className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#00A69C] via-[#21409A] to-[#C04444] rounded-full"
+                className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#74C044] via-[#21409A] to-[#58595B] rounded-full"
               />
 
               {/* Markers */}
@@ -321,7 +321,7 @@ const ExcellenceJourney = () => {
                 ))}
               </div>
             </div>
-            <p className="mt-12 text-center text-[10px] md:text-xs uppercase tracking-[0.3em] text-gray-400 font-sora font-semibold">
+            <p className="mt-12 text-center text-[10px] md:text-xs tracking-[0.3em] text-gray-400 font-iic font-semibold">
               Scroll to journey
             </p>
           </div>

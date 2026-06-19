@@ -16,7 +16,7 @@ const campusItems = [
     image: "/images/about/Image-3.png" 
   },
   { 
-    title: "Lecture Theaters", 
+    title: "Lecture Theatres",
     image: "/images/about/Image-4.png" 
   },
   { 
@@ -35,29 +35,29 @@ const campusItems = [
 
 const InnovationGrid = () => {
   return (
-    <section className="py-32 bg-[#0A1629] text-white">
+    <section className="py-20 md:py-24 bg-[#21409A] text-white">
       <div className="max-w-[1440px] mx-auto px-6">
         {/* Header Section */}
-        <div className="text-center mb-24">
+        <div className="text-center mb-14 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="space-y-4"
           >
-            <p className="text-2xl md:text-3xl font-medium font-sora text-white/90">
+            <p className="text-2xl md:text-3xl font-medium font-iic text-white/90">
               A Campus Built For
             </p>
             <AnimeReveal
               as="h2"
-              text="INNOVATION"
-              className="text-6xl md:text-8xl lg:text-[120px] font-black text-white font-sora leading-none tracking-tight justify-center"
+              text="Innovation"
+              className="text-6xl md:text-8xl lg:text-[120px] font-black text-white font-iic leading-none tracking-tight justify-center"
               staggerFrom="center"
               delay={0.15}
             />
             <RevealText
               text="Explore our modern facilities designed to provide an optimal environment for learning, research, and recreation."
-              className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg mt-8 font-medium leading-relaxed font-sora justify-center"
+              className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg mt-8 font-medium leading-relaxed font-iic justify-center"
             />
           </motion.div>
         </div>
@@ -83,7 +83,7 @@ const InnovationGrid = () => {
               
               {/* Overlay Content */}
               <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
-                <p className="text-xl md:text-2xl font-bold font-sora text-white tracking-tight">
+                <p className="text-xl md:text-2xl font-bold font-iic text-white tracking-tight">
                   {item.title}
                 </p>
               </div>

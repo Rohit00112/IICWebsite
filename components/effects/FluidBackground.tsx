@@ -58,9 +58,9 @@ const fragmentShader = `
     n3 += mouseForce * 0.5;
     
     // Colors
-    vec3 color1 = vec3(0.0, 0.48, 0.37); // #007a5e
-    vec3 color2 = vec3(0.14, 0.24, 0.55); // #243c8b
-    vec3 color3 = vec3(0.45, 0.75, 0.27); // #74C044
+    vec3 color1 = vec3(0.455, 0.753, 0.267); // #74C044
+    vec3 color2 = vec3(0.129, 0.251, 0.604); // #21409A
+    vec3 color3 = vec3(0.345, 0.349, 0.357); // #58595B
     vec3 bgColor = vec3(0.96, 0.97, 0.98); // #f4f7fa
     
     vec3 mix1 = mix(color1, color2, n1 * 0.5 + 0.5);

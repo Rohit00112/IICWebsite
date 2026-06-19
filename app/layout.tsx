@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     default: "Itahari International College | UK Degrees in Itahari, Nepal",
     template: "%s | Itahari International College",
   },
-  description: "Itahari International College (IIC) offers world-class undergraduate programs in Information Technology and Business in partnership with London Metropolitan University, UK.",
+  description: "Itahari International College (IIC) develops impactful industry-ready graduates through UK-awarded IT and Business programmes in partnership with London Metropolitan University.",
   keywords: ["IIC", "Itahari International College", "Education in Nepal", "IT College Nepal", "BBA Nepal", "BIT Nepal", "London Metropolitan University"],
   authors: [{ name: "Itahari International College" }],
   creator: "Itahari International College",
@@ -55,13 +55,13 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Itahari International College | World-Class Education in Nepal",
-    description: "Empowering students with world-class education and global partnerships. Join Itahari International College for industry-focused programs.",
+    title: "Itahari International College | UK Degrees in Itahari",
+    description: "Study globally connected IT and Business degrees in Itahari through IIC's partnership with London Metropolitan University.",
     url: "https://iic.edu.np",
     siteName: "Itahari International College",
     images: [
       {
-        url: "/api/og?title=Itahari International College&subtitle=World-Class Education in Nepal&section=Itahari International College Nepal",
+        url: "/api/og?title=Itahari International College&subtitle=Developing Industry-Ready Graduates&section=UK Degrees in Itahari",
         width: 1200,
         height: 630,
         alt: "Itahari International College",
@@ -73,10 +73,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Itahari International College",
-    description: "World-class undergraduate programs in IT and Business in Nepal.",
+    description: "UK-awarded undergraduate programmes in IT and Business in Nepal.",
     site: "@iic_nepal",
     creator: "@iic_nepal",
-    images: ["/api/og?title=Itahari International College&subtitle=World-Class Education in Nepal&section=Itahari International College Nepal"],
+    images: ["/api/og?title=Itahari International College&subtitle=Developing Industry-Ready Graduates&section=UK Degrees in Itahari"],
   },
   robots: {
     index: true,
@@ -121,7 +121,7 @@ export default function RootLayout({
                     "height": "80"
                   },
                   "image": "https://iic.edu.np/images/home/hero.png",
-                  "description": "Itahari International College (IIC) provides world-class UK degrees in IT and Business in partnership with London Metropolitan University.",
+                  "description": "Itahari International College (IIC) develops impactful industry-ready graduates through UK-awarded IT and Business degrees in partnership with London Metropolitan University.",
                   "foundingDate": "2017",
                   "knowsAbout": ["Information Technology", "Business Administration", "Higher Education", "UK Degrees"],
                   "sameAs": [
@@ -193,5 +193,4 @@ export default function RootLayout({
     </html>
   );
 }
-
 

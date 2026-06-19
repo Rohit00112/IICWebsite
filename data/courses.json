@@ -9,7 +9,7 @@
     "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
     "level": "Undergraduate",
     "featured": true,
-    "overview": "The BSc (Hons) Computing program is designed to provide you with a comprehensive understanding of computer science principles and practical software development skills. You will learn to design, develop, and maintain complex software systems that solve real-world problems.",
+    "overview": "The BSc (Hons) Computing programme is designed to provide you with a comprehensive understanding of computer science principles and practical software development skills. You will learn to design, develop, and maintain complex software systems that solve real-world problems.",
     "details": {
       "level": "L6 Undergraduate",
       "duration": "3 Years (Full-Time)",
@@ -25,9 +25,9 @@
         ]
       },
       {
-        "title": "Year 2: Specialization",
+        "title": "Year 2: Specialisation",
         "modules": [
-          { "name": "Data Structures & Algorithms", "description": "Optimizing data management and processing.", "credits": "30" },
+          { "name": "Data Structures & Algorithms", "description": "Optimising data management and processing.", "credits": "30" },
           { "name": "Web Application Development", "description": "Building modern, responsive web experiences.", "credits": "30" }
         ]
       }
@@ -35,7 +35,7 @@
     "learningOutcomes": [
       "Design and implement complex software solutions",
       "Apply agile methodologies in team environments",
-      "Analyze and secure network infrastructures"
+      "Analyse and secure network infrastructures"
     ],
     "careerOpportunities": [
       { "title": "Software Engineer", "description": "Build high-scale applications", "color": "#21409A" },
@@ -45,14 +45,14 @@
       { "name": "Dr. Sameer Rai", "role": "Head of Computing", "description": "15+ years of industry experience in AI.", "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop" }
     ],
     "quote": {
-      "text": "The computing program at Itahari International College transformed my perspective on technology.",
+      "text": "The computing programme at Itahari International College transformed my perspective on technology.",
       "author": "Anjali Sharma, Alumna"
     },
     "projects": [
       { "title": "Smart City IoT", "cohort": "2023", "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" }
     ],
     "faqs": [
-      { "question": "Is this degree internationally recognized?", "answer": "Yes, it is awarded by London Metropolitan University." }
+      { "question": "Is this degree internationally recognised?", "answer": "Yes, it is awarded by London Metropolitan University." }
     ]
   }
 ]

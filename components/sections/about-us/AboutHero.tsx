@@ -11,34 +11,34 @@ import AnimeStagger from '../../effects/AnimeStagger';
 
 const AboutHero = () => {
   return (
-    <section className="relative pt-32 md:pt-40 bg-[#EDF2F7] overflow-hidden flex flex-col items-center">
+    <section className="relative pt-24 md:pt-28 bg-[#EDF2F7] overflow-hidden flex flex-col items-center">
       <div className="max-w-[1440px] w-full mx-auto px-6 text-center flex flex-col items-center relative z-10">
         <div className="mb-10 flex flex-col items-center">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[#007a5e] font-bold tracking-[0.25em] uppercase text-xs md:text-sm mb-6 block font-sora"
+            className="text-[#74C044] font-bold tracking-[0.25em] text-xs md:text-sm mb-6 block font-iic"
           >
-            EXPERIENCE THE EXTRAORDINARY
+            Experience the extraordinary
           </motion.span>
 
           <RevealText
             text="Leading"
-            className="text-2xl md:text-3xl font-bold text-[#1a237e] mb-4 font-sora tracking-tight justify-center"
+            className="text-2xl md:text-3xl font-bold text-[#21409A] mb-4 font-iic tracking-tight justify-center"
           />
 
           <AnimeReveal
-            text="GLOBAL EDUCATION"
+            text="Global Education"
             as="h1"
-            className="text-5xl md:text-7xl lg:text-[100px] font-black text-[#21409A] leading-none mb-6 font-sora tracking-tighter justify-center uppercase"
+            className="text-5xl md:text-7xl lg:text-[100px] font-black text-[#21409A] leading-none mb-6 font-iic tracking-tighter justify-center uppercase"
             delay={0.2}
             staggerFrom="center"
           />
 
           <RevealText
             text="In Eastern Nepal"
-            className="text-2xl md:text-3xl font-bold text-[#1a237e] font-sora tracking-tight justify-center"
+            className="text-2xl md:text-3xl font-bold text-[#21409A] font-iic tracking-tight justify-center"
             delay={0.6}
           />
         </div>
@@ -51,7 +51,7 @@ const AboutHero = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link href="/admissions" className="inline-flex px-10 py-4 bg-[#21409A] text-white rounded-md font-bold text-sm hover:bg-[#1a337e] transition-all shadow-[0_10px_20px_rgba(33,64,154,0.3)]">
+            <Link href="/admissions" className="inline-flex px-10 py-4 bg-[#21409A] text-white rounded-md font-bold text-sm hover:bg-[#21409A] transition-all shadow-[0_10px_20px_rgba(33,64,154,0.3)]">
               Apply for Admissions
             </Link>
           </motion.div>

@@ -8,8 +8,8 @@ import AnimeStagger from '../../effects/AnimeStagger';
 
 const Leadership = () => {
   return (
-    <section className="pt-24 bg-white">
-      <div className="max-w-[1440px] mx-auto px-6 space-y-32 pb-32">
+    <section className="pt-16 md:pt-20 bg-white">
+      <div className="max-w-[1440px] mx-auto px-6 space-y-20 md:space-y-24 pb-20 md:pb-24">
         {/* Chairman Section */}
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <motion.div
@@ -18,23 +18,23 @@ const Leadership = () => {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <span className="text-[#74C044] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
+            <span className="text-[#74C044] font-bold tracking-[0.2em] text-sm mb-6 block">
               Message from the
             </span>
             <AnimeReveal
               as="h2"
               text="Our Chairman"
-              className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-sora leading-tight"
+              className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-iic leading-tight"
               staggerFrom="first"
             />
-            <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
+            <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-iic" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
               <p>{`"Welcome to Itahari International College, where we offer world-class IT and Business academic qualifications through partnerships with prestigious international universities from the UK."`}</p>
               <p>{`"Our innovative approach to education goes beyond textbooks and classrooms, engaging the mind, body, and spirit of our students. With a focus on nurturing talent, we instil in our students a passion for learning and excellence, preparing them for real-world challenges."`}</p>
               <p>{`"Embark on a transformative learning journey that shapes your future at Itahari International College, the college of your own!"`}</p>
             </AnimeStagger>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Sulav Budhathoki</p>
-              <p className="text-[#74C044] font-bold uppercase tracking-widest text-sm mt-1">Chairman, ING Group</p>
+              <p className="text-[#74C044] font-bold tracking-widest text-sm mt-1">Chairman, ING Group</p>
             </div>
           </motion.div>
 
@@ -45,7 +45,7 @@ const Leadership = () => {
             className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group"
           >
             {/* Background Shape */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] h-[45%] bg-[#0A1629] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] h-[45%] bg-[#21409A] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
 
             <Image
               src="/images/about/ing-ceo.png"
@@ -65,22 +65,22 @@ const Leadership = () => {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <span className="text-[#21409A] font-bold tracking-[0.2em] uppercase text-sm mb-6 block">
+            <span className="text-[#21409A] font-bold tracking-[0.2em] text-sm mb-6 block">
               Message from the
             </span>
             <AnimeReveal
               as="h2"
               text="What our CEO has to say"
-              className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-sora leading-tight"
+              className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-iic leading-tight"
               staggerFrom="first"
             />
-            <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-sora" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
+            <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-iic" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
               <p>{`"Itahari International College offers exceptional academic programmes, setting us apart from other institutions. As part of Innovate Nepal Group (ING), a renowned provider of practical career-centric education, we prioritise guiding our students and equipping them with practical skills. Our experienced faculty and top-notch infrastructure, combined with the latest international curriculum, ensure a comprehensive learning experience. We provide in-demand Business and IT courses in partnership with London Metropolitan University, aiming to produce globally competitive professionals."`}</p>
               <p>{`"Through ongoing support and innovative approaches, we strive to enhance each student's career prospects and contribute to society."`}</p>
             </AnimeStagger>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Satyabrat Koirala</p>
-              <p className="text-[#21409A] font-bold uppercase tracking-widest text-sm mt-1">CEO, Itahari International College</p>
+              <p className="text-[#21409A] font-bold tracking-widest text-sm mt-1">CEO, Itahari International College</p>
             </div>
           </motion.div>
 
@@ -91,7 +91,7 @@ const Leadership = () => {
             className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group"
           >
             {/* Background Shape */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] h-[45%] bg-[#0A1629] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] h-[45%] bg-[#21409A] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
 
             <Image
               src="/images/about/iic-ceo.png"
@@ -110,16 +110,16 @@ const Leadership = () => {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="bg-[#0A1629] py-32 px-6 text-center"
+        className="bg-[#21409A] py-20 md:py-24 px-6 text-center"
       >
         <div className="max-w-[1200px] mx-auto text-white">
-          <span className="text-white/40 font-bold tracking-[0.3em] uppercase text-xs mb-10 block font-sora">
+          <span className="text-white/40 font-bold tracking-[0.3em] text-xs mb-10 block font-iic">
             The Itahari International College Experience
           </span>
           <AnimeReveal
             as="h2"
             text="Education here extends far beyond the classrooms, developing strong values, encouraging creativity, and building a vibrant community that empowers confident leaders to global professionals ready to make a real world impact."
-            className="text-2xl md:text-4xl lg:text-5xl font-sora leading-[1.5] font-extralight text-white/80 justify-center"
+            className="text-2xl md:text-4xl lg:text-5xl font-iic leading-[1.5] font-extralight text-white/80 justify-center"
             staggerFrom="center"
             stagger={10}
           />

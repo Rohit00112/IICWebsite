@@ -64,7 +64,7 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
         <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8 lg:bottom-10 lg:left-10 flex items-center gap-3">
-          <span className="text-white text-lg sm:text-2xl lg:text-3xl font-bold font-sora leading-tight">{title}</span>
+          <span className="text-white text-lg sm:text-2xl lg:text-3xl font-bold font-iic leading-tight">{title}</span>
         </div>
       </motion.div>
 
@@ -83,24 +83,24 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
         }}
       >
         <div>
-          <span className="inline-block text-white/80 text-[10px] sm:text-xs xl:text-sm font-bold tracking-[0.18em] uppercase mb-3 font-sora">
+          <span className="inline-block text-white/80 text-[10px] sm:text-xs xl:text-sm font-bold tracking-[0.18em] mb-3 font-iic">
             Explore
           </span>
-          <h3 className="text-white text-xl sm:text-3xl xl:text-4xl font-black font-sora leading-tight mb-2 sm:mb-3">{title}</h3>
-          <p className="text-white/90 text-[13px] sm:text-sm xl:text-base leading-relaxed font-sora">{description}</p>
+          <h3 className="text-white text-xl sm:text-3xl xl:text-4xl font-black font-iic leading-tight mb-2 sm:mb-3">{title}</h3>
+          <p className="text-white/90 text-[13px] sm:text-sm xl:text-base leading-relaxed font-iic">{description}</p>
         </div>
 
         <div className="flex flex-wrap gap-4 sm:gap-6 mt-auto">
           {stats.map((s, i) => (
             <div key={i}>
-              <div className="text-white text-lg sm:text-2xl xl:text-3xl font-black font-sora">{s.value}</div>
-              <div className="text-white/80 text-xs xl:text-sm font-medium font-sora">{s.label}</div>
+              <div className="text-white text-lg sm:text-2xl xl:text-3xl font-black font-iic">{s.value}</div>
+              <div className="text-white/80 text-xs xl:text-sm font-medium font-iic">{s.label}</div>
             </div>
           ))}
         </div>
 
         <div>
-          <span className="inline-flex items-center gap-2 text-white font-bold text-sm xl:text-base font-sora border-b-2 border-white/60 pb-1">
+          <span className="inline-flex items-center gap-2 text-white font-bold text-sm xl:text-base font-iic border-b-2 border-white/60 pb-1">
             Learn more
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -136,35 +136,35 @@ const LifestyleSection = () => {
   const y3 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 bg-white overflow-x-clip overflow-y-visible">
+    <section ref={containerRef} className="relative w-full py-14 sm:py-20 md:py-24 bg-white overflow-x-clip overflow-y-visible">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
-        <div className="flex flex-col items-center text-center mb-12 md:mb-20">
-          <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase mb-4 font-sora">
+        <div className="flex flex-col items-center text-center mb-10 md:mb-14">
+          <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.12em] sm:tracking-[0.14em] mb-4 font-iic">
             Discover
           </span>
           <Magnetic strength={0.1}>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-sora">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-iic">
               Student Lifestyle at
             </h2>
           </Magnetic>
           <Magnetic strength={0.2}>
             <AnimeReveal
-              text="ITAHARI INTERNATIONAL COLLEGE"
+              text="Itahari International College"
               as="h2"
-              className="text-[32px] sm:text-5xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-sora justify-center"
+              className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
               staggerFrom="center"
               delay={0.2}
             />
           </Magnetic>
           <RevealText
-            text="Beyond Academics, A Vibrant Campus, Diverse Student Community, And State-Of-The-Art Facilities Designed For Holistic Growth."
+            text="Beyond academics, a vibrant campus, diverse student community, and state-of-the-art facilities designed for holistic growth."
             className="max-w-3xl text-gray-500 text-sm sm:text-base md:text-lg font-medium leading-relaxed justify-center"
           />
         </div>
 
         {/* Lifestyle Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 h-auto lg:min-h-[720px] xl:min-h-[800px]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 h-auto lg:min-h-[640px] xl:min-h-[700px]">
           {/* Main Large Card (Left) */}
           <div className="lg:col-span-2 relative h-[380px] sm:h-[560px] lg:h-full">
             <motion.div
@@ -203,8 +203,8 @@ const LifestyleSection = () => {
             >
               <LifestyleCard
                 image="/images/home/iic-lifestyle 1.png"
-                alt="Equipped Lecture Theater for Engaging Learning at Itahari International College Nepal"
-                title="Lecture Theater"
+                alt="Equipped Lecture Theatre for Engaging Learning at Itahari International College Nepal"
+                title="Lecture Theatre"
                 description="Spacious tiered halls with high-quality AV setups, designed for engaging lectures and dynamic seminars."
                 stats={[
                   { value: '200', label: 'Capacity' },
@@ -233,7 +233,7 @@ const LifestyleSection = () => {
                   { value: '8', label: 'Labs' },
                   { value: '160', label: 'Workstations' },
                 ]}
-                accent="#007a5e"
+                accent="#74C044"
                 rounded="rounded-[24px] md:rounded-[40px]"
                 parallaxY={y3}
                 revealOrigin="bottom-right"

@@ -25,15 +25,15 @@ const AdminNewsPage = async () => {
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
-          <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Total Articles</p>
+          <p className="text-gray-400 text-xs font-bold tracking-widest mb-2">Total Articles</p>
           <p className="text-4xl font-black text-[#1A2B56] font-sora">{news.length}</p>
         </div>
         <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
-          <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Events</p>
+          <p className="text-gray-400 text-xs font-bold tracking-widest mb-2">Events</p>
           <p className="text-4xl font-black text-[#00B2A9] font-sora">{news.filter(n => n.category === 'Event').length}</p>
         </div>
         <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
-          <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Announcements</p>
+          <p className="text-gray-400 text-xs font-bold tracking-widest mb-2">Announcements</p>
           <p className="text-4xl font-black text-[#74C044] font-sora">{news.filter(n => n.category === 'Announcement').length}</p>
         </div>
       </div>

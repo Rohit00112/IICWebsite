@@ -38,10 +38,10 @@ const LifeHero = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-block mb-6 md:mb-8 px-6 py-2 rounded-full bg-[#007a5e] text-white"
+            className="inline-block mb-6 md:mb-8 px-6 py-2 rounded-full bg-[#21409A] text-white"
           >
             <span className="text-xs md:text-sm font-semibold tracking-wide">
-              Experience Itahari International College
+              #LifeAtIIC
             </span>
           </motion.div>
 
@@ -49,12 +49,12 @@ const LifeHero = () => {
           <div className="flex flex-wrap items-center justify-center gap-x-4 mb-8">
             <RevealText
               text="Life At"
-              className="text-4xl md:text-6xl lg:text-[80px] font-black leading-[1.1] tracking-tight font-sora text-[#1a1a1a]"
+              className="text-4xl md:text-6xl lg:text-[80px] font-black leading-[1.1] tracking-tight font-iic text-[#1a1a1a]"
             />
             <div className="text-[#21409A] relative inline-block">
               <RevealText
                 text="IIC"
-                className="text-4xl md:text-6xl lg:text-[80px] font-black leading-[1.1] tracking-tight font-sora"
+                className="text-4xl md:text-6xl lg:text-[80px] font-black leading-[1.1] tracking-tight font-iic"
                 delay={0.4}
               />
               {/* Green SVG Underline */}
@@ -77,9 +77,9 @@ const LifeHero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-[750px] mx-auto text-[#333333] text-sm md:text-base font-medium leading-relaxed mb-8 font-sora opacity-80"
+            className="max-w-[750px] mx-auto text-[#333333] text-sm md:text-base font-medium leading-relaxed mb-8 font-iic opacity-80"
           >
-            Beyond the classroom, Itahari International College offers a dynamic ecosystem designed to foster personal growth, leadership and creativity. Discover your place in our thriving community.
+            Beyond the classroom, IIC creates a supportive campus culture where students build confidence, leadership, creativity, and friendships that last.
           </motion.p>
 
           {/* Action Buttons */}
@@ -94,7 +94,7 @@ const LifeHero = () => {
             >
               <Link
                 href="/contact"
-                className="w-full sm:w-auto px-8 py-4 bg-[#21409A] text-white rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-[#1a3279] transition-all"
+                className="w-full sm:w-auto px-8 py-4 bg-[#21409A] text-white rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-[#21409A] transition-all"
               >
                 Schedule a Campus Tour
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

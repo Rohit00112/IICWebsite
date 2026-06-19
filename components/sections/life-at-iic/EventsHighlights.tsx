@@ -56,22 +56,22 @@ const events = [
 
 const EventsHighlights = () => {
   return (
-    <section className="py-24 md:py-32 bg-[#0A1629] text-white">
+    <section className="py-16 md:py-24 bg-[#21409A] text-white">
       <div className="max-w-[1440px] mx-auto px-6">
-        <div className="text-center mb-20">
-          <p className="text-2xl md:text-3xl font-medium font-sora text-white/90">
+        <div className="text-center mb-12 md:mb-16">
+          <p className="text-2xl md:text-3xl font-medium font-iic text-white/90">
             A Year in Moments
           </p>
           <AnimeReveal
             as="h2"
-            text="EVENTS & FESTS"
-            className="text-5xl md:text-7xl lg:text-[100px] font-black text-white font-sora leading-none tracking-tight justify-center mt-4"
+            text="Events & Fests"
+            className="text-5xl md:text-7xl lg:text-[100px] font-black text-white font-iic leading-none tracking-tight justify-center mt-4"
             staggerFrom="center"
             delay={0.15}
           />
           <RevealText
             text="From cultural festivals to flagship competitions, Itahari International College's calendar is built around moments that bring the community together."
-            className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg mt-8 font-medium leading-relaxed font-sora justify-center"
+            className="text-gray-400 max-w-2xl mx-auto text-base md:text-lg mt-8 font-medium leading-relaxed font-iic justify-center"
           />
         </div>
 
@@ -94,10 +94,10 @@ const EventsHighlights = () => {
               />
 
               <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 pt-24 bg-gradient-to-t from-black/95 via-black/55 to-transparent">
-                <h3 className="text-xl md:text-2xl font-bold font-sora text-white tracking-tight mb-2">
+                <h3 className="text-xl md:text-2xl font-bold font-iic text-white tracking-tight mb-2">
                   {event.title}
                 </h3>
-                <p className="text-white/70 text-sm leading-relaxed font-sora">
+                <p className="text-white/70 text-sm leading-relaxed font-iic">
                   {event.description}
                 </p>
               </div>

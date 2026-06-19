@@ -85,7 +85,7 @@ export default function ClientLayoutWrapper({
   const dotY = useSpring(mouseY, springConfig);
 
   return (
-    <div className={`relative flex flex-col font-sora ${isAdminPage ? 'cursor-default' : 'cursor-none'}`}>
+    <div className={`relative flex flex-col ${isAdminPage ? 'font-sora cursor-default' : 'font-iic cursor-none'}`}>
       {!isAdminPage && (
         <>
           <motion.div

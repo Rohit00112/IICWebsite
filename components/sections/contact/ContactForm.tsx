@@ -87,10 +87,10 @@ const ContactForm = () => {
 
   const fieldClass = "w-full px-5 py-4 bg-white border border-gray-200 rounded-xl focus:border-[#21409A] focus:ring-2 focus:ring-[#21409A]/15 outline-none transition-all placeholder:text-gray-400 font-medium text-sm text-[#1a1a1a]";
   const labelClass = "flex items-center gap-1 text-[13px] font-bold text-[#1a1a1a]";
-  const requiredMark = <span aria-hidden className="text-[#dc2626]">*</span>;
+  const requiredMark = <span aria-hidden className="text-[#ED1C24]">*</span>;
 
   return (
-    <section className="py-24 bg-[#f3f6fb] overflow-hidden">
+    <section className="py-16 md:py-20 bg-[#f3f6fb] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
@@ -99,7 +99,7 @@ const ContactForm = () => {
             <AnimeReveal
               as="h2"
               text="Contact Directory"
-              className="text-[32px] md:text-[40px] font-bold text-[#1a1a1a] mb-3 font-sora tracking-tight"
+              className="text-[32px] md:text-[40px] font-bold text-[#1a1a1a] mb-3 font-iic tracking-tight"
               staggerFrom="first"
             />
             <p className="text-gray-500 mb-12 font-medium text-sm md:text-base">Reach out directly to the department that best suits your needs.</p>
@@ -119,9 +119,9 @@ const ContactForm = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-[#1a1a1a] mb-2 font-sora">Admissions WhatsApp</h3>
+                    <h3 className="text-xl font-bold text-[#1a1a1a] mb-2 font-iic">Admissions WhatsApp</h3>
                     <p className="text-gray-400 text-sm mb-4 leading-relaxed font-medium">Need immediate answers? Chat with our admissions counsellors instantly.</p>
-                    <a href="https://wa.me/9779801003030" target="_blank" rel="noopener noreferrer" className="text-[#25D366] font-bold text-xs uppercase tracking-wider flex items-center gap-2 hover:gap-3 transition-all">
+                    <a href="https://wa.me/9779801003030" target="_blank" rel="noopener noreferrer" className="text-[#25D366] font-bold text-xs tracking-wider flex items-center gap-2 hover:gap-3 transition-all">
                       Chat with Admissions <span>→</span>
                     </a>
                   </div>
@@ -145,7 +145,7 @@ const ContactForm = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-[#1a1a1a] mb-2 font-sora">General Enquiries</h3>
+                    <h3 className="text-xl font-bold text-[#1a1a1a] mb-2 font-iic">General Enquiries</h3>
                     <p className="text-gray-400 text-sm mb-5 leading-relaxed font-medium">For general campus information, student services, and administrative support.</p>
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 text-sm text-[#1a1a1a] font-bold">
@@ -171,7 +171,7 @@ const ContactForm = () => {
               >
                 <div className="flex items-center gap-3 mb-6">
                   <svg className="w-5 h-5 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  <h3 className="text-lg font-bold text-[#1a1a1a] font-sora">Office Hours</h3>
+                  <h3 className="text-lg font-bold text-[#1a1a1a] font-iic">Office Hours</h3>
                 </div>
                 <div className="space-y-4">
                   <div className="flex justify-between text-[13px] md:text-sm font-bold">
@@ -180,7 +180,7 @@ const ContactForm = () => {
                   </div>
                   <div className="flex justify-between text-[13px] md:text-sm font-bold">
                     <span className="text-gray-400">Saturday</span>
-                    <span className="text-red-500 uppercase tracking-wide">Closed</span>
+                    <span className="text-[#ED1C24] tracking-wide">Closed</span>
                   </div>
                 </div>
               </motion.div>
@@ -208,7 +208,7 @@ const ContactForm = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <h2 className="text-3xl font-bold text-[#1a1a1a] mb-4 font-sora">Message Received!</h2>
+                    <h2 className="text-3xl font-bold text-[#1a1a1a] mb-4 font-iic">Message Received!</h2>
                     <p className="text-gray-500 font-medium max-w-sm mb-10">
                       Thank you for reaching out. Our admissions team has been notified and will contact you within 24 hours.
                     </p>
@@ -228,17 +228,17 @@ const ContactForm = () => {
                     <span className="absolute inline-flex w-full h-full bg-[#74C044] rounded-full opacity-75 animate-ping" />
                     <span className="relative inline-flex w-2 h-2 bg-[#74C044] rounded-full" />
                   </span>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#3a7a1f]">Avg. reply in 4 hours</span>
+                  <span className="text-[11px] font-bold tracking-wider text-[#21409A]">Avg. reply in 4 hours</span>
                 </div>
 
                 <AnimeReveal
                   as="h2"
                   text="Send us a Message"
-                  className="text-3xl md:text-[34px] font-bold text-[#1a1a1a] font-sora tracking-tight"
+                  className="text-3xl md:text-[34px] font-bold text-[#1a1a1a] font-iic tracking-tight"
                   staggerFrom="first"
                 />
                 <p className="text-gray-500 text-sm mt-3 font-medium leading-relaxed max-w-md">
-                  Tell us a little about you. Fields marked <span className="text-[#dc2626] font-bold">*</span> are required.
+                  Tell us a little about you. Fields marked <span className="text-[#ED1C24] font-bold">*</span> are required.
                 </p>
               </div>
 
@@ -428,7 +428,7 @@ const ContactForm = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label htmlFor="message" className={labelClass}>Your Message {requiredMark}</label>
-                    <span className={`text-[11px] font-bold tabular-nums ${message.length > MESSAGE_MAX * 0.9 ? 'text-[#dc2626]' : 'text-gray-400'}`}>
+                    <span className={`text-[11px] font-bold tabular-nums ${message.length > MESSAGE_MAX * 0.9 ? 'text-[#ED1C24]' : 'text-gray-400'}`}>
                       {message.length}/{MESSAGE_MAX}
                     </span>
                   </div>
@@ -448,7 +448,7 @@ const ContactForm = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-[18px] bg-[#21409A] text-white font-bold rounded-xl shadow-[0_10px_30px_rgba(33,64,154,0.3)] hover:bg-[#1a337e] hover:shadow-[0_14px_40px_rgba(33,64,154,0.4)] transition-all flex items-center justify-center gap-3 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                    className={`w-full py-[18px] bg-[#21409A] text-white font-bold rounded-xl shadow-[0_10px_30px_rgba(33,64,154,0.3)] hover:bg-[#21409A] hover:shadow-[0_14px_40px_rgba(33,64,154,0.4)] transition-all flex items-center justify-center gap-3 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
                     {isSubmitting ? (
                       <>

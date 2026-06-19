@@ -27,16 +27,16 @@ const sections = [
 
 export default function TermsOfServicePage() {
   return (
-    <main className="min-h-screen bg-[#f4f7fa] pt-28 pb-20">
+    <main className="min-h-screen bg-[#f4f7fa] pt-24 pb-16 md:pt-28 md:pb-20">
       <section className="mx-auto max-w-4xl px-6">
         <Link href="/" className="text-sm font-bold text-[#21409A] hover:underline">
           Back to home
         </Link>
         <div className="mt-10">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#74C044]">
+          <p className="mb-4 text-xs font-bold tracking-[0.24em] text-[#74C044]">
             Website Terms
           </p>
-          <h1 className="font-sora text-4xl font-black tracking-tight text-[#1a1a1a] md:text-6xl">
+          <h1 className="font-iic text-4xl font-black tracking-tight text-[#1a1a1a] md:text-6xl">
             Terms of Service
           </h1>
           <p className="mt-6 max-w-2xl text-base font-medium leading-relaxed text-gray-600 md:text-lg">
@@ -47,7 +47,7 @@ export default function TermsOfServicePage() {
         <div className="mt-12 space-y-6">
           {sections.map((section) => (
             <section key={section.title} className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm md:p-8">
-              <h2 className="font-sora text-xl font-bold text-[#21409A]">
+              <h2 className="font-iic text-xl font-bold text-[#21409A]">
                 {section.title}
               </h2>
               <p className="mt-3 text-sm font-medium leading-relaxed text-gray-600 md:text-base">

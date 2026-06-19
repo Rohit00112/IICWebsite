@@ -5,15 +5,37 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --iic-blue: #21409A;
+  --iic-green: #74C044;
+  --iic-red: #ED1C24;
+  --iic-grey: #58595B;
+  --iic-ink: #171717;
+  --iic-muted: #58595B;
+  --iic-surface: #F4F7FA;
+  --iic-surface-soft: #F8FAFC;
+  --font-iic-primary: var(--font-roboto), Roboto, Arial, Helvetica, sans-serif;
+  --font-iic-helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-iic-metropolis-stack: "Metropolis", var(--font-iic-helvetica);
+  --font-iic-acumin-stack: "Acumin Variable Concept", "Acumin Pro", var(--font-iic-helvetica);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-iic-blue: var(--iic-blue);
+  --color-iic-green: var(--iic-green);
+  --color-iic-red: var(--iic-red);
+  --color-iic-grey: var(--iic-grey);
+  --color-iic-surface: var(--iic-surface);
+  --color-iic-surface-soft: var(--iic-surface-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-sora: var(--font-sora);
   --font-roboto: var(--font-roboto);
+  --font-iic: var(--font-iic-primary);
+  --font-iic-secondary: var(--font-iic-helvetica);
+  --font-iic-metropolis: var(--font-iic-metropolis-stack);
+  --font-iic-acumin: var(--font-iic-acumin-stack);
 }
 
 h1,
@@ -22,7 +44,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-sora), var(--font-geist-sans), sans-serif;
+  font-family: var(--font-iic-primary);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,7 +57,7 @@ h6 {
 body {
   background: transparent;
   color: var(--foreground);
-  font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
+  font-family: var(--font-iic-primary);
   overflow-x: hidden;
 }
 

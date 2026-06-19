@@ -24,16 +24,16 @@ const PartnerSection = () => {
     '/images/lmu rank 5.png',
   ];
 
-  const words = "UNIVERSITY".split("");
+  const words = "University".split("");
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-hidden">
+    <section ref={containerRef} className="relative w-full py-16 md:py-24 bg-white overflow-hidden">
       <div className="w-full flex flex-col items-center">
         <div className="text-center mb-12 px-6 max-w-[1200px]">
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="text-[#1a1a1a] text-lg md:text-xl font-bold font-sora block mb-2"
+            className="text-[#1a1a1a] text-lg md:text-xl font-bold font-iic block mb-2"
           >
             Partner
           </motion.span>
@@ -42,9 +42,9 @@ const PartnerSection = () => {
               initial={{ y: "100%" }}
               animate={isInView ? { y: 0 } : {}}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-sora"
+              className="text-5xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic"
             >
-              UNIVERSITY
+              University
             </motion.h2>
           </div>
         </div>

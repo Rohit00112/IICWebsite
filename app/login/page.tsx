@@ -71,7 +71,7 @@ const LoginPage = () => {
           {step === 'credentials' ? (
             <div className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="email" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+                <label htmlFor="email" className="text-xs font-bold tracking-widest text-gray-400 ml-1">Email Address</label>
                 <input
                   id="email"
                   type="email"
@@ -84,7 +84,7 @@ const LoginPage = () => {
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="password" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Password</label>
+                <label htmlFor="password" className="text-xs font-bold tracking-widest text-gray-400 ml-1">Password</label>
                 <input
                   id="password"
                   type="password"
@@ -99,7 +99,7 @@ const LoginPage = () => {
             </div>
           ) : (
             <div className="space-y-2">
-              <label htmlFor="two-factor-code" className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">Verification Code</label>
+              <label htmlFor="two-factor-code" className="text-xs font-bold tracking-widest text-gray-400 ml-1">Verification Code</label>
               <input
                 id="two-factor-code"
                 type="text"
@@ -150,7 +150,7 @@ const LoginPage = () => {
         </form>
 
         <div className="text-center pt-8">
-          <p className="text-xs font-bold text-gray-300 uppercase tracking-widest">&copy; 2026 Itahari International College</p>
+          <p className="text-xs font-bold text-gray-300 tracking-widest">&copy; 2026 Itahari International College</p>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ type StoryPage = {
 const storyPages: StoryPage[] = [
   {
     id: 'knowledge-hub',
-    accent: '#0A2520',
+    accent: '#21409A',
     left: {
       image: '/images/home/iic-lifestyle 3.png',
       alt: 'The Knowledge Hub at IIC',
@@ -56,7 +56,7 @@ const storyPages: StoryPage[] = [
   },
   {
     id: 'recreation-wellness',
-    accent: '#2E401B',
+    accent: '#58595B',
     left: {
       image: '/images/lifestyle/lifestyle.png',
       alt: 'Recreation and wellness spaces at IIC',
@@ -65,7 +65,7 @@ const storyPages: StoryPage[] = [
       content: {
         title: 'Recreation & Wellness',
         description:
-          'Balance is key to success. Our campus features modern recreational facilities, including a multi-purpose sports hall, fitness center, and vibrant student lounges, ensuring you stay active and refreshed.',
+          'Balance is key to success. Our campus features modern recreational facilities, including a multi-purpose sports hall, fitness centre, and vibrant student lounges, ensuring you stay active and refreshed.',
       },
     },
   },
@@ -214,7 +214,7 @@ const StoryPanel = ({
               transition={{ duration: 0.58, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 max-w-full lg:max-w-xl"
             >
-              <h3 className="mb-5 break-words font-sora text-4xl font-black leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl 2xl:text-7xl">
+              <h3 className="mb-5 break-words font-iic text-4xl font-black leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl 2xl:text-7xl">
                 {side.content.title}
               </h3>
               <p className="max-w-md text-base leading-relaxed text-white/72 md:text-lg">
@@ -403,14 +403,14 @@ const CampusGallery = () => {
       <section
         id="campus-gallery"
         ref={sectionRef}
-        className="bg-[#f7faf8] px-6 py-24 text-[#111827] md:py-32"
+        className="bg-[#f7faf8] px-6 py-16 text-[#111827] md:py-24"
       >
         <div className="mx-auto max-w-[1440px]">
           <div className="mb-12 max-w-3xl">
-            <p className="mb-4 font-sora text-sm font-bold uppercase tracking-[0.2em] text-[#007a5e]">
+            <p className="mb-4 font-iic text-sm font-bold tracking-[0.2em] text-[#74C044]">
               Campus Gallery
             </p>
-            <h2 className="font-sora text-4xl font-black leading-tight tracking-tight md:text-6xl">
+            <h2 className="font-iic text-4xl font-black leading-tight tracking-tight md:text-6xl">
               Life moves differently here.
             </h2>
           </div>
@@ -437,7 +437,7 @@ const CampusGallery = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                   {content && (
                     <div className="absolute inset-x-0 bottom-0 p-5">
-                      <h3 className="font-sora text-2xl font-bold leading-tight">
+                      <h3 className="font-iic text-2xl font-bold leading-tight">
                         {content.title}
                       </h3>
                     </div>
@@ -484,7 +484,7 @@ const CampusGallery = () => {
       </AnimatePresence>
 
       <div className="pointer-events-none absolute left-6 top-8 z-30 md:left-10 md:top-10">
-        <p className="mb-3 font-sora text-xs font-bold uppercase tracking-[0.26em] text-[#74C044] md:text-sm">
+        <p className="mb-3 font-iic text-xs font-bold tracking-[0.26em] text-[#74C044] md:text-sm">
           Campus Gallery
         </p>
         <div className="h-[2px] w-28 overflow-hidden bg-white/18">

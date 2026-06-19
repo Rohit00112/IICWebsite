@@ -9,17 +9,17 @@ const IngSection = () => {
   const containerRef = useRef(null);
 
   return (
-    <section ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 bg-[#f4f7fa] overflow-hidden border-t border-gray-100">
+    <section ref={containerRef} className="relative w-full py-14 sm:py-16 md:py-24 bg-[#f4f7fa] overflow-hidden border-t border-gray-100">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
-          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#1a1a1a] mb-2 font-sora">
-            Be A Part Of
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#1a1a1a] mb-2 font-iic">
+            Be a part of
           </h3>
           <AnimeReveal
             as="h2"
-            text="SOMETHING BIGGER"
-            className="text-[34px] sm:text-4xl md:text-7xl font-black text-[#76bc43] leading-[1] tracking-tight font-sora justify-center"
+            text="Something bigger"
+            className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[1] tracking-tight font-iic justify-center"
             staggerFrom="center"
           />
         </div>
@@ -54,7 +54,7 @@ const IngSection = () => {
               href="https://ing.com.np/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#76bc43] text-base md:text-lg font-bold border-b-2 border-[#76bc43] pb-1 hover:text-[#007a5e] hover:border-[#007a5e] transition-colors font-sora"
+              className="text-[#74C044] text-base md:text-lg font-bold border-b-2 border-[#74C044] pb-1 hover:text-[#74C044] hover:border-[#74C044] transition-colors font-iic"
             >
               Learn More
             </a>

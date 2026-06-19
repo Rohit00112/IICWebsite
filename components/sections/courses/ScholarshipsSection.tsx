@@ -4,12 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
-import AnimeStagger from '../../effects/AnimeStagger';
 import Tilt from '../../effects/Tilt';
 
 const ScholarshipsSection = () => {
   return (
-    <section className="relative w-full py-20 md:py-32 bg-[#f3f6fb] overflow-hidden">
+    <section className="relative w-full py-16 md:py-24 bg-[#f3f6fb] overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-32">
 
@@ -27,7 +26,7 @@ const ScholarshipsSection = () => {
                 staggerFrom="first"
               />
               <p className="text-gray-500 text-lg md:text-xl max-w-lg leading-relaxed font-medium">
-                Few make it to the top — every year, we proudly celebrate and recognize the top 10% of students who demonstrate true excellence in Academics, Attendance, and Attitude.
+                Few make it to the top — every year, we proudly celebrate and recognise the top 10% of students who demonstrate true excellence in Academics, Attendance, and Attitude.
               </p>
             </motion.div>
           </div>
@@ -44,7 +43,7 @@ const ScholarshipsSection = () => {
             >
               <Tilt strength={10} className="w-full h-full">
                 <div className="scholarship-card h-full bg-white p-10 rounded-[32px] shadow-xl shadow-[#21409A]/5 border border-white flex flex-col">
-                  <span className="text-[12px] font-bold text-[#1a1a1a] mb-6 uppercase tracking-wider block">
+                  <span className="text-[12px] font-bold text-[#1a1a1a] mb-6 tracking-wider block">
                     Academic <br /> Excellence
                   </span>
                   <h3 className="text-[24px] font-black text-[#21409A] mb-4 leading-tight">
@@ -77,7 +76,7 @@ const ScholarshipsSection = () => {
                     Need Guidance?
                   </h3>
                   <p className="text-gray-500 text-xs leading-relaxed mb-10 font-medium">
-                    Not sure which program is right for you? Our admissions team is here to help
+                    Not sure which programme is right for you? Our admissions team is here to help
                     you navigate your options.
                   </p>
                   <Link href="/contact" className="mt-auto w-full py-4 border-2 border-[#1a1a1a]/10 bg-white/80 text-[#1a1a1a] text-center rounded-xl font-bold text-[12px] hover:border-[#21409A] hover:text-[#21409A] transition-all">

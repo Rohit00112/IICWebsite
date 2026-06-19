@@ -122,7 +122,7 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
           {activeSection === 'metadata' && (
             <div className="space-y-10 animate-in fade-in slide-in-from-right-4 duration-500">
               <div className="space-y-3">
-                <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Article Title</label>
+                <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Article Title</label>
                 <input 
                   type="text" 
                   required
@@ -135,7 +135,7 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
 
               <div className="grid grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Category</label>
+                  <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Category</label>
                   <div className="relative">
                     <select 
                       value={formData.category}
@@ -150,7 +150,7 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Publish Date</label>
+                  <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Publish Date</label>
                   <input 
                     type="date" 
                     required
@@ -164,7 +164,7 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
               {(formData.category === 'Event' || formData.category === 'Announcement') && (
                 <div className="grid grid-cols-2 gap-8 animate-in fade-in slide-in-from-top-4 duration-500">
                   <div className="space-y-3">
-                    <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Event Time</label>
+                    <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Event Time</label>
                     <input 
                       type="time" 
                       value={formData.time}
@@ -173,7 +173,7 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
                     />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">Location / Venue</label>
+                    <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Location / Venue</label>
                     <input 
                       type="text" 
                       value={formData.location}
@@ -222,7 +222,7 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
               </div>
 
               <div className="space-y-3">
-                <label className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-gray-700 ml-1">SEO Summary (Short Description)</label>
+                <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">SEO Summary (Short Description)</label>
                 <textarea 
                   required
                   rows={4}

@@ -16,14 +16,14 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
   if (items.length === 0) return null;
 
   return (
-    <section className="py-24 bg-[#F8FAFC] border-t border-gray-100">
+    <section className="py-16 md:py-20 bg-[#F8FAFC] border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-16">
           <div>
             <AnimeReveal
               as="h2"
               text="Related Stories"
-              className="text-3xl md:text-4xl font-bold text-[#1a1a1a] font-sora mb-4"
+              className="text-3xl md:text-4xl font-bold text-[#1a1a1a] font-iic mb-4"
               staggerFrom="first"
             />
             <p className="text-gray-500 max-w-md">Continue exploring the latest updates, events, and announcements from Itahari International College.</p>
@@ -60,14 +60,14 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-[#21409A] text-[10px] font-bold uppercase tracking-wider rounded-full shadow-sm">
+                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-[#21409A] text-[10px] font-bold tracking-wider rounded-full shadow-sm">
                       {item.category}
                     </span>
                   </div>
                 </div>
                 <div className="p-8 flex flex-col flex-grow">
-                  <div className="text-[10px] font-bold text-gray-400 uppercase mb-3">{item.date}</div>
-                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 font-sora leading-tight line-clamp-2 group-hover:text-[#21409A] transition-colors">
+                  <div className="text-[10px] font-bold text-gray-400 mb-3">{item.date}</div>
+                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 font-iic leading-tight line-clamp-2 group-hover:text-[#21409A] transition-colors">
                     {item.title}
                   </h4>
                   <p className="text-gray-500 text-sm line-clamp-2 mb-6">

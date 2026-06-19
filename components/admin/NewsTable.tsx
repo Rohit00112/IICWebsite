@@ -48,11 +48,11 @@ export default function NewsTable({ initialNews }: { initialNews: NewsItem[] }) 
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="bg-gray-50/50 border-b border-gray-100">
-            <th className="px-8 py-6 text-xs font-bold text-gray-400 uppercase tracking-widest">Article</th>
-            <th className="px-8 py-6 text-xs font-bold text-gray-400 uppercase tracking-widest">Category</th>
-            <th className="px-8 py-6 text-xs font-bold text-gray-400 uppercase tracking-widest">Date</th>
-            <th className="px-8 py-6 text-xs font-bold text-gray-400 uppercase tracking-widest">Featured</th>
-            <th className="px-8 py-6 text-xs font-bold text-gray-400 uppercase tracking-widest text-right">Actions</th>
+            <th className="px-8 py-6 text-xs font-bold text-gray-400 tracking-widest">Article</th>
+            <th className="px-8 py-6 text-xs font-bold text-gray-400 tracking-widest">Category</th>
+            <th className="px-8 py-6 text-xs font-bold text-gray-400 tracking-widest">Date</th>
+            <th className="px-8 py-6 text-xs font-bold text-gray-400 tracking-widest">Featured</th>
+            <th className="px-8 py-6 text-xs font-bold text-gray-400 tracking-widest text-right">Actions</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-50">
@@ -73,7 +73,7 @@ export default function NewsTable({ initialNews }: { initialNews: NewsItem[] }) 
                 </div>
               </td>
               <td className="px-8 py-6">
-                <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                <span className={`px-3 py-1 rounded-full text-[10px] font-bold tracking-wider ${
                   item.category === 'News' ? 'bg-blue-50 text-blue-600' : 
                   item.category === 'Event' ? 'bg-teal-50 text-teal-600' : 'bg-green-50 text-green-600'
                 }`}>
