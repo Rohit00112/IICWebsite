@@ -63,14 +63,14 @@ const HeroSection = () => {
         <div className="pt-2 md:pt-4 text-center flex flex-col items-center">
           <RevealText
             as="h1"
-            text=""
-            className="text-[32px] sm:text-[42px] md:text-[84px] font-black text-[#21409A] leading-[1.05] sm:leading-[1.1] mb-4 md:mb-6 tracking-tight md:tracking-tighter font-iic justify-center"
+            text="UK Degrees in Itahari"
+            className="text-[44px] sm:text-[68px] md:text-[96px] lg:text-[116px] xl:text-[128px] font-black uppercase text-[#21409A] leading-[0.95] sm:leading-[1] mb-5 md:mb-8 tracking-normal font-iic justify-center"
             delay={0.4}
           />
           <RevealText
             as="p"
-            text="Study world-class IT and Business degrees in Itahari through our direct partnership with London Metropolitan University, UK."
-            className="text-base sm:text-lg md:text-[24px] font-medium text-gray-500 leading-[1.55] md:leading-[1.6] mb-8 md:mb-12 max-w-3xl px-2 sm:px-4 font-iic justify-center"
+            text="Launch your global career with IT and Business programmes from London Metropolitan University."
+            className="text-base sm:text-lg md:text-[24px] lg:text-[28px] font-medium text-gray-500 leading-[1.55] md:leading-[1.6] mb-8 md:mb-12 max-w-4xl px-2 sm:px-4 font-iic justify-center"
             delay={0.7}
           />
 
@@ -100,7 +100,7 @@ const HeroSection = () => {
             >
               <Link
                 href="/courses"
-                aria-label="Explore our academic programmes"
+                aria-label="Browse our degree programmes"
                 className="w-full sm:w-auto px-6 sm:px-10 py-3.5 sm:py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-sm sm:text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:outline-none"
               >
                 Explore Programmes

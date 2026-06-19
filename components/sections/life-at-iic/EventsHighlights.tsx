@@ -56,9 +56,9 @@ const events = [
 
 const EventsHighlights = () => {
   return (
-    <section className="py-24 md:py-32 bg-[#21409A] text-white">
+    <section className="py-16 md:py-24 bg-[#21409A] text-white">
       <div className="max-w-[1440px] mx-auto px-6">
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-16">
           <p className="text-2xl md:text-3xl font-medium font-iic text-white/90">
             A Year in Moments
           </p>

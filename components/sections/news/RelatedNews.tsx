@@ -16,7 +16,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
   if (items.length === 0) return null;
 
   return (
-    <section className="py-24 bg-[#F8FAFC] border-t border-gray-100">
+    <section className="py-16 md:py-20 bg-[#F8FAFC] border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-16">
           <div>

@@ -32,7 +32,7 @@ const CoursesHero = () => {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-center pt-24 md:pt-36 pb-4">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 flex flex-col items-center pt-20 md:pt-28 pb-4">
         <div className="text-center flex flex-col items-center">
           <RevealText 
             text="Learn locally"

@@ -6,7 +6,7 @@ import RevealText from '../../effects/RevealText';
 
 const AdmissionsHero = () => {
   return (
-    <section className="relative w-full pt-32 pb-32 md:pt-44 md:pb-40 bg-[#21409A] overflow-hidden">
+    <section className="relative w-full pt-24 pb-20 md:pt-28 md:pb-24 bg-[#21409A] overflow-hidden">
       <ParticleBackground />
       {/* Decorative background elements */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#74C044]/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />

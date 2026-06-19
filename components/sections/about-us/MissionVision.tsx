@@ -8,7 +8,7 @@ const MissionVision = () => {
   return (
     <section className="py-16 sm:py-20 md:py-24 bg-[#F8FAFF] overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6">
-        <div className="text-center mb-14 md:mb-24">
+        <div className="text-center mb-12 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -25,7 +25,7 @@ const MissionVision = () => {
             </div>
 
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#21409A] font-iic leading-tight tracking-tight mb-6">
-              &ldquo;Developing impactful <br className="hidden md:block" /> industry ready graduates&rdquo;
+              &ldquo;Building globally ready <br className="hidden md:block" /> graduates in Eastern Nepal&rdquo;
             </h2>
 
             <p className="text-gray-400 font-bold tracking-[0.2em] text-xs md:text-sm font-iic">
@@ -60,10 +60,10 @@ const MissionVision = () => {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: 0.2, duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
-              className="w-full md:w-[45%] bg-[#21409A] p-8 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(33,64,154,0.3)] relative flex flex-col items-start"
+              className="w-full md:w-[45%] bg-[#1F3176] p-8 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(31,49,118,0.3)] relative flex flex-col items-start"
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-inner">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#21409A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1F3176" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
                   <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
                   <path d="M4 22h16" />
@@ -74,9 +74,9 @@ const MissionVision = () => {
               </div>
               <h3 className="text-2xl md:text-3xl font-bold mb-6 font-iic">Our Mission</h3>
               <p className="text-white/80 text-sm md:text-base leading-relaxed font-medium font-iic">
-                To deliver direct UK university education locally, cultivating academic excellence,
-critical thinking, and hands-on skills that prepare students to make an immediate
-impact in industry.
+                To deliver direct UK University education locally, cultivating academic excellence,
+                Critical thinking and hands on skills that prepares students to make an immediate
+                impact in the industry.
               </p>
             </motion.div>
           </div>
@@ -106,10 +106,10 @@ impact in industry.
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: 0.2, duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
-              className="w-full md:w-[45%] bg-[#ED1C24] p-8 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(237,28,36,0.3)] relative flex flex-col items-start"
+              className="w-full md:w-[45%] bg-[#B9181E] p-8 sm:p-10 md:p-16 rounded-[2rem] md:rounded-[2.5rem] text-white shadow-[0_35px_60px_-15px_rgba(185,24,30,0.3)] relative flex flex-col items-start"
             >
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-inner">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ED1C24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#B9181E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <path d="M12 8v8M8 12h8" />
                   <path d="M15 15l-6-6M9 15l6-6" />
@@ -117,9 +117,9 @@ impact in industry.
               </div>
               <h3 className="text-2xl md:text-3xl font-bold mb-6 font-iic">Our Vision</h3>
               <p className="text-white/80 text-sm md:text-base leading-relaxed font-medium font-iic">
-               To be the leading higher education institution in Eastern Nepal, recognised globally for
-producing innovative leaders and contributing to socio-economic progress through
-quality education.
+                To be the leading higher education institution in Eastern Nepal, recognized globally for
+                producing innovative leaders and contributing in socio-economic progress through quality
+                education.
               </p>
             </motion.div>
           </div>

@@ -39,7 +39,7 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
             </motion.article>
 
             {/* Share Section */}
-            <AnimeStagger className="mt-20 pt-10 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8" selector=":scope > *" staggerDelay={120} translateY={20} duration={700}>
+            <AnimeStagger className="mt-14 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8" selector=":scope > *" staggerDelay={120} translateY={20} duration={700}>
               <div className="flex items-center gap-4">
                 <span className="text-xs font-bold tracking-widest text-gray-400">Share this story</span>
                 <div className="flex items-center gap-3">

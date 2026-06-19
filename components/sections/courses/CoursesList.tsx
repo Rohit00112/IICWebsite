@@ -7,7 +7,20 @@ import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'fr
 
 import Tilt from '../../effects/Tilt';
 
-const CourseCard = ({ course, index, total }: { course: any, index: number, total: number }) => {
+type CourseListItem = {
+  title: string;
+  category: string;
+  duration: string;
+  bg: string;
+  description: string;
+  credits: string;
+  modules: string;
+  image: string;
+  slug: string;
+  features: string[];
+};
+
+const CourseCard = ({ course, index, total }: { course: CourseListItem, index: number, total: number }) => {
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
 
@@ -270,9 +283,9 @@ const CoursesList = () => {
   ];
 
   return (
-    <section className="relative w-full py-16 md:py-32 bg-[#f3f6fb] overflow-hidden">
+    <section className="relative w-full py-14 md:py-24 bg-[#f3f6fb] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="flex flex-col items-center text-center mb-14 md:mb-24">
+        <div className="flex flex-col items-center text-center mb-10 md:mb-16">
           <p className="text-xs md:text-sm tracking-[0.3em] font-bold text-[#74C044] mb-4">
             UK Degrees &middot; Local Impact
           </p>

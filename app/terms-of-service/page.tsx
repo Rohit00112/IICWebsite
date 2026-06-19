@@ -27,7 +27,7 @@ const sections = [
 
 export default function TermsOfServicePage() {
   return (
-    <main className="min-h-screen bg-[#f4f7fa] pt-28 pb-20">
+    <main className="min-h-screen bg-[#f4f7fa] pt-24 pb-16 md:pt-28 md:pb-20">
       <section className="mx-auto max-w-4xl px-6">
         <Link href="/" className="text-sm font-bold text-[#21409A] hover:underline">
           Back to home

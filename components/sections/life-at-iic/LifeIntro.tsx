@@ -6,7 +6,7 @@ import AnimeStagger from '../../effects/AnimeStagger';
 
 const LifeIntro = () => {
   return (
-    <section className="py-24 md:py-32 bg-white flex items-center justify-center text-center px-6">
+    <section className="py-16 md:py-24 bg-white flex items-center justify-center text-center px-6">
       <div className="max-w-5xl mx-auto">
         <AnimeReveal
           as="h2"

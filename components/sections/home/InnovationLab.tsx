@@ -20,7 +20,7 @@ const InnovationLab = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section id="innovation-lab" ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 overflow-hidden bg-[#f4f7fa]">
+    <section id="innovation-lab" ref={containerRef} className="relative w-full py-14 sm:py-20 md:py-24 overflow-hidden bg-[#f4f7fa]">
       <TechGrid />
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
@@ -39,7 +39,7 @@ const InnovationLab = () => {
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: 0 } : {}}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[40px] sm:text-5xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter font-iic"
+                className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter font-iic"
               >
                 Classroom
               </motion.h1>

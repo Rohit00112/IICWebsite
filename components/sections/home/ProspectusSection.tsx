@@ -14,7 +14,7 @@ const ProspectusSection = () => {
   };
 
   return (
-    <section id="admission" className="relative w-full py-16 sm:py-24 md:py-32 bg-[#21409A] overflow-hidden">
+    <section id="admission" className="relative w-full py-14 sm:py-20 md:py-24 bg-[#21409A] overflow-hidden">
       <AnimeStagger
         className="max-w-[1440px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-10 sm:gap-16 lg:gap-24 items-center"
         selector=".prospectus-panel"

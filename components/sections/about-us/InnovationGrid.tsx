@@ -35,10 +35,10 @@ const campusItems = [
 
 const InnovationGrid = () => {
   return (
-    <section className="py-32 bg-[#21409A] text-white">
+    <section className="py-20 md:py-24 bg-[#21409A] text-white">
       <div className="max-w-[1440px] mx-auto px-6">
         {/* Header Section */}
-        <div className="text-center mb-24">
+        <div className="text-center mb-14 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -52,7 +52,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
 
 
   return (
-    <section className="pb-32 bg-[#F8FAFC]">
+    <section className="pb-20 md:pb-24 bg-[#F8FAFC]">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Filter Bar */}

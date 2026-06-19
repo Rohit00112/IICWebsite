@@ -8,7 +8,7 @@ import Tilt from '../../effects/Tilt';
 
 const ScholarshipsSection = () => {
   return (
-    <section className="relative w-full py-20 md:py-32 bg-[#f3f6fb] overflow-hidden">
+    <section className="relative w-full py-16 md:py-24 bg-[#f3f6fb] overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-32">
 

@@ -30,7 +30,7 @@ const ProgrammesSection = () => {
       credits: '360 Credits',
       image: '/images/home/course1.png',
       bgColor: 'bg-[#1C86A6]',
-      tagColor: 'bg-[#5C6265]',
+      tagColor: 'bg-[#166D87]',
       pillColor: 'bg-[#459DB7]',
       featurePillColor: 'bg-[#3391AE]',
       tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and IoT'],
@@ -47,7 +47,7 @@ const ProgrammesSection = () => {
       credits: '360 Credits',
       image: '/images/home/course2.png',
       bgColor: 'bg-[#1CBEC8]',
-      tagColor: 'bg-[#27439B]',
+      tagColor: 'bg-[#159AA3]',
       pillColor: 'bg-[#55CDD5]',
       featurePillColor: 'bg-[#3CC6CF]',
       tags: ['Global Business', 'Digital Management'],
@@ -57,26 +57,26 @@ const ProgrammesSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 bg-white overflow-x-clip overflow-y-visible">
+    <section ref={containerRef} className="relative w-full py-14 sm:py-20 md:py-24 bg-white overflow-x-clip overflow-y-visible">
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.span
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-[#74C044] text-[11px] sm:text-[12px] md:text-[14px] font-bold tracking-[0.12em] md:tracking-[0.16em] mb-4 md:mb-6 font-iic"
         >
-          UK Degree Programmes
+          Our Programmes
         </motion.span>
 
         <div className="text-center mb-10 md:mb-16">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-iic">
-            Learn Locally, Compete Globally in
+            Nepal&apos;s First <span className="text-[#74C044]">UK Degree</span> Programmes in
           </h2>
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
               <AnimeReveal
                 text="Itahari"
                 as="h2"
-                className="text-[34px] sm:text-5xl md:text-7xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center"
+                className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center uppercase"
                 staggerFrom="center"
                 delay={0.2}
               />
@@ -84,7 +84,7 @@ const ProgrammesSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 w-full mb-20 max-w-[1440px] 2xl:max-w-[1600px]">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 w-full mb-14 md:mb-16 max-w-[1440px] 2xl:max-w-[1600px]">
           {programmes.map((prog, index) => (
             <Tilt key={index} strength={4} className="h-full min-w-0">
               <Link href={prog.href} className="block h-full">
@@ -149,7 +149,7 @@ const ProgrammesSection = () => {
                       >
                         {prog.list.map((item, i) => (
                           <li key={i} className="text-white/80 text-[12px] sm:text-[13px] md:text-[15px] flex items-center gap-2.5 sm:gap-3 font-medium leading-relaxed transition-transform duration-300 hover:translate-x-2">
-                            <span className="w-1.5 h-1.5 bg-[#74C044] rounded-full shrink-0 shadow-[0_0_8px_rgba(116,192,68,0.6)]"></span>
+                            <span className="w-1.5 h-1.5 bg-white rounded-full shrink-0 shadow-[0_0_8px_rgba(255,255,255,0.6)]"></span>
                             {item}
                           </li>
                         ))}
@@ -232,12 +232,12 @@ const ProgrammesSection = () => {
 
         <div className="max-w-3xl text-center flex flex-col items-center">
           <RevealText
-            text="Each programme blends London Metropolitan University standards with practical learning, industry exposure, and the support students need to build a globally competitive career from Itahari."
+            text="Starting your college journey is a meaningful experience shaped by growth, and we’re here to support you in every step of the way, helping you feel confident and connected as you begin this new chapter."
             className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-8 md:mb-10 px-2 sm:px-4 justify-center"
           />
           <Magnetic strength={0.3}>
             <Link href="/admissions" className="inline-flex bg-[#21409A] text-white px-8 sm:px-12 py-3.5 sm:py-4 rounded-lg font-bold text-base sm:text-lg shadow-2xl hover:opacity-90 transition-all active:scale-95">
-              Apply Now
+              Enroll Now
             </Link>
           </Magnetic>
         </div>

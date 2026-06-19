@@ -11,7 +11,7 @@ import AnimeStagger from '../../effects/AnimeStagger';
 
 const AboutHero = () => {
   return (
-    <section className="relative pt-32 md:pt-40 bg-[#EDF2F7] overflow-hidden flex flex-col items-center">
+    <section className="relative pt-24 md:pt-28 bg-[#EDF2F7] overflow-hidden flex flex-col items-center">
       <div className="max-w-[1440px] w-full mx-auto px-6 text-center flex flex-col items-center relative z-10">
         <div className="mb-10 flex flex-col items-center">
           <motion.span
@@ -20,24 +20,24 @@ const AboutHero = () => {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="text-[#74C044] font-bold tracking-[0.25em] text-xs md:text-sm mb-6 block font-iic"
           >
-            Empowering future leaders
+            Experience the extraordinary
           </motion.span>
 
           <RevealText
-            text="Globally Connected"
+            text="Leading"
             className="text-2xl md:text-3xl font-bold text-[#21409A] mb-4 font-iic tracking-tight justify-center"
           />
 
           <AnimeReveal
-            text="Local impact"
+            text="Global Education"
             as="h1"
-            className="text-5xl md:text-7xl lg:text-[100px] font-black text-[#21409A] leading-none mb-6 font-iic tracking-tighter justify-center"
+            className="text-5xl md:text-7xl lg:text-[100px] font-black text-[#21409A] leading-none mb-6 font-iic tracking-tighter justify-center uppercase"
             delay={0.2}
             staggerFrom="center"
           />
 
           <RevealText
-            text="From Itahari to the world"
+            text="In Eastern Nepal"
             className="text-2xl md:text-3xl font-bold text-[#21409A] font-iic tracking-tight justify-center"
             delay={0.6}
           />

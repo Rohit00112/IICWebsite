@@ -136,10 +136,10 @@ const LifestyleSection = () => {
   const y3 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section ref={containerRef} className="relative w-full py-16 sm:py-24 md:py-32 bg-white overflow-x-clip overflow-y-visible">
+    <section ref={containerRef} className="relative w-full py-14 sm:py-20 md:py-24 bg-white overflow-x-clip overflow-y-visible">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
-        <div className="flex flex-col items-center text-center mb-12 md:mb-20">
+        <div className="flex flex-col items-center text-center mb-10 md:mb-14">
           <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.12em] sm:tracking-[0.14em] mb-4 font-iic">
             Discover
           </span>
@@ -152,7 +152,7 @@ const LifestyleSection = () => {
             <AnimeReveal
               text="Itahari International College"
               as="h2"
-              className="text-[32px] sm:text-5xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
+              className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
               staggerFrom="center"
               delay={0.2}
             />
@@ -164,7 +164,7 @@ const LifestyleSection = () => {
         </div>
 
         {/* Lifestyle Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 h-auto lg:min-h-[720px] xl:min-h-[800px]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 h-auto lg:min-h-[640px] xl:min-h-[700px]">
           {/* Main Large Card (Left) */}
           <div className="lg:col-span-2 relative h-[380px] sm:h-[560px] lg:h-full">
             <motion.div

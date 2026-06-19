@@ -8,8 +8,8 @@ import AnimeStagger from '../../effects/AnimeStagger';
 
 const Leadership = () => {
   return (
-    <section className="pt-24 bg-white">
-      <div className="max-w-[1440px] mx-auto px-6 space-y-32 pb-32">
+    <section className="pt-16 md:pt-20 bg-white">
+      <div className="max-w-[1440px] mx-auto px-6 space-y-20 md:space-y-24 pb-20 md:pb-24">
         {/* Chairman Section */}
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <motion.div
@@ -110,7 +110,7 @@ const Leadership = () => {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="bg-[#21409A] py-32 px-6 text-center"
+        className="bg-[#21409A] py-20 md:py-24 px-6 text-center"
       >
         <div className="max-w-[1200px] mx-auto text-white">
           <span className="text-white/40 font-bold tracking-[0.3em] text-xs mb-10 block font-iic">

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 const AboutCTA = () => {
   return (
-    <section className="py-24 bg-[#21409A]">
+    <section className="py-16 md:py-20 bg-[#21409A]">
       <div className="max-w-[1440px] mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

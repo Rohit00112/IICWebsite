@@ -22,11 +22,11 @@ const IngSection = () => {
           whileInView={{ y: 0, opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-60px", amount: 0.15 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-[#21409A] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row items-stretch p-6 md:p-16 max-w-7xl mx-auto gap-8 lg:gap-12"
+          className="bg-[#4B8F30] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col lg:flex-row items-stretch p-6 md:p-16 max-w-7xl mx-auto gap-8 lg:gap-12"
         >
           {/* Left Content */}
           <div className="lg:w-[50%] flex flex-col text-white">
-            <div className="w-12 h-12 md:w-14 md:h-14 bg-[#58595B] rounded-xl flex items-center justify-center mb-6 md:mb-10 shadow-lg">
+            <div className="w-12 h-12 md:w-14 md:h-14 bg-[#346D22] rounded-xl flex items-center justify-center mb-6 md:mb-10 shadow-lg">
               <svg className="w-6 h-6 md:w-7 md:h-7" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
@@ -41,14 +41,14 @@ const IngSection = () => {
             />
 
             <p className="text-white/90 text-sm md:text-base font-medium leading-relaxed mb-6 md:mb-10 font-iic">
-              Itahari International College is part of Innovate Nepal Group (ING), a pioneering education network focused on accessible, international-quality higher education in Nepal. This affiliation gives students access to shared academic resources, industry connections, and a culture of quality excellence.
+              Itahari International College is proud to be a part of the Innovate Nepal Group (ING), a pioneering organization that has revolutionized higher education in Nepal. This affiliation ensures our students benefit from a vast network of industry connections, shared resources, and a legacy of academic excellence.
             </p>
 
             <div className="space-y-3 md:space-y-4">
               {[
                 "Extensive Alumni Network",
                 "Shared Placement Opportunities",
-                "Standardised Quality Assurance"
+                "Standardized Quality Assurance"
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 md:gap-4">
                   <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-white/15 border border-white/40 flex items-center justify-center shrink-0">
@@ -65,7 +65,7 @@ const IngSection = () => {
           {/* Right Content */}
           <div className="lg:w-[50%] flex flex-col gap-5 md:gap-8">
             <div className="text-white">
-              <p className="text-[10px] font-bold tracking-[0.2em] mb-4 md:mb-6 opacity-80">Academic partners & accreditations</p>
+              <p className="text-[10px] font-bold tracking-[0.2em] mb-4 md:mb-6 opacity-80">ACADEMIC PARTNERS &amp; ACCREDITATIONS</p>
 
               <div className="rounded-2xl md:rounded-[1.5rem] border-2 border-dashed border-white/85 p-4 md:p-6 flex flex-col md:flex-row items-center gap-4 md:gap-5">
                 {/* Left — Degree Awarded By + LMU */}
@@ -107,15 +107,15 @@ const IngSection = () => {
             </div>
 
             {/* Recognition Box */}
-            <div className="bg-[#21409A] rounded-2xl md:rounded-[2rem] p-5 md:p-10 flex items-start gap-4 md:gap-8 border-l-4 md:border-l-[6px] border-[#74C044] shadow-2xl relative overflow-hidden">
-              <div className="shrink-0 mt-0.5 text-[#74C044]">
+            <div className="bg-[#3A7528] rounded-2xl md:rounded-[2rem] p-5 md:p-10 flex items-start gap-4 md:gap-8 border-l-4 md:border-l-[6px] border-[#9CE83B] shadow-2xl relative overflow-hidden">
+              <div className="shrink-0 mt-0.5 text-[#9CE83B]">
                 <svg className="w-6 h-6 md:w-8 md:h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                 </svg>
               </div>
               <p className="text-white text-sm md:text-lg font-medium leading-relaxed font-iic">
-                All our programmes are fully approved by the Government of Nepal and recognised by Tribhuvan University as equivalent to their respective degrees.
+                All our programs are fully approved by the Government of Nepal and recognized by Tribhuvan University as equivalent to their respective degrees.
               </p>
             </div>
           </div>

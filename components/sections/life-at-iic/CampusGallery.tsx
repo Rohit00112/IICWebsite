@@ -403,7 +403,7 @@ const CampusGallery = () => {
       <section
         id="campus-gallery"
         ref={sectionRef}
-        className="bg-[#f7faf8] px-6 py-24 text-[#111827] md:py-32"
+        className="bg-[#f7faf8] px-6 py-16 text-[#111827] md:py-24"
       >
         <div className="mx-auto max-w-[1440px]">
           <div className="mb-12 max-w-3xl">

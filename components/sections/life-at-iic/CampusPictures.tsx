@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 const CampusPictures = () => {
   return (
-    <section className="py-24 md:py-32 bg-[#f8fafc]">
+    <section className="py-16 md:py-24 bg-[#f8fafc]">
       <div className="max-w-[1440px] mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

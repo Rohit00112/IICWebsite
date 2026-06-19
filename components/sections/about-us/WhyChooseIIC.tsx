@@ -58,13 +58,13 @@ const features = [
 
 const WhyChooseIIC = () => {
   return (
-    <section className="py-16 md:py-32 bg-[#F8FAFF]">
+    <section className="py-14 md:py-24 bg-[#F8FAFF]">
       <div className="max-w-[1440px] mx-auto px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12 md:mb-24"
+          className="text-center mb-10 md:mb-16"
         >
           <p className="text-xs md:text-sm tracking-[0.3em] font-bold text-[#21409A] mb-3 md:mb-4 font-iic">
             What Sets Us Apart
@@ -74,7 +74,7 @@ const WhyChooseIIC = () => {
           </h2>
         </motion.div>
 
-        <div className="space-y-16 md:space-y-32">
+        <div className="space-y-12 md:space-y-20">
           {features.map((feature, idx) => {
             const reverse = idx % 2 === 1;
             return (

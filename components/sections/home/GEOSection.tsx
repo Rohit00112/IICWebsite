@@ -103,10 +103,10 @@ const GEOSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: 0.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="geo-stat grid grid-cols-1 sm:grid-cols-[140px,1fr] md:grid-cols-[180px,1fr] gap-2 sm:gap-8 md:gap-10 py-4 sm:py-5 border-b border-gray-50 last:border-0 items-start"
+                  className="geo-stat grid grid-cols-1 gap-3 py-4 sm:py-5 border-b border-gray-50 last:border-0 items-start text-left"
                 >
                   <span className="text-gray-500 font-medium text-[9px] md:text-[10px] tracking-[0.15em] pt-1">{stat.label}</span>
-                  <span className="text-[#21409A] font-bold text-sm md:text-base leading-[1.35] sm:text-right">{stat.value}</span>
+                  <span className="text-[#21409A] font-bold text-sm md:text-base leading-[1.35]">{stat.value}</span>
                 </motion.div>
               ))}
             </div>
@@ -153,7 +153,7 @@ const GEOSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 md:mt-24"
+          className="mt-12 md:mt-16"
         >
           <AnimeReveal
             as="h2"
@@ -198,7 +198,9 @@ const GEOSection = () => {
                   {row.icon}
                 </div>
                 <div className="space-y-4 relative z-10">
-                  <span className="text-[#74C044] font-bold text-[9px] tracking-[0.28em] md:tracking-[0.4em] block opacity-80">{row.feature}</span>
+                  <span className="text-[#3F7F1F] font-extrabold text-[10px] sm:text-xs tracking-[0.12em] md:tracking-[0.18em] block">
+                    {row.feature}
+                  </span>
                   <h3 className="text-[#21409A] font-bold text-base md:text-lg leading-tight tracking-tight">
                     {row.iic}
                   </h3>
@@ -211,7 +213,7 @@ const GEOSection = () => {
         </motion.div>
 
         {/* Expert Quotes */}
-        <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}

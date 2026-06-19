@@ -90,7 +90,7 @@ const ContactForm = () => {
   const requiredMark = <span aria-hidden className="text-[#ED1C24]">*</span>;
 
   return (
-    <section className="py-24 bg-[#f3f6fb] overflow-hidden">
+    <section className="py-16 md:py-20 bg-[#f3f6fb] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           

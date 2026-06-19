@@ -35,9 +35,9 @@ const StudentExperience = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="py-24 md:py-32 bg-[#1a1a1a] text-white overflow-hidden">
+    <section className="py-16 md:py-24 bg-[#1a1a1a] text-white overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6">
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-16">
           <span className="text-[#74C044] text-sm md:text-base font-bold tracking-[0.2em] mb-4 block font-iic">
             Student Life
           </span>

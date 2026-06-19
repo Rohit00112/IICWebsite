@@ -6,7 +6,7 @@ import AnimeReveal from '../../effects/AnimeReveal';
 
 const NewsHero = () => {
   return (
-    <section className="pt-32 pb-16 bg-[#F8FAFC] overflow-hidden">
+    <section className="pt-24 pb-12 md:pt-28 md:pb-14 bg-[#F8FAFC] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

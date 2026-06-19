@@ -23,7 +23,7 @@ const ContactMap = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60" />
       </div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 py-24 md:py-32">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
           
           {/* Left: Location Card */}

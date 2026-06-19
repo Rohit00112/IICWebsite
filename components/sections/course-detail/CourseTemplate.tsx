@@ -89,7 +89,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative w-full min-h-[70vh] flex flex-col items-center justify-center pt-24 pb-20 overflow-hidden bg-[#1a1a1a]">
+      <section className="relative w-full min-h-[70vh] flex flex-col items-center justify-center pt-20 pb-16 md:pt-24 md:pb-20 overflow-hidden bg-[#1a1a1a]">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/course-details/course-details-hero.png"
@@ -257,9 +257,9 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       </section>
 
       {/* Curriculum Section */}
-      <section className="py-24 bg-[#f3f6fb]">
+      <section className="py-16 md:py-20 bg-[#f3f6fb]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
+          <div className="mb-10 md:mb-12">
             <h2 className="text-4xl font-bold text-[#1a1a1a] relative inline-block mb-4">
               Curriculum Structure
               <div className="absolute -bottom-2 left-0 w-16 h-1.5 bg-[#21409A] rounded-full" />
@@ -345,7 +345,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       </section>
 
       {/* Entry Requirements Section */}
-      <section className="py-24 bg-white">
+      <section className="py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12 text-center">
             <span className="text-[#21409A] font-bold text-xs tracking-[0.2em] mb-4 block">Eligibility</span>
@@ -393,10 +393,10 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
 
       {/* Career Opportunities Section */}
       {course.careerOpportunities && course.careerOpportunities.length > 0 && (
-        <section className="py-24 bg-[#0a0a0a] relative overflow-hidden">
+        <section className="py-16 md:py-20 bg-[#0a0a0a] relative overflow-hidden">
           <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-[#21409A]/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/4" />
           <div className="max-w-7xl mx-auto px-6 relative z-10">
-            <div className="text-center mb-20">
+            <div className="text-center mb-12 md:mb-16">
               <span className="text-[#21409A] font-bold text-xs tracking-[0.2em] mb-4 block">Future Prospects</span>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-iic tracking-tight">
                 Your <span className="text-[#21409A]">Career</span> Path
@@ -435,7 +435,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
 
       {/* Student Innovation Gallery (Projects) */}
       {course.projects && course.projects.length > 0 && (
-        <section className="py-24 bg-white overflow-hidden">
+        <section className="py-16 md:py-20 bg-white overflow-hidden">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
               <div>
@@ -474,9 +474,9 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       )}
 
       {/* Meet the Faculty Section */}
-      <section className="py-24 bg-[#f3f6fb]">
+      <section className="py-16 md:py-20 bg-[#f3f6fb]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
+          <div className="mb-10 md:mb-12">
             <h2 className="text-4xl font-bold text-[#1a1a1a] relative inline-block mb-4">
               Meet the Faculty
               <div className="absolute -bottom-2 left-0 w-16 h-1.5 bg-[#21409A] rounded-full" />
@@ -524,9 +524,9 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       </section>
 
       {/* FAQs */}
-      <section className="py-24 bg-white">
+      <section className="py-16 md:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="mb-16">
+          <div className="mb-10 md:mb-12">
             <h2 className="text-4xl font-bold text-[#1a1a1a] relative inline-block mb-4">
               Frequently Asked Questions
               <div className="absolute -bottom-2 left-0 w-16 h-1.5 bg-[#21409A] rounded-full" />
@@ -575,11 +575,11 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       </section>
 
       {/* Student Success Stories Section */}
-      <section className="py-24 bg-[#0a0a0a] relative overflow-hidden">
+      <section className="py-16 md:py-20 bg-[#0a0a0a] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-[#21409A]/5 blur-[120px] rounded-full -translate-y-1/2" />
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-20">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 md:mb-16">
             <div className="max-w-2xl">
               <span className="text-[#21409A] font-bold text-xs tracking-[0.2em] mb-4 block">Student Outcomes</span>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-iic tracking-tight leading-[1.1]">
@@ -646,9 +646,9 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       </section>
 
       {/* Related Courses Section */}
-      <section className="py-24 bg-white">
+      <section className="py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
+          <div className="mb-10 md:mb-12">
             <h2 className="text-4xl font-bold text-[#1a1a1a] relative inline-block mb-4">
               Explore Other Degrees
               <div className="absolute -bottom-2 left-0 w-16 h-1.5 bg-[#21409A] rounded-full" />

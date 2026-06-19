@@ -189,7 +189,7 @@ const ScholarshipSection = () => {
   const activePillarData = activePillar === null ? null : pillars[activePillar];
 
   return (
-    <section ref={containerRef} className="relative w-full overflow-hidden bg-[#081A39] py-16 text-white sm:py-24 md:py-32">
+    <section ref={containerRef} className="relative w-full overflow-hidden bg-[#081A39] py-14 text-white sm:py-20 md:py-24">
       <div className="absolute inset-x-0 top-0 h-px bg-white/60" />
       <div className="absolute left-0 top-0 h-1 w-[48%] bg-[#74C044]" />
 

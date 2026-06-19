@@ -27,7 +27,7 @@ const PartnerSection = () => {
   const words = "University".split("");
 
   return (
-    <section ref={containerRef} className="relative w-full py-24 md:py-32 bg-white overflow-hidden">
+    <section ref={containerRef} className="relative w-full py-16 md:py-24 bg-white overflow-hidden">
       <div className="w-full flex flex-col items-center">
         <div className="text-center mb-12 px-6 max-w-[1200px]">
           <motion.span
