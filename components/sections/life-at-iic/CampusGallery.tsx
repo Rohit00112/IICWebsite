@@ -1,7 +1,12 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, type Variants, useReducedMotion } from 'framer-motion';
+import {
+  AnimatePresence,
+  motion,
+  type Variants,
+  useReducedMotion,
+} from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import Image from 'next/image';
 
@@ -71,50 +76,40 @@ const storyPages: StoryPage[] = [
   },
 ];
 
-const SLIDE_DURATION_MS = 900;
-const SNAP_TOLERANCE = 24;
+const SLIDE_DURATION_MS = 620;
+const SNAP_TOLERANCE = 28;
 const TOUCH_THRESHOLD = 42;
+const WHEEL_GESTURE_IDLE_MS = 320;
+const WHEEL_DELTA_THRESHOLD = 8;
 
-const leftPanelVariants: Variants = {
-  enter: (direction: 1 | -1) => ({
+const EASE_EXPO = [0.83, 0, 0.17, 1] as const;
+
+// per-panel layered motion — image and content travel at different
+// offsets so the slide reads as depth, not one flat block sliding.
+type PanelCustom = { direction: 1 | -1; isImage: boolean };
+
+const panelVariants: Variants = {
+  enter: ({ direction, isImage }: PanelCustom) => ({
     y: direction > 0 ? '100%' : '-100%',
+    scale: isImage ? 1.12 : 1,
   }),
   center: {
     y: '0%',
+    scale: 1,
+    transition: {
+      y: { duration: 0.9, ease: EASE_EXPO },
+      scale: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+    },
   },
-  exit: (direction: 1 | -1) => ({
-    y: direction > 0 ? '-100%' : '100%',
+  exit: ({ direction, isImage }: PanelCustom) => ({
+    // content trails the image slightly for a parallax lag
+    y: direction > 0 ? (isImage ? '-100%' : '-72%') : isImage ? '100%' : '72%',
+    scale: isImage ? 1.08 : 1,
+    transition: {
+      y: { duration: 0.9, ease: EASE_EXPO },
+      scale: { duration: 0.9, ease: EASE_EXPO },
+    },
   }),
-};
-
-const rightPanelVariants: Variants = {
-  enter: (direction: 1 | -1) => ({
-    y: direction > 0 ? '-100%' : '100%',
-  }),
-  center: {
-    y: '0%',
-  },
-  exit: (direction: 1 | -1) => ({
-    y: direction > 0 ? '100%' : '-100%',
-  }),
-};
-
-const contentVariants: Variants = {
-  enter: {
-    opacity: 0,
-    y: 28,
-    filter: 'blur(10px)',
-  },
-  center: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-  },
-  exit: {
-    opacity: 0,
-    y: -18,
-    filter: 'blur(8px)',
-  },
 };
 
 const preventPageScroll = (event: Event) => {
@@ -123,22 +118,40 @@ const preventPageScroll = (event: Event) => {
   event.stopImmediatePropagation();
 };
 
+const contentVariants: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.09, delayChildren: 0.18 },
+  },
+};
+
+const contentItemVariants: Variants = {
+  hidden: { opacity: 0, y: 26 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.62, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 const StoryPanel = ({
   accent,
-  direction,
   index,
   page,
   side,
-  variants,
   position,
+  pageNumber,
+  pageTotal,
+  direction,
 }: {
   accent: string;
-  direction: 1 | -1;
   index: number;
   page: StoryPage;
   side: StorySide;
-  variants: Variants;
   position: 'left' | 'right';
+  pageNumber: number;
+  pageTotal: number;
+  direction: 1 | -1;
 }) => {
   const hasImage = Boolean(side.image);
   const isRight = position === 'right';
@@ -159,22 +172,20 @@ const StoryPanel = ({
 
   return (
     <motion.div
-      custom={direction}
-      variants={variants}
+      custom={{ direction, isImage: hasImage }}
+      variants={panelVariants}
       initial="enter"
       animate="center"
       exit="exit"
-      transition={{ duration: 0.92, ease: [0.76, 0, 0.24, 1] }}
-      className={`absolute left-0 w-full overflow-hidden md:top-0 md:h-full ${mobilePlacement} ${desktopPlacement}`}
+      className={`absolute left-0 w-full overflow-hidden will-change-transform md:top-0 md:h-full ${mobilePlacement} ${desktopPlacement}`}
     >
       {hasImage ? (
         <div className="group relative h-full w-full overflow-hidden bg-[#07100d]">
           <motion.div
             key={`${page.id}-${position}-image`}
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 1.04 }}
-            transition={{ duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ scale: 1.08 }}
+            animate={{ scale: 1.02 }}
+            transition={{ duration: 7, ease: 'linear' }}
             className="absolute inset-0"
           >
             <Image
@@ -193,33 +204,77 @@ const StoryPanel = ({
           />
         </div>
       ) : (
-        <div className="relative flex h-full w-full items-center bg-[#070b12] px-6 py-9 sm:px-8 md:px-10 lg:px-12 xl:px-16 2xl:px-20">
+        <div className="relative flex h-full w-full items-center bg-[#070b12] px-6 py-9 sm:px-8 md:px-10 lg:px-14 xl:px-20 2xl:px-24">
           <div
-            className="pointer-events-none absolute inset-0 opacity-85"
+            className="pointer-events-none absolute inset-0"
             style={{
-              background: `radial-gradient(circle at ${
-                isRight ? '18% 20%' : '82% 20%'
-              }, ${accent}44, transparent 38%), linear-gradient(135deg, #050706 0%, #0d1413 48%, #060915 100%)`,
+              background: `radial-gradient(120% 90% at ${
+                isRight ? '14% 16%' : '86% 16%'
+              }, ${accent}38, transparent 46%), linear-gradient(135deg, #050706 0%, #0c1412 50%, #060912 100%)`,
             }}
           />
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04),transparent_32%,transparent_68%,rgba(255,255,255,0.04))]" />
+          {/* fine grid texture */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                'linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)',
+              backgroundSize: '64px 64px',
+              maskImage:
+                'radial-gradient(120% 100% at 50% 0%, black, transparent 78%)',
+            }}
+          />
+          {/* soft accent glow drifting in */}
+          <motion.div
+            key={`${page.id}-${position}-glow`}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 0.5, scale: 1 }}
+            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-none absolute h-72 w-72 rounded-full blur-[120px]"
+            style={{
+              backgroundColor: accent,
+              top: '12%',
+              [isRight ? 'left' : 'right']: '8%',
+            }}
+          />
 
           {side.content && (
             <motion.div
               key={`${page.id}-${position}-content`}
               variants={contentVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.58, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+              initial="hidden"
+              animate="show"
               className="relative z-10 max-w-full lg:max-w-xl"
             >
-              <h3 className="mb-5 break-words font-iic text-4xl font-black leading-[1.02] tracking-tight text-white sm:text-5xl lg:text-6xl 2xl:text-7xl">
+              {/* eyebrow: index + accent rule */}
+              <motion.div
+                variants={contentItemVariants}
+                className="mb-7 flex items-center gap-4"
+              >
+                <span
+                  className="font-iic text-sm font-bold tabular-nums tracking-[0.2em]"
+                  style={{ color: accent === '#0B1120' ? '#74C044' : accent }}
+                >
+                  {String(pageNumber).padStart(2, '0')}
+                </span>
+                <span className="h-px w-12" style={{ backgroundColor: accent === '#0B1120' ? '#74C044' : accent }} />
+                <span className="font-iic text-xs font-medium uppercase tracking-[0.28em] text-white/40">
+                  {String(pageTotal).padStart(2, '0')}
+                </span>
+              </motion.div>
+
+              <motion.h3
+                variants={contentItemVariants}
+                className="mb-6 break-words font-iic text-4xl font-black leading-[1.0] tracking-tight text-white sm:text-5xl lg:text-6xl 2xl:text-7xl"
+              >
                 {side.content.title}
-              </h3>
-              <p className="max-w-md text-base leading-relaxed text-white/72 md:text-lg">
+              </motion.h3>
+              <motion.p
+                variants={contentItemVariants}
+                className="max-w-md text-base leading-relaxed text-white/65 md:text-lg"
+              >
                 {side.content.description}
-              </p>
+              </motion.p>
             </motion.div>
           )}
         </div>
@@ -233,12 +288,16 @@ const CampusGallery = () => {
   const activeIndexRef = useRef(0);
   const cooldownRef = useRef(false);
   const cooldownTimerRef = useRef<number | null>(null);
+  const lastScrollYRef = useRef(0);
+  const wheelGestureTimerRef = useRef<number | null>(null);
+  const wheelGestureActiveRef = useRef(false);
+  const touchStartedPinnedRef = useRef(false);
+  const touchContentChangedRef = useRef(false);
   const touchStartYRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   const prefersReducedMotion = useReducedMotion() ?? false;
   const lenis = useLenis();
-
   const activePage = storyPages[activeIndex];
 
   const scrollToSectionTop = useCallback(() => {
@@ -253,6 +312,35 @@ const CampusGallery = () => {
       window.scrollTo(0, sectionTop);
     }
   }, [lenis]);
+
+  const isSectionPinned = useCallback(() => {
+    const section = sectionRef.current;
+    if (!section) return false;
+
+    const rect = section.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    return (
+      Math.abs(rect.top) <= SNAP_TOLERANCE &&
+      Math.abs(rect.bottom - viewportHeight) <= SNAP_TOLERANCE
+    );
+  }, []);
+
+  const markWheelGesture = useCallback(() => {
+    const isFreshGesture = !wheelGestureActiveRef.current;
+    wheelGestureActiveRef.current = true;
+
+    if (wheelGestureTimerRef.current !== null) {
+      window.clearTimeout(wheelGestureTimerRef.current);
+    }
+
+    wheelGestureTimerRef.current = window.setTimeout(() => {
+      wheelGestureActiveRef.current = false;
+      wheelGestureTimerRef.current = null;
+    }, WHEEL_GESTURE_IDLE_MS);
+
+    return isFreshGesture;
+  }, []);
 
   const lockCooldown = useCallback(() => {
     cooldownRef.current = true;
@@ -292,6 +380,32 @@ const CampusGallery = () => {
     }
   }, [setBoundaryPage]);
 
+  const keepSectionPinnedWhileChangingContent = useCallback(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const rect = section.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const currentScrollY = window.scrollY;
+    const isScrollingDown = currentScrollY >= lastScrollYRef.current;
+    lastScrollYRef.current = currentScrollY;
+
+    const isAtGalleryViewport =
+      rect.top <= SNAP_TOLERANCE &&
+      rect.bottom >= viewportHeight - SNAP_TOLERANCE;
+    const shouldHoldForDirection = isScrollingDown
+      ? activeIndexRef.current < storyPages.length - 1
+      : activeIndexRef.current > 0;
+
+    if (
+      isAtGalleryViewport &&
+      shouldHoldForDirection &&
+      Math.abs(rect.top) > 1
+    ) {
+      scrollToSectionTop();
+    }
+  }, [scrollToSectionTop]);
+
   const setPage = useCallback(
     (nextIndex: number, nextDirection: 1 | -1) => {
       const boundedIndex = Math.min(storyPages.length - 1, Math.max(0, nextIndex));
@@ -305,50 +419,43 @@ const CampusGallery = () => {
   );
 
   const handleStep = useCallback(
-    (event: Event, nextDirection: 1 | -1) => {
+    (event: Event, nextDirection: 1 | -1, canAdvanceContent = true) => {
       if (prefersReducedMotion) return false;
 
-      const section = sectionRef.current;
-      if (!section) return false;
-
-      const rect = section.getBoundingClientRect();
-      const isPinned = Math.abs(rect.top) <= SNAP_TOLERANCE;
-
-      if (!isPinned) {
-        return false;
-      }
+      if (!isSectionPinned()) return false;
 
       const currentIndex = activeIndexRef.current;
       const nextIndex = currentIndex + nextDirection;
-      const canMovePanels = nextIndex >= 0 && nextIndex < storyPages.length;
+      const canChangeContent = nextIndex >= 0 && nextIndex < storyPages.length;
 
-      if (!canMovePanels) return false;
+      if (!canChangeContent) return false;
 
       preventPageScroll(event);
 
-      if (cooldownRef.current) return true;
+      if (!canAdvanceContent || cooldownRef.current) return true;
 
       scrollToSectionTop();
       setPage(nextIndex, nextDirection);
       return true;
     },
-    [
-      prefersReducedMotion,
-      scrollToSectionTop,
-      setPage,
-    ]
+    [isSectionPinned, prefersReducedMotion, scrollToSectionTop, setPage]
   );
 
   useEffect(() => {
     syncBoundaryPage();
 
     const handleWheel = (event: WheelEvent) => {
+      markWheelGesture();
+      if (Math.abs(event.deltaY) < WHEEL_DELTA_THRESHOLD) return;
       const nextDirection: 1 | -1 = event.deltaY >= 0 ? 1 : -1;
-      handleStep(event, nextDirection);
+      // advance continuously while scrolling; cooldown paces the steps
+      handleStep(event, nextDirection, true);
     };
 
     const handleTouchStart = (event: TouchEvent) => {
       touchStartYRef.current = event.touches[0]?.clientY ?? 0;
+      touchStartedPinnedRef.current = isSectionPinned();
+      touchContentChangedRef.current = false;
     };
 
     const handleTouchMove = (event: TouchEvent) => {
@@ -357,16 +464,25 @@ const CampusGallery = () => {
       if (Math.abs(deltaY) < TOUCH_THRESHOLD) return;
 
       const nextDirection: 1 | -1 = deltaY >= 0 ? 1 : -1;
+      const canAdvanceContent =
+        touchStartedPinnedRef.current && !touchContentChangedRef.current;
 
-      if (handleStep(event, nextDirection)) {
+      if (handleStep(event, nextDirection, canAdvanceContent)) {
+        if (canAdvanceContent) touchContentChangedRef.current = true;
         touchStartYRef.current = currentY;
       }
+    };
+
+    const handleTouchEnd = () => {
+      touchStartedPinnedRef.current = false;
+      touchContentChangedRef.current = false;
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       const downKeys = ['ArrowDown', 'PageDown', ' '];
       const upKeys = ['ArrowUp', 'PageUp'];
 
+      if (event.repeat) return;
       if (!downKeys.includes(event.key) && !upKeys.includes(event.key)) return;
 
       const nextDirection: 1 | -1 = downKeys.includes(event.key) ? 1 : -1;
@@ -374,7 +490,12 @@ const CampusGallery = () => {
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false, capture: true });
-    window.addEventListener('scroll', syncBoundaryPage, { passive: true });
+    const handleScroll = () => {
+      syncBoundaryPage();
+      keepSectionPinnedWhileChangingContent();
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('touchstart', handleTouchStart, {
       passive: true,
       capture: true,
@@ -383,20 +504,36 @@ const CampusGallery = () => {
       passive: false,
       capture: true,
     });
+    window.addEventListener('touchend', handleTouchEnd, { capture: true });
+    window.addEventListener('touchcancel', handleTouchEnd, { capture: true });
     window.addEventListener('keydown', handleKeyDown, { capture: true });
 
     return () => {
       window.removeEventListener('wheel', handleWheel, { capture: true });
-      window.removeEventListener('scroll', syncBoundaryPage);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('touchstart', handleTouchStart, { capture: true });
       window.removeEventListener('touchmove', handleTouchMove, { capture: true });
+      window.removeEventListener('touchend', handleTouchEnd, { capture: true });
+      window.removeEventListener('touchcancel', handleTouchEnd, { capture: true });
       window.removeEventListener('keydown', handleKeyDown, { capture: true });
 
       if (cooldownTimerRef.current !== null) {
         window.clearTimeout(cooldownTimerRef.current);
       }
+
+      if (wheelGestureTimerRef.current !== null) {
+        window.clearTimeout(wheelGestureTimerRef.current);
+      }
+
+      wheelGestureActiveRef.current = false;
     };
-  }, [handleStep, syncBoundaryPage]);
+  }, [
+    handleStep,
+    isSectionPinned,
+    keepSectionPinnedWhileChangingContent,
+    markWheelGesture,
+    syncBoundaryPage,
+  ]);
 
   if (prefersReducedMotion) {
     return (
@@ -461,35 +598,43 @@ const CampusGallery = () => {
       <div className="pointer-events-none absolute inset-0 z-20 bg-[linear-gradient(180deg,rgba(0,0,0,0.28),transparent_18%,transparent_72%,rgba(0,0,0,0.48))]" />
 
       <AnimatePresence initial={false} mode="sync" custom={direction}>
-        <div key={activePage.id} className="absolute inset-0">
-          <StoryPanel
-            accent={activePage.accent}
-            direction={direction}
-            index={activeIndex}
-            page={activePage}
-            side={activePage.left}
-            variants={leftPanelVariants}
-            position="left"
-          />
-          <StoryPanel
-            accent={activePage.accent}
-            direction={direction}
-            index={activeIndex}
-            page={activePage}
-            side={activePage.right}
-            variants={rightPanelVariants}
-            position="right"
-          />
-        </div>
+        <StoryPanel
+          key={`${activePage.id}-left`}
+          accent={activePage.accent}
+          index={activeIndex}
+          page={activePage}
+          side={activePage.left}
+          position="left"
+          pageNumber={activeIndex + 1}
+          pageTotal={storyPages.length}
+          direction={direction}
+        />
+        <StoryPanel
+          key={`${activePage.id}-right`}
+          accent={activePage.accent}
+          index={activeIndex}
+          page={activePage}
+          side={activePage.right}
+          position="right"
+          pageNumber={activeIndex + 1}
+          pageTotal={storyPages.length}
+          direction={direction}
+        />
       </AnimatePresence>
 
       <div className="pointer-events-none absolute left-6 top-8 z-30 md:left-10 md:top-10">
-        <p className="mb-3 font-iic text-xs font-bold tracking-[0.26em] text-[#74C044] md:text-sm">
-          Campus Gallery
-        </p>
+        <div className="mb-3 flex items-center gap-2">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#74C044] opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#74C044]" />
+          </span>
+          <p className="font-iic text-xs font-bold tracking-[0.26em] text-[#74C044] md:text-sm">
+            Campus Gallery
+          </p>
+        </div>
         <div className="h-[2px] w-28 overflow-hidden bg-white/18">
           <div
-            className="h-full origin-left bg-[#74C044] transition-transform duration-700"
+            className="h-full origin-left bg-[#74C044] transition-transform duration-700 ease-out"
             style={{
               transform: `scaleX(${(activeIndex + 1) / storyPages.length})`,
             }}
@@ -497,6 +642,21 @@ const CampusGallery = () => {
         </div>
       </div>
 
+      {/* vertical slide dots */}
+      <div className="pointer-events-none absolute right-6 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex md:right-10">
+        {storyPages.map((page, dotIndex) => (
+          <span
+            key={page.id}
+            className="rounded-full transition-all duration-500 ease-out"
+            style={{
+              width: dotIndex === activeIndex ? '8px' : '6px',
+              height: dotIndex === activeIndex ? '24px' : '6px',
+              backgroundColor:
+                dotIndex === activeIndex ? '#74C044' : 'rgba(255,255,255,0.28)',
+            }}
+          />
+        ))}
+      </div>
     </section>
   );
 };
