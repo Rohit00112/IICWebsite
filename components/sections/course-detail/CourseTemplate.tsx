@@ -150,12 +150,12 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       </section>
 
       {/* Overview & Details Section */}
-      <section className="py-20 bg-[#f3f6fb]">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <section className="py-20 bg-[#f3f6fb] overflow-x-clip">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 min-w-0">
           
           {/* Overview Card */}
-          <div className="lg:col-span-7 bg-white p-12 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-white/50">
-            <div className="flex gap-8 border-b border-gray-100 mb-10">
+          <div className="lg:col-span-7 min-w-0 overflow-hidden bg-white p-6 sm:p-8 md:p-12 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-white/50">
+            <div className="flex flex-wrap gap-x-8 gap-y-3 border-b border-gray-100 mb-10">
               <button 
                 onClick={() => setActiveTab('overview')}
                 className={`pb-4 text-lg font-bold transition-all relative ${activeTab === 'overview' ? 'text-[#21409A] border-b-2 border-[#21409A]' : 'text-gray-400'}`}
@@ -177,9 +177,9 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="space-y-6"
+                  className="min-w-0 space-y-6"
                 >
-                  <div className="prose prose-lg text-gray-500 max-w-none font-medium leading-relaxed" 
+                  <div className="prose prose-lg max-w-none min-w-0 break-words text-gray-500 font-medium leading-relaxed [overflow-wrap:anywhere] [&_*]:max-w-full [&_*]:!whitespace-normal [&_*]:[overflow-wrap:anywhere]"
                     dangerouslySetInnerHTML={{ __html: sanitizedOverview }} 
                   />
                 </motion.div>
@@ -189,16 +189,16 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="space-y-4"
+                  className="min-w-0 space-y-4"
                 >
                   {course.learningOutcomes?.map((outcome, i) => (
-                    <div key={i} className="flex gap-4 items-start">
+                    <div key={i} className="flex min-w-0 gap-4 items-start">
                       <div className="w-6 h-6 rounded-full bg-[#74C044]/10 flex items-center justify-center flex-shrink-0 mt-1">
                         <svg className="w-3.5 h-3.5 text-[#74C044]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <p className="text-gray-500 font-medium">{outcome}</p>
+                      <p className="min-w-0 break-words text-gray-500 font-medium">{outcome}</p>
                     </div>
                   )) || (
                     <p className="text-gray-400 italic">No learning outcomes specified for this course yet.</p>
@@ -209,7 +209,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           </div>
           
           {/* Programme Details Card */}
-          <div className="lg:col-span-5 bg-white p-12 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-white/50">
+          <div className="lg:col-span-5 min-w-0 bg-white p-6 sm:p-8 md:p-12 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-white/50">
             <h3 className="text-2xl font-bold text-[#1a1a1a] mb-10">Programme Details</h3>
             
             <AnimeStagger className="space-y-8" selector=":scope > div" staggerDelay={110} translateY={22} duration={720}>
@@ -241,13 +241,13 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   </svg>
                 )},
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-6">
-                  <div className="w-12 h-12 bg-[#f0f4f8] rounded-xl flex items-center justify-center text-[#21409A]">
+                <div key={i} className="flex min-w-0 items-center gap-5 sm:gap-6">
+                  <div className="w-12 h-12 shrink-0 bg-[#f0f4f8] rounded-xl flex items-center justify-center text-[#21409A]">
                     {item.icon}
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-gray-400 text-sm font-medium">{item.label}</p>
-                    <p className="text-[#1a1a1a] font-bold text-lg">{item.value}</p>
+                    <p className="break-words text-[#1a1a1a] font-bold text-lg leading-snug">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -393,12 +393,12 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
 
       {/* Career Opportunities Section */}
       {course.careerOpportunities && course.careerOpportunities.length > 0 && (
-        <section className="py-16 md:py-20 bg-[#0a0a0a] relative overflow-hidden">
+        <section className="py-16 md:py-20 bg-[#f3f6fb] relative overflow-hidden">
           <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-[#21409A]/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/4" />
           <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="text-center mb-12 md:mb-16">
               <span className="text-[#21409A] font-bold text-xs tracking-[0.2em] mb-4 block">Future Prospects</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white font-iic tracking-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] font-iic tracking-tight">
                 Your <span className="text-[#21409A]">Career</span> Path
               </h2>
             </div>
@@ -416,16 +416,16 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="career-card bg-white/5 border border-white/10 p-8 rounded-[32px] hover:bg-white/10 transition-all"
+                  className="career-card bg-white border border-gray-100 p-8 rounded-[32px] shadow-sm hover:border-[#21409A]/20 hover:shadow-xl transition-all"
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  <div className="w-12 h-12 rounded-2xl mb-6 flex items-center justify-center bg-[#21409A]/20 text-[#21409A]">
+                  <div className="w-12 h-12 rounded-2xl mb-6 flex items-center justify-center bg-[#21409A]/10 text-[#21409A]">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h4 className="text-xl font-bold text-white mb-3">{path.title}</h4>
-                  <p className="text-gray-400 text-sm leading-relaxed">{path.description}</p>
+                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-3">{path.title}</h4>
+                  <p className="text-gray-500 text-sm leading-relaxed">{path.description}</p>
                 </motion.div>
               ))}
             </AnimeStagger>
@@ -575,18 +575,18 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       </section>
 
       {/* Student Success Stories Section */}
-      <section className="py-16 md:py-20 bg-[#0a0a0a] relative overflow-hidden">
+      <section className="py-16 md:py-20 bg-[#f3f6fb] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-[#21409A]/5 blur-[120px] rounded-full -translate-y-1/2" />
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 md:mb-16">
             <div className="max-w-2xl">
               <span className="text-[#21409A] font-bold text-xs tracking-[0.2em] mb-4 block">Student Outcomes</span>
-              <h2 className="text-4xl md:text-5xl font-bold text-white font-iic tracking-tight leading-[1.1]">
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1a1a1a] font-iic tracking-tight leading-[1.1]">
                 Where Our <span className="text-[#21409A]">Graduates</span> Shine
               </h2>
             </div>
-            <p className="text-gray-400 font-medium max-w-md lg:text-right">
+            <p className="text-gray-500 font-medium max-w-md lg:text-right">
               Join a global network of alumni working at top-tier tech firms and multinational corporations.
             </p>
           </div>
@@ -618,18 +618,18 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white/5 border border-white/10 p-10 rounded-[40px] hover:bg-white/10 transition-all group"
+                className="bg-white border border-gray-100 p-10 rounded-[40px] shadow-sm hover:border-[#21409A]/20 hover:shadow-xl transition-all group"
               >
                 <div className="flex items-center gap-4 mb-8">
                   <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#21409A]/30">
                     <Image src={testi.img} alt={testi.name} fill className="object-cover" />
                   </div>
                   <div>
-                    <h4 className="text-white font-bold text-lg">{testi.name}</h4>
+                    <h4 className="text-[#1a1a1a] font-bold text-lg">{testi.name}</h4>
                     <p className="text-[#21409A] text-xs font-bold tracking-wider">{testi.role}</p>
                   </div>
                 </div>
-                <p className="text-gray-300 font-medium leading-relaxed italic">
+                <p className="text-gray-600 font-medium leading-relaxed italic">
                   {`"${testi.quote}"`}
                 </p>
                 <div className="mt-8 flex gap-1">
