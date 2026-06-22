@@ -166,8 +166,8 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
                           </li>
                         ))}
                       </ul>
-                      <Link href="/courses" className="text-[12px] font-bold text-[#21409A] flex items-center gap-2 mt-4 hover:translate-x-1 transition-transform">
-                        View detailed programme requirements →
+                      <Link href={item.id === 'scholarships' ? '/scholarships' : '/courses'} className="text-[12px] font-bold text-[#21409A] flex items-center gap-2 mt-4 hover:translate-x-1 transition-transform">
+                        {item.id === 'scholarships' ? 'View scholarship details ->' : 'View detailed programme requirements ->'}
                       </Link>
                     </div>
                   </motion.div>

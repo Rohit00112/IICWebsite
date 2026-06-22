@@ -52,7 +52,7 @@ const ScholarshipsSection = () => {
                   <p className="text-gray-400 text-xs leading-relaxed mb-10 font-medium">
                     Awarded to top performers in their previous academic qualifications.
                   </p>
-                  <Link href="/admissions" className="mt-auto w-full py-4 bg-[#1a1a1a] text-white rounded-xl font-bold text-[12px] hover:bg-[#21409A] transition-colors flex items-center justify-center gap-2">
+                  <Link href="/scholarships" className="mt-auto w-full py-4 bg-[#1a1a1a] text-white rounded-xl font-bold text-[12px] hover:bg-[#21409A] transition-colors flex items-center justify-center gap-2">
                     Learn More
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />

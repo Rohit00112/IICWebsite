@@ -6,6 +6,7 @@ const protectedRoutes = ['/admin'];
 const protectedApiRoutes = [
   { path: '/api/courses', methods: ['POST', 'PUT', 'PATCH', 'DELETE'] },
   { path: '/api/news', methods: ['POST', 'PUT', 'PATCH', 'DELETE'] },
+  { path: '/api/scholarships', methods: ['POST', 'PUT', 'PATCH', 'DELETE'] },
 ];
 
 export async function proxy(request: NextRequest) {
@@ -26,7 +27,7 @@ export async function proxy(request: NextRequest) {
     try {
       await decrypt(session);
       return NextResponse.redirect(new URL('/admin/news', request.url));
-    } catch (error) {
+    } catch {
       // Continue to login if session is invalid
     }
   }
@@ -42,7 +43,7 @@ export async function proxy(request: NextRequest) {
     try {
       await decrypt(session);
       return NextResponse.next();
-    } catch (error) {
+    } catch {
       if (isProtectedApiRoute) {
         return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
       }
@@ -58,6 +59,7 @@ export const config = {
     '/admin/:path*',
     '/api/courses/:path*',
     '/api/news/:path*',
+    '/api/scholarships/:path*',
     '/login',
   ],
 };

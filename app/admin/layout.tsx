@@ -46,6 +46,15 @@ export default function AdminLayout({
       )
     },
     {
+      label: 'Scholarships',
+      href: '/admin/scholarships',
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.21 13.89L7 22l5-3 5 3-1.21-8.11M12 2a7 7 0 110 14 7 7 0 010-14z" />
+        </svg>
+      )
+    },
+    {
       label: 'Security',
       href: '/admin/security',
       icon: (

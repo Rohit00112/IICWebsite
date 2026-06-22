@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/about-us',
     '/contact',
     '/courses',
+    '/scholarships',
     '/news',
     '/life-at-iic',
     '/admissions',

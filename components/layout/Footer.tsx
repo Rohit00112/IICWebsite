@@ -94,6 +94,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/scholarships" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
+                  Scholarships
+                </Link>
+              </li>
+              <li>
                 <Link href="/life-at-iic" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
                   Campus Life
                 </Link>

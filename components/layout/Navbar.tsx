@@ -29,6 +29,7 @@ const Navbar = () => {
     { name: 'About', href: '/about-us' },
     { name: 'Courses', href: '/courses' },
     { name: 'Admission', href: '/admissions' },
+    { name: 'Scholarships', href: '/scholarships' },
     { name: 'Innovation Lab', href: 'https://innovation.iic.edu.np', external: true },
     { name: 'Life at IIC', href: '/life-at-iic' },
     { name: 'News & Events', href: '/news' },

@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
+import Link from 'next/link';
 import RevealText from '../../effects/RevealText';
 
 const pillars = [
@@ -589,6 +590,15 @@ const ScholarshipSection = () => {
               'Applying to pursue a full-time residential Postgraduate Degree at London Metropolitan University, UK.',
             ]}
           />
+        </div>
+
+        <div className="mt-12 flex flex-wrap justify-center gap-4">
+          <Link href="/scholarships" className="rounded-2xl bg-white px-6 py-4 text-sm font-black text-[#21409A] transition-colors hover:bg-[#DCEAFF]">
+            View Scholarship Page
+          </Link>
+          <Link href="/admissions" className="rounded-2xl border border-white/20 px-6 py-4 text-sm font-black text-white transition-colors hover:bg-white/10">
+            Apply Now
+          </Link>
         </div>
       </div>
     </section>
