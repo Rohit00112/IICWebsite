@@ -1,7 +1,7 @@
-const fs = require('fs/promises');
-const path = require('path');
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+import fs from 'fs/promises';
+import path from 'path';
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const MONGODB_URI = "mongodb+srv://subedirohit49:Password123@cluster0.lqorrbb.mongodb.net/iic_website?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -31,15 +31,66 @@ async function seed() {
 
     const CourseSchema = new mongoose.Schema({
       title: String,
+      subtitle: String,
       slug: String,
       category: String,
       duration: String,
       description: String,
       image: String,
       level: String,
+      listing: {
+        title: String,
+        category: String,
+        description: String,
+        image: String,
+        backgroundColor: String,
+        modulesLabel: String,
+        creditsLabel: String,
+        featuredModules: [String],
+        order: Number,
+      },
       featured: Boolean,
       overview: String,
-      modules: [String],
+      details: {
+        level: String,
+        duration: String,
+        intake: String,
+        awardingBody: String,
+      },
+      curriculum: [{
+        title: String,
+        modules: [{
+          name: String,
+          description: String,
+          credits: String,
+        }]
+      }],
+      learningOutcomes: [String],
+      careerOpportunities: [{
+        title: String,
+        description: String,
+        color: String,
+      }],
+      faculty: [{
+        name: String,
+        role: String,
+        description: String,
+        image: String,
+        color: String,
+      }],
+      quote: {
+        text: String,
+        author: String,
+      },
+      projects: [{
+        title: String,
+        cohort: String,
+        image: String,
+      }],
+      faqs: [{
+        question: String,
+        answer: String,
+      }],
     }, { timestamps: true });
 
     const News = mongoose.models.News || mongoose.model('News', NewsSchema);
@@ -48,15 +99,19 @@ async function seed() {
 
     // 1. Seed News
     try {
-      const newsPath = path.join(__dirname, '../data/news.json');
+      const newsPath = path.join(process.cwd(), 'data/news.json');
       const newsContent = await fs.readFile(newsPath, 'utf-8');
-      const newsData = JSON.parse(newsContent);
+      const newsData = JSON.parse(newsContent) as Record<string, unknown>[];
       console.log('Clearing News DB...');
       await News.deleteMany({});
-      const cleanNews = newsData.map(({ id, ...rest }: any) => rest);
+      const cleanNews = newsData.map((item) => {
+        const rest = { ...item };
+        delete rest.id;
+        return rest;
+      });
       await News.insertMany(cleanNews);
       console.log('News seeded.');
-    } catch (e) { console.log('Skipping News seed (file not found)'); }
+    } catch { console.log('Skipping News seed (file not found)'); }
 
     // 2. Seed Admin
     console.log('Clearing Admin DB...');
@@ -71,16 +126,20 @@ async function seed() {
 
     // 3. Seed Courses
     try {
-      const coursesPath = path.join(__dirname, '../data/courses.json');
+      const coursesPath = path.join(process.cwd(), 'data/courses.json');
       const coursesContent = await fs.readFile(coursesPath, 'utf-8');
-      const coursesData = JSON.parse(coursesContent);
+      const coursesData = JSON.parse(coursesContent) as Record<string, unknown>[];
       console.log('Clearing Courses DB...');
       await Course.deleteMany({});
       // Course IDs are strings like "bsc-computing" usually, so we might keep them or let Mongo generate
-      const cleanCourses = coursesData.map(({ id, ...rest }: any) => rest);
+      const cleanCourses = coursesData.map((item) => {
+        const rest = { ...item };
+        delete rest.id;
+        return rest;
+      });
       await Course.insertMany(cleanCourses);
       console.log('Courses seeded.');
-    } catch (e) { console.log('Skipping Courses seed (file not found)'); }
+    } catch { console.log('Skipping Courses seed (file not found)'); }
 
     console.log('Full Seeding completed successfully!');
     process.exit(0);

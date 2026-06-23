@@ -4,8 +4,11 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
+import type { CourseItem } from '@/lib/courses';
 
 import Tilt from '../../effects/Tilt';
+
+const COURSES_APPLY_HREF = '/admissions';
 
 type CourseListItem = {
   title: string;
@@ -18,6 +21,110 @@ type CourseListItem = {
   image: string;
   slug: string;
   features: string[];
+};
+
+const courseDefaults: Record<string, Partial<CourseListItem>> = {
+  'bsc-hons-computing': {
+    title: 'Bachelor in Information Technology',
+    category: 'BSc (Hons) Computing',
+    duration: '3 Years',
+    bg: '#21409A',
+    description: 'A programme for future-ready technologists. Study software engineering, application development, artificial intelligence, and systems analysis through practical projects that connect theory with real industry expectations.',
+    credits: '360 Credits',
+    modules: '17 Modules',
+    image: '/images/courses/bit.png',
+    features: ['Software Engineering', 'AI'],
+  },
+  'digital-business-management': {
+    category: 'Business & Management',
+    duration: '3 Years',
+    bg: '#58595B',
+    description: 'Build the skills to lead digital transformation, manage technology-enabled teams, and connect business strategy with modern tools, data, and customer expectations.',
+    credits: '360 Credits',
+    modules: '17 Modules',
+    image: '/images/courses/bba2.png',
+    features: ['Digital Strategy', 'Management'],
+  },
+  'international-business': {
+    category: 'Business & Management',
+    duration: '3 Years',
+    bg: '#58595B',
+    description: 'Prepare for global markets with a business degree shaped by international standards, cross-cultural collaboration, and practical decision-making.',
+    credits: '360 Credits',
+    modules: '17 Modules',
+    image: '/images/courses/bba1.png',
+    features: ['Global Markets', 'Leadership'],
+  },
+  'advertising-marketing': {
+    category: 'Business & Management',
+    duration: '3 Years',
+    bg: '#21409A',
+    description: 'Develop the creative, analytical, and strategic skills to build brands, understand audiences, and deliver campaigns that make a measurable impact.',
+    credits: '360 Credits',
+    modules: '17 Modules',
+    image: '/images/courses/bba3.png',
+    features: ['Brand Strategy', 'Marketing'],
+  },
+};
+
+const featureBadgeStyles = [
+  'rounded-full bg-white text-[#21409A] border-white/70 shadow-[0_12px_28px_rgba(255,255,255,0.18)]',
+  'rounded-tl-2xl rounded-br-2xl rounded-tr-md rounded-bl-md bg-[#74C044] text-white border-white/25 shadow-[0_12px_28px_rgba(116,192,68,0.25)]',
+];
+
+const getModuleCount = (course: CourseItem) => (
+  course.curriculum?.reduce((total, year) => total + (year.modules?.length || 0), 0) || 0
+);
+
+const getCreditTotal = (course: CourseItem) => (
+  course.curriculum?.reduce((total, year) => (
+    total + (year.modules?.reduce((moduleTotal, module) => {
+      const parsed = Number.parseInt(module.credits || '', 10);
+      return moduleTotal + (Number.isFinite(parsed) ? parsed : 0);
+    }, 0) || 0)
+  ), 0) || 0
+);
+
+const placeholderPillValues = new Set(['string']);
+
+const normalizePills = (items: unknown[] = []) => {
+  const seen = new Set<string>();
+
+  return items.reduce<string[]>((labels, item) => {
+    const label = String(item).trim();
+    const key = label.toLowerCase();
+
+    if (!label || placeholderPillValues.has(key) || seen.has(key)) return labels;
+
+    seen.add(key);
+    labels.push(label);
+    return labels;
+  }, []);
+};
+
+const toCourseListItem = (course: CourseItem): CourseListItem => {
+  const defaults = courseDefaults[course.slug] || {};
+  const listing = course.listing || {};
+  const moduleCount = getModuleCount(course);
+  const creditTotal = getCreditTotal(course);
+  const listingPills = normalizePills(listing.featuredModules || []);
+  const curriculumPills = normalizePills(course.curriculum?.flatMap((year) => (
+    year.modules?.map((module) => module.name) || []
+  )) || []);
+  const topModulePills = listingPills.length > 0 ? listingPills : curriculumPills;
+
+  return {
+    title: listing.title || defaults.title || course.title,
+    category: listing.category || defaults.category || course.category || 'Undergraduate',
+    duration: course.duration || course.details?.duration || defaults.duration || '3 Years',
+    bg: listing.backgroundColor || defaults.bg || '#21409A',
+    description: listing.description || course.description || defaults.description || 'Explore a London Metropolitan University awarded programme designed for practical learning and career readiness.',
+    credits: listing.creditsLabel || (creditTotal ? `${creditTotal} Credits` : defaults.credits) || '360 Credits',
+    modules: listing.modulesLabel || (moduleCount ? `${moduleCount} Modules` : defaults.modules) || '17 Modules',
+    image: listing.image || defaults.image || course.image || '/images/courses/course-hero.png',
+    slug: course.slug,
+    features: topModulePills.length > 0 ? topModulePills.slice(0, 2) : (defaults.features || ['Career Ready', 'Practical Learning']),
+  };
 };
 
 const CourseCard = ({ course, index, total }: { course: CourseListItem, index: number, total: number }) => {
@@ -201,7 +308,7 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
           >
             <div className="flex flex-wrap gap-2">
               {course.features.slice(0, 2).map((feature: string, i: number) => (
-                <span key={i} className="px-3 py-1.5 bg-white/[0.04] rounded-md text-[9px] font-bold tracking-[0.2em] text-white/50 border border-white/10">
+                <span key={i} className={`${featureBadgeStyles[i % featureBadgeStyles.length]} px-3 py-1.5 text-[9px] font-black tracking-[0.14em] border`}>
                   {feature}
                 </span>
               ))}
@@ -230,57 +337,12 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
   );
 };
 
-const CoursesList = () => {
-  const courses = [
-    {
-      title: "Bachelor in Information Technology",
-      category: "BSc (Hons) Computing",
-      duration: "3 Years",
-      bg: "#21409A",
-      description: "A programme for future-ready technologists. Study software engineering, application development, artificial intelligence, and systems analysis through practical projects that connect theory with real industry expectations.",
-      credits: "360 Credits",
-      modules: "17 Modules",
-      image: "/images/courses/bit.png",
-      slug: "bsc-hons-computing",
-      features: ["Software Engineering", "AI"],
-    },
-    {
-      title: "Digital Business Management",
-      category: "Business & Management",
-      duration: "3 Years",
-      bg: "#58595B",
-      description: "Build the skills to lead digital transformation, manage technology-enabled teams, and connect business strategy with modern tools, data, and customer expectations.",
-      credits: "360 Credits",
-      modules: "17 Modules",
-      image: "/images/courses/bba2.png",
-      slug: "digital-business-management",
-      features: ["Digital Strategy", "Management"],
-    },
-    {
-      title: "International Business",
-      category: "Business & Management",
-      duration: "3 Years",
-      bg: "#58595B",
-      description: "Prepare for global markets with a business degree shaped by international standards, cross-cultural collaboration, and practical decision-making.",
-      credits: "360 Credits",
-      modules: "17 Modules",
-      image: "/images/courses/bba1.png",
-      slug: "international-business",
-      features: ["Global Markets", "Leadership"],
-    },
-    {
-      title: "Advertising & Marketing",
-      category: "Business & Management",
-      duration: "3 Years",
-      bg: "#21409A",
-      description: "Develop the creative, analytical, and strategic skills to build brands, understand audiences, and deliver campaigns that make a measurable impact.",
-      credits: "360 Credits",
-      modules: "17 Modules",
-      image: "/images/courses/bba3.png",
-      slug: "advertising-marketing",
-      features: ["Brand Strategy", "Marketing"],
-    }
-  ];
+const CoursesList = ({ courses }: { courses: CourseItem[] }) => {
+  const courseCards = courses.map(toCourseListItem);
+
+  if (courseCards.length === 0) {
+    return null;
+  }
 
   return (
     <section className="relative w-full py-14 md:py-24 bg-[#f3f6fb] overflow-hidden">
@@ -298,13 +360,20 @@ const CoursesList = () => {
         </div>
 
         <div className="relative">
-          {courses.map((course, index) => (
+          {courseCards.map((course, index) => (
             <div key={index} className="mb-[15vh] last:mb-0">
-              <CourseCard course={course} index={index} total={courses.length} />
+              <CourseCard course={course} index={index} total={courseCards.length} />
             </div>
           ))}
           {/* Spacer so last sticky card releases */}
-          <div aria-hidden className="h-[20vh]" />
+          <div className="flex h-[20vh] items-center justify-center">
+            <Link
+              href={COURSES_APPLY_HREF}
+              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#21409A] px-7 py-3 text-xs font-black tracking-[0.18em] text-white shadow-2xl shadow-[#21409A]/20 transition-all hover:bg-[#74C044] active:scale-95"
+            >
+              Apply Now
+            </Link>
+          </div>
         </div>
       </div>
     </section>

@@ -195,7 +195,7 @@ const Navbar = () => {
                     <div className="flex min-w-0 items-center gap-3">
                       <div className="relative h-5 w-[72px] shrink-0 sm:w-20">
                         <Image
-                          src="/images/common/iic_logo.png"
+                          src="/images/common/iic_logo_white.png"
                           alt="Itahari International College"
                           fill
                           sizes="80px"

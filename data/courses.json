@@ -8,6 +8,17 @@
     "description": "Gain a deep understanding of software development, networks, and database systems with our London Met awarded degree.",
     "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
     "level": "Undergraduate",
+    "listing": {
+      "title": "Bachelor in Information Technology",
+      "category": "BSc (Hons) Computing",
+      "description": "A programme for future-ready technologists. Study software engineering, application development, artificial intelligence, and systems analysis through practical projects that connect theory with real industry expectations.",
+      "image": "/images/courses/bit.png",
+      "backgroundColor": "#21409A",
+      "modulesLabel": "17 Modules",
+      "creditsLabel": "360 Credits",
+      "featuredModules": ["Software Engineering", "AI"],
+      "order": 1
+    },
     "featured": true,
     "overview": "The BSc (Hons) Computing programme is designed to provide you with a comprehensive understanding of computer science principles and practical software development skills. You will learn to design, develop, and maintain complex software systems that solve real-world problems.",
     "details": {

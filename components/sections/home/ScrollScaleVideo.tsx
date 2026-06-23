@@ -114,7 +114,7 @@ const ScrollScaleVideo = () => {
           <h2 className="text-white text-6xl font-light leading-[1.1] tracking-tight font-iic">
             A place where <br />
             <span className="text-[#74C044] font-semibold">education</span> and <br />
-            <span className="text-[#74C044] font-semibold">innovation</span> connect.
+            <span className="text-[#74C044] font-semibold">innovation</span> get connected.
           </h2>
         </motion.div>
 
@@ -177,7 +177,7 @@ const ScrollScaleVideo = () => {
                   Visit Hours
                 </span>
                 <p className="text-white text-base font-light font-iic tracking-tight">
-                  Sun – Fri · 9:00 AM – 5:00 PM
+                  Sun – Sat · 7:00 AM – 5:00 PM
                 </p>
               </div>
               <div className="shrink-0 w-11 h-11 rounded-full bg-white/5 border border-white/15 flex items-center justify-center backdrop-blur-sm">

@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
@@ -12,7 +11,7 @@ const campusItems = [
     image: "/images/about/Image-2.png" 
   },
   { 
-    title: "The Innovation Library", 
+    title: "Innovation Lab", 
     image: "/images/about/Image-3.png" 
   },
   { 
@@ -20,7 +19,7 @@ const campusItems = [
     image: "/images/about/Image-4.png" 
   },
   { 
-    title: "Advanced Computing Labs", 
+    title: "Library", 
     image: "/images/about/Image-5.png" 
   },
   {

@@ -25,6 +25,23 @@ const CourseSchema = new Schema({
     },
   },
   level: String,
+  listing: {
+    title: String,
+    category: String,
+    description: String,
+    image: {
+      type: String,
+      validate: {
+        validator: optionalImageSrc,
+        message: IMAGE_SOURCE_ERROR,
+      },
+    },
+    backgroundColor: String,
+    modulesLabel: String,
+    creditsLabel: String,
+    featuredModules: [String],
+    order: Number,
+  },
   featured: {
     type: Boolean,
     default: false,

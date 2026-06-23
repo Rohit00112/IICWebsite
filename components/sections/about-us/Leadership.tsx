@@ -18,13 +18,13 @@ const Leadership = () => {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <span className="text-[#74C044] font-bold tracking-[0.2em] text-sm mb-6 block">
-              Message from the
+            <span className="mb-5 block text-base font-black text-[#4FAE35] md:text-lg">
+              Chairman&apos;s Message
             </span>
             <AnimeReveal
               as="h2"
-              text="Our Chairman"
-              className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-iic leading-tight"
+              text="A Vision for Global Learning"
+              className="mb-10 max-w-2xl text-[44px] font-black leading-[1.04] text-[#101010] sm:text-5xl md:text-6xl xl:text-[72px] font-iic"
               staggerFrom="first"
             />
             <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-iic" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
@@ -65,13 +65,13 @@ const Leadership = () => {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <span className="text-[#21409A] font-bold tracking-[0.2em] text-sm mb-6 block">
-              Message from the
+            <span className="mb-5 block text-base font-black text-[#21409A] md:text-lg">
+              CEO&apos;s Message
             </span>
             <AnimeReveal
               as="h2"
-              text="What our CEO has to say"
-              className="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-10 font-iic leading-tight"
+              text="Preparing Students for Global Careers"
+              className="mb-10 max-w-2xl text-[44px] font-black leading-[1.04] text-[#101010] sm:text-5xl md:text-6xl xl:text-[72px] font-iic"
               staggerFrom="first"
             />
             <AnimeStagger className="space-y-6 text-gray-500 text-lg font-medium leading-relaxed font-iic" selector=":scope > *" staggerDelay={120} translateY={24} duration={700}>
