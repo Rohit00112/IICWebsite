@@ -19,6 +19,11 @@ const ProgrammesSection = () => {
   });
 
   const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const moduleBadgeStyles = [
+    'rounded-full bg-white text-[#21409A] border-white/70 shadow-[0_12px_28px_rgba(255,255,255,0.18)]',
+    'rounded-tl-2xl rounded-br-2xl rounded-tr-md rounded-bl-md bg-[#74C044] text-white border-white/25 shadow-[0_12px_28px_rgba(116,192,68,0.25)]',
+    'rounded-xl bg-[#101010]/28 text-white border-white/20 shadow-[0_12px_28px_rgba(0,0,0,0.16)]',
+  ];
 
   const programmes = [
     {
@@ -42,7 +47,7 @@ const ProgrammesSection = () => {
       duration: '3 Years',
       title: 'BBA',
       subtitle: 'Specialisation',
-      list: ['International Business', 'Digital Business Management', 'Advertising And Marketing'],
+      list: ['International Business', 'Digital Business Management', 'Advertising and Marketing'],
       modules: '17 Modules',
       credits: '360 Credits',
       image: '/images/home/course2.png',
@@ -52,6 +57,7 @@ const ProgrammesSection = () => {
       featurePillColor: 'bg-[#3CC6CF]',
       tags: ['Global Business', 'Digital Management'],
       href: '/courses',
+      applyHref: '/admissions?program=BA%20%28Hons%29%20Business%20Administration',
       parallax: y1
     },
   ];
@@ -87,24 +93,23 @@ const ProgrammesSection = () => {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 w-full mb-14 md:mb-16 max-w-[1440px] 2xl:max-w-[1600px]">
           {programmes.map((prog, index) => (
             <Tilt key={index} strength={4} className="h-full min-w-0">
-              <Link href={prog.href} className="block h-full">
-                <motion.div
-                  initial={{
-                    y: 60,
-                    opacity: 0
-                  }}
-                  whileInView={{
-                    y: 0,
-                    opacity: 1
-                  }}
-                  viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.15 }}
-                  transition={{
-                    delay: index * 0.1,
-                    duration: 1,
-                    ease: [0.16, 1, 0.3, 1]
-                  }}
-                  className={`${prog.bgColor} rounded-[24px] sm:rounded-[40px] md:rounded-[48px] p-5 sm:p-8 md:p-10 2xl:p-12 relative overflow-hidden flex h-full min-h-[440px] sm:min-h-[500px] md:min-h-[520px] xl:min-h-[500px] 2xl:min-h-[540px] flex-col justify-between shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] group cursor-pointer border border-white/5 transition-shadow duration-500 hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)]`}
-                >
+              <motion.div
+                initial={{
+                  y: 60,
+                  opacity: 0
+                }}
+                whileInView={{
+                  y: 0,
+                  opacity: 1
+                }}
+                viewport={{ once: true, margin: "0px 0px -80px 0px", amount: 0.15 }}
+                transition={{
+                  delay: index * 0.1,
+                  duration: 1,
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+                className={`${prog.bgColor} rounded-[24px] sm:rounded-[40px] md:rounded-[48px] p-5 sm:p-8 md:p-10 2xl:p-12 relative overflow-hidden flex h-full min-h-[440px] sm:min-h-[500px] md:min-h-[520px] xl:min-h-[500px] 2xl:min-h-[540px] flex-col justify-between shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] group border border-white/5 transition-shadow duration-500 hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)]`}
+              >
                 <div className="relative z-10 flex flex-col h-full">
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
@@ -148,12 +153,27 @@ const ProgrammesSection = () => {
                         className="space-y-2 mb-8"
                       >
                         {prog.list.map((item, i) => (
-                          <li key={i} className="text-white/80 text-[12px] sm:text-[13px] md:text-[15px] flex items-center gap-2.5 sm:gap-3 font-medium leading-relaxed transition-transform duration-300 hover:translate-x-2">
-                            <span className="w-1.5 h-1.5 bg-white rounded-full shrink-0 shadow-[0_0_8px_rgba(255,255,255,0.6)]"></span>
+                          <li key={i} className={`text-[12px] sm:text-[13px] md:text-[15px] flex items-center gap-2.5 sm:gap-3 font-medium leading-relaxed transition-transform duration-300 hover:translate-x-2 ${i === prog.list.length - 1 ? 'text-white' : 'text-white/80'}`}>
+                            <span className={`${i === prog.list.length - 1 ? 'h-2.5 w-2.5 rotate-45 rounded-[3px] bg-[#74C044] shadow-[0_0_14px_rgba(116,192,68,0.85)]' : 'w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.6)]'} shrink-0`}></span>
                             {item}
                           </li>
                         ))}
                       </motion.ul>
+                    )}
+
+                    {prog.applyHref && (
+                      <motion.div
+                        variants={{
+                          hidden: { opacity: 0, y: 10 },
+                          visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ delay: index * 0.1 + 0.92 }}
+                        className="mb-8"
+                      >
+                        <Link href={prog.applyHref} className="inline-flex min-h-11 items-center justify-center rounded-lg bg-white px-5 py-3 text-[11px] font-black tracking-[0.18em] text-[#21409A] shadow-xl shadow-black/10 transition-all hover:bg-[#74C044] hover:text-white active:scale-95">
+                          Apply Now
+                        </Link>
+                      </motion.div>
                     )}
                   </div>
 
@@ -182,21 +202,26 @@ const ProgrammesSection = () => {
                       transition={{ delay: index * 0.1 + 1.1 }}
                       className="flex flex-col gap-4 pt-5 sm:pt-6 border-t border-white/10"
                     >
-                      <div className="flex max-w-[66%] gap-2 flex-wrap min-w-0 sm:max-w-[58%] lg:max-w-[62%]">
+                      <div className="flex max-w-[72%] flex-col gap-2 min-w-0 sm:max-w-[64%] lg:max-w-[68%]">
+                        <p className="text-[8px] font-black uppercase tracking-[0.24em] text-white/60">
+                          Top Modules
+                        </p>
+                        <div className="flex flex-wrap gap-2">
                         {prog.tags?.map((item, i) => (
-                          <span key={i} className={`${prog.featurePillColor} max-w-full text-[7px] sm:text-[9px] font-black tracking-[0.1em] sm:tracking-widest leading-snug text-white/60 px-2.5 sm:px-3 py-1.5 rounded-md border border-white/10`}>
+                          <span key={i} className={`${moduleBadgeStyles[i % moduleBadgeStyles.length]} max-w-full text-[8px] sm:text-[9px] font-black tracking-[0.08em] sm:tracking-[0.12em] leading-snug px-2.5 sm:px-3 py-1.5 border`}>
                             {item}
                           </span>
                         ))}
+                        </div>
                       </div>
-                      <div className="flex shrink-0 items-center gap-4 self-start text-[11px] font-black tracking-widest text-white group/btn">
+                      <Link href={prog.href} className="flex shrink-0 items-center gap-4 self-start text-[11px] font-black tracking-widest text-white group/btn">
                         Explore
                         <div className="w-10 h-10 rounded-full border-2 border-white/10 flex items-center justify-center group-hover/btn:border-[#74C044] group-hover/btn:bg-[#74C044] transition-all duration-500">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                           </svg>
                         </div>
-                      </div>
+                      </Link>
                     </motion.div>
                   </div>
                 </div>
@@ -224,8 +249,7 @@ const ProgrammesSection = () => {
 
                 {/* Decorative background glow */}
                 <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
-                </motion.div>
-              </Link>
+              </motion.div>
             </Tilt>
           ))}
         </div>
@@ -237,7 +261,7 @@ const ProgrammesSection = () => {
           />
           <Magnetic strength={0.3}>
             <Link href="/admissions" className="inline-flex bg-[#21409A] text-white px-8 sm:px-12 py-3.5 sm:py-4 rounded-lg font-bold text-base sm:text-lg shadow-2xl hover:opacity-90 transition-all active:scale-95">
-              Enroll Now
+              Enrol Now
             </Link>
           </Magnetic>
         </div>

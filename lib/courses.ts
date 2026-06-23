@@ -12,6 +12,17 @@ export interface CourseItem {
   description: string;
   image: string;
   level?: string;
+  listing?: {
+    title?: string;
+    category?: string;
+    description?: string;
+    image?: string;
+    backgroundColor?: string;
+    modulesLabel?: string;
+    creditsLabel?: string;
+    featuredModules?: string[];
+    order?: number;
+  };
   featured: boolean;
   overview?: string;
   details?: {
@@ -63,6 +74,7 @@ type CourseDocument = Partial<Omit<CourseItem, 'id'>> & {
 };
 
 import { revalidateTag } from 'next/cache';
+import { sanitizeHtml } from './sanitize';
 
 function safeRevalidateTag(tag: string) {
   try {
@@ -72,12 +84,44 @@ function safeRevalidateTag(tag: string) {
   }
 }
 
+const placeholderPillValues = new Set(['string']);
+
+function normalizePillLabels(items: unknown): string[] {
+  if (!Array.isArray(items)) return [];
+
+  const seen = new Set<string>();
+
+  return items.reduce<string[]>((labels, item) => {
+    const label = String(item).trim();
+    const key = label.toLowerCase();
+
+    if (!label || placeholderPillValues.has(key) || seen.has(key)) return labels;
+
+    seen.add(key);
+    labels.push(label);
+    return labels;
+  }, []);
+}
+
+function normalizeCourseData(data: Partial<CourseItem>): Partial<CourseItem> {
+  if (!data.listing) return data;
+
+  return {
+    ...data,
+    listing: {
+      ...data.listing,
+      featuredModules: normalizePillLabels(data.listing.featuredModules),
+    },
+  };
+}
+
 function mapCourse(doc: CourseDocument): CourseItem {
   const plain = typeof doc.toObject === 'function'
     ? doc.toObject({ depopulate: true, virtuals: false, flattenObjectIds: true, versionKey: false })
     : doc;
   const d = plain.details || {};
   const q = plain.quote || {};
+  const listing = plain.listing || {};
   return {
     id: String(plain._id ?? ''),
     title: plain.title || '',
@@ -88,6 +132,17 @@ function mapCourse(doc: CourseDocument): CourseItem {
     description: plain.description || '',
     image: toSafeImageSrc(plain.image, '/images/courses/course-hero.png'),
     level: plain.level,
+    listing: {
+      title: listing.title || '',
+      category: listing.category || '',
+      description: listing.description || '',
+      image: toSafeImageSrc(listing.image, ''),
+      backgroundColor: listing.backgroundColor || '',
+      modulesLabel: listing.modulesLabel || '',
+      creditsLabel: listing.creditsLabel || '',
+      featuredModules: normalizePillLabels(listing.featuredModules),
+      order: typeof listing.order === 'number' ? listing.order : undefined,
+    },
     featured: !!plain.featured,
     overview: plain.overview || '',
     details: {
@@ -133,7 +188,15 @@ function mapCourse(doc: CourseDocument): CourseItem {
 export async function getAllCourses(): Promise<CourseItem[]> {
   await dbConnect();
   const courses = await Course.find({}).sort({ createdAt: -1 });
-  return courses.map(mapCourse);
+  return courses.map(mapCourse).sort((a, b) => {
+    const aOrder = a.listing?.order;
+    const bOrder = b.listing?.order;
+
+    if (typeof aOrder === 'number' && typeof bOrder === 'number' && aOrder !== bOrder) return aOrder - bOrder;
+    if (typeof aOrder === 'number') return -1;
+    if (typeof bOrder === 'number') return 1;
+    return 0;
+  });
 }
 
 export async function getCourseBySlug(slug: string): Promise<CourseItem | null> {
@@ -152,24 +215,24 @@ export async function getCourseById(id: string): Promise<CourseItem | null> {
   }
 }
 
-import { sanitizeHtml } from './sanitize';
-
 export async function createCourse(data: Partial<CourseItem>): Promise<CourseItem> {
   await dbConnect();
-  if (data.overview) {
-    data.overview = sanitizeHtml(data.overview);
+  const normalizedData = normalizeCourseData(data);
+  if (normalizedData.overview) {
+    normalizedData.overview = sanitizeHtml(normalizedData.overview);
   }
-  const newItem = await Course.create(data);
+  const newItem = await Course.create(normalizedData);
   safeRevalidateTag('courses');
   return mapCourse(newItem);
 }
 
 export async function updateCourse(id: string, data: Partial<CourseItem>): Promise<CourseItem | null> {
   await dbConnect();
-  if (data.overview) {
-    data.overview = sanitizeHtml(data.overview);
+  const normalizedData = normalizeCourseData(data);
+  if (normalizedData.overview) {
+    normalizedData.overview = sanitizeHtml(normalizedData.overview);
   }
-  const updatedItem = await Course.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+  const updatedItem = await Course.findByIdAndUpdate(id, normalizedData, { new: true, runValidators: true });
   safeRevalidateTag('courses');
   return updatedItem ? mapCourse(updatedItem) : null;
 }

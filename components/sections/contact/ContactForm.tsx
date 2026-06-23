@@ -175,12 +175,8 @@ const ContactForm = () => {
                 </div>
                 <div className="space-y-4">
                   <div className="flex justify-between text-[13px] md:text-sm font-bold">
-                    <span className="text-gray-400">Sunday - Friday</span>
-                    <span className="text-[#1a1a1a]">8:00 AM - 5:00 PM</span>
-                  </div>
-                  <div className="flex justify-between text-[13px] md:text-sm font-bold">
-                    <span className="text-gray-400">Saturday</span>
-                    <span className="text-[#ED1C24] tracking-wide">Closed</span>
+                    <span className="text-gray-400">Sunday - Saturday</span>
+                    <span className="text-[#1a1a1a]">7:00 AM - 5:00 PM</span>
                   </div>
                 </div>
               </motion.div>

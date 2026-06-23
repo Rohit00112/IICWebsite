@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   let session;
   try {
     session = await getSession();
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
   }
 

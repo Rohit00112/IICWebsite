@@ -17,6 +17,18 @@ interface CurriculumYear {
   modules: Module[];
 }
 
+interface ListingCard {
+  title?: string;
+  category?: string;
+  description?: string;
+  image?: string;
+  backgroundColor?: string;
+  modulesLabel?: string;
+  creditsLabel?: string;
+  featuredModules?: string[];
+  order?: number;
+}
+
 interface CareerPath {
   title: string;
   description: string;
@@ -51,6 +63,7 @@ interface CourseItem {
   description: string;
   image: string;
   level: string;
+  listing?: ListingCard;
   featured: boolean;
   overview: string;
   details: {
@@ -67,13 +80,39 @@ interface CourseItem {
   faqs?: FAQ[];
 }
 
+const cleanTopModulePills = (items: string[] = []) => {
+  const seen = new Set<string>();
+
+  return items.reduce<string[]>((labels, item) => {
+    const label = item.trim();
+    const key = label.toLowerCase();
+
+    if (!label || key === 'string' || seen.has(key)) return labels;
+
+    seen.add(key);
+    labels.push(label);
+    return labels;
+  }, []);
+};
+
 export default function EditCourseForm({ course }: { course: CourseItem }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [activeSection, setActiveSection] = useState<'core' | 'curriculum' | 'outcomes' | 'career' | 'faculty' | 'projects' | 'faqs'>('core');
+  const [activeSection, setActiveSection] = useState<'core' | 'listing' | 'curriculum' | 'outcomes' | 'career' | 'faculty' | 'projects' | 'faqs'>('core');
   
   const [formData, setFormData] = useState({
     ...course,
+    listing: {
+      title: course.listing?.title || '',
+      category: course.listing?.category || '',
+      description: course.listing?.description || '',
+      image: course.listing?.image || '',
+      backgroundColor: course.listing?.backgroundColor || '#21409A',
+      modulesLabel: course.listing?.modulesLabel || '17 Modules',
+      creditsLabel: course.listing?.creditsLabel || '360 Credits',
+      featuredModules: course.listing?.featuredModules || [],
+      order: course.listing?.order ?? 0,
+    },
     learningOutcomes: course.learningOutcomes || [],
     careerOpportunities: course.careerOpportunities || [],
     faculty: course.faculty || [],
@@ -85,11 +124,19 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
     e.preventDefault();
     setLoading(true);
 
+    const payload = {
+      ...formData,
+      listing: {
+        ...formData.listing,
+        featuredModules: cleanTopModulePills(formData.listing.featuredModules),
+      },
+    };
+
     try {
       const res = await fetch(`/api/courses/${course.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
@@ -119,6 +166,36 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
   const addFaculty = () => setFormData({ ...formData, faculty: [...(formData.faculty || []), { name: '', role: '', description: '', image: '' }] });
   const addProject = () => setFormData({ ...formData, projects: [...(formData.projects || []), { title: '', cohort: '', image: '' }] });
   const addFAQ = () => setFormData({ ...formData, faqs: [...(formData.faqs || []), { question: '', answer: '' }] });
+  const addListingPill = () => setFormData((current) => ({
+    ...current,
+    listing: {
+      ...current.listing,
+      featuredModules: [...current.listing.featuredModules, ''],
+    },
+  }));
+  const updateListingPill = (idx: number, value: string) => setFormData((current) => {
+    const featuredModules = [...current.listing.featuredModules];
+    while (featuredModules.length <= idx) featuredModules.push('');
+    featuredModules[idx] = value;
+    return {
+      ...current,
+      listing: {
+        ...current.listing,
+        featuredModules,
+      },
+    };
+  });
+  const removeListingPill = (idx: number) => setFormData((current) => ({
+    ...current,
+    listing: {
+      ...current.listing,
+      featuredModules: current.listing.featuredModules.filter((_, i) => i !== idx),
+    },
+  }));
+
+  const visibleListingPills = formData.listing.featuredModules.length > 0
+    ? formData.listing.featuredModules
+    : [''];
 
   return (
     <div className="max-w-[1600px] mx-auto pb-20">
@@ -148,6 +225,7 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
         <div className="lg:col-span-3 sticky top-8 space-y-2">
           {[
             { id: 'core', label: 'Core Metadata', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+            { id: 'listing', label: 'Listing Card', icon: 'M4 6h16M4 12h16M4 18h7' },
             { id: 'curriculum', label: 'Curriculum Structure', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' },
             { id: 'outcomes', label: 'Entry & Outcomes', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
             { id: 'career', label: 'Career Paths', icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
@@ -216,6 +294,97 @@ export default function EditCourseForm({ course }: { course: CourseItem }) {
                     onChange={(val) => setFormData({...formData, overview: val})} 
                     placeholder="Provide a comprehensive programme summary..."
                   />
+                </div>
+              </div>
+            )}
+
+            {activeSection === 'listing' && (
+              <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4">
+                <div>
+                  <h3 className="text-xl font-bold text-[#1A2B56]">Courses Page Listing Card</h3>
+                  <p className="mt-2 text-sm font-medium text-gray-500">Controls the card shown on the public courses listing page. Empty fields fall back to core course data.</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Display Title</label>
+                    <input type="text" value={formData.listing.title} onChange={(e) => setFormData({...formData, listing: {...formData.listing, title: e.target.value}})} className="form-input-admin" placeholder="Bachelor in Information Technology" />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Display Order</label>
+                    <input type="number" value={formData.listing.order} onChange={(e) => setFormData({...formData, listing: {...formData.listing, order: Number(e.target.value)}})} className="form-input-admin" placeholder="1" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Listing Category</label>
+                    <input type="text" value={formData.listing.category} onChange={(e) => setFormData({...formData, listing: {...formData.listing, category: e.target.value}})} className="form-input-admin" placeholder="BSc (Hons) Computing" />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Card Colour</label>
+                    <input type="text" value={formData.listing.backgroundColor} onChange={(e) => setFormData({...formData, listing: {...formData.listing, backgroundColor: e.target.value}})} className="form-input-admin" placeholder="#21409A" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Modules Label</label>
+                    <input type="text" value={formData.listing.modulesLabel} onChange={(e) => setFormData({...formData, listing: {...formData.listing, modulesLabel: e.target.value}})} className="form-input-admin" placeholder="17 Modules" />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Credits Label</label>
+                    <input type="text" value={formData.listing.creditsLabel} onChange={(e) => setFormData({...formData, listing: {...formData.listing, creditsLabel: e.target.value}})} className="form-input-admin" placeholder="360 Credits" />
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <ImageUpload
+                    label="Listing Image"
+                    value={formData.listing.image || ''}
+                    onChange={(url) => setFormData({...formData, listing: {...formData.listing, image: url}})}
+                    onRemove={() => setFormData({...formData, listing: {...formData.listing, image: ''}})}
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold tracking-widest text-gray-700">Listing Description</label>
+                  <textarea rows={3} value={formData.listing.description} onChange={(e) => setFormData({...formData, listing: {...formData.listing, description: e.target.value}})} className="form-input-admin" placeholder="Short listing copy shown on the course card..." />
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-bold tracking-widest text-gray-700">Top Modules / Pills</label>
+                    <button
+                      type="button"
+                      onClick={addListingPill}
+                      className="rounded-full border border-[#21409A]/20 bg-[#21409A]/5 px-4 py-2 text-xs font-bold tracking-widest text-[#21409A] transition-colors hover:bg-[#21409A] hover:text-white"
+                    >
+                      + Add Module
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {visibleListingPills.map((module, idx) => (
+                      <div key={`listing-module-${idx}`} className="flex gap-3">
+                        <input
+                          type="text"
+                          value={module}
+                          onChange={(e) => updateListingPill(idx, e.target.value)}
+                          className="form-input-admin"
+                          placeholder="Type a top module, e.g. Software Engineering"
+                        />
+                        {formData.listing.featuredModules.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => removeListingPill(idx)}
+                            className="shrink-0 rounded-2xl border border-red-100 px-5 text-xs font-black tracking-widest text-red-500 transition-colors hover:bg-red-50"
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}

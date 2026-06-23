@@ -74,7 +74,7 @@ const StatsStrip = () => {
   const stats = [
     { label: 'Industry-Ready Graduates', value: 1000, suffix: '+' },
     { label: 'Industry Partners', value: 150, suffix: '+' },
-    { label: 'Years of Excellence', value: 8, suffix: '+' },
+    { label: 'Years of Excellence', value: 9, suffix: '+' },
   ];
 
   return (

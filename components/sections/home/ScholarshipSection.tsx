@@ -2,7 +2,6 @@
 
 import React, { useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
-import Link from 'next/link';
 import RevealText from '../../effects/RevealText';
 
 const pillars = [
@@ -403,7 +402,7 @@ const ScholarshipSection = () => {
           transition={{ delay: 0.25, duration: 0.8 }}
           className="max-w-4xl text-center text-3xl font-black leading-[1.08] text-white sm:text-5xl md:text-6xl font-iic"
         >
-          Triple A Scholarship at Itahari International College
+          Scholarship at Itahari International College
         </motion.h2>
 
         <RevealText
@@ -557,7 +556,7 @@ const ScholarshipSection = () => {
           transition={{ delay: 0.25, duration: 0.8 }}
           className="mt-5 max-w-4xl text-center text-3xl font-black leading-[1.08] text-white sm:text-5xl md:text-6xl font-iic"
         >
-          Fully Funded Masters Degree
+          Fully Funded Master&apos;s Degree
         </motion.h2>
 
         <RevealText
@@ -573,7 +572,7 @@ const ScholarshipSection = () => {
           className="mt-10 max-w-3xl space-y-5 text-center"
         >
           <p className="text-base font-medium leading-relaxed text-white/68 sm:text-lg">
-            Upon completion of <span className="font-bold text-[#A8C8FF]">London Metropolitan University&apos;s Bachelor&apos;s Degree</span>, eligible students may receive postgraduate scholarship opportunities within ING colleges. We hope this support inspires future generations to pursue meaningful opportunities and build stronger futures.
+            Upon completion of an eligible <span className="font-bold text-[#A8C8FF]">IT or Business programme</span>, students may receive postgraduate scholarship opportunities within ING colleges. We hope this support inspires future generations to pursue meaningful opportunities and build stronger futures.
           </p>
           <p className="text-base font-medium leading-relaxed text-white/68 sm:text-lg">
             We aim to support each student&apos;s <span className="font-bold text-white">professional and personal growth.</span>
@@ -586,20 +585,12 @@ const ScholarshipSection = () => {
             intro="Applicants can apply for the scholarship if they meet the following criteria:"
             items={[
               'Citizen of Nepal.',
-              'Completed and obtained a London Metropolitan University Undergraduate Degree with FIRST CLASS HONOURS from Itahari International College.',
+              'Completed and obtained an eligible IT or Business undergraduate degree with FIRST CLASS HONOURS from Itahari International College.',
               'Applying to pursue a full-time residential Postgraduate Degree at London Metropolitan University, UK.',
             ]}
           />
         </div>
 
-        <div className="mt-12 flex flex-wrap justify-center gap-4">
-          <Link href="/scholarships" className="rounded-2xl bg-white px-6 py-4 text-sm font-black text-[#21409A] transition-colors hover:bg-[#DCEAFF]">
-            View Scholarship Page
-          </Link>
-          <Link href="/admissions" className="rounded-2xl border border-white/20 px-6 py-4 text-sm font-black text-white transition-colors hover:bg-white/10">
-            Apply Now
-          </Link>
-        </div>
       </div>
     </section>
   );

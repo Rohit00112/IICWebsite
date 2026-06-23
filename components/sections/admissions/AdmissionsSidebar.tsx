@@ -11,10 +11,6 @@ const FileIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
 );
 
-const DownloadIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-);
-
 const BookIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
 );
@@ -43,7 +39,6 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
   const [openAccordion, setOpenAccordion] = useState<string | null>('requirements');
 
   const resources = [
-    { name: 'Download Offline Form (PDF)', icon: <DownloadIcon />, gated: false, href: 'mailto:admissions@iic.edu.np?subject=Offline%20application%20form%20request' },
     { name: 'Download College Brochure', icon: <BookIcon />, gated: true, href: 'https://iic.edu.np/pdf/iic_brochure.pdf' },
   ];
 
@@ -55,7 +50,7 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
     ]},
     { id: 'scholarships', title: 'Scholarships', icon: <MedalIcon />, content: [
       'Triple A Scholarship — up to 100% tuition waiver for excellence in Academics, Attendance, and Attitude (awarded to the top 10% of students).',
-      'Fully Funded Masters — 100% postgraduate scholarship at ING Colleges for First Class Honours graduates of our London Met BA programme.',
+      'Fully Funded Masters — 100% postgraduate scholarship at ING Colleges for First Class Honours graduates of eligible IT or Business programmes.',
       'Eligibility includes good academic standing, 80%+ module attendance, timely fee payment, and a clean disciplinary record.'
     ] },
     { id: 'timeline', title: 'What Happens Next?', icon: <CalendarIcon />, content: [
@@ -201,20 +196,20 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
               <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm bg-gray-100">
                 <Image 
                   src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop"
-                  alt="Sarah Sharma"
+                  alt="Riju Bhattarai"
                   fill
                   className="object-cover"
                 />
               </div>
               <div className="flex flex-col">
-                <h4 className="font-bold text-[#1a1a1a] text-[14px]">Sarah Sharma</h4>
+                <h4 className="font-bold text-[#1a1a1a] text-[14px]">Riju Bhattarai</h4>
                 <span className="text-gray-400 text-[11px] font-medium tracking-wider">Admissions Counsellor</span>
               </div>
             </div>
 
             <div className="flex flex-col gap-3">
               <Magnetic strength={0.1}>
-                <a href="tel:+9779801003030" className="w-full py-3.5 bg-[#21409A] text-white rounded-xl text-[13px] font-bold flex items-center justify-center gap-3 shadow-xl shadow-blue-900/10 hover:brightness-110 transition-all">
+                <a href="tel:+9779801305392" aria-label="Request a callback from Riju Bhattarai at 9801305392" className="w-full py-3.5 bg-[#21409A] text-white rounded-xl text-[13px] font-bold flex items-center justify-center gap-3 shadow-xl shadow-blue-900/10 hover:brightness-110 transition-all">
                   <span className="text-white/70">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                   </span>
