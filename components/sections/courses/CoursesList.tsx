@@ -366,10 +366,10 @@ const CoursesList = ({ courses }: { courses: CourseItem[] }) => {
             </div>
           ))}
           {/* Spacer so last sticky card releases */}
-          <div className="flex h-[20vh] items-center justify-center">
+          <div className="flex h-[8vh] items-center justify-center pt-8">
             <Link
               href={COURSES_APPLY_HREF}
-              className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[#21409A] px-7 py-3 text-xs font-black tracking-[0.18em] text-white shadow-2xl shadow-[#21409A]/20 transition-all hover:bg-[#74C044] active:scale-95"
+              className="inline-flex min-h-14 items-center justify-center rounded-xl bg-[#21409A] px-12 py-4 text-sm md:text-base font-black tracking-[0.18em] text-white shadow-2xl shadow-[#21409A]/20 transition-all hover:bg-[#74C044] active:scale-95"
             >
               Apply Now
             </Link>

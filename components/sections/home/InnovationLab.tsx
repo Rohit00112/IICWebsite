@@ -33,7 +33,7 @@ const InnovationLab = () => {
               Life beyond the
             </motion.h2>
           </Magnetic>
-          <div className="overflow-hidden py-2">
+          <div className="overflow-hidden px-12 py-8">
             <Magnetic strength={0.2}>
               <motion.h1
                 initial={{ y: "100%" }}

@@ -80,7 +80,7 @@ const WhyChooseIIC = () => {
             return (
               <div
                 key={idx}
-                className={`relative flex flex-col items-stretch lg:items-center justify-center gap-0 lg:gap-0 ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+                className={`relative flex flex-col items-stretch lg:items-stretch justify-center gap-0 lg:gap-0 ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
               >
                 {/* Image */}
                 <motion.div
@@ -88,7 +88,7 @@ const WhyChooseIIC = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.9, ease: 'easeOut' }}
-                  className={`w-full lg:w-[58%] h-[260px] sm:h-[340px] md:h-[520px] relative rounded-t-2xl md:rounded-t-[2rem] lg:rounded-t-none ${reverse ? 'lg:rounded-r-[2.5rem] lg:rounded-l-none' : 'lg:rounded-l-[2.5rem] lg:rounded-r-none'} overflow-hidden shadow-xl`}
+                  className={`w-full lg:w-[58%] h-[260px] sm:h-[340px] md:h-[520px] lg:h-auto relative rounded-t-2xl md:rounded-t-[2rem] lg:rounded-t-none ${reverse ? 'lg:rounded-r-[2.5rem] lg:rounded-l-none' : 'lg:rounded-l-[2.5rem] lg:rounded-r-none'} overflow-hidden shadow-xl`}
                 >
                   <Image
                     src={feature.image}
@@ -97,12 +97,6 @@ const WhyChooseIIC = () => {
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 58vw"
                   />
-                  {/* Number badge — placed on the outer corner so the overlapping card never covers it */}
-                  <div className={`absolute top-4 md:top-6 ${reverse ? 'right-4 md:right-6' : 'left-4 md:left-6'} bg-white/95 backdrop-blur-sm rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center shadow-lg z-30`}>
-                    <span className="text-[#21409A] font-black text-sm md:text-base font-iic">
-                      0{idx + 1}
-                    </span>
-                  </div>
                 </motion.div>
 
                 {/* Content card */}
