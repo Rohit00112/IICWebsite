@@ -402,7 +402,7 @@ const ScholarshipSection = () => {
           transition={{ delay: 0.25, duration: 0.8 }}
           className="max-w-4xl text-center text-3xl font-black leading-[1.08] text-white sm:text-5xl md:text-6xl font-iic"
         >
-          Scholarship at Itahari International College
+          Scholarship at <br />Itahari International College
         </motion.h2>
 
         <RevealText
@@ -458,7 +458,7 @@ const ScholarshipSection = () => {
           transition={{ delay: 0.2, duration: 0.7 }}
           className="mt-12 text-center text-base font-black text-white/76 sm:text-xl font-iic"
         >
-          Hit all 3 pillars <span className="text-white/40">→</span> <span className="text-[#8DBAFF]">up to 100% tuition off</span>
+          Achieve all 3 pillars <span className="text-white/40">→</span> <span className="text-[#8DBAFF]">up to 100% tuition off</span>
         </motion.p>
 
         <motion.div

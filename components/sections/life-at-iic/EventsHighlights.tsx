@@ -10,47 +10,47 @@ const events = [
   {
     title: 'Spring Carnival',
     description: 'A campus-wide celebration of music, food, and student-led performances marking the season.',
-    image: '/images/about/img1.png',
+    image: '/images/lifestyle/carnival.JPG',
   },
   {
     title: 'IICQuest',
     description: 'Our flagship inter-college tech and quiz challenge — teams compete across rounds of logic and creativity.',
-    image: '/images/home/ivlab2.png',
+    image: '/images/lifestyle/quest.jpg',
   },
   {
     title: 'Innovex',
     description: 'An innovation showcase where students present prototypes, research, and startup ideas to industry mentors.',
-    image: '/images/home/ivlab3.png',
+    image: '/images/lifestyle/innovex.jpg',
   },
   {
     title: 'Holi',
     description: 'Colors, music, and community — Itahari International College celebrates the festival of spring with the entire student body.',
-    image: '/images/about/img2.png',
+    image: '/images/lifestyle/holi.jpg',
   },
   {
     title: 'Sports Week',
     description: 'A week of futsal, basketball, table tennis, and athletics that turn the campus into one big arena.',
-    image: '/images/home/iic-lifestyle 1.png',
+    image: '/images/lifestyle/sports-week.jpg',
   },
   {
     title: 'Creative Clash',
     description: 'A design and creative arts face-off — film, photography, music, and visual storytelling.',
-    image: '/images/home/iic-lifestyle 2.png',
+    image: '/images/lifestyle/creative-clash.jpg',
   },
   {
-    title: 'Strategic',
+    title: 'Strategic Edge',
     description: 'A business strategy and case competition that puts management students against real-world scenarios.',
-    image: '/images/home/iic-lifestyle 3.png',
+    image: '/images/lifestyle/strategic.jpg',
   },
   {
     title: 'Graduation',
     description: 'The culminating moment — celebrating each cohort as they step into their global careers.',
-    image: '/images/about/Image-3.png',
+    image: '/images/lifestyle/graduation.jpg',
   },
   {
     title: 'Christmas',
     description: 'A warm, lights-and-laughter end-of-year gathering bringing students, faculty, and families together.',
-    image: '/images/about/Image-4.png',
+    image: '/images/lifestyle/christmas.jpg',
   },
 ];
 

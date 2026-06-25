@@ -29,18 +29,19 @@ const NewsLoader = () => {
             repeat: Infinity,
             ease: "easeInOut" 
           }}
-          className="relative w-48 md:w-64 h-16 md:h-20 mb-8"
+          className="relative mb-8 h-12 w-56 overflow-hidden md:h-16 md:w-72"
         >
           <Image
             src="/images/common/iic_logo.png"
             alt="Itahari International College Logo"
             fill
-            className="object-contain"
+            sizes="(max-width: 768px) 224px, 288px"
+            className="object-cover"
             priority
           />
         </motion.div>
 
-        <div className="w-48 md:w-64">
+        <div className="w-56 md:w-72">
           <div className="flex justify-between items-end mb-2">
             <span className="text-[#21409A] text-[10px] font-black tracking-widest opacity-50">
               Fetching News

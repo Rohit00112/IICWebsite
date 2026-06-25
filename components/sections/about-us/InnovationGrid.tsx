@@ -8,19 +8,19 @@ import RevealText from '../../effects/RevealText';
 const campusItems = [
   { 
     title: "Advanced Computing Labs", 
-    image: "/images/about/Image-2.png" 
+    image: "/images/common/lab.JPG" 
   },
   { 
     title: "Innovation Lab", 
-    image: "/images/about/Image-3.png" 
+    image: "/images/common/innovation.JPG" 
   },
   { 
     title: "Lecture Theatres",
-    image: "/images/about/Image-4.png" 
+    image: "/images/common/lecture.JPG" 
   },
   { 
     title: "Library", 
-    image: "/images/about/Image-5.png" 
+    image: "/images/common/library.JPG" 
   },
   {
     title: "Cafeteria",
@@ -28,7 +28,7 @@ const campusItems = [
   },
   {
     title: "Seminar Hall",
-    image: "/images/about/img2.png"
+    image: "/images/common/seminar.JPG"
   }
 ];
 

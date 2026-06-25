@@ -14,6 +14,11 @@ const FluidBackground = dynamic(() => import("@/components/effects/FluidBackgrou
   ssr: false,
 });
 
+const CURSOR_SIZE = 32;
+const CURSOR_OFFSET = CURSOR_SIZE / 2;
+const DOT_OFFSET = 12;
+const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, label, summary, [role="button"], [data-cursor-hover]';
+
 export default function ClientLayoutWrapper({
   children,
 }: {
@@ -27,37 +32,26 @@ export default function ClientLayoutWrapper({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { damping: 25, stiffness: 200 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
-
+  const [isCursorVisible, setIsCursorVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const isCursorVisibleRef = useRef(false);
   const isHoveredRef = useRef(false);
 
   useEffect(() => {
     const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
     if (!hasFinePointer) return;
 
-    let frame: number | null = null;
-    let latestX = 0;
-    let latestY = 0;
-
     const handlePointerMove = (e: PointerEvent) => {
-      latestX = e.clientX - 16;
-      latestY = e.clientY - 16;
+      mouseX.set(e.clientX - CURSOR_OFFSET);
+      mouseY.set(e.clientY - CURSOR_OFFSET);
 
-      if (frame !== null) return;
+      if (!isCursorVisibleRef.current) {
+        isCursorVisibleRef.current = true;
+        setIsCursorVisible(true);
+      }
 
-      frame = window.requestAnimationFrame(() => {
-        mouseX.set(latestX);
-        mouseY.set(latestY);
-        frame = null;
-      });
-    };
-
-    const handlePointerOver = (e: PointerEvent) => {
-      const target = e.target as HTMLElement;
-      const nextHovered = Boolean(target.closest('a, button'));
+      const target = e.target instanceof Element ? e.target : null;
+      const nextHovered = Boolean(target?.closest(INTERACTIVE_SELECTOR));
 
       if (isHoveredRef.current !== nextHovered) {
         isHoveredRef.current = nextHovered;
@@ -65,12 +59,19 @@ export default function ClientLayoutWrapper({
       }
     };
 
+    const handlePointerLeave = () => {
+      if (!isCursorVisibleRef.current) return;
+
+      isCursorVisibleRef.current = false;
+      setIsCursorVisible(false);
+    };
+
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerover", handlePointerOver, { passive: true });
+    document.documentElement.addEventListener("pointerleave", handlePointerLeave, { passive: true });
+
     return () => {
-      if (frame !== null) window.cancelAnimationFrame(frame);
       window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerover", handlePointerOver);
+      document.documentElement.removeEventListener("pointerleave", handlePointerLeave);
     };
   }, [mouseX, mouseY]);
 
@@ -80,9 +81,6 @@ export default function ClientLayoutWrapper({
     damping: 30,
     restDelta: 0.001
   });
-
-  const dotX = useSpring(mouseX, springConfig);
-  const dotY = useSpring(mouseY, springConfig);
 
   return (
     <div className={`relative flex flex-col ${isAdminPage ? 'font-sora cursor-default' : 'font-iic cursor-none'}`}>
@@ -94,21 +92,24 @@ export default function ClientLayoutWrapper({
           />
 
           <motion.div
-            className="fixed top-0 left-0 w-8 h-8 bg-[#21409A]/20 border border-[#21409A]/40 rounded-full pointer-events-none z-[9999] hidden md:block"
+            className="fixed top-0 left-0 w-8 h-8 bg-[#21409A]/20 border border-[#21409A]/40 rounded-full pointer-events-none z-[9999] hidden md:block will-change-transform"
+            animate={{ scale: isHovered ? 1.5 : 1 }}
+            transition={{ type: "spring", stiffness: 520, damping: 34, mass: 0.22 }}
             style={{
-              x: cursorX,
-              y: cursorY,
-              scale: isHovered ? 1.5 : 1,
+              x: mouseX,
+              y: mouseY,
+              opacity: isCursorVisible ? 1 : 0,
             }}
           />
 
           <motion.div
-            className="fixed top-0 left-0 w-2 h-2 bg-[#74C044] rounded-full pointer-events-none z-[9999] hidden md:block"
+            className="fixed top-0 left-0 w-2 h-2 bg-[#74C044] rounded-full pointer-events-none z-[9999] hidden md:block will-change-transform"
             style={{
-              x: dotX,
-              y: dotY,
-              marginLeft: 12,
-              marginTop: 12,
+              x: mouseX,
+              y: mouseY,
+              opacity: isCursorVisible ? 1 : 0,
+              marginLeft: DOT_OFFSET,
+              marginTop: DOT_OFFSET,
             }}
           />
           {hasDesktopViewport && <FluidBackground />}

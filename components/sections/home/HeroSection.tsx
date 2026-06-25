@@ -45,15 +45,14 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="w-[375px] max-w-[calc(100vw-2rem)]"
+            className="relative h-[87px] w-[min(360px,calc(100vw-2rem))] overflow-hidden sm:h-[102px] sm:w-[420px] md:h-[112px] md:w-[460px]"
           >
             <Image
               src="/images/common/iic_logo.png"
               alt="Itahari International College Logo"
-              width={375}
-              height={92}
-              sizes="375px"
-              className="h-auto w-[375px] max-w-full object-contain"
+              fill
+              sizes="(max-width: 640px) 360px, (max-width: 768px) 420px, 460px"
+              className="object-cover"
               loading="eager"
               fetchPriority="high"
             />
@@ -64,7 +63,7 @@ const HeroSection = () => {
           <RevealText
             as="h1"
             text="UK Degrees in Itahari"
-            className="text-[44px] sm:text-[68px] md:text-[96px] lg:text-[116px] xl:text-[128px] font-black uppercase text-[#21409A] leading-[0.95] sm:leading-[1] mb-5 md:mb-8 tracking-normal font-iic justify-center"
+            className="w-full max-w-[1180px] text-[44px] sm:text-[68px] md:text-[88px] lg:text-[104px] xl:text-[112px] font-black uppercase text-[#21409A] leading-[0.98] sm:leading-[1.02] mb-5 md:mb-8 tracking-normal font-iic justify-center text-center"
             delay={0.4}
           />
           <RevealText

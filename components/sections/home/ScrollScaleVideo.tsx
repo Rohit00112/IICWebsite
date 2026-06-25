@@ -204,7 +204,7 @@ const ScrollScaleVideo = () => {
             playsInline
             preload="metadata"
             aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 h-full w-full object-contain"
           />
 
           {/* Edge radial blur mask */}

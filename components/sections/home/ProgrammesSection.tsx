@@ -62,7 +62,7 @@ const ProgrammesSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full py-14 sm:py-20 md:py-24 bg-white overflow-x-clip overflow-y-visible">
+    <section ref={containerRef} className="relative w-full bg-white pt-14 pb-8 overflow-x-clip overflow-y-visible sm:pt-20 sm:pb-10 md:pt-24 md:pb-10">
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.span
           initial={{ opacity: 0, y: 10 }}
@@ -148,21 +148,26 @@ const ProgrammesSection = () => {
                       </motion.div>
 
                       {prog.list && (
-                        <motion.ul
+                        <motion.div
                           variants={{
                             hidden: { opacity: 0, x: -20 },
                             visible: { opacity: 1, x: 0 }
                           }}
                           transition={{ delay: index * 0.1 + 0.8, duration: 1 }}
-                          className="space-y-2 mb-8"
+                          className="mb-8"
                         >
-                          {prog.list.map((item, i) => (
-                            <li key={i} className="text-[12px] sm:text-[13px] md:text-[15px] flex items-center gap-2.5 sm:gap-3 font-medium leading-relaxed text-white/80 transition-transform duration-300 hover:translate-x-2">
-                              <span className="w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.6)] shrink-0"></span>
-                              {item}
-                            </li>
-                          ))}
-                        </motion.ul>
+                          <p className="mb-3 text-[10px] font-black uppercase tracking-[0.22em] text-white/60 sm:text-[11px]">
+                            Specialization
+                          </p>
+                          <ul className="space-y-2">
+                            {prog.list.map((item, i) => (
+                              <li key={i} className="text-[12px] sm:text-[13px] md:text-[15px] flex items-center gap-2.5 sm:gap-3 font-medium leading-relaxed text-white/80 transition-transform duration-300 hover:translate-x-2">
+                                <span className="w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.6)] shrink-0"></span>
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </motion.div>
                       )}
                     </div>
 

@@ -13,7 +13,7 @@ const LifeHero = () => {
       {/* Background Image */}
       <div className="absolute inset-0 h-full w-full">
         <Image
-          src="/images/lifestyle/lifestyle-hero.png"
+          src="/images/lifestyle/lifestyle-hero.JPG"
           alt="Life at IIC"
           fill
           className="object-cover object-center"

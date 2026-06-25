@@ -15,7 +15,7 @@ const ContactHero = () => {
       {/* Background Image (Static) */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/home/tower_block.png"
+          src="/images/common/tower_block.JPG"
           alt="Itahari International College Tower Block"
           fill
           className="object-cover brightness-50 scale-105"

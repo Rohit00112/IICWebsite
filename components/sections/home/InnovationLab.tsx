@@ -20,7 +20,7 @@ const InnovationLab = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section id="innovation-lab" ref={containerRef} className="relative w-full py-14 sm:py-20 md:py-24 overflow-hidden bg-[#f4f7fa]">
+    <section id="innovation-lab" ref={containerRef} className="relative w-full bg-[#f4f7fa] pt-8 pb-14 overflow-hidden sm:pt-10 sm:pb-20 md:pt-10 md:pb-24">
       <TechGrid />
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
@@ -95,7 +95,7 @@ growth."
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </motion.div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div className="absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
             <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10">
               <RevealText
                 text="Student Led Communities"
@@ -123,7 +123,7 @@ growth."
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </motion.div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/65 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
                   <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-iic">
                     Entrepreneurship & Research Support
@@ -146,7 +146,7 @@ growth."
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </motion.div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/65 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
                   <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-iic">
                     Tech Events & Hackathons
@@ -171,7 +171,7 @@ growth."
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </motion.div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
               <div className="absolute bottom-5 left-5 right-5 sm:bottom-8 sm:left-8 sm:right-8">
                 <h4 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 font-iic">
                   Learning Zones

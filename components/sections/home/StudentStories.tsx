@@ -203,7 +203,7 @@ const StudentStories = () => {
   const containerRef = useRef(null);
 
   return (
-    <section ref={containerRef} className="relative w-full py-16 md:py-24 bg-[#f8fafc] overflow-hidden">
+    <section ref={containerRef} className="relative w-full bg-[#f8fafc] pt-16 pb-8 overflow-hidden md:pt-24 md:pb-8">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
@@ -226,7 +226,7 @@ const StudentStories = () => {
         </div>
 
         {/* Horizontal Scrollable Row */}
-        <div className="flex gap-6 overflow-x-auto pb-12 pt-4 px-2 no-scrollbar snap-x snap-mandatory scroll-smooth md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:snap-none lg:gap-8">
+        <div className="flex gap-6 overflow-x-auto pb-6 pt-4 px-2 no-scrollbar snap-x snap-mandatory scroll-smooth md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:snap-none lg:gap-8">
           {testimonials.map((item, index) => (
             <StoryCard key={index} item={item} index={index} />
           ))}
