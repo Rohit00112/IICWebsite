@@ -33,7 +33,7 @@ const CampusPictures = () => {
             className="md:col-span-5 lg:col-span-6 relative rounded-[40px] overflow-hidden shadow-2xl"
           >
             <Image
-              src="/images/home/iic-lifestyle 3.png"
+              src="/images/common/library.JPG"
               alt="Campus Life"
               fill
               className="object-cover hover:scale-105 transition-transform duration-1000"
@@ -53,7 +53,7 @@ const CampusPictures = () => {
                 className="relative rounded-[32px] overflow-hidden shadow-xl"
               >
                 <Image
-                  src="/images/home/iic-lifestyle 2.png"
+                  src="/images/common/lab.JPG"
                   alt="Labs"
                   fill
                   className="object-cover hover:scale-110 transition-transform duration-1000"
@@ -88,8 +88,8 @@ const CampusPictures = () => {
               className="h-1/2 relative rounded-[40px] overflow-hidden shadow-2xl"
             >
               <Image
-                src="/images/home/iic-lifestyle 1.png"
-                alt="Culture"
+                src="/images/common/lecture.JPG"
+                alt="Lecture Hall"
                 fill
                 className="object-cover hover:scale-105 transition-transform duration-1000"
                 sizes="(max-width: 768px) 100vw, 50vw"

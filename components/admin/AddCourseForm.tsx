@@ -5,6 +5,17 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import RichTextEditor from './RichTextEditor';
 import ImageUpload from './ImageUpload';
+import JsonArrayInput from './JsonArrayInput';
+import {
+  courseJsonExamples,
+  normalizeCareerJson,
+  normalizeCurriculumJson,
+  normalizeFacultyJson,
+  normalizeFaqsJson,
+  normalizeFeaturedModulesJson,
+  normalizeLearningOutcomesJson,
+  normalizeProjectsJson,
+} from './courseJsonNormalizers';
 
 interface Module {
   name: string;
@@ -201,6 +212,38 @@ export default function AddCourseForm() {
     ? formData.listing.featuredModules
     : [''];
 
+  const applyListingPillsJson = (items: string[], mode: 'replace' | 'append') => setFormData((current) => ({
+    ...current,
+    listing: {
+      ...current.listing,
+      featuredModules: mode === 'replace' ? items : [...current.listing.featuredModules, ...items],
+    },
+  }));
+  const applyCurriculumJson = (items: CurriculumYear[], mode: 'replace' | 'append') => setFormData((current) => ({
+    ...current,
+    curriculum: mode === 'replace' ? items : [...current.curriculum, ...items],
+  }));
+  const applyLearningOutcomesJson = (items: string[], mode: 'replace' | 'append') => setFormData((current) => ({
+    ...current,
+    learningOutcomes: mode === 'replace' ? items : [...current.learningOutcomes, ...items],
+  }));
+  const applyCareerJson = (items: CareerPath[], mode: 'replace' | 'append') => setFormData((current) => ({
+    ...current,
+    careerOpportunities: mode === 'replace' ? items : [...current.careerOpportunities, ...items],
+  }));
+  const applyFacultyJson = (items: FacultyMember[], mode: 'replace' | 'append') => setFormData((current) => ({
+    ...current,
+    faculty: mode === 'replace' ? items : [...current.faculty, ...items],
+  }));
+  const applyProjectsJson = (items: Project[], mode: 'replace' | 'append') => setFormData((current) => ({
+    ...current,
+    projects: mode === 'replace' ? items : [...current.projects, ...items],
+  }));
+  const applyFaqsJson = (items: FAQ[], mode: 'replace' | 'append') => setFormData((current) => ({
+    ...current,
+    faqs: mode === 'replace' ? items : [...current.faqs, ...items],
+  }));
+
   return (
     <div className="max-w-[1600px] mx-auto pb-20">
       {/* Header */}
@@ -379,6 +422,13 @@ export default function AddCourseForm() {
                       + Add Module
                     </button>
                   </div>
+                  <JsonArrayInput
+                    fieldName="featuredModules"
+                    currentCount={formData.listing.featuredModules.length}
+                    example={courseJsonExamples.featuredModules}
+                    transformItems={normalizeFeaturedModulesJson}
+                    onApply={applyListingPillsJson}
+                  />
                   <div className="space-y-3">
                     {visibleListingPills.map((module, idx) => (
                       <div key={`listing-module-${idx}`} className="flex gap-3">
@@ -411,6 +461,13 @@ export default function AddCourseForm() {
                   <h3 className="text-xl font-bold text-[#1A2B56]">Module Structure</h3>
                   <button type="button" onClick={addYear} className="text-sm font-bold text-[#21409A]">+ Add Academic Year</button>
                 </div>
+                <JsonArrayInput
+                  fieldName="curriculum"
+                  currentCount={formData.curriculum.length}
+                  example={courseJsonExamples.curriculum}
+                  transformItems={normalizeCurriculumJson}
+                  onApply={applyCurriculumJson}
+                />
                 {formData.curriculum.map((year, yIdx) => (
                   <div key={`year-${yIdx}`} className="p-8 bg-gray-50 rounded-[32px] space-y-6">
                     <div className="flex items-center justify-between">
@@ -454,6 +511,13 @@ export default function AddCourseForm() {
                     <h3 className="text-xl font-bold text-[#1A2B56]">Learning Outcomes</h3>
                     <button type="button" onClick={addOutcome} className="text-sm font-bold text-[#21409A]">+ Add Outcome</button>
                   </div>
+                  <JsonArrayInput
+                    fieldName="learningOutcomes"
+                    currentCount={formData.learningOutcomes.length}
+                    example={courseJsonExamples.learningOutcomes}
+                    transformItems={normalizeLearningOutcomesJson}
+                    onApply={applyLearningOutcomesJson}
+                  />
                   <div className="grid grid-cols-1 gap-4">
                     {formData.learningOutcomes.map((outcome, idx) => (
                       <input key={`outcome-${idx}`} type="text" value={outcome} onChange={(e) => {
@@ -473,6 +537,13 @@ export default function AddCourseForm() {
                   <h3 className="text-xl font-bold text-[#1A2B56]">Career Opportunities</h3>
                   <button type="button" onClick={addCareer} className="text-sm font-bold text-[#21409A]">+ Add Pathway</button>
                 </div>
+                <JsonArrayInput
+                  fieldName="careerOpportunities"
+                  currentCount={formData.careerOpportunities.length}
+                  example={courseJsonExamples.careerOpportunities}
+                  transformItems={normalizeCareerJson}
+                  onApply={applyCareerJson}
+                />
                 <div className="grid grid-cols-2 gap-6">
                   {formData.careerOpportunities.map((career, idx) => (
                     <div key={`career-${idx}`} className="p-6 bg-gray-50 rounded-2xl space-y-4 border border-gray-100">
@@ -498,6 +569,13 @@ export default function AddCourseForm() {
                   <h3 className="text-xl font-bold text-[#1A2B56]">Faculty Members</h3>
                   <button type="button" onClick={addFaculty} className="text-sm font-bold text-[#21409A]">+ Add Faculty</button>
                 </div>
+                <JsonArrayInput
+                  fieldName="faculty"
+                  currentCount={formData.faculty.length}
+                  example={courseJsonExamples.faculty}
+                  transformItems={normalizeFacultyJson}
+                  onApply={applyFacultyJson}
+                />
                 <div className="grid grid-cols-2 gap-6">
                   {formData.faculty.map((member, idx) => (
                     <div key={`faculty-${idx}`} className="p-8 border border-gray-100 rounded-[32px] space-y-4">
@@ -542,6 +620,13 @@ export default function AddCourseForm() {
                   <h3 className="text-xl font-bold text-[#1A2B56]">Student Innovation</h3>
                   <button type="button" onClick={addProject} className="text-sm font-bold text-[#21409A]">+ Add Project</button>
                 </div>
+                <JsonArrayInput
+                  fieldName="projects"
+                  currentCount={formData.projects.length}
+                  example={courseJsonExamples.projects}
+                  transformItems={normalizeProjectsJson}
+                  onApply={applyProjectsJson}
+                />
                 <div className="grid grid-cols-2 gap-6">
                   {formData.projects.map((proj, idx) => (
                     <div key={`proj-${idx}`} className="p-6 bg-gray-50 rounded-2xl space-y-4">
@@ -581,6 +666,13 @@ export default function AddCourseForm() {
                   <h3 className="text-xl font-bold text-[#1A2B56]">Programme FAQs</h3>
                   <button type="button" onClick={addFAQ} className="text-sm font-bold text-[#21409A]">+ Add FAQ</button>
                 </div>
+                <JsonArrayInput
+                  fieldName="faqs"
+                  currentCount={formData.faqs.length}
+                  example={courseJsonExamples.faqs}
+                  transformItems={normalizeFaqsJson}
+                  onApply={applyFaqsJson}
+                />
                 {formData.faqs.map((faq, idx) => (
                   <div key={`faq-${idx}`} className="space-y-4 p-8 bg-gray-50 rounded-[32px]">
                     <input type="text" value={faq.question} placeholder="Frequently Asked Question" onChange={(e) => {

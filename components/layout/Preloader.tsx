@@ -4,20 +4,24 @@ import React, { useEffect, useState } from 'react';
 import { animate, motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
+const PROGRESS_DURATION = 0.32;
+const DISMISS_DELAY_MS = 520;
+const EXIT_DURATION = 0.18;
+
 const Preloader = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
     const ctrl = animate(0, 100, {
-      duration: 0.9,
+      duration: PROGRESS_DURATION,
       ease: [0.4, 0, 0.2, 1],
       onUpdate: (v) => setPercentage(Math.round(v)),
     });
 
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 1600);
+    }, DISMISS_DELAY_MS);
 
     return () => {
       ctrl.stop();
@@ -35,20 +39,20 @@ const Preloader = () => {
           key="preloader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3, delay: 0.7 }}
+          transition={{ duration: 0.12 }}
           className="fixed inset-0 z-[9999] bg-white flex items-center justify-center overflow-hidden"
         >
           {/* Split panels — invisible during load, slide apart on exit */}
           <motion.div
             initial={{ x: 0 }}
             exit={{ x: '-101%' }}
-            transition={{ duration: 0.7, ease: [0.83, 0, 0.17, 1] }}
+            transition={{ duration: EXIT_DURATION, ease: [0.83, 0, 0.17, 1] }}
             className="absolute inset-y-0 left-0 w-1/2 z-10 bg-white will-change-transform"
           />
           <motion.div
             initial={{ x: 0 }}
             exit={{ x: '101%' }}
-            transition={{ duration: 0.7, ease: [0.83, 0, 0.17, 1] }}
+            transition={{ duration: EXIT_DURATION, ease: [0.83, 0, 0.17, 1] }}
             className="absolute inset-y-0 right-0 w-1/2 z-10 bg-white will-change-transform"
           />
 
@@ -57,22 +61,22 @@ const Preloader = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.92, y: -10 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-20 flex w-full max-w-sm flex-col items-center px-6 sm:max-w-md"
           >
             {/* Logo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="relative mb-8 h-10 w-48 sm:w-56 md:mb-12 md:h-14 md:w-72"
+              transition={{ duration: 0.28, delay: 0.03 }}
+              className="relative mb-8 h-[58px] w-[260px] overflow-hidden sm:h-[68px] sm:w-[310px] md:mb-10 md:h-[78px] md:w-[360px]"
             >
               <Image
                 src="/images/common/iic_logo.png"
                 alt="Itahari International College Logo"
                 fill
-                sizes="(max-width: 768px) 224px, 288px"
-                className="object-contain"
+                sizes="(max-width: 640px) 260px, (max-width: 768px) 310px, 360px"
+                className="object-cover"
                 loading="eager"
                 fetchPriority="high"
               />
@@ -94,7 +98,7 @@ const Preloader = () => {
                 <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: percentage / 100 }}
-                  transition={{ type: "spring", bounce: 0, duration: 0.5 }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.16 }}
                   className="absolute inset-0 bg-[#21409A] origin-left z-10"
                 >
                   {/* Foreground Text (White) - Only visible where bar exists */}
@@ -116,8 +120,8 @@ const Preloader = () => {
                         initial={{ y: '100%' }}
                         animate={{ y: 0 }}
                         transition={{
-                          duration: 0.3,
-                          delay: 0.15 + (wIdx * 0.06) + (cIdx * 0.015),
+                          duration: 0.14,
+                          delay: 0.04 + (wIdx * 0.03) + (cIdx * 0.008),
                           ease: "easeOut"
                         }}
                         className="text-[#21409A] text-[9px] sm:text-[10px] md:text-xs font-black tracking-[0.16em] sm:tracking-[0.2em]"

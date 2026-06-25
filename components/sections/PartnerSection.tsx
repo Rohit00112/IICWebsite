@@ -72,7 +72,7 @@ const PartnerSection = () => {
             className="relative h-14 md:h-16 w-80 md:w-[380px]"
           >
             <Image
-              src="/images/lmu brand 1.png"
+              src="/images/lmu brand 1.jpeg"
               alt="LMU"
               fill
               sizes="(max-width: 768px) 320px, 380px"

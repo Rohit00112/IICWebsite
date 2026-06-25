@@ -8,7 +8,7 @@ const GEOSection = () => {
   const stats = [
     { label: "Partner University", value: "London Metropolitan University, UK" },
     { label: "Location", value: "Sundarharaincha-4, Dulari, Morang" },
-    { label: "Programmes", value: "Bsc. (Hons) Computing, BA (Hons) Business Administration" },
+    { label: "Programmes", value: "BSc (Hons) Computing, BA (Hons) Business Administration" },
     { label: "Accreditation", value: "Approved by Ministry of Education, Nepal and Equivalence by Tribhuvan University" },
   ];
 

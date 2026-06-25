@@ -14,7 +14,7 @@ const ContactMap = () => {
       {/* Background Campus Image with Parallax-like feel */}
       <div className="absolute inset-0 z-0 h-full">
         <Image
-          src="/images/home/tower_block.png"
+          src="/images/common/tower_block.JPG"
           alt="Itahari International College Campus"
           fill
           className="object-cover brightness-[0.4]"

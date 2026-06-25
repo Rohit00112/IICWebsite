@@ -73,16 +73,13 @@ const IngSection = () => {
                   <h4 className="text-white text-base md:text-lg font-black font-iic mb-0.5 leading-tight">
                     Degree Awarded By
                   </h4>
-                  <p className="text-white/80 text-[8px] md:text-[9px] font-bold tracking-[0.2em] mb-2 font-iic">
-                    University Partner
-                  </p>
-                  <div className="relative h-8 md:h-9 w-full max-w-[160px] mx-auto md:mx-0">
+                  <div className="relative mx-auto mt-3 h-20 w-[230px] overflow-hidden md:mx-0 md:h-24 md:w-[280px]">
                     <Image
                       src="/images/home/lmu brand 2.png"
                       alt="London Metropolitan University"
                       fill
-                      sizes="160px"
-                      className="object-contain object-center md:object-left brightness-0 invert"
+                      sizes="(max-width: 768px) 230px, 280px"
+                      className="object-cover object-[50%_34%] brightness-0 invert"
                     />
                   </div>
                 </div>

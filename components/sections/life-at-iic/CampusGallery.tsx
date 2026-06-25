@@ -33,7 +33,7 @@ const storyPages: StoryPage[] = [
     id: 'knowledge-hub',
     accent: '#21409A',
     left: {
-      image: '/images/home/iic-lifestyle 3.png',
+      image: '/images/common/library.JPG',
       alt: 'The Knowledge Hub at IIC',
     },
     right: {
@@ -55,7 +55,7 @@ const storyPages: StoryPage[] = [
       },
     },
     right: {
-      image: '/images/home/iic-lifestyle 2.png',
+      image: '/images/common/lab.JPG',
       alt: 'Advanced Technology Labs at IIC',
     },
   },
@@ -63,20 +63,21 @@ const storyPages: StoryPage[] = [
     id: 'recreation-wellness',
     accent: '#58595B',
     left: {
-      image: '/images/lifestyle/lifestyle.png',
-      alt: 'Recreation and wellness spaces at IIC',
+      image: '/images/lifestyle/holi.jpg',
+      alt: 'Students celebrating Holi at IIC',
     },
     right: {
       content: {
-        title: 'Recreation & Wellness',
+        title: 'Student Life & Wellbeing',
         description:
-          'Balance is key to success. Our campus features modern recreational facilities, including a multi-purpose sports hall, fitness centre, and vibrant student lounges, ensuring you stay active and refreshed.',
+          'Balance is key to success. Beyond classes, campus life brings together student clubs, community events, creative activities, and comfortable common areas where you can connect, recharge, and feel supported.',
       },
     },
   },
 ];
 
 const SLIDE_DURATION_MS = 620;
+const BOUNDARY_HOLD_MS = SLIDE_DURATION_MS + 360;
 const SNAP_TOLERANCE = 28;
 const TOUCH_THRESHOLD = 42;
 const WHEEL_GESTURE_IDLE_MS = 320;
@@ -140,8 +141,6 @@ const StoryPanel = ({
   page,
   side,
   position,
-  pageNumber,
-  pageTotal,
   direction,
 }: {
   accent: string;
@@ -149,8 +148,6 @@ const StoryPanel = ({
   page: StoryPage;
   side: StorySide;
   position: 'left' | 'right';
-  pageNumber: number;
-  pageTotal: number;
   direction: 1 | -1;
 }) => {
   const hasImage = Boolean(side.image);
@@ -246,21 +243,12 @@ const StoryPanel = ({
               animate="show"
               className="relative z-10 max-w-full lg:max-w-xl"
             >
-              {/* eyebrow: index + accent rule */}
+              {/* eyebrow accent rule */}
               <motion.div
                 variants={contentItemVariants}
-                className="mb-7 flex items-center gap-4"
+                className="mb-7 flex items-center"
               >
-                <span
-                  className="font-iic text-sm font-bold tabular-nums tracking-[0.2em]"
-                  style={{ color: accent === '#0B1120' ? '#74C044' : accent }}
-                >
-                  {String(pageNumber).padStart(2, '0')}
-                </span>
                 <span className="h-px w-12" style={{ backgroundColor: accent === '#0B1120' ? '#74C044' : accent }} />
-                <span className="font-iic text-xs font-medium uppercase tracking-[0.28em] text-white/40">
-                  {String(pageTotal).padStart(2, '0')}
-                </span>
               </motion.div>
 
               <motion.h3
@@ -288,6 +276,7 @@ const CampusGallery = () => {
   const activeIndexRef = useRef(0);
   const cooldownRef = useRef(false);
   const cooldownTimerRef = useRef<number | null>(null);
+  const boundaryHoldUntilRef = useRef(0);
   const lastScrollYRef = useRef(0);
   const wheelGestureTimerRef = useRef<number | null>(null);
   const wheelGestureActiveRef = useRef(false);
@@ -411,6 +400,10 @@ const CampusGallery = () => {
       const boundedIndex = Math.min(storyPages.length - 1, Math.max(0, nextIndex));
 
       activeIndexRef.current = boundedIndex;
+      boundaryHoldUntilRef.current =
+        boundedIndex === 0 || boundedIndex === storyPages.length - 1
+          ? Date.now() + BOUNDARY_HOLD_MS
+          : 0;
       setDirection(nextDirection);
       setActiveIndex(boundedIndex);
       lockCooldown();
@@ -419,7 +412,12 @@ const CampusGallery = () => {
   );
 
   const handleStep = useCallback(
-    (event: Event, nextDirection: 1 | -1, canAdvanceContent = true) => {
+    (
+      event: Event,
+      nextDirection: 1 | -1,
+      canAdvanceContent = true,
+      isWheelGestureContinuation = false
+    ) => {
       if (prefersReducedMotion) return false;
 
       if (!isSectionPinned()) return false;
@@ -428,7 +426,21 @@ const CampusGallery = () => {
       const nextIndex = currentIndex + nextDirection;
       const canChangeContent = nextIndex >= 0 && nextIndex < storyPages.length;
 
-      if (!canChangeContent) return false;
+      if (!canChangeContent) {
+        const shouldHoldBoundary =
+          cooldownRef.current ||
+          Date.now() < boundaryHoldUntilRef.current ||
+          !canAdvanceContent ||
+          isWheelGestureContinuation;
+
+        if (shouldHoldBoundary) {
+          preventPageScroll(event);
+          scrollToSectionTop();
+          return true;
+        }
+
+        return false;
+      }
 
       preventPageScroll(event);
 
@@ -445,11 +457,11 @@ const CampusGallery = () => {
     syncBoundaryPage();
 
     const handleWheel = (event: WheelEvent) => {
-      markWheelGesture();
+      const isFreshGesture = markWheelGesture();
       if (Math.abs(event.deltaY) < WHEEL_DELTA_THRESHOLD) return;
       const nextDirection: 1 | -1 = event.deltaY >= 0 ? 1 : -1;
       // advance continuously while scrolling; cooldown paces the steps
-      handleStep(event, nextDirection, true);
+      handleStep(event, nextDirection, true, !isFreshGesture);
     };
 
     const handleTouchStart = (event: TouchEvent) => {
@@ -605,8 +617,6 @@ const CampusGallery = () => {
           page={activePage}
           side={activePage.left}
           position="left"
-          pageNumber={activeIndex + 1}
-          pageTotal={storyPages.length}
           direction={direction}
         />
         <StoryPanel
@@ -616,8 +626,6 @@ const CampusGallery = () => {
           page={activePage}
           side={activePage.right}
           position="right"
-          pageNumber={activeIndex + 1}
-          pageTotal={storyPages.length}
           direction={direction}
         />
       </AnimatePresence>

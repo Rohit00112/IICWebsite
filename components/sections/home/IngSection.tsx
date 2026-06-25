@@ -9,7 +9,7 @@ const IngSection = () => {
   const containerRef = useRef(null);
 
   return (
-    <section ref={containerRef} className="relative w-full py-14 sm:py-16 md:py-24 bg-[#f4f7fa] overflow-hidden border-t border-gray-100">
+    <section ref={containerRef} className="relative w-full py-14 sm:py-16 md:py-24 bg-white overflow-hidden border-t border-gray-100">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">
@@ -36,9 +36,10 @@ const IngSection = () => {
           <div className="ing-panel w-full md:w-1/2 flex justify-center md:justify-end" style={{ willChange: 'transform, opacity' }}>
             <div className="relative w-full max-w-[320px] md:max-w-[380px] aspect-[1.6/1]">
               <Image
-                src="/images/home/ing.png"
+                src="/images/common/ing.png"
                 alt="ING Group Logo"
                 fill
+                unoptimized
                 sizes="(max-width: 768px) 100vw, 30vw"
                 className="object-contain"
               />

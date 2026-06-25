@@ -225,12 +225,9 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
             className={`pointer-events-none absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-transparent via-transparent to-black/30`}
           />
 
-          {/* Index marker, sits in the photo's outer corner */}
+          {/* Accent rule, sits in the photo's outer corner */}
           <div className={`absolute top-5 ${isEven ? 'left-5 md:left-6' : 'right-5 md:right-6'} z-20`}>
-            <div className="flex items-center gap-2 text-white/85">
-              <span className="text-[10px] font-bold tracking-[0.3em]">
-                {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-              </span>
+            <div className="flex items-center text-white/85">
               <span className="w-8 h-px bg-white/40" />
             </div>
           </div>
