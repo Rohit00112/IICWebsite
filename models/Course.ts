@@ -59,6 +59,7 @@ const CourseSchema = new Schema({
     title: String,
     modules: [{
       name: String,
+      code: String,
       description: String,
       credits: String,
     }]
@@ -108,7 +109,7 @@ const CourseSchema = new Schema({
 const existingCourseModel = models.Course;
 
 // Next.js keeps Mongoose models alive across development hot reloads. Add new
-// listing fields to an already-compiled model so updates are not stripped.
+// fields to an already-compiled model so updates are not stripped.
 if (
   existingCourseModel &&
   (!existingCourseModel.schema.path('listing.displayTitle') || !existingCourseModel.schema.path('listing.specialism'))
@@ -117,6 +118,15 @@ if (
     'listing.displayTitle': String,
     'listing.specialism': String,
   });
+}
+
+if (existingCourseModel) {
+  const curriculumSchema = existingCourseModel.schema.path('curriculum')?.schema;
+  const moduleSchema = curriculumSchema?.path('modules')?.schema;
+
+  if (moduleSchema && !moduleSchema.path('code')) {
+    moduleSchema.add({ code: String });
+  }
 }
 
 const Course = existingCourseModel || model('Course', CourseSchema);

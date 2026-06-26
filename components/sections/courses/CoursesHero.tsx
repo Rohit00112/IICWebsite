@@ -70,7 +70,7 @@ const CoursesHero = () => {
           className="absolute inset-0 w-full h-[120%] -top-[10%]"
         >
           <Image
-            src="/images/courses/course-hero.png"
+            src="/images/courses/course-hero.JPG"
             alt="Itahari International College Campus Life"
             fill
             sizes="(max-width: 1280px) 100vw, 1280px"

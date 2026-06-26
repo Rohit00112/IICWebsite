@@ -37,6 +37,7 @@ export interface CourseItem {
     title?: string;
     modules?: {
       name: string;
+      code?: string;
       description?: string;
       credits?: string;
     }[];
@@ -163,6 +164,7 @@ function mapCourse(doc: CourseDocument): CourseItem {
       title: y.title || '',
       modules: (y.modules || []).map((m) => ({
         name: m.name || '',
+        code: m.code || '',
         description: m.description || '',
         credits: m.credits || '',
       })),
@@ -240,7 +242,13 @@ export async function updateCourse(id: string, data: Partial<CourseItem>): Promi
   if (normalizedData.overview) {
     normalizedData.overview = sanitizeHtml(normalizedData.overview);
   }
-  const updatedItem = await Course.findByIdAndUpdate(id, normalizedData, { new: true, runValidators: true });
+  const updatedItem = await Course.findByIdAndUpdate(id, normalizedData, {
+    new: true,
+    runValidators: true,
+    // The request payload has already been filtered by Zod. This keeps newly
+    // added fields intact while a development model is being hot-reloaded.
+    strict: false,
+  });
   safeRevalidateTag('courses');
   return updatedItem ? mapCourse(updatedItem) : null;
 }

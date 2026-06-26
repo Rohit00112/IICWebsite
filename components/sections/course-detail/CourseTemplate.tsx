@@ -12,6 +12,7 @@ import type { CourseItem } from '@/lib/courses';
 
 interface Module {
   name: string;
+  code?: string;
   description?: string;
   credits?: string;
 }
@@ -399,8 +400,15 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                                       : 'border-gray-200 bg-white hover:-translate-y-1 hover:border-[#21409A]/55 hover:shadow-[0_14px_30px_rgba(33,64,154,0.1)]'
                                   }`}
                                 >
-                                  <span className="block text-[17px] font-bold leading-snug text-[#1a1a1a]">
-                                    {mod.name}
+                                  <span className="flex flex-col items-start gap-2">
+                                    {mod.code && (
+                                      <span className="font-mono text-[11px] font-bold tracking-[0.12em] text-[#21409A]">
+                                        {mod.code}
+                                      </span>
+                                    )}
+                                    <span className="block text-[17px] font-bold leading-snug text-[#1a1a1a]">
+                                      {mod.name}
+                                    </span>
                                   </span>
                                 </button>
                               );
@@ -745,10 +753,19 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
         >
           <div className="flex items-start justify-between gap-5">
             <div>
-              {popoverModule.credits && (
-                <span className="mb-3 inline-flex rounded-full bg-[#21409A]/10 px-3 py-1 text-[10px] font-bold tracking-[0.16em] text-[#21409A]">
-                  {formatCredits(popoverModule.credits)}
-                </span>
+              {(popoverModule.code || popoverModule.credits) && (
+                <div className="mb-3 flex flex-wrap gap-2">
+                  {popoverModule.code && (
+                    <span className="inline-flex rounded-full bg-gray-100 px-3 py-1 font-mono text-[10px] font-bold tracking-[0.12em] text-gray-600">
+                      {popoverModule.code}
+                    </span>
+                  )}
+                  {popoverModule.credits && (
+                    <span className="inline-flex rounded-full bg-[#21409A]/10 px-3 py-1 text-[10px] font-bold tracking-[0.16em] text-[#21409A]">
+                      {formatCredits(popoverModule.credits)}
+                    </span>
+                  )}
+                </div>
               )}
               <h3 className="text-xl font-bold leading-tight text-[#1a1a1a]">{popoverModule.name}</h3>
             </div>

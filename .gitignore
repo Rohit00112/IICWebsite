@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local agent skills
 /skills/
+
+# Superpowers brainstorm artifacts
+.superpowers/

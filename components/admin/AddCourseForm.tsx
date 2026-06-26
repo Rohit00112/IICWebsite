@@ -19,6 +19,7 @@ import {
 
 interface Module {
   name: string;
+  code?: string;
   description: string;
   credits: string;
 }
@@ -178,7 +179,7 @@ export default function AddCourseForm() {
   const addYear = () => setFormData({ ...formData, curriculum: [...formData.curriculum, { title: 'Year ' + (formData.curriculum.length + 1), modules: [] }] });
   const addModule = (yIdx: number) => {
     const newCurr = [...formData.curriculum];
-    newCurr[yIdx].modules.push({ name: '', description: '', credits: '' });
+    newCurr[yIdx].modules.push({ name: '', code: '', description: '', credits: '' });
     setFormData({ ...formData, curriculum: newCurr });
   };
   
@@ -512,6 +513,11 @@ export default function AddCourseForm() {
                             newCurr[yIdx].modules[mIdx].name = e.target.value;
                              setFormData({...formData, curriculum: newCurr});
                           }} className="w-full text-sm font-bold outline-none text-[#1A2B56]" />
+                          <input type="text" value={mod.code || ''} placeholder="Module Code (e.g. COMP101)" onChange={(e) => {
+                            const newCurr = [...formData.curriculum];
+                            newCurr[yIdx].modules[mIdx].code = e.target.value;
+                             setFormData({...formData, curriculum: newCurr});
+                          }} className="w-full text-xs text-gray-700 outline-none font-medium" />
                           <input type="text" value={mod.credits} placeholder="Credits (e.g. 30)" onChange={(e) => {
                             const newCurr = [...formData.curriculum];
                             newCurr[yIdx].modules[mIdx].credits = e.target.value;

@@ -49,6 +49,7 @@ export const courseSchema = z.object({
     title: z.string(),
     modules: z.array(z.object({
       name: z.string(),
+      code: z.string().max(30).optional(),
       description: z.string().optional(),
       credits: z.string().optional()
     }))

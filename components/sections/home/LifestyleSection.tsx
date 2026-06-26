@@ -184,9 +184,9 @@ const LifestyleSection = () => {
                 title="Library"
                 description="A quiet, modern space stocked with academic texts, journals, and digital resources to power your research and study."
                 stats={[
-                  { value: '5K+', label: 'Books' },
+                  { value: '2.5K+', label: 'Books' },
                   { value: '24/7', label: 'Digital Access' },
-                  { value: '120', label: 'Study Seats' },
+                  { value: '80', label: 'Study Seats' },
                 ]}
                 accent="#21409A"
                 rounded="rounded-[24px] md:rounded-[40px]"
@@ -211,7 +211,7 @@ const LifestyleSection = () => {
                 title="Lecture Theatre"
                 description="Spacious tiered halls with high-quality AV setups, designed for engaging lectures and dynamic seminars."
                 stats={[
-                  { value: '200', label: 'Capacity' },
+                  { value: '120+', label: 'Capacity' },
                   { value: 'HD', label: 'Projection' },
                 ]}
                 accent="#21409A"
@@ -235,7 +235,7 @@ const LifestyleSection = () => {
                 title="Advanced Labs"
                 description="Industry-grade computing labs equipped with the latest hardware and software for hands-on technical training."
                 stats={[
-                  { value: '8', label: 'Labs' },
+                  { value: '3', label: 'Labs' },
                   { value: '160', label: 'Workstations' },
                 ]}
                 accent="#21409A"

@@ -40,6 +40,7 @@ export const normalizeCurriculumJson = (items: unknown[]) => (
 
         return {
           name: asString(moduleRecord.name || moduleRecord.title),
+          code: asString(moduleRecord.code || moduleRecord.moduleCode),
           description: asString(moduleRecord.description),
           credits: asString(moduleRecord.credits),
         };
@@ -107,6 +108,7 @@ export const courseJsonExamples = {
     modules: [
       {
         name: "Programming",
+        code: "COMP101",
         credits: "30",
         description: "Core programming concepts and practice."
       }
