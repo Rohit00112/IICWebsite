@@ -28,7 +28,6 @@ function getGalleryImages(gallery: EventGalleryItem) {
 
 export default function EventGalleryPage({ gallery }: { gallery: EventGalleryArchive }) {
   const [activePhoto, setActivePhoto] = useState<ActivePhoto | null>(null);
-  const latestYear = gallery.galleries[0].year;
 
   const changePhoto = (direction: -1 | 1) => {
     if (!activePhoto) return;
@@ -56,7 +55,7 @@ export default function EventGalleryPage({ gallery }: { gallery: EventGalleryArc
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 18-6-6 6-6" /></svg>
             Life at IIC
           </Link>
-          <p className="mb-4 text-sm font-bold tracking-[0.18em] text-white/75">{latestYear} EVENT ARCHIVE</p>
+          <p className="mb-4 text-sm font-bold tracking-[0.18em] text-white/75">EVENT ARCHIVE</p>
           <h1 className="max-w-4xl font-iic text-5xl font-black leading-[1.05] tracking-normal md:text-7xl">{gallery.title}</h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">{gallery.summary}</p>
         </div>

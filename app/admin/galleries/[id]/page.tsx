@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import EventGalleryForm from '@/components/admin/EventGalleryForm';
-import { getEventGalleryById } from '@/lib/event-galleries';
+import { getAllEventGalleries, getEventGalleryById } from '@/lib/event-galleries';
 
 export default async function EditEventGalleryPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -8,5 +8,8 @@ export default async function EditEventGalleryPage({ params }: { params: Promise
 
   if (!gallery) notFound();
 
-  return <EventGalleryForm gallery={gallery} />;
+  const eventYears = (await getAllEventGalleries())
+    .filter((item) => item.title.trim().toLowerCase() === gallery.title.trim().toLowerCase());
+
+  return <EventGalleryForm gallery={gallery} eventYears={eventYears} />;
 }

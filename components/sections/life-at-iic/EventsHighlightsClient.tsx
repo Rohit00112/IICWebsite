@@ -48,9 +48,6 @@ export default function EventsHighlightsClient({ galleries }: { galleries: Event
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
-                  <p className="mb-3 text-xs font-bold tracking-[0.16em] text-white/70">
-                    {gallery.galleries.length > 1 ? `${gallery.galleries.length} YEARS` : gallery.galleries[0].year}
-                  </p>
                   <h3 className="mb-2 font-iic text-xl font-bold text-white md:text-2xl">{gallery.title}</h3>
                   <p className="line-clamp-2 font-iic text-sm leading-relaxed text-white/75">{gallery.summary}</p>
                 </div>
