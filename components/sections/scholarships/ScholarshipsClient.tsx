@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import type { ScholarshipAwardType, ScholarshipBatch, ScholarshipRecipient } from '@/lib/scholarships';
 
 const awardLabels: Record<ScholarshipAwardType, string> = {
@@ -11,19 +11,44 @@ const awardLabels: Record<ScholarshipAwardType, string> = {
   ing_postgraduate: 'ING Postgraduate Scholarship',
 };
 
-const awardAccents: Record<ScholarshipAwardType, string> = {
-  aaa: '#21409A',
-  ing_postgraduate: '#74C044',
+const awardThemes: Record<ScholarshipAwardType, {
+  accent: string;
+  ink: string;
+  pale: string;
+  line: string;
+  dark: string;
+  soft: string;
+}> = {
+  aaa: {
+    accent: '#21409A',
+    ink: '#142F75',
+    pale: '#EEF3FF',
+    line: '#C8D6FF',
+    dark: '#081A39',
+    soft: 'rgba(33,64,154,0.08)',
+  },
+  ing_postgraduate: {
+    accent: '#74C044',
+    ink: '#3C7D25',
+    pale: '#F0FAEA',
+    line: '#CDE8BD',
+    dark: '#173B16',
+    soft: 'rgba(116,192,68,0.10)',
+  },
 };
 
 const trackCopy = {
   aaa: {
-    eyebrow: 'AAA Scholarship',
-    title: 'A wider annual cohort for consistent excellence.',
-    shortTitle: 'AAA Scholarship Recipients',
-    kicker: 'Academics + Attendance + Attitude',
-    description: 'AAA recognises students who keep their academic work, attendance, and attitude consistently strong across the year. Because this scholarship celebrates steady performance, each published year can include a larger recipient list.',
-    archiveTitle: 'Previous AAA recipient lists',
+    eyebrow: 'Seize the opportunity',
+    posterTop: 'Academics · Attendance · Attitude',
+    posterTitle: 'AAA Scholarship',
+    posterNote: '100% college fee refunded* for deserving students',
+    posterFine: '*Excluding University Fee',
+    cardTitle: 'AAA Scholarship',
+    kicker: 'Up to 100% tuition waiver',
+    description: 'The AAA (Academics, Attendance, and Attitude) Scholarship Award is given to 10% of students who excelled during the calendar year in academics, discipline, and active participation. It provides students with an incentive to have 100% of their tuition fees waived for the calendar year.',
+    fineprint: '*Excluding University Fee',
+    archiveTitle: 'AAA Scholarship Recipients',
     emptyTitle: 'AAA recipients will be published soon.',
     emptyDescription: 'When the IIC team publishes the next AAA batch, the full recipient list and group photo will appear here.',
     criteria: [
@@ -34,12 +59,16 @@ const trackCopy = {
     ],
   },
   ing_postgraduate: {
-    eyebrow: 'ING Postgraduate Scholarship',
-    title: 'One standout graduate, one postgraduate pathway each year.',
-    shortTitle: 'ING Postgraduate Scholar',
+    eyebrow: 'Seize the opportunity',
+    posterTop: 'Full-fledged',
+    posterTitle: 'ING Postgraduate',
+    posterNote: 'Postgraduate scholarship within ING colleges',
+    posterFine: 'Placement at one of the ING companies',
+    cardTitle: 'ING Postgraduate Scholarship',
     kicker: 'One recipient per year',
-    description: 'The ING Postgraduate Scholarship is designed as a focused annual honour for one eligible graduate who is ready to continue into postgraduate study through the ING pathway.',
-    archiveTitle: 'Previous ING postgraduate scholars',
+    description: 'Upon completion of London Metropolitan University’s Bachelor’s Degree, our students will be awarded postgraduate scholarships within ING colleges. We hope our assistance will inspire future generations, so that they may as well get similar opportunities to better their future. We aim to facilitate our student’s professional and personal growth.',
+    fineprint: '',
+    archiveTitle: 'ING postgraduate archive',
     emptyTitle: 'ING postgraduate scholar will be published soon.',
     emptyDescription: 'Once the annual ING Postgraduate Scholar is announced, their profile will appear as a dedicated spotlight.',
     criteria: [
@@ -51,9 +80,12 @@ const trackCopy = {
   },
 } as const;
 
-const fallbackHeroImage = '/images/common/footer-bg.png';
-const fallbackGroupImage = '/images/home/hero.png';
+const heroImage = '/images/lifestyle/graduation.JPG';
+const fallbackGroupImage = '/images/lifestyle/graduation.JPG';
 const fallbackRecipientImage = '/images/common/iic_logo.png';
+const ingLogo = '/images/common/ing.png';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const sortBatches = (batches: ScholarshipBatch[]) => (
   [...batches].sort((a, b) => {
@@ -66,321 +98,295 @@ const getRecipients = (batch?: ScholarshipBatch) => batch?.recipients || [];
 
 const recipientLabel = (count: number) => `${count || 'No'} ${count === 1 ? 'recipient' : 'recipients'}`;
 
-const AwardBadge = ({ awardType }: { awardType: ScholarshipAwardType }) => (
-  <span
-    className="inline-flex items-center rounded-lg px-3 py-1.5 text-[10px] font-black uppercase text-white"
-    style={{ backgroundColor: awardAccents[awardType] }}
-  >
-    {awardLabels[awardType]}
-  </span>
+const ArrowIcon = ({ className = '' }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M5 12h14" />
+    <path d="M13 6l6 6-6 6" />
+  </svg>
 );
 
-const EligibilityCriteria = ({
-  criteria,
-}: {
-  criteria: readonly string[];
-}) => (
-  <div className="border-t border-gray-200 pt-5">
-    <h4 className="text-sm font-black text-[#1a1a1a]">Eligibility Criteria</h4>
-    <ul className="mt-4 space-y-3">
-      {criteria.map((item) => (
-        <li key={item} className="flex gap-3 text-sm font-medium leading-relaxed text-gray-600">
-          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#74C044]" />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
+const CheckIcon = ({ className = '' }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
 );
 
-const TrackIntro = ({ awardType }: { awardType: ScholarshipAwardType }) => {
-  const copy = trackCopy[awardType];
-
-  return (
-    <article className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm md:p-8">
-      <AwardBadge awardType={awardType} />
-      <h3 className="mt-6 text-3xl font-black leading-tight text-[#1a1a1a] md:text-4xl">{copy.shortTitle}</h3>
-      <p className="mt-2 text-sm font-black uppercase text-gray-400">{copy.kicker}</p>
-      <p className="mt-6 text-base font-medium leading-relaxed text-gray-600">{copy.description}</p>
-      <div className="mt-8">
-        <EligibilityCriteria criteria={copy.criteria} />
-      </div>
-    </article>
-  );
-};
-
-const EmptyTrackState = ({ awardType }: { awardType: ScholarshipAwardType }) => {
-  const copy = trackCopy[awardType];
-
-  return (
-    <div className="rounded-lg border border-dashed border-gray-300 bg-white p-8 text-center">
-      <AwardBadge awardType={awardType} />
-      <h3 className="mt-5 text-2xl font-black text-[#1a1a1a]">{copy.emptyTitle}</h3>
-      <p className="mx-auto mt-3 max-w-xl text-sm font-medium leading-relaxed text-gray-500">{copy.emptyDescription}</p>
-    </div>
-  );
-};
-
-const MetricBox = ({ label, value }: { label: string; value: number | string }) => (
-  <div className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
-    <p className="text-3xl font-black text-[#1a1a1a]">{value}</p>
-    <p className="mt-1 text-[10px] font-black uppercase text-gray-400">{label}</p>
-  </div>
+const ChevronIcon = ({ className = '' }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="m6 9 6 6 6-6" />
+  </svg>
 );
 
-const AAARecipientItem = ({ recipient, index }: { recipient: ScholarshipRecipient; index: number }) => (
-  <motion.article
-    initial={{ opacity: 0, y: 18 }}
+const Reveal = ({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 26 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-40px' }}
-    transition={{ delay: Math.min(index * 0.025, 0.3), duration: 0.45 }}
-    className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+    viewport={{ once: true, margin: '-60px' }}
+    transition={{ duration: 0.7, ease: EASE, delay }}
+    className={className}
   >
-    <div className="flex items-center gap-4">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#21409A] text-sm font-black text-white">
-        {index + 1}
-      </div>
-      <div className="min-w-0">
-        <h4 className="break-words text-base font-black text-[#1a1a1a]">{recipient.name}</h4>
-        <p className="mt-1 break-words text-xs font-bold text-gray-500">
-          {recipient.programme || 'AAA Scholarship Recipient'}
-        </p>
-      </div>
-    </div>
-  </motion.article>
+    {children}
+  </motion.div>
 );
 
-const IngScholarCard = ({
-  batch,
-  recipient,
-}: {
-  batch: ScholarshipBatch;
-  recipient?: ScholarshipRecipient;
-}) => (
-  <div className="grid overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl shadow-[#21409A]/10 lg:grid-cols-[0.95fr_1.05fr]">
-    <div className="relative min-h-[360px] bg-[#eef4f0]">
-      <Image
-        src={recipient?.image || batch.groupImage || fallbackGroupImage}
-        alt={recipient?.name || `${batch.year} ING Postgraduate Scholar`}
-        fill
-        sizes="(max-width: 1024px) 100vw, 42vw"
-        className="object-cover"
-      />
-      <div className="absolute left-5 top-5 rounded-lg bg-white px-4 py-3 shadow-lg">
-        <p className="text-[10px] font-black uppercase text-gray-400">Scholarship Year</p>
-        <p className="text-3xl font-black text-[#21409A]">{batch.year}</p>
-      </div>
-    </div>
-    <div className="flex flex-col justify-center p-7 md:p-10">
-      <AwardBadge awardType="ing_postgraduate" />
-      <h3 className="mt-6 text-4xl font-black leading-tight text-[#1a1a1a]">
-        {recipient?.name || batch.title}
-      </h3>
-      <p className="mt-3 text-sm font-black uppercase text-[#74C044]">
-        {recipient?.programme || 'Annual ING Postgraduate Scholar'}
-      </p>
-      {recipient?.quote ? (
-        <p className="mt-7 text-lg font-medium leading-relaxed text-gray-600">{`"${recipient.quote}"`}</p>
-      ) : (
-        <p className="mt-7 text-lg font-medium leading-relaxed text-gray-600">
-          {batch.summary || 'A focused postgraduate scholarship awarded to one outstanding eligible graduate for the year.'}
-        </p>
-      )}
-    </div>
+const SectionTitle = ({ children }: { children: React.ReactNode }) => (
+  <div className="text-center">
+    <h2 className="text-3xl font-black tracking-tight text-[#171717] md:text-5xl">{children}</h2>
+    <span className="mx-auto mt-5 block h-1 w-20 rounded-full bg-gradient-to-r from-[#21409A] to-[#74C044]" />
   </div>
 );
 
-const ScholarshipArchive = ({
-  awardType,
-  batches,
-  openArchive,
-  toggleArchive,
-}: {
-  awardType: ScholarshipAwardType;
-  batches: ScholarshipBatch[];
-  openArchive: Record<string, boolean>;
-  toggleArchive: (key: string) => void;
-}) => {
-  const copy = trackCopy[awardType];
+/* ---------- Hero ---------- */
 
-  if (batches.length === 0) {
-    return (
-      <div className="rounded-lg border border-gray-200 bg-white p-6 text-center">
-        <p className="text-sm font-bold text-gray-500">
-          {awardType === 'aaa' ? 'Previous AAA years will appear here as the archive grows.' : 'Previous ING scholars will appear here after more years are published.'}
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-3">
-      <h3 className="text-2xl font-black text-[#1a1a1a]">{copy.archiveTitle}</h3>
-      {batches.map((batch) => {
-        const key = `${awardType}-${batch.id}`;
-        const open = openArchive[key] ?? false;
-        const recipients = getRecipients(batch);
-
-        return (
-          <div key={batch.id} className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-            <button
-              type="button"
-              onClick={() => toggleArchive(key)}
-              className="flex w-full flex-wrap items-center justify-between gap-4 px-5 py-4 text-left md:px-6"
-            >
-              <div>
-                <p className="text-xl font-black text-[#1a1a1a]">{batch.year}</p>
-                <p className="mt-1 text-sm font-bold text-gray-500">{batch.title}</p>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="text-xs font-black uppercase text-[#21409A]">{recipientLabel(recipients.length)}</span>
-                <motion.svg
-                  animate={{ rotate: open ? 180 : 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="h-5 w-5 text-gray-400"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </motion.svg>
-              </div>
-            </button>
-            <AnimatePresence initial={false}>
-              {open && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
-                >
-                  <div className="border-t border-gray-200 bg-[#f8fafc] p-5 md:p-6">
-                    {awardType === 'ing_postgraduate' ? (
-                      <div className="flex items-center gap-4">
-                        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-white">
-                          <Image
-                            src={recipients[0]?.image || batch.groupImage || fallbackRecipientImage}
-                            alt={recipients[0]?.name || batch.title}
-                            fill
-                            sizes="64px"
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="break-words text-lg font-black text-[#1a1a1a]">{recipients[0]?.name || 'Scholar to be announced'}</p>
-                          <p className="mt-1 break-words text-sm font-bold text-gray-500">
-                            {recipients[0]?.programme || 'ING Postgraduate Scholar'}
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                        {recipients.map((recipient, index) => (
-                          <AAARecipientItem key={`${batch.id}-${recipient.name}-${index}`} recipient={recipient} index={index} />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
+const ScholarshipHero = () => (
+  <section className="relative isolate overflow-hidden bg-[#07162F] text-white">
+    <div className="relative h-[58vh] min-h-[420px] w-full md:h-[66vh]">
+      <Image src={heroImage} alt="IIC graduates celebrating at graduation" fill priority sizes="100vw" className="object-cover object-center" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#06142D] via-[#06142D]/35 to-[#06142D]/55" />
     </div>
-  );
-};
 
-const AAASection = ({
-  batches,
-  openArchive,
-  toggleArchive,
-}: {
-  batches: ScholarshipBatch[];
-  openArchive: Record<string, boolean>;
-  toggleArchive: (key: string) => void;
-}) => {
-  const latestBatch = batches[0];
-  const previousBatches = batches.slice(1);
-  const recipients = getRecipients(latestBatch);
-  const totalRecipients = batches.reduce((sum, batch) => sum + batch.recipients.length, 0);
+    <div className="relative mx-auto -mt-24 max-w-7xl px-6 pb-4 md:-mt-28">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: EASE }}
+        className="relative max-w-2xl overflow-hidden rounded-2xl bg-white p-7 text-[#171717] shadow-2xl shadow-black/30 md:p-9"
+      >
+        <span className="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-[#21409A] to-[#74C044]" />
+        <p className="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#21409A]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#74C044]" />
+          Scholarships at IIC
+        </p>
+        <h1 className="mt-3 text-3xl font-black leading-tight tracking-tight md:text-4xl">Scholarship Opportunity</h1>
+        <p className="mt-4 text-base font-medium leading-relaxed text-gray-600">
+          At IIC, we take pride in recognising and honouring our students’ outstanding academic achievements, talents, and accomplishments through our exclusive scholarship programme.
+        </p>
+      </motion.div>
+    </div>
+  </section>
+);
+
+/* ---------- Award poster cards ---------- */
+
+const AwardPoster = ({ awardType }: { awardType: ScholarshipAwardType }) => {
+  const theme = awardThemes[awardType];
+  const copy = trackCopy[awardType];
+  const isAaa = awardType === 'aaa';
 
   return (
-    <section id="aaa-scholarship" className="bg-[#f4f7fb] py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-12 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <div>
-            <p className="mb-4 text-xs font-black uppercase text-[#21409A]">AAA Scholarship</p>
-            <h2 className="text-4xl font-black leading-tight text-[#1a1a1a] md:text-6xl">
-              A yearwise honour roll for many deserving students.
-            </h2>
-          </div>
+    <div className="relative">
+      {/* offset frame */}
+      <span
+        className={`absolute -z-10 h-full w-full rounded-2xl ${isAaa ? '-left-4 -top-4' : '-right-4 -top-4'}`}
+        style={{ backgroundColor: isAaa ? '#F5C516' : theme.accent }}
+      />
+      <div
+        className="relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-2xl p-7 text-center shadow-xl md:p-8"
+        style={{ background: isAaa
+          ? 'linear-gradient(160deg,#EAF2FF 0%,#D4E4FF 55%,#BFD6FF 100%)'
+          : 'linear-gradient(160deg,#0B2E55 0%,#123C6E 60%,#1B4E8C 100%)' }}
+      >
+        <p
+          className="text-[10px] font-black uppercase tracking-[0.28em]"
+          style={{ color: isAaa ? theme.ink : '#A9D88A' }}
+        >
+          {copy.eyebrow}
+        </p>
+
+        <div>
+          {!isAaa && (
+            <span className="mb-3 inline-block rounded-md bg-[#74C044] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white">
+              {copy.posterTop}
+            </span>
+          )}
+          {isAaa && (
+            <p className="mb-1 text-[11px] font-black uppercase tracking-[0.14em]" style={{ color: theme.ink }}>{copy.posterTop}</p>
+          )}
+          <h3
+            className={`font-black leading-[0.9] tracking-tight ${isAaa ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'}`}
+            style={{ color: isAaa ? theme.accent : '#fff' }}
+          >
+            {copy.posterTitle}
+          </h3>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[360px_1fr]">
-          <TrackIntro awardType="aaa" />
+        <p className="text-[11px] font-bold leading-relaxed" style={{ color: isAaa ? theme.ink : 'rgba(255,255,255,0.78)' }}>
+          {copy.posterNote}
+          <span className="mt-1 block text-[9px] font-semibold opacity-70">{copy.posterFine}</span>
+        </p>
+      </div>
+    </div>
+  );
+};
 
-          {latestBatch ? (
-            <div className="space-y-8">
-              <div className="grid gap-6 md:grid-cols-3">
-                <MetricBox label="Latest year" value={latestBatch.year} />
-                <MetricBox label="Latest recipients" value={recipients.length} />
-                <MetricBox label="Total archived" value={totalRecipients} />
-              </div>
+const EligibilityDropdown = ({ awardType, open, onToggle }: { awardType: ScholarshipAwardType; open: boolean; onToggle: () => void }) => {
+  const theme = awardThemes[awardType];
+  const copy = trackCopy[awardType];
 
-              <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-                <div className="relative min-h-[280px] bg-[#e9eef8] md:min-h-[420px]">
-                  <Image
-                    src={latestBatch.groupImage || fallbackGroupImage}
-                    alt={`${latestBatch.year} AAA Scholarship recipients`}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 68vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white md:p-8">
-                    <AwardBadge awardType="aaa" />
-                    <h3 className="mt-4 text-3xl font-black md:text-5xl">{latestBatch.title}</h3>
-                    {latestBatch.summary && (
-                      <p className="mt-3 max-w-3xl text-sm font-medium leading-relaxed text-white/75 md:text-base">
-                        {latestBatch.summary}
-                      </p>
-                    )}
-                  </div>
+  return (
+    <div className="overflow-hidden rounded-xl border" style={{ borderColor: theme.line }}>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-3 px-5 py-3.5 text-left transition-colors hover:bg-gray-50"
+      >
+        <span className="text-sm font-black tracking-tight text-[#171717]">Eligibility Criteria</span>
+        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.25 }} style={{ color: theme.ink }}>
+          <ChevronIcon className="h-5 w-5" />
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            className="overflow-hidden"
+          >
+            <div className="space-y-3 px-5 pb-5 pt-1" style={{ backgroundColor: theme.soft }}>
+              {copy.criteria.map((item) => (
+                <div key={item} className="flex gap-3 text-sm font-medium leading-relaxed text-gray-700">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white" style={{ backgroundColor: theme.accent }}>
+                    <CheckIcon className="h-3 w-3" />
+                  </span>
+                  <span>{item}</span>
                 </div>
-                <div className="p-5 md:p-8">
-                  <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                    <h3 className="text-2xl font-black text-[#1a1a1a]">{latestBatch.year} AAA recipients</h3>
-                    <span className="rounded-lg bg-[#21409A]/10 px-4 py-2 text-xs font-black uppercase text-[#21409A]">
-                      {recipientLabel(recipients.length)}
-                    </span>
-                  </div>
-                  {recipients.length > 0 ? (
-                    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                      {recipients.map((recipient, index) => (
-                        <AAARecipientItem key={`${latestBatch.id}-${recipient.name}-${index}`} recipient={recipient} index={index} />
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="rounded-lg bg-[#f8fafc] p-5 text-sm font-bold text-gray-500">
-                      Recipient names for this AAA batch will be added soon.
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <ScholarshipArchive
-                awardType="aaa"
-                batches={previousBatches}
-                openArchive={openArchive}
-                toggleArchive={toggleArchive}
-              />
+              ))}
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const AwardsRow = ({ openEligibility, toggleEligibility }: {
+  openEligibility: Record<ScholarshipAwardType, boolean>;
+  toggleEligibility: (key: ScholarshipAwardType) => void;
+}) => (
+  <section className="bg-white py-16 md:py-24">
+    <div className="mx-auto max-w-7xl px-6">
+      <div className="grid gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-10">
+        {(['aaa', 'ing_postgraduate'] as ScholarshipAwardType[]).map((awardType, idx) => {
+          const theme = awardThemes[awardType];
+          const copy = trackCopy[awardType];
+
+          return (
+            <Reveal key={awardType} delay={idx * 0.08} className="flex flex-col">
+              <AwardPoster awardType={awardType} />
+              <h3 className="mt-9 text-2xl font-black tracking-tight" style={{ color: theme.ink }}>{copy.cardTitle}</h3>
+              <p className="mt-4 text-sm font-medium leading-relaxed text-gray-600">{copy.description}</p>
+              {copy.fineprint && <p className="mt-3 text-xs font-bold italic text-gray-400">{copy.fineprint}</p>}
+              <div className="mt-6">
+                <EligibilityDropdown awardType={awardType} open={openEligibility[awardType]} onToggle={() => toggleEligibility(awardType)} />
+              </div>
+            </Reveal>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
+/* ---------- ING spotlight ---------- */
+
+const IngSpotlight = ({ batch, recipient }: { batch: ScholarshipBatch; recipient?: ScholarshipRecipient }) => {
+  const theme = awardThemes.ing_postgraduate;
+  const nameParts = (recipient?.name || batch.title).split(' ');
+  const first = nameParts[0];
+  const rest = nameParts.slice(1).join(' ');
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 34 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.8, ease: EASE }}
+      className="grid items-stretch gap-8 md:grid-cols-2 md:gap-12"
+    >
+      <div className="group relative aspect-[4/5] overflow-hidden rounded-3xl bg-[#EEF7EA] shadow-xl shadow-[#74C044]/15">
+        <Image
+          src={recipient?.image || batch.groupImage || fallbackGroupImage}
+          alt={recipient?.name || `${batch.year} ING Postgraduate Scholar`}
+          fill
+          sizes="(max-width: 768px) 100vw, 45vw"
+          className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+        />
+        <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] text-[#3C7D25] backdrop-blur">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#74C044]" />
+          ING Postgraduate
+        </span>
+      </div>
+
+      <div className="flex flex-col justify-center">
+        <p className="text-2xl font-black uppercase tracking-tight" style={{ color: theme.accent }}>Scholarship {batch.year}</p>
+        <span className="mt-3 block h-1 w-16 rounded-full" style={{ backgroundColor: theme.accent }} />
+        <h3 className="mt-7 text-3xl font-black tracking-tight text-[#171717] md:text-4xl">
+          {first} <span className="font-medium text-gray-500">{rest}</span>
+        </h3>
+        <p className="mt-2 text-sm font-bold uppercase tracking-[0.12em]" style={{ color: theme.ink }}>
+          {recipient?.programme || 'Annual ING Postgraduate Scholar'}
+        </p>
+        {recipient?.quote ? (
+          <p className="mt-7 border-l-2 pl-5 text-lg font-medium italic leading-relaxed text-gray-600" style={{ borderColor: theme.accent }}>
+            {`"${recipient.quote}"`}
+          </p>
+        ) : (
+          <p className="mt-7 text-lg font-medium leading-relaxed text-gray-600">
+            {batch.summary || 'A focused postgraduate scholarship awarded to one outstanding eligible graduate for the year.'}
+          </p>
+        )}
+      </div>
+    </motion.article>
+  );
+};
+
+const IngArchiveRow = ({ batch }: { batch: ScholarshipBatch }) => {
+  const recipient = batch.recipients[0];
+  return (
+    <div className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-4">
+      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#F4F7FA]">
+        <Image src={recipient?.image || batch.groupImage || fallbackRecipientImage} alt={recipient?.name || batch.title} fill sizes="56px" className="object-cover" />
+      </div>
+      <div className="min-w-0">
+        <p className="text-xs font-black uppercase tracking-[0.12em] text-[#3C7D25]">{batch.year}</p>
+        <p className="mt-0.5 break-words text-base font-black tracking-tight text-[#171717]">{recipient?.name || 'Scholar to be announced'}</p>
+        <p className="break-words text-xs font-bold text-gray-500">{recipient?.programme || 'ING Postgraduate Scholar'}</p>
+      </div>
+    </div>
+  );
+};
+
+const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) => {
+  const latestBatch = batches[0];
+  const previousBatches = batches.slice(1);
+  const scholar = latestBatch?.recipients[0];
+
+  return (
+    <section id="ing-postgraduate-scholarship" className="scroll-mt-8 bg-[#F4F7FA] py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <Reveal><SectionTitle>Full Scholarship Recipients</SectionTitle></Reveal>
+        <div className="mt-14">
+          {latestBatch ? (
+            <>
+              <IngSpotlight batch={latestBatch} recipient={scholar} />
+              {previousBatches.length > 0 && (
+                <Reveal className="mt-12">
+                  <p className="text-sm font-black uppercase tracking-[0.14em] text-[#3C7D25]">Previous ING scholars</p>
+                  <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {previousBatches.map((batch) => <IngArchiveRow key={batch.id} batch={batch} />)}
+                  </div>
+                </Reveal>
+              )}
+            </>
           ) : (
-            <EmptyTrackState awardType="aaa" />
+            <div className="rounded-3xl border border-dashed border-[#CDE8BD] bg-white/60 p-10 text-center">
+              <h3 className="text-2xl font-black tracking-tight text-[#171717]">{trackCopy.ing_postgraduate.emptyTitle}</h3>
+              <p className="mx-auto mt-3 max-w-xl text-sm font-medium leading-relaxed text-gray-500">{trackCopy.ing_postgraduate.emptyDescription}</p>
+            </div>
           )}
         </div>
       </div>
@@ -388,173 +394,167 @@ const AAASection = ({
   );
 };
 
-const IngSection = ({
-  batches,
-  openArchive,
-  toggleArchive,
-}: {
-  batches: ScholarshipBatch[];
-  openArchive: Record<string, boolean>;
-  toggleArchive: (key: string) => void;
-}) => {
-  const latestBatch = batches[0];
-  const previousBatches = batches.slice(1);
-  const scholar = latestBatch?.recipients[0];
+/* ---------- AAA recipients accordion ---------- */
+
+const AaaBatchPanel = ({ batch, open, onToggle, defaultOpen }: { batch: ScholarshipBatch; open: boolean; onToggle: () => void; defaultOpen?: boolean }) => {
+  const theme = awardThemes.aaa;
+  const recipients = getRecipients(batch);
+  const isOpen = open;
 
   return (
-    <section id="ing-postgraduate-scholarship" className="bg-white py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-12 grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
-          <div>
-            <p className="mb-4 text-xs font-black uppercase text-[#74C044]">ING Postgraduate Scholarship</p>
-            <h2 className="text-4xl font-black leading-tight text-[#1a1a1a] md:text-6xl">
-              One postgraduate scholar receives the spotlight each year.
-            </h2>
-          </div>
-        </div>
-
-        <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
-          <div className="space-y-8">
-            {latestBatch ? (
-              <>
-                <div className="grid gap-6 sm:grid-cols-3">
-                  <MetricBox label="Latest year" value={latestBatch.year} />
-                  <MetricBox label="Annual scholar" value={scholar ? 1 : 0} />
-                  <MetricBox label="Years archived" value={batches.length} />
-                </div>
-                <IngScholarCard batch={latestBatch} recipient={scholar} />
-                <ScholarshipArchive
-                  awardType="ing_postgraduate"
-                  batches={previousBatches}
-                  openArchive={openArchive}
-                  toggleArchive={toggleArchive}
+    <div className="overflow-hidden rounded-2xl border bg-white shadow-sm" style={{ borderColor: isOpen ? theme.line : '#E5E7EB' }}>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        className={`flex w-full items-center justify-between gap-3 px-5 py-4 text-left transition-colors md:px-6 ${isOpen ? 'text-white' : 'text-[#171717] hover:bg-gray-50'}`}
+        style={isOpen ? { backgroundColor: theme.accent } : undefined}
+      >
+        <span className="text-sm font-black tracking-tight md:text-base">List of {batch.title || `AAA Scholarship ${batch.year} Recipients`}</span>
+        <span className="flex items-center gap-3">
+          <span className={`hidden text-xs font-black uppercase tracking-[0.1em] sm:inline ${isOpen ? 'text-white/70' : 'text-gray-400'}`}>
+            {recipientLabel(recipients.length)}
+          </span>
+          <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25 }}>
+            <ChevronIcon className="h-5 w-5" />
+          </motion.span>
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={defaultOpen ? false : { height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            className="overflow-hidden"
+          >
+            <div className="p-5 md:p-6">
+              <div className="relative aspect-[16/7] w-full overflow-hidden rounded-xl bg-[#E9EEF8]">
+                <Image
+                  src={batch.groupImage || fallbackGroupImage}
+                  alt={`${batch.year} AAA Scholarship recipients`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 1100px"
+                  className="object-cover"
                 />
-              </>
-            ) : (
-              <EmptyTrackState awardType="ing_postgraduate" />
-            )}
-          </div>
-          <TrackIntro awardType="ing_postgraduate" />
-        </div>
-      </div>
-    </section>
+              </div>
+              {batch.summary && (
+                <p className="mt-5 text-sm font-medium leading-relaxed text-gray-600">{batch.summary}</p>
+              )}
+              {recipients.length > 0 ? (
+                <ol className="mt-6 grid gap-x-6 gap-y-1 sm:grid-cols-2 lg:grid-cols-4">
+                  {recipients.map((recipient, index) => (
+                    <li key={`${batch.id}-${recipient.name}-${index}`} className="flex gap-2 border-b border-gray-100 py-2 text-sm font-medium text-gray-700">
+                      <span className="shrink-0 font-black tabular-nums" style={{ color: theme.ink }}>{index + 1}.</span>
+                      <span className="break-words">{recipient.name}</span>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="mt-6 text-sm font-bold text-gray-500">Recipient names for this batch will be added soon.</p>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
-const ScholarshipsClient = ({ batches }: { batches: ScholarshipBatch[] }) => {
-  const [openArchive, setOpenArchive] = useState<Record<string, boolean>>({});
+const AaaRecipientsSection = ({ batches, openArchive, toggleArchive }: {
+  batches: ScholarshipBatch[];
+  openArchive: Record<string, boolean>;
+  toggleArchive: (key: string) => void;
+}) => (
+  <section id="aaa-scholarship" className="scroll-mt-8 bg-white py-16 md:py-24">
+    <div className="mx-auto max-w-7xl px-6">
+      <Reveal><SectionTitle>AAA Scholarship Recipients</SectionTitle></Reveal>
+      <div className="mx-auto mt-14 max-w-5xl space-y-4">
+        {batches.length > 0 ? (
+          batches.map((batch, idx) => {
+            const key = `aaa-${batch.id}`;
+            const open = openArchive[key] ?? idx === 0;
+            return (
+              <Reveal key={batch.id} delay={Math.min(idx * 0.05, 0.2)}>
+                <AaaBatchPanel batch={batch} open={open} onToggle={() => toggleArchive(key)} defaultOpen={idx === 0} />
+              </Reveal>
+            );
+          })
+        ) : (
+          <div className="rounded-3xl border border-dashed border-[#C8D6FF] bg-[#F4F7FA] p-10 text-center">
+            <h3 className="text-2xl font-black tracking-tight text-[#171717]">{trackCopy.aaa.emptyTitle}</h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm font-medium leading-relaxed text-gray-500">{trackCopy.aaa.emptyDescription}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+);
 
-  const aaaBatches = useMemo(() => sortBatches(batches.filter((batch) => batch.awardType === 'aaa')), [batches]);
-  const ingBatches = useMemo(() => sortBatches(batches.filter((batch) => batch.awardType === 'ing_postgraduate')), [batches]);
-  const years = new Set(batches.map((batch) => batch.year));
+/* ---------- Next step CTA ---------- */
 
-  const toggleArchive = (key: string) => {
-    setOpenArchive((state) => ({ ...state, [key]: !state[key] }));
-  };
-
-  return (
-    <main className="min-h-screen bg-[#f4f7fb] text-[#1a1a1a]">
-      <section className="relative flex min-h-[82svh] items-end overflow-hidden bg-black px-6 pb-14 pt-32 text-white md:pb-20">
-        <Image
-          src={fallbackHeroImage}
-          alt="IIC graduates celebrating scholarships"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-75"
+const NextStepCTA = () => (
+  <section className="bg-white px-6 py-16 md:py-24">
+    <div className="mx-auto max-w-7xl">
+      <div
+        className="relative isolate overflow-hidden rounded-[28px] px-8 py-16 text-center text-white md:px-12 md:py-20"
+        style={{ background: 'linear-gradient(135deg,#3C7D25 0%,#5AA033 45%,#74C044 100%)' }}
+      >
+        {/* decorative glows */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-70"
+          style={{ background: 'radial-gradient(circle at 85% 15%, rgba(255,255,255,0.22), transparent 40%), radial-gradient(circle at 12% 90%, rgba(8,26,57,0.30), transparent 45%)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/10" />
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
-          <div>
-            <p className="mb-5 text-xs font-black uppercase text-[#8DBAFF]">Scholarships at IIC</p>
-            <h1 className="max-w-4xl text-5xl font-black leading-[0.98] sm:text-6xl md:text-7xl lg:text-[86px]">
-              Two scholarship paths, two different kinds of recognition.
-            </h1>
-            <p className="mt-7 max-w-2xl text-base font-medium leading-relaxed text-white/76 sm:text-xl">
-              AAA celebrates a wider cohort of disciplined students. ING Postgraduate honours one outstanding graduate each year.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-4">
-              <Link href="#aaa-scholarship" className="rounded-lg bg-[#21409A] px-6 py-4 text-sm font-black text-white shadow-xl shadow-black/20 transition-colors hover:bg-[#173179]">
-                Explore AAA
-              </Link>
-              <Link href="#ing-postgraduate-scholarship" className="rounded-lg border border-white/28 bg-white/10 px-6 py-4 text-sm font-black text-white backdrop-blur transition-colors hover:bg-white/18">
-                Explore ING Postgraduate
-              </Link>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-3 rounded-lg border border-white/15 bg-white/10 p-4 backdrop-blur-xl">
-            {[
-              { label: 'Years', value: years.size || '-' },
-              { label: 'AAA students', value: aaaBatches.reduce((sum, batch) => sum + batch.recipients.length, 0) || '-' },
-              { label: 'ING scholars', value: ingBatches.reduce((sum, batch) => sum + Math.min(batch.recipients.length, 1), 0) || '-' },
-            ].map((metric) => (
-              <div key={metric.label} className="rounded-lg bg-black/20 p-4 text-center">
-                <p className="text-3xl font-black text-white">{metric.value}</p>
-                <p className="mt-1 text-[10px] font-black uppercase text-white/55">{metric.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        {/* subtle grid texture */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.08]"
+          style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)', backgroundSize: '46px 46px' }}
+        />
 
-      <section className="bg-white py-14 md:py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid gap-6 lg:grid-cols-2">
-            {(['aaa', 'ing_postgraduate'] as ScholarshipAwardType[]).map((awardType) => {
-              const copy = trackCopy[awardType];
-              return (
-                <Link
-                  key={awardType}
-                  href={awardType === 'aaa' ? '#aaa-scholarship' : '#ing-postgraduate-scholarship'}
-                  className="group rounded-lg border border-gray-200 bg-[#f8fafc] p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-[#21409A]/30 hover:shadow-lg md:p-8"
-                >
-                  <AwardBadge awardType={awardType} />
-                  <h2 className="mt-6 text-3xl font-black leading-tight text-[#1a1a1a] md:text-4xl">{copy.title}</h2>
-                  <p className="mt-4 text-base font-medium leading-relaxed text-gray-600">{copy.description}</p>
-                  <span className="mt-7 inline-flex text-sm font-black text-[#21409A] group-hover:text-[#173179]">
-                    View section
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {batches.length === 0 && (
-        <section className="bg-[#f4f7fb] py-12">
-          <div className="mx-auto max-w-4xl px-6 text-center">
-            <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm md:p-10">
-              <p className="text-xs font-black uppercase text-[#21409A]">Recipients Archive</p>
-              <h2 className="mt-5 text-4xl font-black text-[#1a1a1a]">Recipients will be published soon.</h2>
-              <p className="mx-auto mt-5 max-w-2xl text-base font-medium leading-relaxed text-gray-500">
-                The scholarship archive is ready for yearwise updates. Once published by the IIC team, AAA and ING recipient stories will appear in their own sections.
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      <AAASection batches={aaaBatches} openArchive={openArchive} toggleArchive={toggleArchive} />
-      <IngSection batches={ingBatches} openArchive={openArchive} toggleArchive={toggleArchive} />
-
-      <section className="relative overflow-hidden bg-[#21409A] py-16 text-white md:py-24">
-        <div className="mx-auto max-w-5xl px-6 text-center">
-          <p className="text-xs font-black uppercase text-[#A9D88A]">Next Step</p>
-          <h2 className="mt-5 text-4xl font-black md:text-6xl">Ready to compete for your opportunity?</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-relaxed text-white/72">
+        <div className="relative mx-auto max-w-3xl">
+          <p className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-white backdrop-blur">
+            <span className="h-1.5 w-1.5 rounded-full bg-white" />
+            Admissions Open
+          </p>
+          <h2 className="mt-6 text-4xl font-black tracking-tight md:text-6xl">What’s Your Next Step?</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base font-medium leading-relaxed text-white/90">
             Talk with our admissions team about eligibility, deadlines, and how scholarship decisions are published each year.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
-            <Link href="/admissions" className="rounded-lg bg-white px-6 py-4 text-sm font-black text-[#21409A] transition-colors hover:bg-[#f3f6fb]">
-              Apply Now
+            <Link href="/contact" className="inline-flex items-center gap-3 rounded-full border-2 border-white/70 px-7 py-3.5 text-sm font-black text-white transition-colors hover:border-white hover:bg-white hover:text-[#3C7D25]">
+              Schedule a Visit
             </Link>
-            <Link href="/contact" className="rounded-lg border border-white/24 px-6 py-4 text-sm font-black text-white transition-colors hover:bg-white/10">
-              Contact Admissions
+            <Link href="/admissions" className="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-3.5 text-sm font-black text-[#3C7D25] shadow-lg shadow-black/15 transition-transform hover:-translate-y-0.5">
+              Apply Now
+              <ArrowIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
+);
+
+/* ---------- Root ---------- */
+
+const ScholarshipsClient = ({ batches }: { batches: ScholarshipBatch[] }) => {
+  const [openArchive, setOpenArchive] = useState<Record<string, boolean>>({});
+  const [openEligibility, setOpenEligibility] = useState<Record<ScholarshipAwardType, boolean>>({ aaa: false, ing_postgraduate: false });
+
+  const aaaBatches = useMemo(() => sortBatches(batches.filter((batch) => batch.awardType === 'aaa')), [batches]);
+  const ingBatches = useMemo(() => sortBatches(batches.filter((batch) => batch.awardType === 'ing_postgraduate')), [batches]);
+
+  const toggleArchive = (key: string) => setOpenArchive((state) => ({ ...state, [key]: !(state[key] ?? key === `aaa-${aaaBatches[0]?.id}`) }));
+  const toggleEligibility = (key: ScholarshipAwardType) => setOpenEligibility((state) => ({ ...state, [key]: !state[key] }));
+
+  return (
+    <main className="min-h-screen bg-white text-[#171717]">
+      <ScholarshipHero />
+      <AwardsRow openEligibility={openEligibility} toggleEligibility={toggleEligibility} />
+      <FullScholarshipSection batches={ingBatches} />
+      <AaaRecipientsSection batches={aaaBatches} openArchive={openArchive} toggleArchive={toggleArchive} />
+      <NextStepCTA />
     </main>
   );
 };

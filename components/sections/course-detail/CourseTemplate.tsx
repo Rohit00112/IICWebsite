@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { createPortal } from 'react-dom';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
@@ -45,9 +46,28 @@ interface FAQ {
   answer?: string;
 }
 
+type ModulePopoverState = {
+  yearIndex: number;
+  moduleIndex: number;
+  left: number;
+  top: number;
+  opensAbove: boolean;
+};
+
+const formatCredits = (credits?: string) => {
+  const value = credits?.trim();
+
+  if (!value) return '';
+  return /credits?/i.test(value) ? value : `${value} Credits`;
+};
+
 interface CourseData {
   title: string;
   subtitle?: string;
+  listing?: {
+    displayTitle?: string;
+    specialism?: string;
+  };
   description?: string;
   overview?: string;
   details?: {
@@ -74,13 +94,60 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
   const [activeYear, setActiveYear] = useState(0);
   const [activeTab, setActiveTab] = useState<'overview' | 'outcomes'>('overview');
   const [activeFAQ, setActiveFAQ] = useState(0);
+  const [activeModule, setActiveModule] = useState<ModulePopoverState | null>(null);
+  const modulePopoverTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const heroTitle = course.listing?.displayTitle || course.title;
+  const heroSpecialism = course.listing?.specialism || '';
+  const heroDescription = course.title === 'BSc (Hons) Computing' && course.description?.trim().toLowerCase() === 'hacked_by_inred'
+    ? ''
+    : course.description?.trim();
+
+  const clearModulePopoverTimeout = () => {
+    if (!modulePopoverTimeout.current) return;
+    clearTimeout(modulePopoverTimeout.current);
+    modulePopoverTimeout.current = null;
+  };
+
+  const closeModulePopover = () => {
+    clearModulePopoverTimeout();
+    setActiveModule(null);
+  };
+
+  const scheduleModulePopoverClose = () => {
+    clearModulePopoverTimeout();
+    modulePopoverTimeout.current = setTimeout(() => setActiveModule(null), 140);
+  };
+
+  const openModulePopover = (element: HTMLElement, yearIndex: number, moduleIndex: number) => {
+    clearModulePopoverTimeout();
+
+    const rect = element.getBoundingClientRect();
+    const popoverWidth = Math.min(380, window.innerWidth - 32);
+    const left = Math.min(
+      Math.max(rect.left + rect.width / 2, popoverWidth / 2 + 16),
+      window.innerWidth - popoverWidth / 2 - 16
+    );
+    const opensAbove = rect.bottom + 300 > window.innerHeight && rect.top > 300;
+
+    setActiveModule({
+      yearIndex,
+      moduleIndex,
+      left,
+      top: opensAbove ? rect.top - 12 : rect.bottom + 12,
+      opensAbove,
+    });
+  };
+
+  const popoverModule = activeModule
+    ? course.curriculum?.[activeModule.yearIndex]?.modules?.[activeModule.moduleIndex]
+    : undefined;
 
   const sanitizedOverview = React.useMemo(() => {
     const overviewHtml = course.overview || `
       <p>The ${course.title} degree at Itahari International College, awarded by London Metropolitan University, is designed to provide you with a comprehensive understanding of core principles and practical skills in your chosen field.</p>
       <p>Our industry-aligned curriculum ensures you are exposed to the latest technologies and methodologies, preparing you for a seamless transition into the global workforce.</p>
     `;
-    return sanitizeHtml(overviewHtml);
+    return sanitizeHtml(overviewHtml).replace(/[\u00A0\u202F]/g, ' ');
   }, [course.overview, course.title]);
 
   const admissionsHref = `/admissions?program=${encodeURIComponent(course.title)}`;
@@ -117,20 +184,34 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
             </span>
           </motion.div>
 
-          <AnimeReveal
-            text={course.title}
-            className="text-6xl md:text-[100px] font-bold text-white mb-10 leading-[1] tracking-tight max-w-[900px] mx-auto justify-center"
-            staggerFrom="center"
-          />
+          <div className="mb-10 flex flex-col items-center">
+            <AnimeReveal
+              as="h1"
+              text={heroTitle}
+              className="text-[40px] sm:text-[48px] md:text-[54px] lg:text-[64px] xl:text-[72px] font-bold text-white leading-[1.05] tracking-normal max-w-[1230px] mx-auto justify-center"
+              staggerFrom="center"
+            />
+            {heroSpecialism && (
+              <AnimeReveal
+                as="p"
+                text={heroSpecialism}
+                delay={0.2}
+                className="mt-3 text-[28px] sm:text-[34px] md:text-[42px] lg:text-[48px] font-semibold text-white/80 leading-[1.1] tracking-normal max-w-[1230px] mx-auto justify-center"
+                staggerFrom="center"
+              />
+            )}
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="text-white/80 text-[14px] md:text-[16px] max-w-2xl mx-auto mb-12 leading-relaxed font-normal"
-          >
-            {course.description}
-          </motion.p>
+          {heroDescription && (
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-white/80 text-[14px] md:text-[16px] max-w-2xl mx-auto mb-12 leading-relaxed font-normal"
+            >
+              {heroDescription}
+            </motion.p>
+          )}
 
           <Magnetic strength={0.25}>
             <motion.div
@@ -179,7 +260,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   exit={{ opacity: 0, x: 20 }}
                   className="min-w-0 space-y-6"
                 >
-                  <div className="prose prose-lg max-w-none min-w-0 break-words text-gray-500 font-medium leading-relaxed [overflow-wrap:anywhere] [&_*]:max-w-full [&_*]:!whitespace-normal [&_*]:[overflow-wrap:anywhere]"
+                  <div className="prose prose-lg max-w-none min-w-0 break-normal text-gray-500 font-medium leading-relaxed [overflow-wrap:normal] [word-break:normal] [&_*]:max-w-full [&_*]:!whitespace-normal [&_*]:break-normal [&_*]:[overflow-wrap:normal] [&_*]:[word-break:normal]"
                     dangerouslySetInnerHTML={{ __html: sanitizedOverview }} 
                   />
                 </motion.div>
@@ -269,10 +350,15 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left side: Accordions */}
             <div className="lg:col-span-8 space-y-6">
-              {course.curriculum?.map((year, i) => (
+              {course.curriculum?.map((year, i) => {
+                return (
                 <div key={i} className="bg-white rounded-[24px] overflow-hidden shadow-sm border border-gray-100">
                   <button
-                    onClick={() => setActiveYear(activeYear === i ? -1 : i)}
+                    onClick={() => {
+                      const isClosing = activeYear === i;
+                      setActiveYear(isClosing ? -1 : i);
+                      if (isClosing) closeModulePopover();
+                    }}
                     className="w-full px-8 py-7 flex items-center justify-between hover:bg-gray-50 transition-colors"
                   >
                     <span className="text-xl font-bold text-[#1a1a1a]">{year.title}</span>
@@ -290,21 +376,42 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                       >
-                        <div className="px-8 pb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                          {year.modules?.map((mod, j) => (
-                            <div key={j} className="p-8 bg-[#f8fafc] rounded-2xl border border-gray-100 group hover:border-[#21409A]/20 transition-all">
-                              <h4 className="font-bold text-[#1a1a1a] mb-3 text-lg leading-tight">
-                                {mod.name} {mod.credits && `(${mod.credits} Credits)`}
-                              </h4>
-                              <p className="text-sm text-gray-500 leading-relaxed">{mod.description}</p>
-                            </div>
-                          ))}
+                        <div className="grid grid-cols-1 gap-3 px-8 pb-8 sm:grid-cols-2 lg:grid-cols-3">
+                            {year.modules?.map((mod, moduleIndex) => {
+                              const isSelected = activeModule?.yearIndex === i && activeModule.moduleIndex === moduleIndex;
+
+                              return (
+                                <button
+                                  key={moduleIndex}
+                                  type="button"
+                                  onMouseEnter={(event) => openModulePopover(event.currentTarget, i, moduleIndex)}
+                                  onMouseLeave={scheduleModulePopoverClose}
+                                  onFocus={(event) => openModulePopover(event.currentTarget, i, moduleIndex)}
+                                  onBlur={scheduleModulePopoverClose}
+                                  onClick={(event) => openModulePopover(event.currentTarget, i, moduleIndex)}
+                                  onKeyDown={(event) => {
+                                    if (event.key === 'Escape') closeModulePopover();
+                                  }}
+                                  aria-expanded={isSelected}
+                                  className={`flex min-h-[124px] items-center rounded-md border p-5 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:ring-offset-2 ${
+                                    isSelected
+                                      ? 'border-[#21409A] bg-[#f3f6fb] shadow-[0_14px_30px_rgba(33,64,154,0.1)]'
+                                      : 'border-gray-200 bg-white hover:-translate-y-1 hover:border-[#21409A]/55 hover:shadow-[0_14px_30px_rgba(33,64,154,0.1)]'
+                                  }`}
+                                >
+                                  <span className="block text-[17px] font-bold leading-snug text-[#1a1a1a]">
+                                    {mod.name}
+                                  </span>
+                                </button>
+                              );
+                            })}
                         </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
-              ))}
+                );
+              })}
 
               <div className="pt-4 flex items-center gap-2 text-gray-400 text-sm font-medium">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -491,29 +598,28 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
             duration={760}
           >
             {course.faculty?.map((member, i) => {
-              const isFirst = i === 0;
               return (
                 <div 
                   key={i} 
-                  className={`faculty-card ${isFirst ? 'bg-[#58595B] text-white' : 'bg-white border border-gray-100 text-[#1a1a1a]'} p-10 rounded-[32px] shadow-sm flex flex-col items-center text-center`}
+                  className="faculty-card flex flex-col items-center rounded-[32px] border border-gray-100 bg-white p-10 text-center text-[#1a1a1a] shadow-sm"
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  <div className={`relative w-28 h-28 rounded-full mb-8 flex items-center justify-center ${isFirst ? 'bg-[#F4F7FA]/20' : 'bg-[#f0f4f8]'}`}>
-                    <div className="relative w-24 h-24 rounded-full overflow-hidden shadow-inner">
+                  <div className="relative mb-7 flex h-28 w-28 items-center justify-center rounded-full bg-[#f0f4f8]">
+                    <div className="relative h-24 w-24 overflow-hidden rounded-full bg-white shadow-inner">
                       <Image 
                         src={member.image || '/images/common/avatar-placeholder.png'} 
                         alt={member.name || 'Faculty Member'} 
                         fill 
-                        className="object-cover scale-110" 
-                        sizes="(max-width: 768px) 96px, 96px"
+                        className="object-cover object-[50%_18%] scale-[1.25]"
+                        sizes="96px"
                       />
                     </div>
                   </div>
                   <h4 className="text-xl font-bold mb-3">{member.name || 'Staff Member'}</h4>
-                  <p className={`text-sm font-bold mb-1 ${isFirst ? 'text-white/80' : 'text-[#21409A]'}`}>
+                  <p className="mb-1 text-sm font-bold text-[#21409A]">
                     {member.role || 'Faculty'}
                   </p>
-                  <p className={`text-[13px] leading-relaxed ${isFirst ? 'text-white/60' : 'text-gray-400'}`}>
+                  <p className="text-[13px] leading-relaxed text-gray-400">
                     {member.description}
                   </p>
                 </div>
@@ -623,6 +729,48 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           </AnimeStagger>
         </div>
       </section>
+
+      {activeModule && popoverModule && typeof document !== 'undefined' && createPortal(
+        <div
+          role="dialog"
+          aria-label={`${popoverModule.name} module details`}
+          onMouseEnter={clearModulePopoverTimeout}
+          onMouseLeave={scheduleModulePopoverClose}
+          style={{
+            left: activeModule.left,
+            top: activeModule.top,
+            transform: activeModule.opensAbove ? 'translate(-50%, -100%)' : 'translateX(-50%)',
+          }}
+          className="fixed z-[300] w-[min(380px,calc(100vw-2rem))] rounded-md border border-[#21409A]/20 bg-white p-6 shadow-[0_24px_60px_rgba(15,23,42,0.24)]"
+        >
+          <div className="flex items-start justify-between gap-5">
+            <div>
+              {popoverModule.credits && (
+                <span className="mb-3 inline-flex rounded-full bg-[#21409A]/10 px-3 py-1 text-[10px] font-bold tracking-[0.16em] text-[#21409A]">
+                  {formatCredits(popoverModule.credits)}
+                </span>
+              )}
+              <h3 className="text-xl font-bold leading-tight text-[#1a1a1a]">{popoverModule.name}</h3>
+            </div>
+            <button
+              type="button"
+              onClick={closeModulePopover}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-gray-400 transition-colors hover:bg-gray-100 hover:text-[#1a1a1a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#21409A]"
+              aria-label="Close module details"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m6 6 12 12M18 6 6 18" />
+              </svg>
+            </button>
+          </div>
+          {popoverModule.description && (
+            <p className="mt-4 max-h-[min(360px,calc(100vh-2rem))] overflow-y-auto pr-2 text-sm leading-relaxed text-gray-500">
+              {popoverModule.description}
+            </p>
+          )}
+        </div>,
+        document.body
+      )}
     </main>
   );
 };

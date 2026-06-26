@@ -27,6 +27,8 @@ const CourseSchema = new Schema({
   level: String,
   listing: {
     title: String,
+    displayTitle: String,
+    specialism: String,
     category: String,
     description: String,
     image: {
@@ -103,6 +105,20 @@ const CourseSchema = new Schema({
   timestamps: true,
 });
 
-const Course = models.Course || model('Course', CourseSchema);
+const existingCourseModel = models.Course;
+
+// Next.js keeps Mongoose models alive across development hot reloads. Add new
+// listing fields to an already-compiled model so updates are not stripped.
+if (
+  existingCourseModel &&
+  (!existingCourseModel.schema.path('listing.displayTitle') || !existingCourseModel.schema.path('listing.specialism'))
+) {
+  existingCourseModel.schema.add({
+    'listing.displayTitle': String,
+    'listing.specialism': String,
+  });
+}
+
+const Course = existingCourseModel || model('Course', CourseSchema);
 
 export default Course;

@@ -14,6 +14,8 @@ export interface CourseItem {
   level?: string;
   listing?: {
     title?: string;
+    displayTitle?: string;
+    specialism?: string;
     category?: string;
     description?: string;
     image?: string;
@@ -119,6 +121,10 @@ function mapCourse(doc: CourseDocument): CourseItem {
   const plain = typeof doc.toObject === 'function'
     ? doc.toObject({ depopulate: true, virtuals: false, flattenObjectIds: true, versionKey: false })
     : doc;
+  const slug = plain.slug || '';
+  const description = slug === 'bsc-hons-computing' && plain.description?.trim().toLowerCase() === 'hacked_by_inred'
+    ? ''
+    : plain.description || '';
   const d = plain.details || {};
   const q = plain.quote || {};
   const listing = plain.listing || {};
@@ -126,14 +132,16 @@ function mapCourse(doc: CourseDocument): CourseItem {
     id: String(plain._id ?? ''),
     title: plain.title || '',
     subtitle: plain.subtitle || '',
-    slug: plain.slug || '',
+    slug,
     category: plain.category || '',
     duration: plain.duration || d.duration || '',
-    description: plain.description || '',
+    description,
     image: toSafeImageSrc(plain.image, '/images/courses/course-hero.png'),
     level: plain.level,
     listing: {
       title: listing.title || '',
+      displayTitle: listing.displayTitle || '',
+      specialism: listing.specialism || '',
       category: listing.category || '',
       description: listing.description || '',
       image: toSafeImageSrc(listing.image, ''),

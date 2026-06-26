@@ -12,6 +12,8 @@ const COURSES_APPLY_HREF = '/admissions';
 
 type CourseListItem = {
   title: string;
+  specialism: string;
+  officialTitle: string;
   category: string;
   duration: string;
   bg: string;
@@ -35,7 +37,9 @@ const courseDefaults: Record<string, Partial<CourseListItem>> = {
     image: '/images/courses/bit.png',
     features: ['Software Engineering', 'AI'],
   },
-  'digital-business-management': {
+  'bba-digital-business-management': {
+    title: 'Business Administration',
+    specialism: 'Digital Business Management',
     category: 'Business & Management',
     duration: '3 Years',
     bg: '#58595B',
@@ -46,6 +50,8 @@ const courseDefaults: Record<string, Partial<CourseListItem>> = {
     features: ['Digital Strategy', 'Management'],
   },
   'international-business': {
+    title: 'Business Administration',
+    specialism: 'International Business',
     category: 'Business & Management',
     duration: '3 Years',
     bg: '#58595B',
@@ -56,6 +62,8 @@ const courseDefaults: Record<string, Partial<CourseListItem>> = {
     features: ['Global Markets', 'Leadership'],
   },
   'advertising-marketing': {
+    title: 'Business Administration',
+    specialism: 'Advertising and Marketing',
     category: 'Business & Management',
     duration: '3 Years',
     bg: '#21409A',
@@ -114,7 +122,9 @@ const toCourseListItem = (course: CourseItem): CourseListItem => {
   const topModulePills = listingPills.length > 0 ? listingPills : curriculumPills;
 
   return {
-    title: listing.title || defaults.title || course.title,
+    title: listing.displayTitle || defaults.title || listing.title || course.title,
+    specialism: listing.specialism || defaults.specialism || '',
+    officialTitle: course.title,
     category: listing.category || defaults.category || course.category || 'Undergraduate',
     duration: course.duration || course.details?.duration || defaults.duration || '3 Years',
     bg: listing.backgroundColor || defaults.bg || '#21409A',
@@ -212,7 +222,7 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
           >
             <Image
               src={course.image}
-              alt={course.title}
+              alt={course.officialTitle}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               priority={index < 2}
@@ -261,9 +271,14 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
               visible: { opacity: 1, y: 0 }
             }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[28px] sm:text-4xl md:text-[42px] lg:text-[48px] font-black mb-7 leading-[1.05] tracking-tight"
+            className="mb-7 text-[28px] sm:text-4xl md:text-[42px] lg:text-[48px] font-black leading-[1.05] tracking-normal"
           >
-            {course.title}
+            <span className="block text-balance">{course.title}</span>
+            {course.specialism && (
+              <span className="mt-3 block text-[18px] font-bold leading-tight text-white/75 sm:text-[22px] md:text-[24px]">
+                {course.specialism}
+              </span>
+            )}
           </motion.h3>
 
           {/* Stat strip — two columns with subtle divider */}
@@ -312,6 +327,7 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
             </div>
             <Link
               href={`/courses/${course.slug}`}
+              aria-label={`Explore ${course.officialTitle}`}
               className="inline-flex items-center gap-3 self-start sm:self-auto text-[11px] font-black tracking-[0.25em] group/btn"
             >
               <span className="relative transition-colors duration-300 group-hover/btn:text-[#74C044]">
