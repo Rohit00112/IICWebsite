@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import ImageUpload from './ImageUpload';
+import JsonArrayInput from './JsonArrayInput';
 import type { ScholarshipAwardType, ScholarshipBatch, ScholarshipRecipient, ScholarshipStatus } from '@/lib/scholarships';
 
 type ScholarshipFormData = {
@@ -33,6 +34,40 @@ const defaultFormData: ScholarshipFormData = {
   status: 'draft',
   recipients: [],
 };
+
+const RECIPIENT_JSON_EXAMPLE = `[
+  {
+    "name": "Sujan Subedi",
+    "programme": "BSc (Hons) Computing",
+    "image": "https://example.com/sujan.jpg",
+    "quote": "Optional recipient quote"
+  },
+  {
+    "name": "Rohit Sharma",
+    "programme": "BA (Hons) Business Administration",
+    "image": "https://example.com/rohit.jpg"
+  }
+]`;
+
+function recipientsFromJson(items: unknown[]): ScholarshipRecipient[] {
+  return items.map((item, index) => {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) {
+      throw new Error(`Recipient ${index + 1} must be an object.`);
+    }
+
+    const recipient = item as Record<string, unknown>;
+    const name = typeof recipient.name === 'string' ? recipient.name.trim() : '';
+    if (name.length < 2) {
+      throw new Error(`Recipient ${index + 1} needs a name with at least 2 characters.`);
+    }
+
+    const programme = typeof recipient.programme === 'string' ? recipient.programme.trim() : '';
+    const image = typeof recipient.image === 'string' ? recipient.image.trim() : '';
+    const quote = typeof recipient.quote === 'string' ? recipient.quote.trim() : '';
+
+    return { name, programme, image, quote, sortOrder: index };
+  });
+}
 
 export default function ScholarshipBatchForm({ batch }: { batch?: ScholarshipBatch }) {
   const router = useRouter();
@@ -101,6 +136,20 @@ export default function ScholarshipBatchForm({ batch }: { batch?: ScholarshipBat
     setFormData({
       ...formData,
       recipients: nextRecipients.map((recipient, sortOrder) => ({ ...recipient, sortOrder })),
+    });
+  };
+
+  const applyRecipientJson = (items: ScholarshipRecipient[], mode: 'replace' | 'append') => {
+    const recipients = mode === 'replace' ? items : [...formData.recipients, ...items];
+
+    if (isIngPostgraduate && recipients.length > 1) {
+      alert('ING Postgraduate Scholarship can have only one recipient per year.');
+      return;
+    }
+
+    setFormData({
+      ...formData,
+      recipients: recipients.map((recipient, sortOrder) => ({ ...recipient, sortOrder })),
     });
   };
 
@@ -293,6 +342,23 @@ export default function ScholarshipBatchForm({ batch }: { batch?: ScholarshipBat
             </div>
 
             <div className="space-y-6">
+              <details className="group border-b border-gray-100 pb-6">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-black text-[#21409A] [&::-webkit-details-marker]:hidden">
+                  Import recipients from JSON
+                  <svg className="h-5 w-5 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m6 9 6 6 6-6" /></svg>
+                </summary>
+                <div className="pt-5">
+                  <JsonArrayInput
+                    fieldName="recipients"
+                    label="Recipient JSON"
+                    currentCount={formData.recipients.length}
+                    example={RECIPIENT_JSON_EXAMPLE}
+                    transformItems={recipientsFromJson}
+                    onApply={applyRecipientJson}
+                  />
+                </div>
+              </details>
+
               {formData.recipients.map((recipient, index) => (
                 <div key={`recipient-${index}`} className="rounded-[28px] border border-gray-100 bg-[#f8fafc] p-6">
                   <div className="mb-6 flex items-center justify-between gap-4">
