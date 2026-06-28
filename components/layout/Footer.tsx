@@ -44,7 +44,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-sm font-iic">
-              Developing impactful industry-ready graduates through globally connected IT and Business education.
+              Developing impactful industry-ready graduates through globally connected IT and Business programmes.
             </p>
             {/* Social Icons */}
             <div className="flex flex-wrap gap-4">

@@ -62,6 +62,166 @@ const formatCredits = (credits?: string) => {
   return /credits?/i.test(value) ? value : `${value} Credits`;
 };
 
+const MNEMONIC_WHITE_FILTER_ID = 'related-course-mnemonic-white-filter';
+
+const mnemonicSeparators = /\r?\n|\s*\|\s*/;
+
+const isShortMnemonicLabel = (value?: string) => {
+  const label = value?.trim();
+
+  return !!label && label.length <= 6 && /^[a-z0-9&.+-]+$/i.test(label);
+};
+
+const getShortCourseLabel = (course: CourseItem) => {
+  const candidates = [course.category, course.listing?.category, course.title];
+
+  for (const candidate of candidates) {
+    const label = candidate?.trim();
+
+    if (!label) continue;
+    if (isShortMnemonicLabel(label)) return label;
+
+    const match = label.match(/\b(BBA|BSc|BA|BIT|MBA|BHM)\b/i);
+    if (match) return match[1];
+  }
+
+  return '';
+};
+
+const splitMnemonic = (value?: string) => (
+  value
+    ?.split(mnemonicSeparators)
+    .map((part) => part.trim())
+    .filter(Boolean) || []
+);
+
+const getHeadlineMnemonic = (headline: string) => {
+  const cleanHeadline = headline.trim();
+  const bachelorMatch = cleanHeadline.match(/^(Bachelor in)\s+(.+)$/i);
+
+  if (bachelorMatch) {
+    return [bachelorMatch[1], bachelorMatch[2]];
+  }
+
+  return cleanHeadline ? [cleanHeadline] : [];
+};
+
+const getRelatedCourseMnemonic = (course: CourseItem) => {
+  const listing = course.listing || {};
+  const customMnemonic = splitMnemonic(listing.mnemonic);
+
+  if (customMnemonic.length > 0) {
+    return customMnemonic;
+  }
+
+  const specialism = listing.specialism?.trim();
+  const headline = listing.displayTitle?.trim() || listing.title?.trim();
+
+  if (specialism) {
+    const shortLabel = getShortCourseLabel(course);
+    return [shortLabel || headline || course.category || course.title, specialism].filter(Boolean);
+  }
+
+  return getHeadlineMnemonic(headline || course.title);
+};
+
+const getRelatedCourseModuleCount = (course: CourseItem) => (
+  course.curriculum?.reduce((total, year) => total + (year.modules?.length || 0), 0) || 0
+);
+
+const getRelatedCourseCreditTotal = (course: CourseItem) => (
+  course.curriculum?.reduce((total, year) => (
+    total + (year.modules?.reduce((moduleTotal, module) => {
+      const parsed = Number.parseInt(module.credits || '', 10);
+      return moduleTotal + (Number.isFinite(parsed) ? parsed : 0);
+    }, 0) || 0)
+  ), 0) || 0
+);
+
+const getRelatedCourseDisplay = (course: CourseItem) => {
+  const listing = course.listing || {};
+  const specialism = listing.specialism?.trim();
+  const headline = listing.displayTitle?.trim() || listing.title?.trim();
+  const moduleCount = getRelatedCourseModuleCount(course);
+  const creditTotal = getRelatedCourseCreditTotal(course);
+
+  return {
+    image: listing.image || course.image,
+    category: listing.category || course.category || 'Undergraduate',
+    title: specialism || headline || course.title,
+    color: listing.backgroundColor || '#21409A',
+    mnemonic: getRelatedCourseMnemonic(course),
+    mnemonicImage: listing.mnemonicImage || '',
+    duration: course.duration || course.details?.duration || '3 Years',
+    modules: listing.modulesLabel || (moduleCount ? `${moduleCount} Modules` : '17 Modules'),
+    credits: listing.creditsLabel || (creditTotal ? `${creditTotal} Credits` : '360 Credits'),
+  };
+};
+
+const RelatedCourseMnemonic = ({
+  parts,
+  color,
+  imageSrc,
+  alt,
+}: {
+  parts: string[];
+  color: string;
+  imageSrc?: string;
+  alt: string;
+}) => {
+  const [rawLead = '', ...detailParts] = parts;
+  const inlineDegreeMatch = rawLead.match(/^(BSc|BBA|BA|BIT|MBA|BHM)\s+(.+)$/i);
+  const lead = detailParts.length === 0 && inlineDegreeMatch ? inlineDegreeMatch[1] : rawLead;
+  const detail = detailParts.length === 0 && inlineDegreeMatch
+    ? inlineDegreeMatch[2]
+    : detailParts.join(' ');
+  const compactLead = isShortMnemonicLabel(lead) && !!detail;
+
+  return (
+    <div
+      className={`absolute bottom-0 left-6 z-20 flex translate-y-1/2 items-center overflow-hidden text-white shadow-[0_18px_32px_rgba(15,23,42,0.18)] md:left-8 ${
+        imageSrc
+          ? 'aspect-[3.15/1] w-[min(82%,380px)]'
+          : 'min-h-[92px] w-[min(76%,320px)] px-7 py-5'
+      }`}
+      style={{ backgroundColor: color }}
+    >
+      {imageSrc ? (
+        <Image
+          src={imageSrc}
+          alt={alt}
+          fill
+          className="scale-[1.45] object-contain"
+          sizes="(max-width: 768px) 82vw, 380px"
+          style={{ filter: `url(#${MNEMONIC_WHITE_FILTER_ID})` }}
+        />
+      ) : compactLead ? (
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="shrink-0 text-5xl font-black uppercase leading-none md:text-[56px]">
+            {lead}
+          </span>
+          <span className="min-w-0 text-sm font-black uppercase leading-[0.95] md:text-base">
+            {detail}
+          </span>
+        </div>
+      ) : (
+        <div className="min-w-0">
+          {lead && (
+            <div className={`${detail ? 'text-xs md:text-sm' : 'text-3xl md:text-[40px]'} font-black uppercase leading-[0.95]`}>
+              {lead}
+            </div>
+          )}
+          {detail && (
+            <div className="mt-2 text-2xl font-black uppercase leading-[0.95] md:text-[30px]">
+              {detail}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
 interface CourseData {
   title: string;
   subtitle?: string;
@@ -156,6 +316,22 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
 
   return (
     <main className="bg-white">
+      <svg aria-hidden="true" focusable="false" className="pointer-events-none absolute h-0 w-0 overflow-hidden">
+        <filter id={MNEMONIC_WHITE_FILTER_ID} colorInterpolationFilters="sRGB">
+          <feColorMatrix
+            in="SourceGraphic"
+            result="whiteArtwork"
+            type="matrix"
+            values="
+              0 0 0 0 1
+              0 0 0 0 1
+              0 0 0 0 1
+              1.45 1.45 1.45 0 -2.65
+            "
+          />
+          <feComposite in="whiteArtwork" in2="SourceAlpha" operator="in" />
+        </filter>
+      </svg>
       {/* Hero Section */}
       <section className="relative w-full min-h-[70vh] flex flex-col items-center justify-center pt-20 pb-16 md:pt-24 md:pb-20 overflow-hidden bg-[#1a1a1a]">
         <div className="absolute inset-0 z-0">
@@ -421,12 +597,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                 );
               })}
 
-              <div className="pt-4 flex items-center gap-2 text-gray-400 text-sm font-medium">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M7 10l5 5m0 0l5-5m-5 5V3" />
-                </svg>
-                Download full module specification (PDF)
-              </div>
+
             </div>
 
             {/* Right side: Image & CTAs */}
@@ -705,35 +876,59 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
             translateY={30}
             duration={760}
           >
-            {relatedCourses?.map((relCourse, i: number) => (
-              <Link href={`/courses/${relCourse.slug}`} key={i} className="related-course-card group" style={{ willChange: 'transform, opacity' }}>
-                <div className="bg-[#f8fafc] rounded-[32px] overflow-hidden border border-gray-100 transition-all hover:shadow-xl hover:-translate-y-2">
-                  <div className="relative aspect-[16/9] w-full">
-                    <Image
-                      src={relCourse.image}
-                      alt={relCourse.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
-                  <div className="p-8">
-                    <span className="text-[12px] font-bold text-[#21409A] tracking-wider mb-3 block">
-                      {relCourse.category}
-                    </span>
-                    <h3 className="text-xl font-bold text-[#1a1a1a] mb-4 group-hover:text-[#21409A] transition-colors">
-                      {relCourse.title}
-                    </h3>
-                    <div className="flex items-center gap-2 text-gray-400 font-medium text-sm">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      {relCourse.duration}
+            {relatedCourses?.map((relCourse) => {
+              const display = getRelatedCourseDisplay(relCourse);
+
+              return (
+                <Link
+                  href={`/courses/${relCourse.slug}`}
+                  key={relCourse.slug}
+                  className="related-course-card group block h-full"
+                  style={{ willChange: 'transform, opacity' }}
+                >
+                  <article className="flex h-full flex-col overflow-hidden rounded-sm border border-gray-100 bg-white shadow-[0_18px_48px_rgba(15,23,42,0.06)] transition-all hover:-translate-y-2 hover:shadow-xl">
+                    <div className="relative z-10">
+                      <div className="relative aspect-[16/11] w-full overflow-hidden bg-gray-100">
+                        <Image
+                          src={display.image}
+                          alt={relCourse.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                      </div>
+                      <RelatedCourseMnemonic
+                        parts={display.mnemonic}
+                        color={display.color}
+                        imageSrc={display.mnemonicImage}
+                        alt={`${relCourse.title} mnemonic`}
+                      />
                     </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+                    <div className="relative flex min-h-[205px] flex-1 overflow-hidden px-7 pb-7 pt-16 md:px-8 md:pb-8">
+                      <div
+                        className="absolute inset-x-0 bottom-0 h-full translate-y-full transition-transform duration-500 ease-out group-hover:translate-y-0 group-focus-visible:translate-y-0"
+                        style={{ backgroundColor: display.color }}
+                      />
+                      <div className="relative z-10 flex min-h-[145px] flex-1 flex-col">
+                        <span className="mb-3 block text-base font-medium leading-tight text-[#21409A] transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">
+                          {display.category}
+                        </span>
+                        <h3 className="text-2xl font-black leading-tight text-[#1a1a1a] transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">
+                          {display.title}
+                        </h3>
+                        <div className="mt-auto flex translate-y-4 flex-wrap items-center gap-x-5 gap-y-2 pt-6 text-base font-bold leading-tight text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+                          <span>{display.duration}</span>
+                          <span className="text-white/75">|</span>
+                          <span>{display.modules}</span>
+                          <span className="text-white/75">|</span>
+                          <span>{display.credits}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                </Link>
+              );
+            })}
           </AnimeStagger>
         </div>
       </section>

@@ -32,8 +32,14 @@ const ContactHero = () => {
             <div className="flex flex-col items-center">
               <RevealText
                 as="h1"
-                text="Connect With Itahari International College"
+                text="Connect with"
                 className="text-4xl md:text-6xl font-bold text-[#ffffff] mb-6 font-iic justify-center drop-shadow-md"
+              />
+              <RevealText
+                as="h1"
+                text="Itahari International College"
+                                className="text-4xl md:text-6xl font-bold text-[#ffffff] mb-6 font-iic justify-center drop-shadow-md"
+
               />
             </div>
 

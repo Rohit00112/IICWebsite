@@ -272,33 +272,6 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
 
             <NewsletterSignup />
 
-            {/* Archive */}
-            <div className="bg-[#F3F7FA] p-10 rounded-[24px] shadow-sm">
-              <div className="flex items-center gap-3 mb-8">
-                <svg className="w-6 h-6 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7h16M4 12h16M4 17h10" /></svg>
-                <h5 className="text-xl font-bold text-[#1a1a1a] font-iic tracking-tight">News Archive</h5>
-              </div>
-              {archive.length === 0 ? (
-                <p className="text-sm text-slate-500 font-medium">No archive yet.</p>
-              ) : (
-                <div className="space-y-5">
-                  {archive.map((entry) => (
-                    <button
-                      key={entry.month}
-                      onClick={() => {
-                        setSearchQuery('');
-                        setActiveCategory('All');
-                      }}
-                      className="w-full flex items-center justify-between group"
-                    >
-                      <span className="text-[15px] font-bold text-slate-600 group-hover:text-[#21409A] transition-colors">{entry.month}</span>
-                      <span className="text-[12px] font-bold text-slate-500 bg-white px-2.5 py-1 rounded-full tabular-nums">{entry.count}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
           </AnimeStagger>
 
         </div>

@@ -31,6 +31,8 @@ interface CurriculumYear {
 
 interface ListingCard {
   title: string;
+  mnemonic: string;
+  mnemonicImage: string;
   displayTitle: string;
   specialism: string;
   category: string;
@@ -98,6 +100,8 @@ export default function AddCourseForm() {
     level: '',
     listing: {
       title: '',
+      mnemonic: '',
+      mnemonicImage: '',
       displayTitle: '',
       specialism: '',
       category: '',
@@ -185,6 +189,10 @@ export default function AddCourseForm() {
   
   const addOutcome = () => setFormData({ ...formData, learningOutcomes: [...formData.learningOutcomes, ''] });
   const addCareer = () => setFormData({ ...formData, careerOpportunities: [...formData.careerOpportunities, { title: '', description: '', color: '#21409A' }] });
+  const removeCareer = (index: number) => setFormData((current) => ({
+    ...current,
+    careerOpportunities: current.careerOpportunities.filter((_, careerIndex) => careerIndex !== index),
+  }));
   const addFaculty = () => setFormData({ ...formData, faculty: [...formData.faculty, { name: '', role: '', description: '', image: '' }] });
   const addProject = () => setFormData({ ...formData, projects: [...formData.projects, { title: '', cohort: '', image: '' }] });
   const removeProject = (index: number) => setFormData((current) => ({
@@ -398,6 +406,28 @@ export default function AddCourseForm() {
                 </div>
 
                 <div className="space-y-3">
+                  <ImageUpload
+                    label="Mnemonic Image"
+                    value={formData.listing.mnemonicImage}
+                    onChange={(url) => setFormData({...formData, listing: {...formData.listing, mnemonicImage: url}})}
+                    onRemove={() => setFormData({...formData, listing: {...formData.listing, mnemonicImage: ''}})}
+                  />
+                  <p className="text-xs font-medium text-gray-500">Upload the designed mnemonic artwork shown over the course image.</p>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold tracking-widest text-gray-700">Mnemonic Text Fallback</label>
+                  <textarea
+                    rows={2}
+                    value={formData.listing.mnemonic}
+                    onChange={(e) => setFormData({...formData, listing: {...formData.listing, mnemonic: e.target.value}})}
+                    className="form-input-admin"
+                    placeholder={'BBA\nDIGITAL BUSINESS MANAGEMENT'}
+                  />
+                  <p className="text-xs font-medium text-gray-500">Used only when no mnemonic image is uploaded.</p>
+                </div>
+
+                <div className="space-y-3">
                   <label className="text-[10px] font-bold tracking-widest text-gray-700">Display Order</label>
                   <input type="number" value={formData.listing.order} onChange={(e) => setFormData({...formData, listing: {...formData.listing, order: Number(e.target.value)}})} className="form-input-admin" placeholder="1" />
                 </div>
@@ -579,11 +609,24 @@ export default function AddCourseForm() {
                 <div className="grid grid-cols-2 gap-6">
                   {formData.careerOpportunities.map((career, idx) => (
                     <div key={`career-${idx}`} className="p-6 bg-gray-50 rounded-2xl space-y-4 border border-gray-100">
-                      <input type="text" value={career.title} placeholder="e.g. Senior Software Architect" onChange={(e) => {
-                        const newCareers = [...formData.careerOpportunities];
-                        newCareers[idx].title = e.target.value;
-                        setFormData({...formData, careerOpportunities: newCareers});
-                      }} className="w-full font-bold bg-transparent outline-none text-[#1A2B56] placeholder:text-gray-500" />
+                      <div className="flex items-center gap-3">
+                        <input type="text" value={career.title} placeholder="e.g. Senior Software Architect" onChange={(e) => {
+                          const newCareers = [...formData.careerOpportunities];
+                          newCareers[idx].title = e.target.value;
+                          setFormData({...formData, careerOpportunities: newCareers});
+                        }} className="min-w-0 flex-1 font-bold bg-transparent outline-none text-[#1A2B56] placeholder:text-gray-500" />
+                        <button
+                          type="button"
+                          onClick={() => removeCareer(idx)}
+                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-red-500 transition-colors hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                          aria-label={`Remove ${career.title || 'career pathway'}`}
+                          title="Remove pathway"
+                        >
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 7h16m-10 4v6m4-6v6M9 7l1-3h4l1 3m-8 0 1 13h8l1-13" />
+                          </svg>
+                        </button>
+                      </div>
                       <textarea placeholder="Describe the career path and potential earnings..." rows={3} value={career.description} onChange={(e) => {
                         const newCareers = [...formData.careerOpportunities];
                         newCareers[idx].description = e.target.value;

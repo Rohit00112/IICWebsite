@@ -103,15 +103,7 @@ const LifestyleCard: React.FC<LifestyleCardProps> = ({ image, alt, title, descri
           ))}
         </div>
 
-        <div>
-          <span className="inline-flex items-center gap-2 text-white font-bold text-sm xl:text-base font-iic border-b-2 border-white/60 pb-1">
-            Learn more
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </span>
-        </div>
+      
       </motion.div>
 
       {/* Bloom reveal — accent gradient sweeps in from origin */}
@@ -232,11 +224,11 @@ const LifestyleSection = () => {
               <LifestyleCard
                 image="/images/common/lab.JPG"
                 alt="Advanced Computing Labs for Hands-on Technical Training at Itahari International College"
-                title="Advanced Labs"
+                title="Workstations & Labs"
                 description="Industry-grade computing labs equipped with the latest hardware and software for hands-on technical training."
                 stats={[
                   { value: '3', label: 'Labs' },
-                  { value: '160', label: 'Workstations' },
+                  { value: '100+', label: 'Workstations' },
                 ]}
                 accent="#21409A"
                 rounded="rounded-[24px] md:rounded-[40px]"

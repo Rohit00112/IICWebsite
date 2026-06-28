@@ -224,7 +224,7 @@ const ContactForm = () => {
                     <span className="absolute inline-flex w-full h-full bg-[#74C044] rounded-full opacity-75 animate-ping" />
                     <span className="relative inline-flex w-2 h-2 bg-[#74C044] rounded-full" />
                   </span>
-                  <span className="text-[11px] font-bold tracking-wider text-[#21409A]">Avg. reply in 4 hours</span>
+                  <span className="text-[11px] font-bold tracking-wider text-[#21409A]">Avg. reply in 15 minutes</span>
                 </div>
 
                 <AnimeReveal

@@ -1,15 +1,10 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { ScholarshipAwardType, ScholarshipBatch, ScholarshipRecipient } from '@/lib/scholarships';
-
-const awardLabels: Record<ScholarshipAwardType, string> = {
-  aaa: 'AAA Scholarship',
-  ing_postgraduate: 'ING Postgraduate Scholarship',
-};
 
 const awardThemes: Record<ScholarshipAwardType, {
   accent: string;
@@ -82,8 +77,6 @@ const trackCopy = {
 
 const heroImage = '/images/lifestyle/graduation.JPG';
 const fallbackGroupImage = '/images/lifestyle/graduation.JPG';
-const fallbackRecipientImage = '/images/common/iic_logo.png';
-const ingLogo = '/images/common/ing.png';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -170,51 +163,84 @@ const ScholarshipHero = () => (
 /* ---------- Award poster cards ---------- */
 
 const AwardPoster = ({ awardType }: { awardType: ScholarshipAwardType }) => {
-  const theme = awardThemes[awardType];
   const copy = trackCopy[awardType];
   const isAaa = awardType === 'aaa';
 
   return (
-    <div className="relative">
-      {/* offset frame */}
-      <span
-        className={`absolute -z-10 h-full w-full rounded-2xl ${isAaa ? '-left-4 -top-4' : '-right-4 -top-4'}`}
-        style={{ backgroundColor: isAaa ? '#F5C516' : theme.accent }}
-      />
-      <div
-        className="relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-2xl p-7 text-center shadow-xl md:p-8"
-        style={{ background: isAaa
-          ? 'linear-gradient(160deg,#EAF2FF 0%,#D4E4FF 55%,#BFD6FF 100%)'
-          : 'linear-gradient(160deg,#0B2E55 0%,#123C6E 60%,#1B4E8C 100%)' }}
-      >
-        <p
-          className="text-[10px] font-black uppercase tracking-[0.28em]"
-          style={{ color: isAaa ? theme.ink : '#A9D88A' }}
-        >
-          {copy.eyebrow}
-        </p>
+    <div className="relative overflow-hidden rounded-sm bg-white shadow-[0_22px_54px_rgba(15,23,42,0.12)]">
+      <div className={`absolute ${isAaa ? 'left-0 top-0 h-full w-2 bg-[#F4CA2F]' : 'right-0 top-0 h-full w-2 bg-[#1A9E92]'}`} />
+      <div className={`absolute ${isAaa ? 'bottom-0 left-0 h-2 w-full bg-[#F4CA2F]' : 'bottom-0 right-0 h-2 w-full bg-[#1A9E92]'}`} />
+      <div className={`relative aspect-[1.45/1] overflow-hidden p-6 text-center md:p-8 ${isAaa ? 'bg-[#E7F8FF]' : 'bg-white'}`}>
+        <div
+          className="pointer-events-none absolute inset-0 opacity-70"
+          style={{
+            backgroundImage: isAaa
+              ? 'radial-gradient(circle at 18px 18px, rgba(255,255,255,0.92) 0 2px, transparent 2.5px), linear-gradient(135deg, rgba(48,160,184,0.11) 0 18%, transparent 18% 36%, rgba(48,160,184,0.08) 36% 54%, transparent 54%)'
+              : 'radial-gradient(circle at 8px 8px, rgba(20,20,20,0.055) 0 1.5px, transparent 1.8px)',
+            backgroundSize: isAaa ? '42px 42px, 180px 180px' : '18px 18px',
+          }}
+        />
+        {isAaa ? (
+          <div className="relative flex h-full flex-col items-center justify-between">
+            <p className="text-sm font-medium uppercase tracking-normal text-[#1D3148] md:text-base">
+              Seize the <span className="font-black">Opportunity</span>
+            </p>
+            <div className="w-full">
+              <div className="flex items-center justify-center gap-4 md:gap-6">
+                <span className="text-[86px] font-black leading-none text-[#2F9DB5] md:text-[116px]">
+                  AAA
+                </span>
+                <span className="text-left text-2xl font-black leading-[0.95] text-[#2F9DB5] md:text-3xl">
+                  Academic<br />Attitude<br />Attendance
+                </span>
+              </div>
+              <h3 className="mt-1 text-[60px] font-black leading-none text-[#3E3E3E] md:text-[82px]">
+                Scholarship
+              </h3>
+            </div>
+            <p className="text-2xl font-medium leading-tight text-[#3E3E3E] md:text-3xl">
+              100% College fee refunded*<br />
+              <span className="font-normal">for deserving students</span>
+              <span className="mt-3 block text-sm font-bold">{copy.posterFine}</span>
+            </p>
+          </div>
+        ) : (
+          <div className="relative flex h-full flex-col items-center text-center">
+            <div className="pointer-events-none absolute -bottom-28 -left-28 h-72 w-72 rounded-full border-[42px] border-gray-200/70" />
+            <div className="pointer-events-none absolute bottom-0 left-0 h-20 w-full bg-gradient-to-t from-gray-200/70 to-transparent" />
+            <svg className="pointer-events-none absolute bottom-[30%] right-[16%] h-16 w-24 text-[#172033] drop-shadow-[0_10px_10px_rgba(15,23,42,0.18)] md:h-20 md:w-32" viewBox="0 0 160 100" fill="none" aria-hidden="true">
+              <path d="M18 38 84 14l58 24-66 25-58-25Z" fill="currentColor" />
+              <path d="M48 55h62v20c0 8-14 15-31 15s-31-7-31-15V55Z" fill="#24314A" />
+              <path d="M113 45v28" stroke="#E31E24" strokeWidth="5" strokeLinecap="round" />
+              <path d="M113 73c10 2 17 7 22 15" stroke="#E31E24" strokeWidth="5" strokeLinecap="round" />
+              <path d="M78 76h54v9H78z" fill="#F6F0E4" />
+              <path d="M90 86h49v8H90z" fill="#21409A" />
+            </svg>
 
-        <div>
-          {!isAaa && (
-            <span className="mb-3 inline-block rounded-md bg-[#74C044] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white">
-              {copy.posterTop}
-            </span>
-          )}
-          {isAaa && (
-            <p className="mb-1 text-[11px] font-black uppercase tracking-[0.14em]" style={{ color: theme.ink }}>{copy.posterTop}</p>
-          )}
-          <h3
-            className={`font-black leading-[0.9] tracking-tight ${isAaa ? 'text-4xl md:text-5xl' : 'text-3xl md:text-4xl'}`}
-            style={{ color: isAaa ? theme.accent : '#fff' }}
-          >
-            {copy.posterTitle}
-          </h3>
-        </div>
-
-        <p className="text-[11px] font-bold leading-relaxed" style={{ color: isAaa ? theme.ink : 'rgba(255,255,255,0.78)' }}>
-          {copy.posterNote}
-          <span className="mt-1 block text-[9px] font-semibold opacity-70">{copy.posterFine}</span>
-        </p>
+            <p className="mt-2 text-sm font-medium uppercase tracking-normal text-[#171717] md:text-base">
+              Seize the <span className="font-black">Opportunity</span>
+            </p>
+            <div className="mt-5 w-full">
+              <span className="inline-flex bg-[#279BB6] px-4 py-1.5 text-2xl font-black uppercase leading-none text-white md:text-3xl">
+                Full-fledged
+              </span>
+              <p className="mt-5 text-[50px] font-black uppercase leading-[0.88] text-[#171717] md:text-[70px]">
+                ING
+              </p>
+              <p className="text-[38px] font-black uppercase leading-[0.92] text-[#171717] md:text-[52px]">
+                Postgraduate
+              </p>
+              <h3 className="mt-1 text-[74px] font-black uppercase leading-[0.82] text-[#2F9DB5] md:text-[108px]">
+                Scholarship
+              </h3>
+            </div>
+            <div className="relative z-10 mt-auto text-center text-base font-semibold leading-relaxed text-[#3E3E3E] md:text-xl">
+              <p>IT/Business Post Graduate Degree at</p>
+              <p>Islington College, Herald College Kathmandu or Apex College</p>
+              <p className="mt-1">Job placement at one of the ING Companies</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -279,10 +305,10 @@ const AwardsRow = ({ openEligibility, toggleEligibility }: {
               <AwardPoster awardType={awardType} />
               <h3 className="mt-9 text-2xl font-black tracking-tight" style={{ color: theme.ink }}>{copy.cardTitle}</h3>
               <p className="mt-4 text-sm font-medium leading-relaxed text-gray-600">{copy.description}</p>
-              {copy.fineprint && <p className="mt-3 text-xs font-bold italic text-gray-400">{copy.fineprint}</p>}
               <div className="mt-6">
                 <EligibilityDropdown awardType={awardType} open={openEligibility[awardType]} onToggle={() => toggleEligibility(awardType)} />
               </div>
+              {copy.fineprint && <p className="mt-3 text-xs font-bold italic text-gray-400">{copy.fineprint}</p>}
             </Reveal>
           );
         })}
@@ -344,26 +370,58 @@ const IngSpotlight = ({ batch, recipient }: { batch: ScholarshipBatch; recipient
   );
 };
 
-const IngArchiveRow = ({ batch }: { batch: ScholarshipBatch }) => {
-  const recipient = batch.recipients[0];
-  return (
-    <div className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-4">
-      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#F4F7FA]">
-        <Image src={recipient?.image || batch.groupImage || fallbackRecipientImage} alt={recipient?.name || batch.title} fill sizes="56px" className="object-cover" />
-      </div>
-      <div className="min-w-0">
-        <p className="text-xs font-black uppercase tracking-[0.12em] text-[#3C7D25]">{batch.year}</p>
-        <p className="mt-0.5 break-words text-base font-black tracking-tight text-[#171717]">{recipient?.name || 'Scholar to be announced'}</p>
-        <p className="break-words text-xs font-bold text-gray-500">{recipient?.programme || 'ING Postgraduate Scholar'}</p>
-      </div>
-    </div>
-  );
-};
-
 const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) => {
   const latestBatch = batches[0];
-  const previousBatches = batches.slice(1);
-  const scholar = latestBatch?.recipients[0];
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const activeIndexRef = useRef(0);
+  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
+
+  const updateActiveIndexFromScroll = () => {
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+
+    if (!viewport || !track) return;
+
+    const viewportLeft = viewport.scrollLeft;
+    let closestIndex = 0;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    Array.from(track.children).forEach((child, index) => {
+      const slide = child as HTMLElement;
+      const distance = Math.abs(slide.offsetLeft - track.offsetLeft - viewportLeft);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    activeIndexRef.current = closestIndex;
+  };
+
+  useEffect(() => {
+    if (batches.length <= 1 || isAutoScrollPaused) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const timer = window.setInterval(() => {
+      const viewport = viewportRef.current;
+      const track = trackRef.current;
+
+      if (!viewport || !track) return;
+
+      const nextIndex = (activeIndexRef.current + 1) % batches.length;
+      const nextSlide = track.children[nextIndex] as HTMLElement | undefined;
+
+      activeIndexRef.current = nextIndex;
+      viewport.scrollTo({
+        left: nextSlide ? nextSlide.offsetLeft - track.offsetLeft : viewport.clientWidth * nextIndex,
+        behavior: 'smooth',
+      });
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, [batches.length, isAutoScrollPaused]);
 
   return (
     <section id="ing-postgraduate-scholarship" className="scroll-mt-8 bg-[#F4F7FA] py-16 md:py-24">
@@ -371,17 +429,23 @@ const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) =>
         <Reveal><SectionTitle>Full Scholarship Recipients</SectionTitle></Reveal>
         <div className="mt-14">
           {latestBatch ? (
-            <>
-              <IngSpotlight batch={latestBatch} recipient={scholar} />
-              {previousBatches.length > 0 && (
-                <Reveal className="mt-12">
-                  <p className="text-sm font-black uppercase tracking-[0.14em] text-[#3C7D25]">Previous ING scholars</p>
-                  <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {previousBatches.map((batch) => <IngArchiveRow key={batch.id} batch={batch} />)}
+            <div
+              ref={viewportRef}
+              onMouseEnter={() => setIsAutoScrollPaused(true)}
+              onMouseLeave={() => setIsAutoScrollPaused(false)}
+              onFocus={() => setIsAutoScrollPaused(true)}
+              onBlur={() => setIsAutoScrollPaused(false)}
+              onScroll={updateActiveIndexFromScroll}
+              className="-mx-6 overflow-x-auto px-6 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              <div ref={trackRef} className="flex snap-x snap-mandatory gap-8">
+                {batches.map((batch) => (
+                  <div key={batch.id} className="min-w-full snap-start">
+                    <IngSpotlight batch={batch} recipient={batch.recipients[0]} />
                   </div>
-                </Reveal>
-              )}
-            </>
+                ))}
+              </div>
+            </div>
           ) : (
             <div className="rounded-3xl border border-dashed border-[#CDE8BD] bg-white/60 p-10 text-center">
               <h3 className="text-2xl font-black tracking-tight text-[#171717]">{trackCopy.ing_postgraduate.emptyTitle}</h3>

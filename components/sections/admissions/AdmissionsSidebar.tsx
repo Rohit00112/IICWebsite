@@ -49,14 +49,9 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
       'Successful completion of an admissions interview.'
     ]},
     { id: 'scholarships', title: 'Scholarships', icon: <MedalIcon />, content: [
-      'Triple A Scholarship — up to 100% tuition waiver for excellence in Academics, Attendance, and Attitude (awarded to the top 10% of students).',
-      'Fully Funded Masters — 100% postgraduate scholarship at ING Colleges for First Class Honours graduates of eligible IT or Business programmes.',
+      'AAA Scholarship — up to 100% tuition waiver for excellence in Academics, Attendance, and Attitude (awarded to the top 10% of students).',
+      'Fully Funded Masters Degree — 100% postgraduate scholarship at ING Colleges with Job placement in one of the ING companies',
       'Eligibility includes good academic standing, 80%+ module attendance, timely fee payment, and a clean disciplinary record.'
-    ] },
-    { id: 'timeline', title: 'What Happens Next?', icon: <CalendarIcon />, content: [
-      '1. Review: Our team reviews your docs (2-3 days).',
-      '2. Interview: A short session with our counsellors.',
-      '3. Offer: Receive your conditional/unconditional offer.'
     ] },
   ];
 
@@ -87,8 +82,7 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
                   </div>
                   {locked && (
                     <span className="text-[10px] font-bold tracking-widest text-gray-400 flex items-center gap-1">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                      Locked
+                      <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                     </span>
                   )}
                 </>
@@ -154,12 +148,16 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
                   >
                     <div className="px-14 pb-8 pt-0 flex flex-col gap-3">
                       <ul className="flex flex-col gap-4">
-                        {item.content.map((point, idx) => (
-                          <li key={idx} className="flex gap-3 text-[13px] text-gray-500 leading-relaxed font-medium">
-                            <span className="text-[#74C044] mt-1.5 w-1.5 h-1.5 rounded-full bg-[#74C044] flex-shrink-0" />
-                            {point}
-                          </li>
-                        ))}
+                        {item.content.map((point, idx) => {
+                          const hideBullet = item.id === 'scholarships' && idx === item.content.length - 1;
+
+                          return (
+                            <li key={idx} className="flex gap-3 text-[13px] text-gray-500 leading-relaxed font-medium">
+                              <span className={`mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full ${hideBullet ? 'invisible' : 'bg-[#74C044]'}`} />
+                              {point}
+                            </li>
+                          );
+                        })}
                       </ul>
                       <Link href={item.id === 'scholarships' ? '/scholarships' : '/courses'} className="text-[12px] font-bold text-[#21409A] flex items-center gap-2 mt-4 hover:translate-x-1 transition-transform">
                         {item.id === 'scholarships' ? 'View scholarship details ->' : 'View detailed programme requirements ->'}

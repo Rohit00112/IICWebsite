@@ -27,6 +27,14 @@ const CourseSchema = new Schema({
   level: String,
   listing: {
     title: String,
+    mnemonic: String,
+    mnemonicImage: {
+      type: String,
+      validate: {
+        validator: optionalImageSrc,
+        message: IMAGE_SOURCE_ERROR,
+      },
+    },
     displayTitle: String,
     specialism: String,
     category: String,
@@ -110,14 +118,20 @@ const existingCourseModel = models.Course;
 
 // Next.js keeps Mongoose models alive across development hot reloads. Add new
 // fields to an already-compiled model so updates are not stripped.
-if (
-  existingCourseModel &&
-  (!existingCourseModel.schema.path('listing.displayTitle') || !existingCourseModel.schema.path('listing.specialism'))
-) {
-  existingCourseModel.schema.add({
-    'listing.displayTitle': String,
-    'listing.specialism': String,
+if (existingCourseModel) {
+  const missingListingFields: Record<string, StringConstructor> = {};
+
+  ['displayTitle', 'specialism', 'mnemonic', 'mnemonicImage'].forEach((field) => {
+    const path = `listing.${field}`;
+
+    if (!existingCourseModel.schema.path(path)) {
+      missingListingFields[path] = String;
+    }
   });
+
+  if (Object.keys(missingListingFields).length > 0) {
+    existingCourseModel.schema.add(missingListingFields);
+  }
 }
 
 if (existingCourseModel) {

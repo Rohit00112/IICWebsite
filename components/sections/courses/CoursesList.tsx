@@ -171,6 +171,7 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
   );
 
   const topOffset = 80 + index * 24;
+  const courseHref = `/courses/${course.slug}`;
 
   return (
     <motion.div
@@ -201,151 +202,153 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
       }}
       className="group sticky overflow-hidden rounded-2xl md:rounded-[32px] min-h-[480px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.45)] border border-white/10"
     >
-      {/* Soft ambient gradient overlay — adds depth without busy effects */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.08),transparent_60%)] z-[1]" />
-
-      <Tilt
-        strength={3}
-        className="w-full h-full relative z-10"
-        innerClassName={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+      <Link
+        href={courseHref}
+        aria-label={`Explore ${course.officialTitle}`}
+        className="block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-white/70 md:rounded-[32px]"
       >
-        {/* Image Section */}
-        <div className="w-full md:w-1/2 relative h-[260px] sm:h-[320px] md:h-auto md:min-h-[480px] overflow-hidden">
-          <motion.div
-            variants={{
-              hidden: { clipPath: 'inset(0% 0% 100% 0%)' },
-              visible: { clipPath: 'inset(0% 0% 0% 0%)' }
-            }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            style={{ y: imageY, willChange: 'transform' }}
-            className="absolute inset-0 w-full h-full"
-          >
-            <Image
-              src={course.image}
-              alt={course.officialTitle}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority={index < 2}
-              className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+        {/* Soft ambient gradient overlay — adds depth without busy effects */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.08),transparent_60%)] z-[1]" />
+
+        <Tilt
+          strength={3}
+          className="w-full h-full relative z-10"
+          innerClassName={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+        >
+          {/* Image Section */}
+          <div className="w-full md:w-1/2 relative h-[260px] sm:h-[320px] md:h-auto md:min-h-[480px] overflow-hidden">
+            <motion.div
+              variants={{
+                hidden: { clipPath: 'inset(0% 0% 100% 0%)' },
+                visible: { clipPath: 'inset(0% 0% 0% 0%)' }
+              }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              style={{ y: imageY, willChange: 'transform' }}
+              className="absolute inset-0 w-full h-full"
+            >
+              <Image
+                src={course.image}
+                alt={course.officialTitle}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority={index < 2}
+                className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+              />
+            </motion.div>
+
+            {/* Gradient veil — fades image into the colored side smoothly */}
+            <div
+              className={`pointer-events-none absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-transparent via-transparent to-black/30`}
             />
-          </motion.div>
 
-          {/* Gradient veil — fades image into the colored side smoothly */}
-          <div
-            className={`pointer-events-none absolute inset-0 bg-gradient-to-${isEven ? 'r' : 'l'} from-transparent via-transparent to-black/30`}
-          />
-
-          {/* Accent rule, sits in the photo's outer corner */}
-          <div className={`absolute top-5 ${isEven ? 'left-5 md:left-6' : 'right-5 md:right-6'} z-20`}>
-            <div className="flex items-center text-white/85">
-              <span className="w-8 h-px bg-white/40" />
+            {/* Accent rule, sits in the photo's outer corner */}
+            <div className={`absolute top-5 ${isEven ? 'left-5 md:left-6' : 'right-5 md:right-6'} z-20`}>
+              <div className="flex items-center text-white/85">
+                <span className="w-8 h-px bg-white/40" />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Content Section */}
-        <div className="w-full md:w-1/2 p-7 sm:p-10 md:p-12 lg:p-16 flex flex-col justify-center text-white relative z-10">
-          {/* Eyebrow row: category + duration */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, x: -16 },
-              visible: { opacity: 1, x: 0 }
-            }}
-            className="flex flex-wrap items-center gap-2.5 mb-6"
-          >
-            <span className="px-3.5 py-1.5 border border-white/25 rounded-full text-[10px] font-bold tracking-[0.2em] bg-white/[0.06] backdrop-blur-sm">
-              {course.category}
-            </span>
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white/[0.08] border border-white/10 rounded-full text-[10px] font-bold tracking-[0.15em]">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {course.duration}
-            </div>
-          </motion.div>
-
-          {/* Title */}
-          <motion.h3
-            variants={{
-              hidden: { opacity: 0, y: 28 },
-              visible: { opacity: 1, y: 0 }
-            }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-7 text-[28px] sm:text-4xl md:text-[42px] lg:text-[48px] font-black leading-[1.05] tracking-normal"
-          >
-            <span className="block text-balance">{course.title}</span>
-            {course.specialism && (
-              <span className="mt-3 block text-[18px] font-bold leading-tight text-white/75 sm:text-[22px] md:text-[24px]">
-                {course.specialism}
-              </span>
-            )}
-          </motion.h3>
-
-          {/* Stat strip — two columns with subtle divider */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 12 },
-              visible: { opacity: 1, y: 0 }
-            }}
-            className="grid grid-cols-2 gap-0 mb-7 border-y border-white/10 divide-x divide-white/10"
-          >
-            <div className="py-3.5 pr-4">
-              <div className="text-[9px] font-bold tracking-[0.25em] text-white/50 mb-1">Modules</div>
-              <div className="text-lg md:text-xl font-black text-white">{course.modules.replace(/\s*Modules?$/i, '')}</div>
-            </div>
-            <div className="py-3.5 pl-4">
-              <div className="text-[9px] font-bold tracking-[0.25em] text-white/50 mb-1">Credits</div>
-              <div className="text-lg md:text-xl font-black text-white">{course.credits.replace(/\s*Credits?$/i, '')}</div>
-            </div>
-          </motion.div>
-
-          {/* Description */}
-          <motion.p
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 0.78 }
-            }}
-            className="text-white mb-8 leading-relaxed text-sm md:text-[15px] max-w-lg font-medium"
-          >
-            {course.description}
-          </motion.p>
-
-          {/* Footer: feature tags + CTA */}
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 16 },
-              visible: { opacity: 1, y: 0 }
-            }}
-            className="mt-auto pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5"
-          >
-            <div className="flex flex-wrap gap-2">
-              {course.features.slice(0, 2).map((feature: string, i: number) => (
-                <span key={i} className={`${featureBadgeStyles[i % featureBadgeStyles.length]} px-3 py-1.5 text-[9px] font-black tracking-[0.14em] border`}>
-                  {feature}
-                </span>
-              ))}
-            </div>
-            <Link
-              href={`/courses/${course.slug}`}
-              aria-label={`Explore ${course.officialTitle}`}
-              className="inline-flex items-center gap-3 self-start sm:self-auto text-[11px] font-black tracking-[0.25em] group/btn"
+          {/* Content Section */}
+          <div className="w-full md:w-1/2 p-7 sm:p-10 md:p-12 lg:p-16 flex flex-col justify-center text-white relative z-10">
+            {/* Eyebrow row: category + duration */}
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, x: -16 },
+                visible: { opacity: 1, x: 0 }
+              }}
+              className="flex flex-wrap items-center gap-2.5 mb-6"
             >
-              <span className="relative transition-colors duration-300 group-hover/btn:text-[#74C044]">
-                Explore
-                <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#74C044] transition-all duration-500 group-hover/btn:w-full" />
+              <span className="px-3.5 py-1.5 border border-white/25 rounded-full text-[10px] font-bold tracking-[0.2em] bg-white/[0.06] backdrop-blur-sm">
+                {course.category}
               </span>
-              <span className="relative w-10 h-10 rounded-full border border-white/20 flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover/btn:border-[#74C044] group-hover/btn:bg-[#74C044]">
-                <svg className="w-4 h-4 transition-transform duration-500 group-hover/btn:translate-x-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              <div className="flex items-center gap-1.5 px-3.5 py-1.5 bg-white/[0.08] border border-white/10 rounded-full text-[10px] font-bold tracking-[0.15em]">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <svg className="w-4 h-4 absolute -translate-x-6 transition-transform duration-500 group-hover/btn:translate-x-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </span>
-            </Link>
-          </motion.div>
-        </div>
-      </Tilt>
+                {course.duration}
+              </div>
+            </motion.div>
+
+            {/* Title */}
+            <motion.h3
+              variants={{
+                hidden: { opacity: 0, y: 28 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-7 text-[28px] sm:text-4xl md:text-[42px] lg:text-[48px] font-black leading-[1.05] tracking-normal"
+            >
+              <span className="block text-balance">{course.title}</span>
+              {course.specialism && (
+                <span className="mt-3 block text-[18px] font-bold leading-tight text-white/75 sm:text-[22px] md:text-[24px]">
+                  {course.specialism}
+                </span>
+              )}
+            </motion.h3>
+
+            {/* Stat strip — two columns with subtle divider */}
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 12 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className="grid grid-cols-2 gap-0 mb-7 border-y border-white/10 divide-x divide-white/10"
+            >
+              <div className="py-3.5 pr-4">
+                <div className="text-[9px] font-bold tracking-[0.25em] text-white/50 mb-1">Modules</div>
+                <div className="text-lg md:text-xl font-black text-white">{course.modules.replace(/\s*Modules?$/i, '')}</div>
+              </div>
+              <div className="py-3.5 pl-4">
+                <div className="text-[9px] font-bold tracking-[0.25em] text-white/50 mb-1">Credits</div>
+                <div className="text-lg md:text-xl font-black text-white">{course.credits.replace(/\s*Credits?$/i, '')}</div>
+              </div>
+            </motion.div>
+
+            {/* Description */}
+            <motion.p
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 0.78 }
+              }}
+              className="text-white mb-8 leading-relaxed text-sm md:text-[15px] max-w-lg font-medium"
+            >
+              {course.description}
+            </motion.p>
+
+            {/* Footer: feature tags + CTA */}
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 16 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              className="mt-auto pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5"
+            >
+              <div className="flex flex-wrap gap-2">
+                {course.features.slice(0, 2).map((feature: string, i: number) => (
+                  <span key={i} className={`${featureBadgeStyles[i % featureBadgeStyles.length]} px-3 py-1.5 text-[9px] font-black tracking-[0.14em] border`}>
+                    {feature}
+                  </span>
+                ))}
+              </div>
+              <div className="inline-flex items-center gap-3 self-start text-[11px] font-black tracking-[0.25em] sm:self-auto">
+                <span className="relative transition-colors duration-300 group-hover:text-[#74C044]">
+                  Explore
+                  <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#74C044] transition-all duration-500 group-hover:w-full" />
+                </span>
+                <span className="relative w-10 h-10 rounded-full border border-white/20 flex items-center justify-center overflow-hidden transition-colors duration-500 group-hover:border-[#74C044] group-hover:bg-[#74C044]">
+                  <svg className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                  <svg className="w-4 h-4 absolute -translate-x-6 transition-transform duration-500 group-hover:translate-x-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </span>
+              </div>
+            </motion.div>
+          </div>
+        </Tilt>
+      </Link>
     </motion.div>
   );
 };

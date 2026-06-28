@@ -26,6 +26,8 @@ export const courseSchema = z.object({
   level: z.string().optional(),
   listing: z.object({
     title: z.string().optional(),
+    mnemonic: z.string().trim().max(140).optional(),
+    mnemonicImage: optionalImageSourceSchema,
     displayTitle: z.string().max(70).optional(),
     specialism: z.string().max(90).optional(),
     category: z.string().optional(),

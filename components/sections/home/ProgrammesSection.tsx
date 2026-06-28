@@ -31,14 +31,14 @@ const ProgrammesSection = () => {
       duration: '3 Years',
       title: 'Bachelor in',
       subtitle: 'Information Technology',
-      modules: '17 Modules',
-      credits: '360 Credits',
+      // modules: '17 Modules',
+      // credits: '360 Credits',
       image: '/images/home/course1.png',
       bgColor: 'bg-[#1C86A6]',
       tagColor: 'bg-[#166D87]',
       pillColor: 'bg-[#459DB7]',
       featurePillColor: 'bg-[#3391AE]',
-      tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and IoT'],
+      tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and the Internet of Things'],
       href: '/courses/bsc-hons-computing',
       parallax: y1
     },
@@ -48,14 +48,14 @@ const ProgrammesSection = () => {
       title: 'Bachelor in',
       subtitle: 'Business Administration',
       list: ['International Business', 'Digital Business Management', 'Advertising and Marketing'],
-      modules: '17 Modules',
-      credits: '360 Credits',
+      // modules: '17 Modules',
+      // credits: '360 Credits',
       image: '/images/home/course2.png',
       bgColor: 'bg-[#1CBEC8]',
       tagColor: 'bg-[#159AA3]',
       pillColor: 'bg-[#55CDD5]',
       featurePillColor: 'bg-[#3CC6CF]',
-      tags: ['Global Business', 'Digital Management'],
+      tags: ['Principles of Finance', 'Company and Business Law', 'Dissertation'],
       href: '/courses',
       parallax: y1
     },
@@ -180,12 +180,12 @@ const ProgrammesSection = () => {
                         transition={{ delay: index * 0.1 + 0.9, duration: 0.8, ease: "backOut" }}
                         className="flex flex-wrap gap-2.5 sm:gap-4"
                       >
-                        <span className={`${prog.pillColor} text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/15`}>
+                        {/* <span className={`${prog.pillColor} text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/15`}>
                           {prog.modules}
                         </span>
                         <span className={`${prog.pillColor} text-white text-[11px] sm:text-[12px] md:text-[13px] font-bold px-4 sm:px-5 py-2 rounded-full border border-white/15`}>
                           {prog.credits}
-                        </span>
+                        </span> */}
                       </motion.div>
 
                       <motion.div

@@ -22,7 +22,7 @@ const AdmissionsHero = () => {
 
         <div className="max-w-2xl px-4">
           <RevealText
-            text="Apply to a London Metropolitan University awarded programme at IIC and take the next step toward an industry-ready future."
+            text="Apply to a London Metropolitan University awarded programme at Itahari International College and take the next step toward an industry-ready future."
             className="text-gray-300 text-lg md:text-xl font-medium leading-relaxed font-iic justify-center"
             delay={0.6}
           />

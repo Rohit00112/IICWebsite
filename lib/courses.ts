@@ -14,6 +14,8 @@ export interface CourseItem {
   level?: string;
   listing?: {
     title?: string;
+    mnemonic?: string;
+    mnemonicImage?: string;
     displayTitle?: string;
     specialism?: string;
     category?: string;
@@ -141,6 +143,8 @@ function mapCourse(doc: CourseDocument): CourseItem {
     level: plain.level,
     listing: {
       title: listing.title || '',
+      mnemonic: listing.mnemonic || '',
+      mnemonicImage: toSafeImageSrc(listing.mnemonicImage, ''),
       displayTitle: listing.displayTitle || '',
       specialism: listing.specialism || '',
       category: listing.category || '',

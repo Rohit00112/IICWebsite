@@ -317,7 +317,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
                   }`}
               >
                 <div className={`font-bold mb-1 ${selectedProgram === 'BBA' ? 'text-[#21409A]' : 'text-gray-700'}`}>BA (Hons) Business Administration</div>
-                <div className={`text-[10px] tracking-widest font-bold ${selectedProgram === 'BBA' ? 'text-gray-500' : 'text-gray-400'}`}>Business - 3 Years</div>
+                <div className={`text-[10px] tracking-widest font-bold ${selectedProgram === 'BBA' ? 'text-gray-500' : 'text-gray-400'}`}>BBA - 3 Years</div>
               </button>
             </div>
           </div>
