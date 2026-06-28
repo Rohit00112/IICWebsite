@@ -55,6 +55,9 @@ export async function POST(request: Request) {
         details: error.issues.map(e => ({ path: e.path, message: e.message }))
       }, { status: 400 });
     }
+    if (error && typeof error === 'object' && (error as { code?: number }).code === 11000) {
+      return NextResponse.json({ error: 'An article with this title already exists. Try a slightly different title.' }, { status: 409 });
+    }
     console.error('POST /api/news error:', error);
     return NextResponse.json({ error: 'Failed to create news item' }, { status: 500 });
   }

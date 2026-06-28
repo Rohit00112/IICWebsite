@@ -10,7 +10,8 @@ import type { NewsItem, UpcomingEvent, ArchiveEntry } from '@/lib/news';
 import ShareMenu from './ShareMenu';
 import NewsletterSignup from './NewsletterSignup';
 
-const categories = ['All', 'News', 'Events', 'Announcements'];
+const categories = ['All', 'News', 'Events'];
+const FALLBACK_IMAGE = '/images/common/tower_block.JPG';
 
 interface NewsContentProps {
   initialNews: NewsItem[];
@@ -31,8 +32,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
     // Standardize category comparison (handle plural UI vs singular data)
     let normalizedActive = activeCategory;
     if (activeCategory === 'Events') normalizedActive = 'Event';
-    if (activeCategory === 'Announcements') normalizedActive = 'Announcement';
-    
+
     const normalizedItem = item.category;
     
     const matchesCategory = activeCategory === 'All' || normalizedItem === normalizedActive;
@@ -44,7 +44,6 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
   // Featured post logic
   let activeNormalized = activeCategory;
   if (activeCategory === 'Events') activeNormalized = 'Event';
-  if (activeCategory === 'Announcements') activeNormalized = 'Announcement';
   
   const showFeatured = !!featuredPost &&
     (activeCategory === 'All' || featuredPost.category === activeNormalized) &&
@@ -109,7 +108,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                       </span>
                     </div>
                     <Image
-                      src={featuredPost.image}
+                      src={featuredPost.image || FALLBACK_IMAGE}
                       alt={featuredPost.title}
                       fill
                       priority
@@ -179,7 +178,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                             </span>
                           </div>
                         <Image
-                          src={item.image}
+                          src={item.image || FALLBACK_IMAGE}
                           alt={item.title}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"

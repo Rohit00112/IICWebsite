@@ -10,6 +10,7 @@ import { sanitizeHtml } from '@/lib/sanitize';
 const NewNewsPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<'metadata' | 'content' | 'media' | 'preview'>('metadata');
   
   const [formData, setFormData] = useState({
@@ -33,6 +34,25 @@ const NewNewsPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
+    // Client-side guards mirroring the API schema, so failures are obvious
+    if (formData.title.trim().length < 5) {
+      setError('Title must be at least 5 characters.');
+      setActiveSection('metadata');
+      return;
+    }
+    if (formData.description.trim().length < 10) {
+      setError('SEO summary must be at least 10 characters.');
+      setActiveSection('media');
+      return;
+    }
+    if (formData.content.trim().length < 20) {
+      setError('Article content is too short.');
+      setActiveSection('content');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -45,9 +65,20 @@ const NewNewsPage = () => {
       if (res.ok) {
         router.push('/admin/news');
         router.refresh();
+        return;
       }
-    } catch (error) {
-      console.error('Error creating news:', error);
+
+      const data = await res.json().catch(() => null);
+      if (res.status === 401) {
+        setError('Your session expired. Please log in again.');
+      } else if (data?.details?.length) {
+        setError(data.details.map((d: { message: string }) => d.message).join(' '));
+      } else {
+        setError(data?.error || `Publish failed (HTTP ${res.status}).`);
+      }
+    } catch (err) {
+      console.error('Error creating news:', err);
+      setError('Network error. Check your connection and try again.');
     } finally {
       setLoading(false);
     }
@@ -82,6 +113,13 @@ const NewNewsPage = () => {
           </button>
         </div>
       </div>
+
+      {error && (
+        <div className="mb-8 flex items-start gap-3 rounded-2xl border-2 border-red-200 bg-red-50 px-6 py-4 text-sm font-bold text-red-700">
+          <svg className="mt-0.5 h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <span>{error}</span>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         
@@ -131,7 +169,6 @@ const NewNewsPage = () => {
                     >
                       <option value="News">News Story</option>
                       <option value="Event">Upcoming Event</option>
-                      <option value="Announcement">Announcement</option>
                     </select>
                     <svg className="w-5 h-5 absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                   </div>
@@ -148,7 +185,7 @@ const NewNewsPage = () => {
                 </div>
               </div>
 
-              {(formData.category === 'Event' || formData.category === 'Announcement') && (
+              {formData.category === 'Event' && (
                 <div className="grid grid-cols-2 gap-8 animate-in fade-in slide-in-from-top-4 duration-500">
                   <div className="space-y-3">
                     <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Event Time</label>
@@ -200,9 +237,9 @@ const NewNewsPage = () => {
           {activeSection === 'media' && (
             <div className="space-y-10 animate-in fade-in slide-in-from-right-4 duration-500">
                <div className="space-y-3">
-                <ImageUpload 
-                  label="Featured Image"
-                  value={formData.image} 
+                <ImageUpload
+                  label="Featured Image (optional)"
+                  value={formData.image}
                   onChange={(url) => setFormData({...formData, image: url})} 
                   onRemove={() => setFormData({...formData, image: ''})}
                 />
@@ -251,11 +288,11 @@ const NewNewsPage = () => {
                 </button>
               </div>
               
-              <div className="prose prose-lg max-w-none break-words prose-headings:font-sora prose-headings:font-bold [&&_h1]:text-[#1A2B56] [&&_h2]:text-[#1A2B56] [&&_h3]:text-[#1A2B56] [&&_h4]:text-[#1A2B56] [&&_p]:text-slate-800 [&&_li]:text-slate-800 [&&_strong]:text-slate-900 [&&_span]:text-slate-800 prose-p:leading-relaxed prose-li:marker:text-[#21409A] prose-li:marker:font-black prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl">
+              <div className="prose prose-lg max-w-none break-words prose-headings:font-sora prose-headings:font-bold [&&_h1]:text-[#1A2B56] [&&_h2]:text-[#1A2B56] [&&_h3]:text-[#1A2B56] [&&_h4]:text-[#1A2B56] [&&_p]:text-slate-800 [&&_li]:text-slate-800 [&&_strong]:text-slate-900 [&&_span]:text-slate-800 prose-p:leading-relaxed prose-li:marker:text-[#21409A] prose-li:marker:font-black prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl [&_*]:!whitespace-normal [&_*]:break-words">
                 {formData.content ? (
-                  <div 
+                  <div
                     dangerouslySetInnerHTML={{ __html: sanitizedPreviewContent }}
-                    className="rich-content"
+                    className="rich-content max-w-full overflow-hidden"
                   />
                 ) : (
                   <div className="py-20 text-center text-gray-300 italic">No content to preview. Start writing in the Content tab.</div>

@@ -6,11 +6,11 @@ const imageSourceSchema = z.string().trim().refine(isSafeImageSrc, IMAGE_SOURCE_
 export const newsSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters").max(150),
   slug: z.string().optional(),
-  category: z.enum(['News', 'Event', 'Announcement']),
+  category: z.enum(['News', 'Event']),
   date: z.string().min(1, "Date is required"),
   time: z.string().optional(),
   location: z.string().optional(),
-  image: imageSourceSchema,
+  image: imageSourceSchema.optional().or(z.literal('')),
   description: z.string().min(10, "Description must be at least 10 characters").max(500),
   content: z.string().min(20, "Content is too short"),
   featured: z.boolean().default(false),

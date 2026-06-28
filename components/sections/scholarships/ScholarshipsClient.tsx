@@ -168,8 +168,8 @@ const AwardPoster = ({ awardType }: { awardType: ScholarshipAwardType }) => {
 
   return (
     <div className="relative overflow-hidden rounded-sm bg-white shadow-[0_22px_54px_rgba(15,23,42,0.12)]">
-      <div className={`absolute ${isAaa ? 'left-0 top-0 h-full w-2 bg-[#F4CA2F]' : 'right-0 top-0 h-full w-2 bg-[#1A9E92]'}`} />
-      <div className={`absolute ${isAaa ? 'bottom-0 left-0 h-2 w-full bg-[#F4CA2F]' : 'bottom-0 right-0 h-2 w-full bg-[#1A9E92]'}`} />
+      <div className={`absolute ${isAaa ? 'left-0 top-0 h-full w-2 bg-[#F4CA2F]' : 'right-0 top-0 h-full w-2 bg-[#2F9DB5]'}`} />
+      <div className={`absolute ${isAaa ? 'bottom-0 left-0 h-2 w-full bg-[#F4CA2F]' : 'bottom-0 right-0 h-2 w-full bg-[#2F9DB5]'}`} />
       <div className={`relative aspect-[1.45/1] overflow-hidden p-6 text-center md:p-8 ${isAaa ? 'bg-[#E7F8FF]' : 'bg-white'}`}>
         <div
           className="pointer-events-none absolute inset-0 opacity-70"
@@ -205,39 +205,88 @@ const AwardPoster = ({ awardType }: { awardType: ScholarshipAwardType }) => {
             </p>
           </div>
         ) : (
-          <div className="relative flex h-full flex-col items-center text-center">
-            <div className="pointer-events-none absolute -bottom-28 -left-28 h-72 w-72 rounded-full border-[42px] border-gray-200/70" />
-            <div className="pointer-events-none absolute bottom-0 left-0 h-20 w-full bg-gradient-to-t from-gray-200/70 to-transparent" />
-            <svg className="pointer-events-none absolute bottom-[30%] right-[16%] h-16 w-24 text-[#172033] drop-shadow-[0_10px_10px_rgba(15,23,42,0.18)] md:h-20 md:w-32" viewBox="0 0 160 100" fill="none" aria-hidden="true">
-              <path d="M18 38 84 14l58 24-66 25-58-25Z" fill="currentColor" />
-              <path d="M48 55h62v20c0 8-14 15-31 15s-31-7-31-15V55Z" fill="#24314A" />
-              <path d="M113 45v28" stroke="#E31E24" strokeWidth="5" strokeLinecap="round" />
-              <path d="M113 73c10 2 17 7 22 15" stroke="#E31E24" strokeWidth="5" strokeLinecap="round" />
-              <path d="M78 76h54v9H78z" fill="#F6F0E4" />
-              <path d="M90 86h49v8H90z" fill="#21409A" />
+          <div className="@container relative flex h-full flex-col items-center text-center">
+            {/* Soft teal aura behind wordmark for depth */}
+            <div className="pointer-events-none absolute left-1/2 top-[46%] h-[60%] w-[88%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(47,157,181,0.16),transparent_68%)] blur-md" />
+
+            {/* Concentric arcs radiating from bottom-left, layered opacity */}
+            <svg className="pointer-events-none absolute -bottom-[32%] -left-[20%] h-[160%] w-[82%]" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+              <circle cx="0" cy="200" r="58" stroke="rgba(47,157,181,0.10)" strokeWidth="13" />
+              <circle cx="0" cy="200" r="106" stroke="rgba(148,163,184,0.28)" strokeWidth="13" />
+              <circle cx="0" cy="200" r="154" stroke="rgba(148,163,184,0.18)" strokeWidth="13" />
+              <circle cx="0" cy="200" r="200" stroke="rgba(148,163,184,0.10)" strokeWidth="13" />
             </svg>
 
-            <p className="mt-2 text-sm font-medium uppercase tracking-normal text-[#171717] md:text-base">
-              Seize the <span className="font-black">Opportunity</span>
+            {/* Graduation cap + scroll + book cluster — floats in empty top-right corner, tilted */}
+            <svg className="pointer-events-none absolute -top-1 right-0 h-20 w-32 rotate-[8deg] md:h-24 md:w-40" viewBox="0 0 200 130" fill="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="ingCapBoard" x1="0" y1="0" x2="0.3" y2="1">
+                  <stop offset="0%" stopColor="#243049" />
+                  <stop offset="100%" stopColor="#11192B" />
+                </linearGradient>
+                <linearGradient id="ingCapBase" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#1A2336" />
+                  <stop offset="100%" stopColor="#0A1019" />
+                </linearGradient>
+              </defs>
+              {/* contact shadow */}
+              <ellipse cx="105" cy="120" rx="72" ry="9" fill="rgba(15,23,42,0.16)" />
+              {/* book */}
+              <path d="M150 95h44v19h-44z" fill="#21306A" />
+              <path d="M150 95l-5 6v19l5-6z" fill="#16204A" />
+              <path d="M194 95l5 6v19l-5-6z" fill="#2C3D7C" />
+              <path d="M150 100h44" stroke="#3A4C93" strokeWidth="1.5" />
+              {/* diploma scroll */}
+              <path d="M88 102c-9 6-24 8-37 4 11-2 20-8 24-17l19 7z" fill="#F0E7D2" />
+              <path d="M88 102c-9 6-24 8-37 4 6-1 12-3 17-7l16 2z" fill="#E2D6BB" />
+              <ellipse cx="50" cy="108" rx="6" ry="9" fill="#E03A2F" transform="rotate(20 50 108)" />
+              <path d="M92 83l25 15-23 15-23-13z" fill="#F6EFDD" />
+              {/* cap board */}
+              <path d="M30 56 104 29l67 25-73 27-68-25Z" fill="url(#ingCapBoard)" />
+              <path d="M104 29l67 25-73 27" fill="rgba(255,255,255,0.06)" />
+              {/* cap base */}
+              <path d="M58 73h84v23c0 9-18 16-42 16s-42-7-42-16V73Z" fill="url(#ingCapBase)" />
+              {/* button */}
+              <circle cx="101" cy="54" r="7" fill="#E8B84B" />
+              <circle cx="101" cy="54" r="3" fill="#C9952E" />
+              {/* tassel */}
+              <path d="M135 56v34" stroke="#E03A2F" strokeWidth="5" strokeLinecap="round" />
+              <path d="M135 90c3 8 1 17-4 23" stroke="#E03A2F" strokeWidth="5" strokeLinecap="round" />
+              <circle cx="130" cy="117" r="7.5" fill="#E03A2F" />
+              <circle cx="130" cy="117" r="3.5" fill="#B72B22" />
+            </svg>
+
+            {/* Heading group */}
+            <p className="relative z-10 mt-1 text-[2.4cqw] font-semibold uppercase tracking-[0.34em] text-[#334155]">
+              Seize the <span className="font-black text-[#171717]">Opportunity</span>
             </p>
-            <div className="mt-5 w-full">
-              <span className="inline-flex bg-[#279BB6] px-4 py-1.5 text-2xl font-black uppercase leading-none text-white md:text-3xl">
+            <span className="relative z-10 mt-2 block h-px w-[7cqw] bg-gradient-to-r from-transparent via-[#2F9DB5] to-transparent" />
+
+            <div className="relative z-10 mt-[3cqw] w-full">
+              <span className="relative inline-flex bg-[#2F9DB5] px-[2.4cqw] py-[1cqw] text-[3.6cqw] font-black uppercase leading-none tracking-[0.06em] text-white shadow-[0_8px_18px_rgba(47,157,181,0.32)]">
                 Full-fledged
               </span>
-              <p className="mt-5 text-[50px] font-black uppercase leading-[0.88] text-[#171717] md:text-[70px]">
-                ING
+              <p className="mt-[2.6cqw] bg-gradient-to-b from-[#1E2A3A] to-[#0B1320] bg-clip-text text-[6.4cqw] font-black uppercase leading-none tracking-[-0.01em] text-transparent">
+                ING Postgraduate
               </p>
-              <p className="text-[38px] font-black uppercase leading-[0.92] text-[#171717] md:text-[52px]">
-                Postgraduate
-              </p>
-              <h3 className="mt-1 text-[74px] font-black uppercase leading-[0.82] text-[#2F9DB5] md:text-[108px]">
-                Scholarship
-              </h3>
+              <div className="relative -mt-[0.5cqw]">
+                <h3 className="bg-gradient-to-b from-[#3FB6CE] via-[#2F9DB5] to-[#1F7F95] bg-clip-text text-[13.4cqw] font-black uppercase leading-[0.82] tracking-[-0.018em] text-transparent drop-shadow-[0_2px_10px_rgba(47,157,181,0.22)]">
+                  Scholarship
+                </h3>
+              </div>
             </div>
-            <div className="relative z-10 mt-auto text-center text-base font-semibold leading-relaxed text-[#3E3E3E] md:text-xl">
-              <p>IT/Business Post Graduate Degree at</p>
-              <p>Islington College, Herald College Kathmandu or Apex College</p>
-              <p className="mt-1">Job placement at one of the ING Companies</p>
+
+            {/* Detail lines */}
+            <div className="relative z-10 mb-auto mt-[4cqw] w-full text-[2.7cqw] font-semibold leading-relaxed text-[#334155]">
+              <span className="mx-auto mb-[2cqw] block h-px w-[11cqw] bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+              <p className="flex items-start justify-center gap-[1.4cqw]">
+                <span className="mt-[0.4cqw] text-[#2F9DB5]">▸</span>
+                <span>IT/Business Post Graduate Degree at<br />Islington College, Herald College Kathmandu or Apex College</span>
+              </p>
+              <p className="mt-[1.4cqw] flex items-start justify-center gap-[1.4cqw]">
+                <span className="mt-[0.4cqw] text-[#2F9DB5]">▸</span>
+                <span>Job placement at one of the ING Companies</span>
+              </p>
             </div>
           </div>
         )}
@@ -303,7 +352,7 @@ const AwardsRow = ({ openEligibility, toggleEligibility }: {
           return (
             <Reveal key={awardType} delay={idx * 0.08} className="flex flex-col">
               <AwardPoster awardType={awardType} />
-              <h3 className="mt-9 text-2xl font-black tracking-tight" style={{ color: theme.ink }}>{copy.cardTitle}</h3>
+              <h3 className="mt-9 text-2xl font-black tracking-tight text-[#2F9DB5]">{copy.cardTitle}</h3>
               <p className="mt-4 text-sm font-medium leading-relaxed text-gray-600">{copy.description}</p>
               <div className="mt-6">
                 <EligibilityDropdown awardType={awardType} open={openEligibility[awardType]} onToggle={() => toggleEligibility(awardType)} />

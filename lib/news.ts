@@ -19,7 +19,7 @@ export interface NewsAuthor {
 
 export interface NewsItem {
   id: string;
-  category: 'News' | 'Event' | 'Announcement';
+  category: 'News' | 'Event';
   date: string;
   time?: string;
   location?: string;
@@ -144,11 +144,23 @@ export async function getFeaturedNews(): Promise<NewsItem | null> {
 
 import { sanitizeHtml } from './sanitize';
 
+async function makeUniqueSlug(base: string, excludeId?: string): Promise<string> {
+  const root = base || 'article';
+  let slug = root;
+  let n = 2;
+  // Append -2, -3, ... until the slug is free
+  while (true) {
+    const clash = await News.findOne({ slug, ...(excludeId ? { _id: { $ne: excludeId } } : {}) }).select('_id');
+    if (!clash) return slug;
+    slug = `${root}-${n++}`;
+  }
+}
+
 export async function createNews(data: Partial<NewsItem>): Promise<NewsItem> {
   await dbConnect();
-  // Auto-generate slug from title if not provided
+  // Auto-generate a unique slug from title if not provided
   if (!data.slug && data.title) {
-    data.slug = generateSlug(data.title);
+    data.slug = await makeUniqueSlug(generateSlug(data.title));
   }
   // Sanitize content
   if (data.content) {
@@ -161,9 +173,9 @@ export async function createNews(data: Partial<NewsItem>): Promise<NewsItem> {
 
 export async function updateNews(id: string, data: Partial<NewsItem>): Promise<NewsItem | null> {
   await dbConnect();
-  // Regenerate slug if title changed
+  // Regenerate a unique slug if title changed
   if (data.title && !data.slug) {
-    data.slug = generateSlug(data.title);
+    data.slug = await makeUniqueSlug(generateSlug(data.title), id);
   }
   // Sanitize content
   if (data.content) {
@@ -190,7 +202,6 @@ export async function filterNews(category: string, search: string): Promise<News
   if (category !== 'All') {
     let normalizedCategory = category;
     if (category === 'Events') normalizedCategory = 'Event';
-    if (category === 'Announcements') normalizedCategory = 'Announcement';
     query.category = normalizedCategory;
   }
 

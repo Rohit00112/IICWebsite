@@ -25,16 +25,16 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
           {/* Main Article Body */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-8 min-w-0">
             <motion.article
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="prose prose-lg max-w-none prose-headings:font-iic prose-headings:font-bold [&&_h1]:text-[#21409A] [&&_h2]:text-[#21409A] [&&_h3]:text-[#21409A] [&&_h4]:text-[#21409A] [&&_p]:text-slate-800 [&&_li]:text-slate-800 [&&_strong]:text-slate-900 [&&_span]:text-slate-800 prose-p:leading-relaxed prose-li:marker:text-[#21409A] prose-li:marker:font-black prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl"
+              className="prose prose-lg max-w-none break-words prose-headings:font-iic prose-headings:font-bold [&&_h1]:text-[#21409A] [&&_h2]:text-[#21409A] [&&_h3]:text-[#21409A] [&&_h4]:text-[#21409A] [&&_p]:text-slate-800 [&&_li]:text-slate-800 [&&_strong]:text-slate-900 [&&_span]:text-slate-800 prose-p:leading-relaxed prose-li:marker:text-[#21409A] prose-li:marker:font-black prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl [&_*]:!whitespace-normal [&_*]:break-words"
             >
               <div
                 dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-                className="rich-content"
+                className="rich-content max-w-full overflow-hidden"
               />
             </motion.article>
 

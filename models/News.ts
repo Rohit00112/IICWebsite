@@ -7,7 +7,7 @@ const NewsSchema = new Schema({
   category: {
     type: String,
     required: [true, 'Please provide a category'],
-    enum: ['News', 'Event', 'Announcement'],
+    enum: ['News', 'Event'],
   },
   date: {
     type: String,
@@ -37,9 +37,9 @@ const NewsSchema = new Schema({
   },
   image: {
     type: String,
-    required: [true, 'Please provide an image URL'],
+    default: '',
     validate: {
-      validator: isSafeImageSrc,
+      validator: optionalImageSrc,
       message: IMAGE_SOURCE_ERROR,
     },
   },

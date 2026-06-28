@@ -16,6 +16,18 @@ export const sanitizeHtml = (html: string): string => {
     },
     allowedSchemes: ['http', 'https', 'mailto', 'tel'],
     disallowedTagsMode: 'discard',
+    // Block layout-breaking inline styles that escape the article column
+    // (pasted content often carries white-space:nowrap / fixed widths / positioning).
+    allowedStyles: {
+      '*': {
+        color: [/^.*$/],
+        'background-color': [/^.*$/],
+        'text-align': [/^(left|right|center|justify)$/],
+        'font-weight': [/^.*$/],
+        'font-style': [/^.*$/],
+        'text-decoration': [/^.*$/],
+      },
+    },
     transformTags: {
       a: (tagName, attribs) => {
         const out = { ...attribs };

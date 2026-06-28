@@ -33,8 +33,8 @@ const AdminNewsPage = async () => {
           <p className="text-4xl font-black text-[#00B2A9] font-sora">{news.filter(n => n.category === 'Event').length}</p>
         </div>
         <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
-          <p className="text-gray-400 text-xs font-bold tracking-widest mb-2">Announcements</p>
-          <p className="text-4xl font-black text-[#74C044] font-sora">{news.filter(n => n.category === 'Announcement').length}</p>
+          <p className="text-gray-400 text-xs font-bold tracking-widest mb-2">News Stories</p>
+          <p className="text-4xl font-black text-[#74C044] font-sora">{news.filter(n => n.category === 'News').length}</p>
         </div>
       </div>
 

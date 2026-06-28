@@ -54,7 +54,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
               <Link href={`/news/${item.slug}`} className="group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
                 <div className="relative h-56 overflow-hidden">
                   <Image
-                    src={item.image}
+                    src={item.image || '/images/common/tower_block.JPG'}
                     alt={item.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"

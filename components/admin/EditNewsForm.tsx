@@ -144,7 +144,6 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
                     >
                       <option value="News">News Story</option>
                       <option value="Event">Upcoming Event</option>
-                      <option value="Announcement">Announcement</option>
                     </select>
                     <svg className="w-5 h-5 absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                   </div>
@@ -161,7 +160,7 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
                 </div>
               </div>
 
-              {(formData.category === 'Event' || formData.category === 'Announcement') && (
+              {formData.category === 'Event' && (
                 <div className="grid grid-cols-2 gap-8 animate-in fade-in slide-in-from-top-4 duration-500">
                   <div className="space-y-3">
                     <label className="text-[10px] font-extrabold tracking-[0.2em] text-gray-700 ml-1">Event Time</label>
@@ -213,9 +212,9 @@ export default function EditNewsForm({ article }: { article: NewsItem }) {
           {activeSection === 'media' && (
             <div className="space-y-10 animate-in fade-in slide-in-from-right-4 duration-500">
                <div className="space-y-3">
-                <ImageUpload 
-                  label="Featured Image"
-                  value={formData.image} 
+                <ImageUpload
+                  label="Featured Image (optional)"
+                  value={formData.image}
                   onChange={(url) => setFormData({...formData, image: url})} 
                   onRemove={() => setFormData({...formData, image: ''})}
                 />

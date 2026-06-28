@@ -26,7 +26,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
         className="absolute inset-0 z-0"
       >
         <Image
-          src={item.image}
+          src={item.image || '/images/common/tower_block.JPG'}
           alt={item.title}
           fill
           sizes="100vw"

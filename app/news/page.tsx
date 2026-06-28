@@ -6,7 +6,7 @@ import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export const metadata: Metadata = {
-  title: 'Latest News, Events & Announcements | Itahari International College',
+  title: 'Latest News & Events | Itahari International College',
   description: 'Read the latest IIC news, events, student achievements, and academic updates from our globally connected campus in Itahari.',
 };
 
