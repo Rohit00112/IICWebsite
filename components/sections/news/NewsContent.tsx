@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,6 +12,19 @@ import NewsletterSignup from './NewsletterSignup';
 
 const categories = ['All', 'News', 'Events'];
 const FALLBACK_IMAGE = '/images/common/tower_block.JPG';
+const ITEMS_PER_PAGE = 4;
+
+const formatMonthYear = (value: string) => {
+  const parsedDate = new Date(value);
+  if (Number.isNaN(parsedDate.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    year: 'numeric',
+  }).format(parsedDate);
+};
 
 interface NewsContentProps {
   initialNews: NewsItem[];
@@ -23,6 +36,7 @@ interface NewsContentProps {
 const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured, upcomingEvents, archive }) => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const featuredPost = initialFeatured;
   const newsItems = initialNews.filter(item => !item.featured);
@@ -48,6 +62,22 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
   const showFeatured = !!featuredPost &&
     (activeCategory === 'All' || featuredPost.category === activeNormalized) &&
     (searchQuery === '' || featuredPost.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
+  const paginatedItems = filteredItems.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, searchQuery]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
 
 
   return (
@@ -119,7 +149,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                   <div className="md:w-[55%] p-10 md:p-14 flex flex-col justify-center">
                     <div className="flex items-center gap-2 text-slate-500 text-[11px] font-bold mb-4">
                       <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                      <span>{featuredPost.date}</span>
+                      <span>{formatMonthYear(featuredPost.date)}</span>
                     </div>
                     <h3 className="text-3xl md:text-[38px] font-black text-[#1a1a1a] mb-6 font-iic leading-tight tracking-tight group-hover:text-[#21409A] transition-colors">
                       {featuredPost.title}
@@ -157,7 +187,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
               duration={760}
             >
               <AnimatePresence mode="popLayout">
-                {filteredItems.map((item, idx) => (
+                {paginatedItems.map((item, idx) => (
                   <Link key={item.id} href={`/news/${item.slug}`} className="news-card-wrapper">
                     <Tilt strength={12} className="h-full">
                       <motion.div
@@ -188,7 +218,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                       <div className="p-8 md:p-10 flex flex-col flex-grow">
                         <div className="flex items-center gap-2 text-slate-500 text-[10px] font-bold mb-4">
                           <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                          <span>{item.date}</span>
+                          <span>{formatMonthYear(item.date)}</span>
                         </div>
                         <h4 className="text-xl font-bold text-[#1a1a1a] mb-5 font-iic leading-tight tracking-tight line-clamp-2 min-h-[50px] group-hover:text-[#21409A] transition-colors">
                           {item.title}
@@ -214,6 +244,49 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                 ))}
               </AnimatePresence>
             </AnimeStagger>
+
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-xs font-bold text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:border-[#21409A] hover:text-[#21409A] transition-colors"
+                >
+                  Previous
+                </button>
+
+                {Array.from({ length: totalPages }, (_, index) => {
+                  const page = index + 1;
+                  const isActive = page === currentPage;
+
+                  return (
+                    <button
+                      key={page}
+                      type="button"
+                      onClick={() => setCurrentPage(page)}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={`w-9 h-9 rounded-lg text-xs font-bold transition-colors ${
+                        isActive
+                          ? 'bg-[#21409A] text-white shadow-sm'
+                          : 'bg-white border border-gray-200 text-slate-600 hover:border-[#21409A] hover:text-[#21409A]'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+
+                <button
+                  type="button"
+                  onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-xs font-bold text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:border-[#21409A] hover:text-[#21409A] transition-colors"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Sidebar */}

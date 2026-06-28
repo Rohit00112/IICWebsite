@@ -12,7 +12,6 @@ interface ShareMenuProps {
 const ShareMenu: React.FC<ShareMenuProps> = ({ url, title, description }) => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [igInfo, setIgInfo] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   const absoluteUrl = typeof window !== 'undefined'
@@ -24,11 +23,10 @@ const ShareMenu: React.FC<ShareMenuProps> = ({ url, title, description }) => {
     const onDoc = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
-        setIgInfo(false);
       }
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { setOpen(false); setIgInfo(false); }
+      if (e.key === 'Escape') { setOpen(false); }
     };
     document.addEventListener('mousedown', onDoc);
     document.addEventListener('keydown', onKey);
@@ -46,7 +44,6 @@ const ShareMenu: React.FC<ShareMenuProps> = ({ url, title, description }) => {
   const toggle = (e: React.MouseEvent) => {
     stop(e);
     setOpen(o => !o);
-    setIgInfo(false);
   };
 
   const shareFacebook = (e: React.MouseEvent) => {
@@ -129,12 +126,6 @@ const ShareMenu: React.FC<ShareMenuProps> = ({ url, title, description }) => {
               </span>
               <span className="text-sm font-bold text-[#1a1a1a]">{copied ? 'Link copied' : 'Copy link'}</span>
             </button>
-
-            {igInfo && (
-              <p className="text-[11px] text-gray-500 px-3 pt-2 pb-1 leading-relaxed">
-                Link copied. Open Instagram and paste it into a Story, DM, or your bio.
-              </p>
-            )}
           </motion.div>
         )}
       </AnimatePresence>

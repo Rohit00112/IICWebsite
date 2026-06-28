@@ -90,16 +90,23 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
 
               if (locked) {
                 return (
-                  <button
-                    key={res.name}
-                    type="button"
-                    disabled
-                    aria-disabled="true"
-                    title="Submit your application to unlock the brochure"
-                    className={resourceClassName}
-                  >
-                    {resourceContent}
-                  </button>
+                  <div key={res.name} className="relative">
+                    <button
+                      type="button"
+                      aria-disabled="true"
+                      onClick={(e) => e.preventDefault()}
+                      className={`${resourceClassName} peer`}
+                    >
+                      {resourceContent}
+                    </button>
+                    {/* Instant tooltip — no hover delay */}
+                    <span
+                      role="tooltip"
+                      className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-[#3a3a3a] px-3 py-2 text-[12px] font-semibold text-white opacity-0 shadow-lg transition-opacity duration-100 peer-hover:opacity-100"
+                    >
+                      Submit your application to unlock the brochure
+                    </span>
+                  </div>
                 );
               }
 

@@ -1,9 +1,13 @@
 import sanitizeHtmlLib from 'sanitize-html';
 
+const normalizeRichTextSpacing = (html: string): string => (
+  html.replace(/(?:&nbsp;|&#160;|&#xA0;|\u00a0)/gi, ' ')
+);
+
 export const sanitizeHtml = (html: string): string => {
   if (!html) return '';
 
-  return sanitizeHtmlLib(html, {
+  const sanitized = sanitizeHtmlLib(normalizeRichTextSpacing(html), {
     allowedTags: [
       'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'span', 'a', 'img',
@@ -39,4 +43,6 @@ export const sanitizeHtml = (html: string): string => {
       },
     },
   });
+
+  return normalizeRichTextSpacing(sanitized);
 };

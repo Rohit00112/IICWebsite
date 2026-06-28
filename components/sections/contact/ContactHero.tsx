@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import GlassSurprise from '../../effects/GlassSurprise';
-import AnimeStagger from '../../effects/AnimeStagger';
 
 const ContactHero = () => {
   return (
@@ -33,13 +32,12 @@ const ContactHero = () => {
               <RevealText
                 as="h1"
                 text="Connect with"
-                className="text-4xl md:text-6xl font-bold text-[#ffffff] mb-6 font-iic justify-center drop-shadow-md"
+                className="mb-2 text-4xl font-bold leading-tight text-[#ffffff] drop-shadow-md font-iic justify-center md:mb-3 md:text-6xl"
               />
               <RevealText
                 as="h1"
                 text="Itahari International College"
-                                className="text-4xl md:text-6xl font-bold text-[#ffffff] mb-6 font-iic justify-center drop-shadow-md"
-
+                className="mb-6 text-4xl font-bold leading-tight text-[#ffffff] drop-shadow-md font-iic justify-center md:text-6xl"
               />
             </div>
 

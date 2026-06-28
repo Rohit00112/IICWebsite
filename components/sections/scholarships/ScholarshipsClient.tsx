@@ -91,6 +91,28 @@ const getRecipients = (batch?: ScholarshipBatch) => batch?.recipients || [];
 
 const recipientLabel = (count: number) => `${count || 'No'} ${count === 1 ? 'recipient' : 'recipients'}`;
 
+const formatProgrammeName = (programme?: string) => {
+  const value = programme?.trim();
+
+  if (!value) return 'Annual ING Postgraduate Scholar';
+  if (/[a-z]/.test(value)) return value;
+
+  const preferredCase: Record<string, string> = {
+    BA: 'BA',
+    BBA: 'BBA',
+    BIT: 'BIT',
+    BSC: 'BSc',
+    HONS: 'Hons',
+    IIC: 'IIC',
+    ING: 'ING',
+    IT: 'IT',
+  };
+
+  return value.toLowerCase().replace(/[a-z]+/gi, (word) => (
+    preferredCase[word.toUpperCase()] || `${word.charAt(0).toUpperCase()}${word.slice(1)}`
+  ));
+};
+
 const ArrowIcon = ({ className = '' }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M5 12h14" />
@@ -346,7 +368,6 @@ const AwardsRow = ({ openEligibility, toggleEligibility }: {
     <div className="mx-auto max-w-7xl px-6">
       <div className="grid gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-10">
         {(['aaa', 'ing_postgraduate'] as ScholarshipAwardType[]).map((awardType, idx) => {
-          const theme = awardThemes[awardType];
           const copy = trackCopy[awardType];
 
           return (
@@ -397,13 +418,13 @@ const IngSpotlight = ({ batch, recipient }: { batch: ScholarshipBatch; recipient
       </div>
 
       <div className="flex flex-col justify-center">
-        <p className="text-2xl font-black uppercase tracking-tight" style={{ color: theme.accent }}>Scholarship {batch.year}</p>
+        <p className="text-2xl font-black tracking-tight" style={{ color: theme.accent }}>Recipient {batch.year}</p>
         <span className="mt-3 block h-1 w-16 rounded-full" style={{ backgroundColor: theme.accent }} />
         <h3 className="mt-7 text-3xl font-black tracking-tight text-[#171717] md:text-4xl">
           {first} <span className="font-medium text-gray-500">{rest}</span>
         </h3>
-        <p className="mt-2 text-sm font-bold uppercase tracking-[0.12em]" style={{ color: theme.ink }}>
-          {recipient?.programme || 'Annual ING Postgraduate Scholar'}
+        <p className="mt-2 text-base font-bold tracking-normal" style={{ color: theme.ink }}>
+          {formatProgrammeName(recipient?.programme)}
         </p>
         {recipient?.quote ? (
           <p className="mt-7 border-l-2 pl-5 text-lg font-medium italic leading-relaxed text-gray-600" style={{ borderColor: theme.accent }}>
@@ -475,7 +496,7 @@ const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) =>
   return (
     <section id="ing-postgraduate-scholarship" className="scroll-mt-8 bg-[#F4F7FA] py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-6">
-        <Reveal><SectionTitle>Full Scholarship Recipients</SectionTitle></Reveal>
+        <Reveal><SectionTitle>ING Postgraduate Scholarship Recipients</SectionTitle></Reveal>
         <div className="mt-14">
           {latestBatch ? (
             <div

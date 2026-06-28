@@ -7,11 +7,13 @@ import RichTextEditor from '@/components/admin/RichTextEditor';
 import ImageUpload from '@/components/admin/ImageUpload';
 import { sanitizeHtml } from '@/lib/sanitize';
 
+type NewsFormSection = 'metadata' | 'content' | 'media' | 'preview';
+
 const NewNewsPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [activeSection, setActiveSection] = useState<'metadata' | 'content' | 'media' | 'preview'>('metadata');
+  const [activeSection, setActiveSection] = useState<NewsFormSection>('metadata');
   
   const [formData, setFormData] = useState({
     title: '',
@@ -84,7 +86,7 @@ const NewNewsPage = () => {
     }
   };
 
-  const sections = [
+  const sections: Array<{ id: NewsFormSection; label: string; icon: string }> = [
     { id: 'metadata', label: 'Article Metadata', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
     { id: 'content', label: 'Article Content', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
     { id: 'media', label: 'Media & SEO', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' },
@@ -128,7 +130,7 @@ const NewNewsPage = () => {
           {sections.map((sec) => (
             <button
               key={sec.id}
-              onClick={() => setActiveSection(sec.id as any)}
+              onClick={() => setActiveSection(sec.id)}
               className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-extrabold text-sm transition-all ${
                 activeSection === sec.id 
                 ? 'bg-[#21409A] text-white shadow-xl translate-x-2' 
@@ -288,11 +290,11 @@ const NewNewsPage = () => {
                 </button>
               </div>
               
-              <div className="prose prose-lg max-w-none break-words prose-headings:font-sora prose-headings:font-bold [&&_h1]:text-[#1A2B56] [&&_h2]:text-[#1A2B56] [&&_h3]:text-[#1A2B56] [&&_h4]:text-[#1A2B56] [&&_p]:text-slate-800 [&&_li]:text-slate-800 [&&_strong]:text-slate-900 [&&_span]:text-slate-800 prose-p:leading-relaxed prose-li:marker:text-[#21409A] prose-li:marker:font-black prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl [&_*]:!whitespace-normal [&_*]:break-words">
+              <div className="prose prose-lg max-w-none text-left prose-headings:font-sora prose-headings:font-bold [&&_h1]:text-[#1A2B56] [&&_h2]:text-[#1A2B56] [&&_h3]:text-[#1A2B56] [&&_h4]:text-[#1A2B56] [&&_p]:text-slate-800 [&&_p]:leading-[1.8] [&&_li]:text-slate-800 [&&_strong]:text-slate-900 [&&_span]:text-slate-800 prose-li:marker:text-[#21409A] prose-li:marker:font-black prose-blockquote:border-[#74C044] prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl [&_*]:max-w-full [&_*]:!whitespace-normal [&_*]:[hyphens:none] [&_*]:[overflow-wrap:normal] [&_*]:[word-break:normal] [&_a]:[overflow-wrap:anywhere] [&_code]:[overflow-wrap:anywhere] [&_pre]:overflow-x-auto">
                 {formData.content ? (
                   <div
                     dangerouslySetInnerHTML={{ __html: sanitizedPreviewContent }}
-                    className="rich-content max-w-full overflow-hidden"
+                    className="rich-content max-w-full overflow-hidden [text-wrap:pretty]"
                   />
                 ) : (
                   <div className="py-20 text-center text-gray-300 italic">No content to preview. Start writing in the Content tab.</div>

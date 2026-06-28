@@ -9,16 +9,15 @@ import AnimeStagger from '../../effects/AnimeStagger';
 
 const REASONS = [
   { value: 'admissions', label: 'Admissions Inquiry', programmes: true },
-  { value: 'scholarship', label: 'Scholarship Information', programmes: true },
+  { value: 'scholarship', label: 'Scholarship Information', programmes: false },
   { value: 'general', label: 'General Support', programmes: false },
   { value: 'partnership', label: 'Business Partnership', programmes: false },
   { value: 'visit', label: 'Schedule a Campus Visit', programmes: false },
 ];
 
 const PROGRAMMES = [
-  'BIT (Hons)',
-  'BBA (Hons)',
-  'MBA',
+  'BIT',
+  'BBA',
   'Not sure yet',
 ];
 
@@ -46,10 +45,29 @@ const COUNTRIES = [
 ];
 
 const MESSAGE_MAX = 600;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+type FieldKey = 'firstName' | 'lastName' | 'email' | 'phone' | 'reason' | 'programme' | 'message';
+type FormErrors = Partial<Record<FieldKey, string>>;
+
+const getFormValue = (formData: FormData, key: FieldKey) => (
+  String(formData.get(key) || '').trim()
+);
+
+const FieldError = ({ id, message }: { id: string; message?: string }) => {
+  if (!message) return null;
+
+  return (
+    <p id={id} className="text-xs font-bold text-[#ED1C24]">
+      {message}
+    </p>
+  );
+};
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [reason, setReason] = useState('');
   const [programme, setProgramme] = useState('');
   const [message, setMessage] = useState('');
@@ -77,15 +95,90 @@ const ContactForm = () => {
 
   const showProgramme = REASONS.find(r => r.value === reason)?.programmes;
 
+  const clearError = (field: FieldKey) => {
+    setErrors((state) => {
+      if (!state[field]) return state;
+      const next = { ...state };
+      delete next[field];
+      return next;
+    });
+  };
+
+  const focusFirstError = (form: HTMLFormElement, nextErrors: FormErrors) => {
+    const firstField = (Object.keys(nextErrors) as FieldKey[])[0];
+
+    if (!firstField) return;
+
+    window.requestAnimationFrame(() => {
+      const target = firstField === 'programme'
+        ? form.querySelector<HTMLElement>('[data-programme-choice]')
+        : form.elements.namedItem(firstField);
+
+      if (target instanceof HTMLElement) target.focus();
+    });
+  };
+
+  const validateForm = (form: HTMLFormElement) => {
+    const formData = new FormData(form);
+    const nextErrors: FormErrors = {};
+    const firstName = getFormValue(formData, 'firstName');
+    const lastName = getFormValue(formData, 'lastName');
+    const email = getFormValue(formData, 'email');
+    const phone = getFormValue(formData, 'phone');
+    const selectedReason = reason.trim();
+    const selectedProgramme = programme.trim();
+    const trimmedMessage = message.trim();
+
+    if (!firstName) nextErrors.firstName = 'Please enter your first name.';
+    if (!lastName) nextErrors.lastName = 'Please enter your last name.';
+    if (!email) {
+      nextErrors.email = 'Please enter your email address.';
+    } else if (!EMAIL_PATTERN.test(email)) {
+      nextErrors.email = 'Please enter a valid email address.';
+    }
+
+    if (phone) {
+      const digits = phone.replace(/\D/g, '');
+      if (digits.length < 7 || digits.length > 15) {
+        nextErrors.phone = 'Please enter a valid phone number.';
+      }
+    }
+
+    if (!selectedReason) nextErrors.reason = 'Please select a reason for contact.';
+    if (showProgramme && !selectedProgramme) nextErrors.programme = 'Please select a programme of interest.';
+    if (!trimmedMessage) {
+      nextErrors.message = 'Please enter your message.';
+    } else if (trimmedMessage.length < 10) {
+      nextErrors.message = 'Please enter at least 10 characters.';
+    }
+
+    return nextErrors;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    const nextErrors = validateForm(form);
+
+    setErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      focusFirstError(form, nextErrors);
+      return;
+    }
+
     setIsSubmitting(true);
     await new Promise(resolve => setTimeout(resolve, 1600));
     setIsSubmitting(false);
     setIsSuccess(true);
+    setReason('');
+    setProgramme('');
+    setMessage('');
+    form.reset();
   };
 
   const fieldClass = "w-full px-5 py-4 bg-white border border-gray-200 rounded-xl focus:border-[#21409A] focus:ring-2 focus:ring-[#21409A]/15 outline-none transition-all placeholder:text-gray-400 font-medium text-sm text-[#1a1a1a]";
+  const getFieldClass = (field: FieldKey, extraClass = '') => `${fieldClass} ${errors[field] ? 'border-[#ED1C24] focus:border-[#ED1C24] focus:ring-[#ED1C24]/15' : ''} ${extraClass}`;
   const labelClass = "flex items-center gap-1 text-[13px] font-bold text-[#1a1a1a]";
   const requiredMark = <span aria-hidden className="text-[#ED1C24]">*</span>;
 
@@ -206,10 +299,13 @@ const ContactForm = () => {
                     </div>
                     <h2 className="text-3xl font-bold text-[#1a1a1a] mb-4 font-iic">Message Received!</h2>
                     <p className="text-gray-500 font-medium max-w-sm mb-10">
-                      Thank you for reaching out. Our admissions team has been notified and will contact you within 24 hours.
+                      Thank you for reaching out. Our team has been notified and will contact you within 15 minutes.
                     </p>
                     <button 
-                      onClick={() => setIsSuccess(false)}
+                      onClick={() => {
+                        setIsSuccess(false);
+                        setErrors({});
+                      }}
                       className="px-8 py-3 bg-[#21409A] text-white font-bold rounded-xl"
                     >
                       Send Another
@@ -239,28 +335,44 @@ const ContactForm = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                {Object.keys(errors).length > 0 && (
+                  <div role="alert" className="rounded-2xl border border-[#ED1C24]/20 bg-[#ED1C24]/5 px-4 py-3 text-sm font-bold text-[#B91C1C]">
+                    Please fix the highlighted fields before sending.
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="space-y-2">
                     <label htmlFor="firstName" className={labelClass}>First Name {requiredMark}</label>
                     <input
                       id="firstName"
+                      name="firstName"
                       required
                       type="text"
                       autoComplete="given-name"
                       placeholder="e.g. Aarav"
-                      className={fieldClass}
+                      aria-invalid={Boolean(errors.firstName)}
+                      aria-describedby={errors.firstName ? 'firstName-error' : undefined}
+                      onChange={() => clearError('firstName')}
+                      className={getFieldClass('firstName')}
                     />
+                    <FieldError id="firstName-error" message={errors.firstName} />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="lastName" className={labelClass}>Last Name {requiredMark}</label>
                     <input
                       id="lastName"
+                      name="lastName"
                       required
                       type="text"
                       autoComplete="family-name"
                       placeholder="e.g. Sharma"
-                      className={fieldClass}
+                      aria-invalid={Boolean(errors.lastName)}
+                      aria-describedby={errors.lastName ? 'lastName-error' : undefined}
+                      onChange={() => clearError('lastName')}
+                      className={getFieldClass('lastName')}
                     />
+                    <FieldError id="lastName-error" message={errors.lastName} />
                   </div>
                 </div>
 
@@ -273,13 +385,18 @@ const ContactForm = () => {
                       </svg>
                       <input
                         id="email"
+                        name="email"
                         required
                         type="email"
                         autoComplete="email"
                         placeholder="you@example.com"
-                        className={`${fieldClass} pl-11`}
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? 'email-error' : undefined}
+                        onChange={() => clearError('email')}
+                        className={getFieldClass('email', 'pl-11')}
                       />
                     </div>
+                    <FieldError id="email-error" message={errors.email} />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="phone" className={labelClass}>Phone Number</label>
@@ -301,10 +418,14 @@ const ContactForm = () => {
                       <span className="absolute left-[112px] top-1/2 -translate-y-1/2 h-6 w-px bg-gray-200 z-10 pointer-events-none" aria-hidden />
                       <input
                         id="phone"
+                        name="phone"
                         type="tel"
                         autoComplete="tel"
                         placeholder="98XXXXXXXX"
-                        className={`${fieldClass} pl-[128px] relative`}
+                        aria-invalid={Boolean(errors.phone)}
+                        aria-describedby={errors.phone ? 'phone-error' : undefined}
+                        onChange={() => clearError('phone')}
+                        className={getFieldClass('phone', 'pl-[128px] relative')}
                       />
                       <AnimatePresence>
                         {countryOpen && (
@@ -361,6 +482,7 @@ const ContactForm = () => {
                         )}
                       </AnimatePresence>
                     </div>
+                    <FieldError id="phone-error" message={errors.phone} />
                   </div>
                 </div>
 
@@ -369,10 +491,22 @@ const ContactForm = () => {
                   <div className="relative">
                     <select
                       id="reason"
+                      name="reason"
                       required
                       value={reason}
-                      onChange={(e) => { setReason(e.target.value); setProgramme(''); }}
-                      className={`${fieldClass} appearance-none pr-12 ${reason ? '' : 'text-gray-400'}`}
+                      aria-invalid={Boolean(errors.reason)}
+                      aria-describedby={errors.reason ? 'reason-error' : undefined}
+                      onChange={(e) => {
+                        setReason(e.target.value);
+                        setProgramme('');
+                        setErrors((state) => {
+                          const next = { ...state };
+                          delete next.reason;
+                          delete next.programme;
+                          return next;
+                        });
+                      }}
+                      className={getFieldClass('reason', `appearance-none pr-12 ${reason ? '' : 'text-gray-400'}`)}
                     >
                       <option value="" disabled>Select what brings you here…</option>
                       {REASONS.map(r => (
@@ -383,6 +517,7 @@ const ContactForm = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
+                  <FieldError id="reason-error" message={errors.reason} />
                 </div>
 
                 <AnimatePresence initial={false}>
@@ -396,6 +531,7 @@ const ContactForm = () => {
                     >
                       <div className="space-y-3 pt-1">
                         <label className={labelClass}>Programme of Interest {requiredMark}</label>
+                        <input type="hidden" name="programme" value={programme} />
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                           {PROGRAMMES.map(p => {
                             const active = programme === p;
@@ -403,11 +539,18 @@ const ContactForm = () => {
                               <button
                                 type="button"
                                 key={p}
-                                onClick={() => setProgramme(p)}
+                                data-programme-choice
+                                onClick={() => {
+                                  setProgramme(p);
+                                  clearError('programme');
+                                }}
                                 aria-pressed={active}
+                                aria-describedby={errors.programme ? 'programme-error' : undefined}
                                 className={`px-3 py-3 rounded-xl border text-xs font-bold transition-all ${
                                   active
                                     ? 'bg-[#21409A] border-[#21409A] text-white shadow-md'
+                                    : errors.programme
+                                      ? 'bg-white border-[#ED1C24] text-[#1a1a1a] hover:border-[#ED1C24]'
                                     : 'bg-white border-gray-200 text-[#1a1a1a] hover:border-[#21409A]/40'
                                 }`}
                               >
@@ -416,6 +559,7 @@ const ContactForm = () => {
                             );
                           })}
                         </div>
+                        <FieldError id="programme-error" message={errors.programme} />
                       </div>
                     </motion.div>
                   )}
@@ -430,14 +574,21 @@ const ContactForm = () => {
                   </div>
                   <textarea
                     id="message"
+                    name="message"
                     required
                     rows={5}
                     maxLength={MESSAGE_MAX}
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    aria-invalid={Boolean(errors.message)}
+                    aria-describedby={errors.message ? 'message-error' : undefined}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                      clearError('message');
+                    }}
                     placeholder="Share your goals, questions, or which programme excites you most…"
-                    className={`${fieldClass} resize-none leading-relaxed`}
+                    className={getFieldClass('message', 'resize-none leading-relaxed')}
                   />
+                  <FieldError id="message-error" message={errors.message} />
                 </div>
 
                 <Magnetic strength={0.2}>

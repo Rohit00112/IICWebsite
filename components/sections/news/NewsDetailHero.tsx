@@ -12,9 +12,17 @@ interface NewsDetailHeroProps {
 }
 
 const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
-  const authorName = item.author?.name || 'Itahari International College Editorial Team';
-  const authorRole = item.author?.role || 'Contributor';
-  const authorAvatar = item.author?.avatar || '/images/common/iic_logo.png';
+  const displayDate = React.useMemo(() => {
+    const parsedDate = new Date(item.date);
+    if (Number.isNaN(parsedDate.getTime())) {
+      return item.date;
+    }
+
+    return new Intl.DateTimeFormat('en-US', {
+      month: 'short',
+      year: 'numeric',
+    }).format(parsedDate);
+  }, [item.date]);
 
   return (
     <section className="relative w-full h-[60vh] md:h-[70vh] min-h-[500px] flex items-end pb-12 overflow-hidden bg-black">
@@ -52,16 +60,6 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
             <span className="text-[#74C044] font-black">{item.category}</span>
           </motion.div>
 
-          {/* Category Badge */}
-          <motion.span
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7 }}
-            className="px-4 py-1.5 bg-[#21409A] text-white text-[10px] font-bold tracking-wider rounded-full shadow-xl mb-6 inline-block"
-          >
-            {item.category}
-          </motion.span>
-
           <AnimeReveal
             as="h1"
             text={item.title}
@@ -76,19 +74,9 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
             transition={{ delay: 1 }}
             className="flex flex-wrap items-center gap-8 text-white"
           >
-            <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/20">
-                <Image src={authorAvatar} alt={authorName} fill sizes="40px" className="object-cover" />
-              </div>
-              <div>
-                <p className="text-xs font-bold">{authorName}</p>
-                <p className="text-[10px] text-white/80">{authorRole}</p>
-              </div>
-            </div>
-            
             <div className="flex items-center gap-3 text-xs font-bold tracking-wider">
               <svg className="w-4 h-4 text-[#74C044]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-              <span>{item.date}</span>
+              <span>{displayDate}</span>
             </div>
           </motion.div>
         </div>

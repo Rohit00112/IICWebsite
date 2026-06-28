@@ -17,7 +17,7 @@ const sections = [
   },
   {
     title: 'Data Sharing',
-    body: 'We do not sell personal information. We may share details with authorised college teams or trusted service providers only when needed to support your enquiry or application.',
+    body: 'We do not sell personal information. We may share details with teams from Itahari International College or trusted service providers only when needed to support your enquiry or application.',
   },
   {
     title: 'Contact',
