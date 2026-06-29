@@ -202,7 +202,20 @@ function mapCourse(doc: CourseDocument): CourseItem {
 export async function getAllCourses(): Promise<CourseItem[]> {
   await dbConnect();
   const courses = await Course.find({}).sort({ createdAt: -1 });
-  return courses.map(mapCourse).sort((a, b) => {
+  const mapped = courses.map(mapCourse);
+  const seen = new Set<string>();
+
+  const uniqueCourses = mapped.filter((course) => {
+    const normalizedTitle = (course.listing?.displayTitle || course.title || '').trim().toLowerCase();
+    const normalizedSpecialism = (course.listing?.specialism || '').trim().toLowerCase();
+    const identityKey = `${normalizedTitle}::${normalizedSpecialism}`;
+
+    if (seen.has(identityKey)) return false;
+    seen.add(identityKey);
+    return true;
+  });
+
+  return uniqueCourses.sort((a, b) => {
     const aOrder = a.listing?.order;
     const bOrder = b.listing?.order;
 

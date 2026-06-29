@@ -75,7 +75,7 @@ const MissionVision = () => {
               <h3 className="text-2xl md:text-3xl font-bold mb-6 font-iic">Our Mission</h3>
               <p className="text-white/80 text-sm md:text-base leading-relaxed font-medium font-iic">
                 To deliver direct UK University education locally, cultivating academic excellence,
-                Critical thinking and hands on skills that prepares students to make an immediate
+                critical thinking and hands on skills that prepares students to make an immediate
                 impact in the industry.
               </p>
             </motion.div>

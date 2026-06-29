@@ -798,7 +798,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   <p className="mb-1 text-sm font-bold text-[#21409A]">
                     {member.role || 'Faculty'}
                   </p>
-                  <p className="text-[13px] leading-relaxed text-gray-400">
+                  <p className="text-[13px] leading-relaxed text-gray-400 line-clamp-6">
                     {member.description}
                   </p>
                 </div>
@@ -878,6 +878,9 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           >
             {relatedCourses?.map((relCourse) => {
               const display = getRelatedCourseDisplay(relCourse);
+              const normalizedCategory = display.category.trim().toLowerCase();
+              const normalizedTitle = display.title.trim().toLowerCase();
+              const showCategory = normalizedCategory.length > 0 && normalizedCategory !== normalizedTitle;
 
               return (
                 <Link
@@ -910,9 +913,11 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                         style={{ backgroundColor: display.color }}
                       />
                       <div className="relative z-10 flex min-h-[145px] flex-1 flex-col">
-                        <span className="mb-3 block text-base font-medium leading-tight text-[#21409A] transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">
-                          {display.category}
-                        </span>
+                        {showCategory && (
+                          <span className="mb-3 block text-base font-medium leading-tight text-[#21409A] transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">
+                            {display.category}
+                          </span>
+                        )}
                         <h3 className="text-2xl font-black leading-tight text-[#1a1a1a] transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">
                           {display.title}
                         </h3>

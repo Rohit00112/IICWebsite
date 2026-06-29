@@ -225,6 +225,7 @@ export interface UpcomingEvent {
   time?: string;
   day: string;
   month: string;
+  year: string;
   date: string;
 }
 
@@ -248,6 +249,7 @@ export async function getUpcomingEvents(limit = 4): Promise<UpcomingEvent[]> {
           date: doc.date,
           day: String(d.getDate()).padStart(2, '0'),
           month: monthShort[d.getMonth()] || '',
+          year: String(d.getFullYear()),
         } as UpcomingEvent,
       };
     })

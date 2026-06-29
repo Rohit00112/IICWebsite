@@ -325,16 +325,10 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                     >
                       <div className="flex flex-col items-center justify-center w-16 h-16 bg-[#E8EEF5] rounded-xl shrink-0">
                         <span className="text-[9px] font-bold text-[#21409A] mb-1">{event.month}</span>
-                        <span className="text-2xl font-black text-[#21409A] leading-none">{event.day}</span>
+                        <span className="text-lg font-black text-[#21409A] leading-none">{event.year}</span>
                       </div>
                       <div className="flex flex-col justify-center min-w-0">
-                        <h6 className="text-[14px] font-bold text-[#1a1a1a] leading-tight mb-1.5 group-hover:text-[#21409A] transition-colors line-clamp-2">{event.title}</h6>
-                        {event.time && (
-                          <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500">
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            <span>{event.time}</span>
-                          </div>
-                        )}
+                        <h6 className="text-[14px] font-bold text-[#1a1a1a] leading-tight group-hover:text-[#21409A] transition-colors line-clamp-2">{event.title}</h6>
                       </div>
                     </Link>
                   ))}
