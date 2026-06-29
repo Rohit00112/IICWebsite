@@ -21,6 +21,7 @@ type CourseListItem = {
   credits: string;
   modules: string;
   image: string;
+  imagePosition: string;
   slug: string;
   features: string[];
 };
@@ -35,6 +36,7 @@ const courseDefaults: Record<string, Partial<CourseListItem>> = {
     credits: '360 Credits',
     modules: '17 Modules',
     image: '/images/courses/bit.png',
+    imagePosition: '50% center',
     features: ['Software Engineering', 'AI'],
   },
   'bba-digital-business-management': {
@@ -47,6 +49,7 @@ const courseDefaults: Record<string, Partial<CourseListItem>> = {
     credits: '360 Credits',
     modules: '17 Modules',
     image: '/images/courses/bba2.png',
+    imagePosition: '46% center',
     features: ['Digital Strategy', 'Management'],
   },
   'international-business': {
@@ -59,6 +62,7 @@ const courseDefaults: Record<string, Partial<CourseListItem>> = {
     credits: '360 Credits',
     modules: '17 Modules',
     image: '/images/courses/bba1.png',
+    imagePosition: '50% center',
     features: ['Global Markets', 'Leadership'],
   },
   'advertising-marketing': {
@@ -71,6 +75,7 @@ const courseDefaults: Record<string, Partial<CourseListItem>> = {
     credits: '360 Credits',
     modules: '17 Modules',
     image: '/images/courses/bba3.png',
+    imagePosition: '34% center',
     features: ['Brand Strategy', 'Marketing'],
   },
 };
@@ -132,6 +137,7 @@ const toCourseListItem = (course: CourseItem): CourseListItem => {
     credits: listing.creditsLabel || (creditTotal ? `${creditTotal} Credits` : defaults.credits) || '360 Credits',
     modules: listing.modulesLabel || (moduleCount ? `${moduleCount} Modules` : defaults.modules) || '17 Modules',
     image: listing.image || defaults.image || course.image || '/images/courses/course-hero.png',
+    imagePosition: defaults.imagePosition || '50% center',
     slug: course.slug,
     features: topModulePills.length > 0 ? topModulePills.slice(0, 2) : (defaults.features || ['Career Ready', 'Practical Learning']),
   };
@@ -232,6 +238,7 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority={index < 2}
+                style={{ objectPosition: course.imagePosition }}
                 className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
               />
             </motion.div>

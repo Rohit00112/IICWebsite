@@ -7,7 +7,6 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
 
-    // Dynamic parameters
     const title = searchParams.get('title') || 'Itahari International College';
     const subtitle = searchParams.get('subtitle') || 'Developing Impactful Industry Ready Graduates';
     const section = searchParams.get('section') || 'UK Degrees in Itahari';
@@ -29,20 +28,18 @@ export async function GET(req: NextRequest) {
             fontFamily: 'sans-serif',
           }}
         >
-          {/* Logo Placeholder / Top Bar */}
           <div style={{ position: 'absolute', top: 60, left: 80, display: 'flex', alignItems: 'center' }}>
             <div style={{ width: 40, height: 40, borderRadius: 8, backgroundColor: '#74C044', marginRight: 15 }} />
             <span style={{ color: '#fff', fontSize: 24, fontWeight: 'bold', letterSpacing: '0.05em' }}>Itahari International College</span>
           </div>
 
-          {/* Section Tag */}
-          <div 
-            style={{ 
-              backgroundColor: 'rgba(116, 192, 68, 0.15)', 
-              color: '#74C044', 
-              padding: '8px 20px', 
-              borderRadius: '100px', 
-              fontSize: 20, 
+          <div
+            style={{
+              backgroundColor: 'rgba(116, 192, 68, 0.15)',
+              color: '#74C044',
+              padding: '8px 20px',
+              borderRadius: '100px',
+              fontSize: 20,
               fontWeight: 600,
               marginBottom: 40,
               border: '1px solid rgba(116, 192, 68, 0.3)'
@@ -51,7 +48,6 @@ export async function GET(req: NextRequest) {
             {section}
           </div>
 
-          {/* Title */}
           <div
             style={{
               fontSize: 84,
@@ -65,7 +61,6 @@ export async function GET(req: NextRequest) {
             {title}
           </div>
 
-          {/* Subtitle */}
           <div
             style={{
               fontSize: 32,
@@ -76,7 +71,6 @@ export async function GET(req: NextRequest) {
             {subtitle}
           </div>
 
-          {/* Glassmorphic Accent Shape */}
           <div
             style={{
               position: 'absolute',
@@ -92,7 +86,6 @@ export async function GET(req: NextRequest) {
             }}
           />
 
-          {/* Footer Decoration */}
           <div style={{ position: 'absolute', bottom: 60, right: 80, color: 'rgba(255, 255, 255, 0.3)', fontSize: 20 }}>
             iic.edu.np
           </div>
@@ -103,9 +96,9 @@ export async function GET(req: NextRequest) {
         height: 630,
       }
     );
-  } catch (e: any) {
-    console.log(`${e.message}`);
-    return new Response(`Failed to generate the image`, {
+  } catch (error: unknown) {
+    console.log(error instanceof Error ? error.message : 'Failed to generate the image');
+    return new Response('Failed to generate the image', {
       status: 500,
     });
   }

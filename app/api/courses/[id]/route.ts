@@ -25,7 +25,6 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  // Session check (defense-in-depth)
   let session;
   try {
     session = await getSession();
@@ -42,7 +41,7 @@ export async function PATCH(
     const data = await request.json();
     const validatedData = courseUpdateSchema.parse(data);
     const updatedItem = await updateCourse(id, validatedData);
-    
+
     if (!updatedItem) {
       return NextResponse.json({ error: 'Course not found' }, { status: 404 });
     }
@@ -64,7 +63,6 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  // Session check (defense-in-depth)
   let session;
   try {
     session = await getSession();
@@ -79,7 +77,7 @@ export async function DELETE(
   try {
     const { id } = await params;
     const success = await deleteCourse(id);
-    
+
     if (!success) {
       return NextResponse.json({ error: 'Course not found' }, { status: 404 });
     }

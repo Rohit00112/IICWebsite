@@ -16,15 +16,13 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  // Rate limiting (10 requests per minute per IP)
   const ip = request.headers.get('x-forwarded-for') || 'anonymous';
   const { success } = await rateLimit(`course-create-${ip}`, 10, 60 * 1000);
-  
+
   if (!success) {
     return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
   }
 
-  // Session check (defense-in-depth)
   let session;
   try {
     session = await getSession();
@@ -38,22 +36,20 @@ export async function POST(request: Request) {
 
   try {
     const data = await request.json();
-    
-    // Generate slug from title if not provided
+
     if (!data.slug && data.title) {
       data.slug = data.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
     }
 
-    // Validate with Zod
     const validatedData = courseSchema.parse(data);
 
     const newItem = await createCourse({ ...validatedData, slug: data.slug });
     return NextResponse.json(newItem, { status: 201 });
   } catch (error) {
     if (error instanceof ZodError) {
-      return NextResponse.json({ 
-        error: 'Validation failed', 
-        details: error.issues.map(e => ({ path: e.path, message: e.message })) 
+      return NextResponse.json({
+        error: 'Validation failed',
+        details: error.issues.map(e => ({ path: e.path, message: e.message }))
       }, { status: 400 });
     }
     console.error('Course creation error:', error);

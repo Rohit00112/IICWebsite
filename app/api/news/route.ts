@@ -20,7 +20,6 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  // Rate limiting (10 requests per minute per IP/Identifier)
   const ip = request.headers.get('x-forwarded-for') || 'anonymous';
   const { success } = await rateLimit(`news-create-${ip}`, 10, 60 * 1000);
 
@@ -28,11 +27,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
   }
 
-  // Session check (defense-in-depth)
   let session;
   try {
     session = await getSession();
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
   }
 
@@ -42,8 +40,6 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-
-    // Validate with Zod
     const validatedData = newsSchema.parse(body);
 
     const newItem = await createNews(validatedData);

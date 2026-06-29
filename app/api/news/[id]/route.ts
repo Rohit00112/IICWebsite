@@ -25,7 +25,6 @@ export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  // Session check (defense-in-depth)
   let session;
   try {
     session = await getSession();
@@ -40,12 +39,9 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await request.json();
-    
-    // Validate partial update with Zod
     const validatedData = newsUpdateSchema.parse(body);
-    
     const updatedItem = await updateNews(id, validatedData);
-    
+
     if (!updatedItem) {
       return NextResponse.json({ error: 'News item not found' }, { status: 404 });
     }
@@ -67,7 +63,6 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  // Session check (defense-in-depth)
   let session;
   try {
     session = await getSession();
@@ -82,7 +77,7 @@ export async function DELETE(
   try {
     const { id } = await params;
     const success = await deleteNews(id);
-    
+
     if (!success) {
       return NextResponse.json({ error: 'News item not found' }, { status: 404 });
     }
