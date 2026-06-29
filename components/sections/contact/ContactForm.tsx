@@ -5,20 +5,55 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Magnetic from '../../effects/Magnetic';
 import Link from 'next/link';
 import AnimeReveal from '../../effects/AnimeReveal';
-import AnimeStagger from '../../effects/AnimeStagger';
 
 const REASONS = [
   { value: 'admissions', label: 'Admissions Inquiry', programmes: true },
   { value: 'scholarship', label: 'Scholarship Information', programmes: false },
   { value: 'general', label: 'General Support', programmes: false },
   { value: 'partnership', label: 'Business Partnership', programmes: false },
-  { value: 'visit', label: 'Schedule a Campus Visit', programmes: false },
+  { value: 'visit', label: 'Schedule a College Visit', programmes: false },
 ];
 
 const PROGRAMMES = [
   'BIT',
   'BBA',
   'Not sure yet',
+];
+
+const CONTACT_CHANNELS = [
+  {
+    name: 'Admissions WhatsApp',
+    description: 'Need immediate answers? Chat with our admissions counsellors instantly.',
+    href: 'https://wa.me/9779801003030',
+    action: 'Chat with Admissions',
+    cardClass: 'bg-[#25D366]/5 border-[#25D366]/20',
+    iconClass: 'bg-[#25D366]',
+    actionClass: 'text-[#25D366]',
+    filled: true,
+    path: 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.659 1.432 5.631 1.433h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.415-8.412',
+  },
+  {
+    name: 'Contact on Facebook',
+    description: 'Ask admissions questions and get college updates.',
+    href: 'https://www.facebook.com/IICNepal/',
+    action: 'Message on Facebook',
+    cardClass: 'bg-[#1877F2]/5 border-[#1877F2]/20',
+    iconClass: 'bg-[#1877F2]',
+    actionClass: 'text-[#1877F2]',
+    filled: false,
+    path: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z',
+  },
+  {
+    name: 'Contact on Instagram',
+    description: 'DM us on Instagram for quick questions and college updates.',
+    href: 'https://www.instagram.com/iic.nepal/',
+    action: 'Message on Instagram',
+    cardClass: 'bg-[#E1306C]/5 border-[#E1306C]/20',
+    iconClass: 'bg-[linear-gradient(135deg,#F58529,#DD2A7B,#8134AF,#515BD4)]',
+    actionClass: 'text-[#E1306C]',
+    filled: false,
+    path: 'M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z M17.5 6.5h.01M7.5 2h9A5.5 5.5 0 0122 7.5v9a5.5 5.5 0 01-5.5 5.5h-9A5.5 5.5 0 012 16.5v-9A5.5 5.5 0 017.5 2z',
+  },
 ];
 
 const COUNTRIES = [
@@ -189,57 +224,75 @@ const ContactForm = () => {
           
           {/* Left Column: Contact Directory */}
           <div className="lg:col-span-5">
-            <AnimeReveal
-              as="h2"
-              text="Contact Directory"
-              className="text-[32px] md:text-[40px] font-bold text-[#1a1a1a] mb-3 font-iic tracking-tight"
-              staggerFrom="first"
-            />
-            <p className="text-gray-500 mb-12 font-medium text-sm md:text-base">Reach out directly to the department that best suits your needs.</p>
+            <h2 className="text-[32px] font-bold text-[#1a1a1a] mb-3 font-iic tracking-tight md:hidden">
+              Contact Directory
+            </h2>
+            <div className="hidden md:block">
+              <AnimeReveal
+                as="h2"
+                text="Contact Directory"
+                className="text-[40px] font-bold text-[#1a1a1a] mb-3 font-iic tracking-tight"
+                staggerFrom="first"
+              />
+            </div>
+            <p className="text-gray-500 mb-8 font-medium text-sm md:text-base">Reach out directly to the department that best suits your needs.</p>
             
-            <AnimeStagger className="space-y-6" selector=":scope > *" staggerDelay={120} translateY={28} duration={760}>
-              {/* WhatsApp Fast-Track - NEW CRO ADDITION */}
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-[#25D366]/5 p-8 rounded-[24px] border border-[#25D366]/20 group transition-all"
-              >
-                <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-[#25D366] rounded-xl flex items-center justify-center text-white shrink-0">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.937 3.659 1.432 5.631 1.433h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.415-8.412" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-[#1a1a1a] mb-2 font-iic">Admissions WhatsApp</h3>
-                    <p className="text-gray-400 text-sm mb-4 leading-relaxed font-medium">Need immediate answers? Chat with our admissions counsellors instantly.</p>
-                    <a href="https://wa.me/9779801003030" target="_blank" rel="noopener noreferrer" className="text-[#25D366] font-bold text-xs tracking-wider flex items-center gap-2 hover:gap-3 transition-all">
-                      Chat with Admissions <span>→</span>
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {CONTACT_CHANNELS.map((channel, index) => {
+                  const isPrimary = index === 0;
 
-              
+                  return (
+                    <div
+                      key={channel.name}
+                      className={`${channel.cardClass} ${isPrimary ? 'sm:col-span-2 p-6' : 'p-5'} h-full rounded-[24px] border group transition-all`}
+                    >
+                      <div className={`flex h-full ${isPrimary ? 'items-start gap-5' : 'flex-col gap-4'}`}>
+                        <div className={`${isPrimary ? 'w-12 h-12' : 'w-11 h-11'} ${channel.iconClass} rounded-xl flex items-center justify-center text-white shrink-0`}>
+                          <svg
+                            className={isPrimary ? 'w-6 h-6' : 'w-5 h-5'}
+                            fill={channel.filled ? 'currentColor' : 'none'}
+                            stroke={channel.filled ? 'none' : 'currentColor'}
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            viewBox="0 0 24 24"
+                            aria-hidden
+                          >
+                            <path d={channel.path} />
+                          </svg>
+                        </div>
+                        <div className="flex min-w-0 flex-1 flex-col">
+                          <h3 className={`${isPrimary ? 'text-xl' : 'text-base'} font-bold text-[#1a1a1a] mb-2 font-iic leading-tight`}>{channel.name}</h3>
+                          <p className={`${isPrimary ? 'text-sm' : 'text-xs line-clamp-2'} text-gray-400 mb-4 leading-relaxed font-medium`}>{channel.description}</p>
+                          <a
+                            href={channel.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`${channel.actionClass} mt-auto font-bold text-xs tracking-wider flex items-center gap-2 hover:gap-3 transition-all`}
+                          >
+                            {channel.action} <span>→</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
 
               {/* General Enquiries */}
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="bg-white p-8 rounded-[24px] shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-gray-100 group hover:border-[#21409A]/20 transition-all"
+              <div
+                className="bg-white p-6 rounded-[24px] shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-gray-100 group hover:border-[#21409A]/20 transition-all"
               >
-                <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 bg-[#21409A]/5 rounded-xl flex items-center justify-center text-[#21409A] shrink-0">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 bg-[#21409A]/5 rounded-xl flex items-center justify-center text-[#21409A] shrink-0">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-[#1a1a1a] mb-2 font-iic">General Enquiries</h3>
-                    <p className="text-gray-400 text-sm mb-5 leading-relaxed font-medium">For general campus information, student services, and administrative support.</p>
+                    <h3 className="text-lg font-bold text-[#1a1a1a] mb-2 font-iic">General Enquiries</h3>
+                    <p className="text-gray-400 text-sm mb-4 leading-relaxed font-medium">For general college information, student services, and administrative support.</p>
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 text-sm text-[#1a1a1a] font-bold">
                         <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
@@ -252,17 +305,13 @@ const ContactForm = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Office Hours */}
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="bg-[#21409A]/5 p-8 rounded-[24px] border border-[#21409A]/10"
+              <div
+                className="bg-[#21409A]/5 p-6 rounded-[24px] border border-[#21409A]/10"
               >
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-3 mb-5">
                   <svg className="w-5 h-5 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   <h3 className="text-lg font-bold text-[#1a1a1a] font-iic">Office Hours</h3>
                 </div>
@@ -272,8 +321,8 @@ const ContactForm = () => {
                     <span className="text-[#1a1a1a]">7:00 AM - 5:00 PM</span>
                   </div>
                 </div>
-              </motion.div>
-            </AnimeStagger>
+              </div>
+            </div>
           </div>
 
           {/* Right Column: Send us a Message */}
@@ -323,12 +372,17 @@ const ContactForm = () => {
                   <span className="text-[11px] font-bold tracking-wider text-[#21409A]">Avg. reply in 15 minutes</span>
                 </div>
 
-                <AnimeReveal
-                  as="h2"
-                  text="Send us a Message"
-                  className="text-3xl md:text-[34px] font-bold text-[#1a1a1a] font-iic tracking-tight"
-                  staggerFrom="first"
-                />
+                <h2 className="text-3xl font-bold text-[#1a1a1a] font-iic tracking-tight md:hidden">
+                  Send us a Message
+                </h2>
+                <div className="hidden md:block">
+                  <AnimeReveal
+                    as="h2"
+                    text="Send us a Message"
+                    className="text-[34px] font-bold text-[#1a1a1a] font-iic tracking-tight"
+                    staggerFrom="first"
+                  />
+                </div>
                 <p className="text-gray-500 text-sm mt-3 font-medium leading-relaxed max-w-md">
                   Tell us a little about you. Fields marked <span className="text-[#ED1C24] font-bold">*</span> are required.
                 </p>

@@ -2,6 +2,8 @@
 
 import React, { useRef, useState, ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import useIsMobileLike from './useIsMobileLike';
+import usePrefersReducedMotion from './usePrefersReducedMotion';
 
 interface MagneticProps {
   children: ReactNode;
@@ -13,8 +15,12 @@ const Magnetic = ({ children, strength = 0.5, maxDistance = 20 }: MagneticProps)
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const isMobileLike = useIsMobileLike();
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const shouldDisableMotion = isMobileLike || prefersReducedMotion;
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (shouldDisableMotion) return;
     const { clientX, clientY } = e;
     const { left, top, width, height } = ref.current!.getBoundingClientRect();
     const centerX = left + width / 2;
@@ -40,6 +46,10 @@ const Magnetic = ({ children, strength = 0.5, maxDistance = 20 }: MagneticProps)
     setPosition({ x: 0, y: 0 });
     setIsHovered(false);
   };
+
+  if (shouldDisableMotion) {
+    return <div className="relative">{children}</div>;
+  }
 
   return (
     <motion.div

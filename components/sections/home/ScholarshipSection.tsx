@@ -499,8 +499,68 @@ const ScholarshipSection = () => {
           viewport={{ once: true }}
           className="mb-4 text-center text-[10px] font-black tracking-[0.16em] text-[#8DBAFF] sm:text-xs md:text-sm font-iic"
         >
-          Postgraduate Award
+          ING Postgraduate Scholarship
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 32, scale: 0.94 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
+          className="relative mb-6 flex w-full max-w-6xl items-center justify-center sm:mb-8"
+        >
+          <div className="absolute inset-x-4 top-1/2 h-48 -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(108,168,255,0.32)_0%,transparent_68%)] blur-3xl" />
+          <svg
+            viewBox="0 0 920 250"
+            className="relative z-10 h-auto w-full max-w-[920px] overflow-visible"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="ing-scholarship-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#8DBAFF" />
+                <stop offset="55%" stopColor="#6CA8FF" />
+                <stop offset="100%" stopColor="#4269C5" />
+              </linearGradient>
+              <filter id="ing-scholarship-glow" x="-35%" y="-45%" width="170%" height="190%">
+                <feGaussianBlur stdDeviation="9" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <text
+              x="460"
+              y="130"
+              textAnchor="middle"
+              fill="url(#ing-scholarship-grad)"
+              filter="url(#ing-scholarship-glow)"
+              style={{
+                fontFamily: 'var(--font-iic), sans-serif',
+                fontWeight: 900,
+                fontSize: '152px',
+                letterSpacing: '0px',
+              }}
+            >
+              ING
+            </text>
+            <text
+              x="460"
+              y="212"
+              textAnchor="middle"
+              fill="url(#ing-scholarship-grad)"
+              filter="url(#ing-scholarship-glow)"
+              style={{
+                fontFamily: 'var(--font-iic), sans-serif',
+                fontWeight: 900,
+                fontSize: '58px',
+                letterSpacing: '0px',
+              }}
+            >
+              Postgraduate Scholarship
+            </text>
+          </svg>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
@@ -572,7 +632,7 @@ const ScholarshipSection = () => {
           className="mt-10 max-w-3xl space-y-5 text-center"
         >
           <p className="text-base font-medium leading-relaxed text-white/68 sm:text-lg">
-            Upon completion of an eligible <span className="font-bold text-[#A8C8FF]">IT or Business programme</span>, students may receive postgraduate scholarship opportunities within ING colleges. We hope this support inspires future generations to pursue meaningful opportunities and build stronger futures.
+            The <span className="font-bold text-[#A8C8FF]">ING Postgraduate Scholarship</span> supports one eligible graduate upon completion of an eligible <span className="font-bold text-[#A8C8FF]">IT or Business programme</span>. We hope this support inspires future generations to pursue meaningful opportunities and build stronger futures.
           </p>
           <p className="text-base font-medium leading-relaxed text-white/68 sm:text-lg">
             We aim to support each student&apos;s <span className="font-bold text-white">professional and personal growth.</span>
@@ -586,7 +646,6 @@ const ScholarshipSection = () => {
             items={[
               'Citizen of Nepal.',
               'Completed and obtained an eligible IT or Business undergraduate degree with FIRST CLASS HONOURS from Itahari International College.',
-              'Applying to pursue a full-time residential Postgraduate Degree at London Metropolitan University, UK.',
             ]}
           />
         </div>

@@ -7,6 +7,7 @@ const protectedApiRoutes = [
   { path: '/api/courses', methods: ['POST', 'PUT', 'PATCH', 'DELETE'] },
   { path: '/api/news', methods: ['POST', 'PUT', 'PATCH', 'DELETE'] },
   { path: '/api/scholarships', methods: ['POST', 'PUT', 'PATCH', 'DELETE'] },
+  { path: '/api/home-popup', methods: ['PATCH'] },
 ];
 
 export async function proxy(request: NextRequest) {
@@ -60,6 +61,7 @@ export const config = {
     '/api/courses/:path*',
     '/api/news/:path*',
     '/api/scholarships/:path*',
+    '/api/home-popup',
     '/login',
   ],
 };

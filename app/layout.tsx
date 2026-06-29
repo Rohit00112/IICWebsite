@@ -132,10 +132,10 @@ export default function RootLayout({
                   ],
                   "address": {
                     "@type": "PostalAddress",
-                    "streetAddress": "Sundar Haraicha 04",
-                    "addressLocality": "Itahari",
-                    "addressRegion": "Sunsari",
-                    "postalCode": "56700",
+                    "streetAddress": "Sundarharaicha-4, Dulari",
+                    "addressLocality": "Dulari",
+                    "addressRegion": "Morang, Koshi Province",
+                    "postalCode": "56705",
                     "addressCountry": "NP"
                   },
                   "geo": {

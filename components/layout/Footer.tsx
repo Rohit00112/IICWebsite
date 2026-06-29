@@ -103,7 +103,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link href="/life-at-iic" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
-                  Campus Life
+                  College Life
                 </Link>
               </li>
               <li>

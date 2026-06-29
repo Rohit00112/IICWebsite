@@ -4,7 +4,6 @@ import React from 'react';
 import ContactHero from '@/components/sections/contact/ContactHero';
 import ContactForm from '@/components/sections/contact/ContactForm';
 import ContactMap from '@/components/sections/contact/ContactMap';
-import Footer from '@/components/layout/Footer';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export default function ContactPage() {
@@ -26,8 +25,8 @@ export default function ContactPage() {
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Sundarharaicha-4, Dulari',
-        addressLocality: 'Itahari',
-        addressRegion: 'Morang',
+        addressLocality: 'Dulari',
+        addressRegion: 'Morang, Koshi Province',
         postalCode: '56705',
         addressCountry: 'NP'
       }

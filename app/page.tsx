@@ -6,6 +6,8 @@ import ProgrammesSection from "@/components/sections/home/ProgrammesSection";
 import Preloader from "@/components/layout/Preloader";
 import { Metadata } from "next";
 import GEOSection from "@/components/sections/home/GEOSection";
+import HomePopup from "@/components/sections/home/HomePopup";
+import { getHomePopupSettings } from "@/lib/home-popup";
 
 const PartnerSection = dynamic(() => import("@/components/sections/home/PartnerSection"), { ssr: true });
 const ScholarshipSection = dynamic(() => import("@/components/sections/home/ScholarshipSection"), { ssr: true });
@@ -20,10 +22,13 @@ export const metadata: Metadata = {
   description: "Developing impactful industry-ready graduates through UK-awarded IT and Business programmes in partnership with London Metropolitan University.",
 };
 
-export default function Home() {
+export default async function Home() {
+  const popupSettings = await getHomePopupSettings();
+
   return (
     <>
       <Preloader />
+      <HomePopup settings={popupSettings} />
       <HeroSection />
       <AboutSection />
       <ScrollScaleVideo />

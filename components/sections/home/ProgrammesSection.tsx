@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
@@ -57,9 +57,29 @@ const ProgrammesSection = () => {
       featurePillColor: 'bg-[#3CC6CF]',
       tags: ['Principles of Finance', 'Company and Business Law', 'Dissertation'],
       href: '/courses',
+      specializations: [
+        { name: 'International Business', href: '/courses/bba-international-business' },
+        { name: 'Digital Business Management', href: '/courses/bba-digital-business-management' },
+        { name: 'Advertising and Marketing', href: '/courses/bba-advertising-and-marketing' },
+      ],
       parallax: y1
     },
   ];
+
+  const [activePopup, setActivePopup] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (activePopup === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActivePopup(null);
+    };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [activePopup]);
 
   return (
     <section ref={containerRef} className="relative w-full bg-white pt-14 pb-8 overflow-x-clip overflow-y-visible sm:pt-20 sm:pb-10 md:pt-24 md:pb-10">
@@ -90,13 +110,8 @@ const ProgrammesSection = () => {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 w-full mb-14 md:mb-16 max-w-[1440px] 2xl:max-w-[1600px]">
-          {programmes.map((prog, index) => (
-            <Tilt key={index} strength={4} className="h-full min-w-0">
-              <Link
-                href={prog.href}
-                aria-label={`Explore ${prog.type}`}
-                className="block h-full rounded-[24px] sm:rounded-[40px] md:rounded-[48px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-white/80"
-              >
+          {programmes.map((prog, index) => {
+            const cardInner = (
                 <motion.div
                   initial={{
                     y: 60,
@@ -242,9 +257,34 @@ const ProgrammesSection = () => {
                   {/* Decorative background glow */}
                   <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
                 </motion.div>
-              </Link>
-            </Tilt>
-          ))}
+            );
+
+            const wrapperClass = "block h-full w-full text-left rounded-[24px] sm:rounded-[40px] md:rounded-[48px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-white/80";
+
+            return (
+              <Tilt key={index} strength={4} className="h-full min-w-0">
+                {prog.specializations ? (
+                  <button
+                    type="button"
+                    onClick={() => setActivePopup(index)}
+                    aria-haspopup="dialog"
+                    aria-label={`View specializations for ${prog.type}`}
+                    className={wrapperClass}
+                  >
+                    {cardInner}
+                  </button>
+                ) : (
+                  <Link
+                    href={prog.href}
+                    aria-label={`Explore ${prog.type}`}
+                    className={wrapperClass}
+                  >
+                    {cardInner}
+                  </Link>
+                )}
+              </Tilt>
+            );
+          })}
         </div>
 
         <div className="max-w-3xl text-center flex flex-col items-center">
@@ -259,6 +299,62 @@ const ProgrammesSection = () => {
           </Magnetic>
         </div>
       </div>
+
+      {/* Specialization popup */}
+      <AnimatePresence>
+        {activePopup !== null && programmes[activePopup]?.specializations && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            onClick={() => setActivePopup(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Choose a specialization"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-md rounded-3xl bg-white p-6 sm:p-8 shadow-2xl"
+            >
+              <button
+                type="button"
+                onClick={() => setActivePopup(null)}
+                aria-label="Close"
+                className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 hover:text-gray-700"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+              </button>
+
+              <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#74C044]">
+                {programmes[activePopup].subtitle}
+              </p>
+              <h3 className="mt-1 mb-5 text-2xl font-black text-[#1a1a1a] font-iic">
+                Choose a Specialization
+              </h3>
+
+              <div className="flex flex-col gap-3">
+                {programmes[activePopup].specializations!.map((spec, i) => (
+                  <Link
+                    key={i}
+                    href={spec.href}
+                    onClick={() => setActivePopup(null)}
+                    className="group flex items-center justify-between gap-3 rounded-2xl border border-gray-100 bg-gray-50 px-5 py-4 font-bold text-[#1a1a1a] transition-all hover:border-[#21409A]/30 hover:bg-[#21409A] hover:text-white"
+                  >
+                    <span>{spec.name}</span>
+                    <svg className="shrink-0 transition-transform group-hover:translate-x-1" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

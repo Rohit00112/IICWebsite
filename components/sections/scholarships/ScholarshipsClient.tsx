@@ -70,7 +70,6 @@ const trackCopy = {
       'Citizen of Nepal.',
       'Completed a London Metropolitan University undergraduate degree from IIC.',
       'Achieved First Class Honours.',
-      'Applying to pursue a full-time postgraduate degree through an eligible ING pathway.',
     ],
   },
 } as const;
@@ -488,7 +487,7 @@ const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) =>
         left: nextSlide ? nextSlide.offsetLeft - track.offsetLeft : viewport.clientWidth * nextIndex,
         behavior: 'smooth',
       });
-    }, 4500);
+    }, 3000);
 
     return () => window.clearInterval(timer);
   }, [batches.length, isAutoScrollPaused]);

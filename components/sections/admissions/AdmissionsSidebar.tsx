@@ -50,8 +50,8 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
     ]},
     { id: 'scholarships', title: 'Scholarships', icon: <MedalIcon />, content: [
       'AAA Scholarship — up to 100% tuition waiver for excellence in Academics, Attendance, and Attitude (awarded to the top 10% of students).',
-      'Fully Funded Masters Degree — 100% postgraduate scholarship at ING Colleges with Job placement in one of the ING companies',
-      'Eligibility includes good academic standing, 80%+ module attendance, timely fee payment, and a clean disciplinary record.'
+      'Fully Funded Masters Degree — 100% ING Postgraduate Scholarship at ING Colleges with Job placement in one of the ING companies',
+      '* Eligibility includes good academic standing, 80%+ module attendance, timely fee payment, and a clean disciplinary record.'
     ] },
   ];
 

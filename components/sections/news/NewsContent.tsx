@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -26,6 +26,34 @@ const formatMonthYear = (value: string) => {
   }).format(parsedDate);
 };
 
+type UpcomingEventGroup = {
+  key: string;
+  month: string;
+  year: string;
+  events: UpcomingEvent[];
+};
+
+const groupUpcomingEventsByMonth = (events: UpcomingEvent[]) => (
+  events.reduce<UpcomingEventGroup[]>((groups, event) => {
+    const key = `${event.year}-${event.month}`;
+    const existingGroup = groups.find((group) => group.key === key);
+
+    if (existingGroup) {
+      existingGroup.events.push(event);
+      return groups;
+    }
+
+    groups.push({
+      key,
+      month: event.month,
+      year: event.year,
+      events: [event],
+    });
+
+    return groups;
+  }, [])
+);
+
 interface NewsContentProps {
   initialNews: NewsItem[];
   initialFeatured: NewsItem | null;
@@ -33,7 +61,7 @@ interface NewsContentProps {
   archive: ArchiveEntry[];
 }
 
-const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured, upcomingEvents, archive }) => {
+const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured, upcomingEvents }) => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,21 +92,12 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
     (searchQuery === '' || featuredPost.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
   const paginatedItems = filteredItems.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
+    (safeCurrentPage - 1) * ITEMS_PER_PAGE,
+    safeCurrentPage * ITEMS_PER_PAGE,
   );
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [activeCategory, searchQuery]);
-
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
-    }
-  }, [currentPage, totalPages]);
-
+  const upcomingEventGroups = groupUpcomingEventsByMonth(upcomingEvents);
 
   return (
     <section className="pb-20 md:pb-24 bg-[#F8FAFC]">
@@ -90,7 +109,10 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => {
+                  setActiveCategory(cat);
+                  setCurrentPage(1);
+                }}
                 className={`px-6 py-2 rounded-lg text-sm font-bold transition-all whitespace-nowrap ${
                   activeCategory === cat 
                     ? 'bg-[#21409A] text-white shadow-inner' 
@@ -107,7 +129,10 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
               type="text"
               placeholder="Search articles, events..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1);
+              }}
               className="w-full bg-white text-[#1a1a1a] border-none rounded-lg py-2.5 pl-10 pr-4 outline-none text-sm placeholder:text-gray-400"
             />
             <svg className="w-4 h-4 text-gray-400 absolute left-5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -249,8 +274,8 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
               <div className="flex items-center justify-center gap-2 pt-2">
                 <button
                   type="button"
-                  onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
-                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(Math.max(1, safeCurrentPage - 1))}
+                  disabled={safeCurrentPage === 1}
                   className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-xs font-bold text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:border-[#21409A] hover:text-[#21409A] transition-colors"
                 >
                   Previous
@@ -258,7 +283,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
 
                 {Array.from({ length: totalPages }, (_, index) => {
                   const page = index + 1;
-                  const isActive = page === currentPage;
+                  const isActive = page === safeCurrentPage;
 
                   return (
                     <button
@@ -279,8 +304,8 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
 
                 <button
                   type="button"
-                  onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
-                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(Math.min(totalPages, safeCurrentPage + 1))}
+                  disabled={safeCurrentPage === totalPages}
                   className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-xs font-bold text-slate-600 disabled:opacity-40 disabled:cursor-not-allowed hover:border-[#21409A] hover:text-[#21409A] transition-colors"
                 >
                   Next
@@ -299,15 +324,24 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
           >
             
             {/* Upcoming Events */}
-            <div className="bg-white p-10 rounded-[24px] border-[2px] border-[#74C044] shadow-sm">
-              <div className="flex items-center justify-between mb-10">
+            <div className="bg-white p-7 sm:p-8 md:p-10 rounded-[24px] border-[2px] border-[#74C044] shadow-sm">
+              <div className="mb-9 flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <svg className="w-6 h-6 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                  <h5 className="text-xl font-bold text-[#1a1a1a] font-iic tracking-tight">Upcoming Events</h5>
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EEF4FB] text-[#21409A]">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2v12a2 2 0 002 2z" /></svg>
+                  </div>
+                  <div>
+                    <h5 className="text-xl font-bold text-[#1a1a1a] font-iic tracking-tight">Upcoming Events</h5>
+                    <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">Month view</p>
+                  </div>
                 </div>
                 <button
-                  onClick={() => setActiveCategory('Events')}
-                  className="text-[11px] tracking-wider font-bold text-slate-400 hover:text-[#74C044] transition-colors"
+                  type="button"
+                  onClick={() => {
+                    setActiveCategory('Events');
+                    setCurrentPage(1);
+                  }}
+                  className="mt-2 shrink-0 text-[11px] tracking-wider font-bold text-slate-400 hover:text-[#74C044] transition-colors"
                 >
                   View All
                 </button>
@@ -316,21 +350,41 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
               {upcomingEvents.length === 0 ? (
                 <p className="text-sm text-slate-500 font-medium">No events scheduled. Check back soon.</p>
               ) : (
-                <div className="space-y-8">
-                  {upcomingEvents.map((event) => (
-                    <Link
-                      key={event.id}
-                      href={`/news/${event.slug}`}
-                      className="flex gap-4 group"
-                    >
-                      <div className="flex flex-col items-center justify-center w-16 h-16 bg-[#E8EEF5] rounded-xl shrink-0">
-                        <span className="text-[9px] font-bold text-[#21409A] mb-1">{event.month}</span>
-                        <span className="text-lg font-black text-[#21409A] leading-none">{event.year}</span>
+                <div className="space-y-7">
+                  {upcomingEventGroups.map((group) => (
+                    <div key={group.key}>
+                      <div className="mb-4 flex items-center gap-3">
+                        <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl bg-[#21409A] text-white shadow-sm shadow-[#21409A]/10">
+                          <span className="text-[10px] font-black leading-none tracking-[0.14em]">{group.month}</span>
+                          <span className="mt-1 text-[10px] font-bold leading-none text-white/70">{group.year}</span>
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-[11px] font-black uppercase tracking-[0.22em] text-[#74C044]">{group.month} {group.year}</p>
+                          <p className="mt-1 text-xs font-bold text-slate-400">
+                            {group.events.length === 1 ? '1 event' : `${group.events.length} events`}
+                          </p>
+                        </div>
+                        <div className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent" />
                       </div>
-                      <div className="flex flex-col justify-center min-w-0">
-                        <h6 className="text-[14px] font-bold text-[#1a1a1a] leading-tight group-hover:text-[#21409A] transition-colors line-clamp-2">{event.title}</h6>
+
+                      <div className="relative ml-6 space-y-3 border-l border-slate-200 pl-5">
+                        {group.events.map((event) => (
+                          <Link
+                            key={event.id}
+                            href={`/news/${event.slug}`}
+                            className="group relative flex items-center gap-3 rounded-xl py-3 pl-1 pr-3 transition-colors hover:bg-[#F5F9F2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044]/45"
+                          >
+                            <span className="absolute -left-[26px] top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-white bg-[#74C044] shadow-[0_0_0_3px_rgba(116,192,68,0.18)]" />
+                            <div className="min-w-0 flex-1">
+                              <h6 className="text-[14px] font-bold text-[#1a1a1a] leading-tight transition-colors group-hover:text-[#21409A] line-clamp-2">{event.title}</h6>
+                            </div>
+                            <svg className="h-4 w-4 shrink-0 text-slate-300 transition-all group-hover:translate-x-1 group-hover:text-[#74C044]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                          </Link>
+                        ))}
                       </div>
-                    </Link>
+                    </div>
                   ))}
                 </div>
               )}
