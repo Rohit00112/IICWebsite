@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toSafeImageSrc } from '@/lib/image-source';
 import type { HomePopupSettings } from '@/lib/home-popup';
@@ -10,6 +11,7 @@ interface HomePopupProps {
 }
 
 const SHOW_DELAY_MS = 700;
+const HOME_POPUP_LINK = '/courses';
 
 export default function HomePopup({ settings }: HomePopupProps) {
   const imageSrc = useMemo(() => toSafeImageSrc(settings.image), [settings.image]);
@@ -79,7 +81,11 @@ export default function HomePopup({ settings }: HomePopupProps) {
           </svg>
         </button>
 
-        <div className="overflow-hidden rounded-[28px] bg-white shadow-[0_32px_90px_rgba(0,0,0,0.38)] ring-1 ring-white/30">
+        <Link
+          href={HOME_POPUP_LINK}
+          aria-label="View courses"
+          className="block overflow-hidden rounded-[28px] bg-white shadow-[0_32px_90px_rgba(0,0,0,0.38)] ring-1 ring-white/30 transition-transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-white/40"
+        >
           <Image
             src={imageSrc}
             alt={settings.alt || 'College announcement'}
@@ -89,7 +95,7 @@ export default function HomePopup({ settings }: HomePopupProps) {
             priority
             className="h-auto max-h-[82svh] w-full object-contain"
           />
-        </div>
+        </Link>
       </div>
     </div>
   );
