@@ -1,13 +1,47 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useCallback, useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ArrowRight, CirclePlay, X } from 'lucide-react';
 import RevealText from '../../effects/RevealText';
 import GlassSurprise from '../../effects/GlassSurprise';
 
+const CAMPUS_VIDEO_EMBED_URL =
+  'https://www.youtube.com/embed/uV1UTKs1hso?autoplay=1&rel=0&modestbranding=1';
+
 const LifeHero = () => {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+  const closeVideo = useCallback(() => {
+    setIsVideoOpen(false);
+  }, []);
+
+  useEffect(() => {
+    if (!isVideoOpen) return;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeVideo();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [closeVideo, isVideoOpen]);
+
   return (
     <section className="relative flex min-h-[85svh] w-full items-center justify-center overflow-hidden bg-white px-4 pb-12 pt-24 md:px-8">
       {/* Background Image */}
@@ -97,10 +131,7 @@ const LifeHero = () => {
                 className="w-full sm:w-auto px-8 py-4 bg-[#21409A] text-white rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-[#21409A] transition-all"
               >
                 Schedule a Campus Tour
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
+                <ArrowRight className="h-[18px] w-[18px]" aria-hidden="true" strokeWidth={2.5} />
               </Link>
             </motion.div>
 
@@ -112,21 +143,69 @@ const LifeHero = () => {
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto"
             >
-              <Link
-                href="/life-at-iic#campus-gallery"
+              <button
+                type="button"
+                onClick={() => setIsVideoOpen(true)}
                 className="w-full sm:w-auto px-8 py-4 bg-white/60 backdrop-blur-md border border-white/70 text-[#21409A] rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-white/80 transition-all shadow-sm"
               >
                 Watch Campus Video
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 18V5l12-2v13"></path>
-                  <circle cx="6" cy="18" r="3"></circle>
-                  <circle cx="18" cy="16" r="3"></circle>
-                </svg>
-              </Link>
+                <CirclePlay className="h-[18px] w-[18px]" aria-hidden="true" strokeWidth={2.5} />
+              </button>
             </motion.div>
           </div>
         </GlassSurprise>
       </motion.div>
+
+      <AnimatePresence>
+        {isVideoOpen && (
+          <motion.div
+            className="fixed inset-0 z-[10003] flex items-center justify-center bg-black/80 px-4 py-6 backdrop-blur-md sm:px-6"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="campus-video-title"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) closeVideo();
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.98 }}
+              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-5xl"
+            >
+              <button
+                type="button"
+                onClick={closeVideo}
+                className="absolute -right-2 -top-14 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 focus:outline-none focus:ring-4 focus:ring-white/30 sm:right-0"
+                aria-label="Close campus video"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
+
+              <div className="overflow-hidden rounded-lg bg-black shadow-[0_32px_90px_rgba(0,0,0,0.45)] ring-1 ring-white/20">
+                <div className="aspect-video w-full">
+                  <iframe
+                    className="h-full w-full"
+                    src={CAMPUS_VIDEO_EMBED_URL}
+                    title="Campus Video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+
+              <h2 id="campus-video-title" className="sr-only">
+                Campus Video
+              </h2>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

@@ -9,6 +9,7 @@ import {
 } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import Image from 'next/image';
+import useIsMobileLike from '@/components/effects/useIsMobileLike';
 
 type StoryContent = {
   title: string;
@@ -75,6 +76,26 @@ const storyPages: StoryPage[] = [
     },
   },
 ];
+
+const getStoryContent = (page: StoryPage) => page.left.content ?? page.right.content;
+
+const getStoryImage = (page: StoryPage) => {
+  if (page.left.image) {
+    return {
+      src: page.left.image,
+      alt: page.left.alt ?? '',
+    };
+  }
+
+  if (page.right.image) {
+    return {
+      src: page.right.image,
+      alt: page.right.alt ?? '',
+    };
+  }
+
+  return null;
+};
 
 const SLIDE_DURATION_MS = 620;
 const BOUNDARY_HOLD_MS = SLIDE_DURATION_MS + 360;
@@ -271,6 +292,74 @@ const StoryPanel = ({
   );
 };
 
+const StaticCampusGallery = ({
+  sectionRef,
+}: {
+  sectionRef: React.RefObject<HTMLElement | null>;
+}) => (
+  <section
+    id="campus-gallery"
+    ref={sectionRef}
+    className="bg-[#07100d] px-4 py-14 text-white sm:px-6 sm:py-16 md:bg-[#f7faf8] md:px-6 md:py-24 md:text-[#111827]"
+  >
+    <div className="mx-auto max-w-[1440px]">
+      <div className="mb-10 max-w-3xl md:mb-12">
+        <p className="mb-4 font-iic text-xs font-bold tracking-[0.2em] text-[#74C044] md:text-sm">
+          Campus Gallery
+        </p>
+        <h2 className="font-iic text-4xl font-black leading-tight tracking-tight md:text-6xl">
+          Life moves differently here.
+        </h2>
+      </div>
+
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {storyPages.map((page) => {
+          const content = getStoryContent(page);
+          const image = getStoryImage(page);
+
+          return (
+            <article
+              key={page.id}
+              className="overflow-hidden rounded-lg bg-white/[0.06] text-white ring-1 ring-white/10 shadow-2xl shadow-black/20 md:bg-white md:text-[#111827] md:ring-black/5 md:shadow-[0_22px_54px_rgba(15,23,42,0.12)]"
+            >
+              {image && (
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-black md:aspect-[4/5]">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent md:hidden" />
+                </div>
+              )}
+
+              {content && (
+                <div className="p-5 sm:p-6 md:p-7">
+                  <div
+                    className="mb-4 h-px w-12"
+                    style={{
+                      backgroundColor:
+                        page.accent === '#0B1120' ? '#74C044' : page.accent,
+                    }}
+                  />
+                  <h3 className="font-iic text-2xl font-black leading-tight tracking-tight sm:text-3xl md:text-2xl">
+                    {content.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-7 text-white/68 md:text-[#58595B]">
+                    {content.description}
+                  </p>
+                </div>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
 const CampusGallery = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const activeIndexRef = useRef(0);
@@ -286,6 +375,8 @@ const CampusGallery = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   const prefersReducedMotion = useReducedMotion() ?? false;
+  const isMobileLike = useIsMobileLike();
+  const shouldUseStaticGallery = isMobileLike || prefersReducedMotion;
   const lenis = useLenis();
   const activePage = storyPages[activeIndex];
 
@@ -454,6 +545,8 @@ const CampusGallery = () => {
   );
 
   useEffect(() => {
+    if (shouldUseStaticGallery) return;
+
     syncBoundaryPage();
 
     const handleWheel = (event: WheelEvent) => {
@@ -544,60 +637,12 @@ const CampusGallery = () => {
     isSectionPinned,
     keepSectionPinnedWhileChangingContent,
     markWheelGesture,
+    shouldUseStaticGallery,
     syncBoundaryPage,
   ]);
 
-  if (prefersReducedMotion) {
-    return (
-      <section
-        id="campus-gallery"
-        ref={sectionRef}
-        className="bg-[#f7faf8] px-6 py-16 text-[#111827] md:py-24"
-      >
-        <div className="mx-auto max-w-[1440px]">
-          <div className="mb-12 max-w-3xl">
-            <p className="mb-4 font-iic text-sm font-bold tracking-[0.2em] text-[#74C044]">
-              Campus Gallery
-            </p>
-            <h2 className="font-iic text-4xl font-black leading-tight tracking-tight md:text-6xl">
-              Life moves differently here.
-            </h2>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {storyPages.map((page) => {
-              const content = page.left.content ?? page.right.content;
-              const image = page.left.image ?? page.right.image;
-
-              return (
-                <article
-                  key={page.id}
-                  className="relative aspect-[4/5] overflow-hidden rounded-lg bg-black text-white"
-                >
-                  {image && (
-                    <Image
-                      src={image}
-                      alt={page.left.alt ?? page.right.alt ?? ''}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-                  {content && (
-                    <div className="absolute inset-x-0 bottom-0 p-5">
-                      <h3 className="font-iic text-2xl font-bold leading-tight">
-                        {content.title}
-                      </h3>
-                    </div>
-                  )}
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    );
+  if (shouldUseStaticGallery) {
+    return <StaticCampusGallery sectionRef={sectionRef} />;
   }
 
   return (
