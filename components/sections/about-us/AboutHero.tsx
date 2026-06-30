@@ -5,13 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
-import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
-import AnimeStagger from '../../effects/AnimeStagger';
 
 const AboutHero = () => {
   return (
-    <section className="relative pt-24 md:pt-28 bg-[#EDF2F7] overflow-hidden flex flex-col items-center">
+    <section className="relative flex flex-col items-center overflow-hidden bg-white pt-24 md:pt-28">
       <div className="max-w-[1440px] w-full mx-auto px-6 text-center flex flex-col items-center relative z-10">
         <div className="mb-10 flex flex-col items-center">
           <motion.span
@@ -68,22 +66,24 @@ const AboutHero = () => {
           </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 100, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-[1200px] h-[350px] md:h-[600px] mt-4"
-        >
-          <Image
-            src="/images/about/about-hero.png"
-            alt="Students at Itahari International College"
-            fill
-            priority
-            className="object-contain object-bottom scale-110"
-            sizes="(max-width: 1200px) 100vw, 1200px"
-          />
-        </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 100, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 1.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="relative -mt-30 w-full bg-white md:-mt-40 lg:-mt-48"
+      >
+        <Image
+          src="/images/about/about-hero.JPG"
+          alt="Students at Itahari International College"
+          width={6000}
+          height={4000}
+          priority
+          className="h-auto w-full"
+          sizes="100vw"
+        />
+      </motion.div>
     </section>
   );
 };

@@ -69,7 +69,7 @@ export default function HomePopup({ settings }: HomePopupProps) {
         if (event.target === event.currentTarget) closePopup();
       }}
     >
-      <div className="relative w-full max-w-[min(92vw,620px)] animate-[home-popup-in_220ms_ease-out]">
+      <div className="relative mx-auto w-fit max-w-[min(92vw,620px)] animate-[home-popup-in_220ms_ease-out]">
         <button
           type="button"
           onClick={closePopup}
@@ -84,7 +84,7 @@ export default function HomePopup({ settings }: HomePopupProps) {
         <Link
           href={HOME_POPUP_LINK}
           aria-label="View courses"
-          className="block overflow-hidden rounded-[28px] bg-white shadow-[0_32px_90px_rgba(0,0,0,0.38)] ring-1 ring-white/30 transition-transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-white/40"
+          className="block w-fit overflow-hidden rounded-[28px] bg-white shadow-[0_32px_90px_rgba(0,0,0,0.38)] ring-1 ring-white/30 transition-transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-white/40"
         >
           <Image
             src={imageSrc}
@@ -93,7 +93,7 @@ export default function HomePopup({ settings }: HomePopupProps) {
             height={1920}
             sizes="(max-width: 768px) 92vw, 620px"
             priority
-            className="h-auto max-h-[82svh] w-full object-contain"
+            className="h-auto max-h-[82svh] w-auto max-w-full object-contain"
           />
         </Link>
       </div>

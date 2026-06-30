@@ -206,7 +206,7 @@ const Navbar = () => {
 
                     <div className="flex min-w-0 items-center gap-3 sm:gap-4">
                       <div className="h-4 w-[1px] shrink-0 bg-white/20" />
-                      <span className="min-w-0 max-w-[92px] truncate text-right text-[10px] font-bold tracking-[0.18em] text-white/70 sm:max-w-[124px] sm:text-[11px] sm:tracking-[0.2em]">
+                      <span className="min-w-0 max-w-[108px] truncate text-right text-[13px] font-bold tracking-[0.16em] text-white/75 sm:max-w-[144px] sm:text-[15px] sm:tracking-[0.18em]">
                         {getActivePageName()}
                       </span>
                       <div
