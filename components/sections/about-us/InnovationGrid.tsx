@@ -28,7 +28,7 @@ const campusItems = [
   },
   {
     title: "Seminar Hall",
-    image: "/images/common/seminar.JPG"
+    image: "/images/common/seminar.png"
   }
 ];
 
