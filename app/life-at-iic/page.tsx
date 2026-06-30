@@ -1,21 +1,21 @@
 import React from 'react';
 import LifeHero from '@/components/sections/life-at-iic/LifeHero';
 import LifeIntro from '@/components/sections/life-at-iic/LifeIntro';
-import CampusGallery from '@/components/sections/life-at-iic/CampusGallery';
+import CollegeGallery from '@/components/sections/life-at-iic/CollegeGallery';
 import StudentExperience from '@/components/sections/life-at-iic/StudentExperience';
 import EventsHighlights from '@/components/sections/life-at-iic/EventsHighlights';
-import CampusPictures from '@/components/sections/life-at-iic/CampusPictures';
+import CollegePictures from '@/components/sections/life-at-iic/CollegePictures';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 
 export const metadata = {
   title: 'Life at IIC | Student Experience | Itahari International College',
-  description: 'Discover student life at IIC, from campus events and practical learning to the supportive community behind #LifeAtIIC.',
+  description: 'Discover student life at IIC, from college events and practical learning to the supportive community behind #LifeAtIIC.',
   openGraph: {
     title: 'Life at Itahari International College',
-    description: 'Experience the student community, events, and campus culture behind #LifeAtIIC.',
+    description: 'Experience the student community, events, and college culture behind #LifeAtIIC.',
     images: [
       {
-        url: '/api/og?title=Life At Itahari International College&subtitle=Experience Vibrant Campus Life&section=Student Life',
+        url: '/api/og?title=Life At Itahari International College&subtitle=Experience Vibrant College Life&section=Student Life',
         width: 1200,
         height: 630,
         alt: 'Life At Itahari International College',
@@ -35,10 +35,10 @@ export default function LifeAtIicPage() {
       <BreadcrumbSchema items={breadcrumbs} />
       <LifeHero />
       <LifeIntro />
-      <CampusGallery />
+      <CollegeGallery />
       <StudentExperience />
       <EventsHighlights />
-      <CampusPictures />
+      <CollegePictures />
     </main>
   );
 }

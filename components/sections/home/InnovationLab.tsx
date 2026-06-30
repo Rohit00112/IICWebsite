@@ -88,18 +88,18 @@ growth."
           >
             <motion.div style={{ y: y1 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
               <Image
-                src="/images/home/ivlab1.png"
+                src="/images/home/student-led.jpg"
                 alt="Active Student Clubs and Societies at Itahari International College"
                 fill
                 sizes="(max-width: 768px) 100vw, 66vw"
-                className="object-cover brightness-125 saturate-110 transition-transform duration-700 group-hover:scale-105"
+                className="object-cover brightness-105 saturate-105 transition-transform duration-700 group-hover:scale-105"
               />
             </motion.div>
-            <div className="absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-black/55 via-black/15 to-transparent"></div>
+            <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/80 via-black/35 to-transparent"></div>
             <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10">
               <RevealText
                 text="Student Led Communities"
-                className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 font-iic"
+                className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 font-iic [text-shadow:0_2px_8px_rgba(0,0,0,0.6)]"
               />
               
             </div>
@@ -116,16 +116,16 @@ growth."
               >
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
-                    src="/images/home/ivlab2.png"
+                    src="/images/home/entrepreneurship-and-research-support.JPG"
                     alt="Modern State-of-the-Art Library and Research Centre at Itahari International College Nepal"
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover brightness-125 saturate-110 transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover brightness-105 saturate-105 transition-transform duration-700 group-hover:scale-105"
                   />
                 </motion.div>
-                <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/55 via-black/15 to-transparent"></div>
+                <div className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-t from-black/80 via-black/35 to-transparent"></div>
                 <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
-                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-iic">
+                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-iic [text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
                     Entrepreneurship & Research Support
                   </h4>
                 </div>
@@ -139,16 +139,16 @@ growth."
               >
                 <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[115%] -top-[7.5%]">
                   <Image
-                    src="/images/home/ivlab3.png"
+                    src="/images/home/tech-and-innovation-lab.jpeg"
                     alt="Tech Events and Hackathons at Innovation Lab"
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover brightness-125 saturate-110 transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover brightness-105 saturate-105 transition-transform duration-700 group-hover:scale-105"
                   />
                 </motion.div>
-                <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-black/55 via-black/15 to-transparent"></div>
+                <div className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-t from-black/80 via-black/35 to-transparent"></div>
                 <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6">
-                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-iic">
+                  <h4 className="text-sm sm:text-base md:text-lg font-bold text-white font-iic [text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
                     Tech Events & Hackathons
                   </h4>
                 </div>
@@ -164,16 +164,16 @@ growth."
             >
               <motion.div style={{ y: y2 }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
                 <Image
-                  src="/images/home/ivlab4.png"
-                  alt="Student Cafeteria and Social Networking Hub at Itahari International College"
+                  src="/images/home/learning-zone.JPG"
+                  alt="Learning Zones at Innovation Lab"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover brightness-125 saturate-110 transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover brightness-105 saturate-105 transition-transform duration-700 group-hover:scale-105"
                 />
               </motion.div>
-              <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/55 via-black/15 to-transparent"></div>
+              <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/80 via-black/35 to-transparent"></div>
               <div className="absolute bottom-5 left-5 right-5 sm:bottom-8 sm:left-8 sm:right-8">
-                <h4 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 font-iic">
+                <h4 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 font-iic [text-shadow:0_2px_8px_rgba(0,0,0,0.6)]">
                   Learning Zones
                 </h4>
               

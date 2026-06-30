@@ -783,14 +783,14 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   className="faculty-card flex flex-col items-center rounded-[32px] border border-gray-100 bg-white p-10 text-center text-[#1a1a1a] shadow-sm"
                   style={{ willChange: 'transform, opacity' }}
                 >
-                  <div className="relative mb-7 flex h-28 w-28 items-center justify-center rounded-full bg-[#f0f4f8]">
-                    <div className="relative h-24 w-24 overflow-hidden rounded-full bg-white shadow-inner">
+                  <div className="relative mb-8 flex h-32 w-32 items-center justify-center rounded-full bg-[#f0f4f8]">
+                    <div className="relative h-28 w-28 overflow-hidden rounded-full bg-white shadow-inner">
                       <Image 
                         src={member.image || '/images/common/avatar-placeholder.png'} 
                         alt={member.name || 'Faculty Member'} 
                         fill 
-                        className="object-cover object-[50%_18%] scale-[1.25]"
-                        sizes="96px"
+                        className="scale-[1.08] object-cover object-[50%_12%] [transform-origin:50%_12%]"
+                        sizes="112px"
                       />
                     </div>
                   </div>

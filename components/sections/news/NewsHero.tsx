@@ -30,7 +30,7 @@ const NewsHero = () => {
             transition={{ delay: 0.8, duration: 1 }}
             className="text-gray-500 text-lg md:text-xl max-w-3xl leading-relaxed font-medium"
           >
-            Follow campus stories, student achievements, academic updates, and events that reflect our commitment to global education with local impact.
+            Follow college stories, student achievements, academic updates, and events that reflect our commitment to global education with local impact.
           </motion.p>
         </div>
       </div>

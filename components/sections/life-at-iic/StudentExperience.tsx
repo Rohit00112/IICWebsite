@@ -9,25 +9,25 @@ const experiences = [
     id: "01",
     title: "Tech",
     description: "Where ideas become reality. This community is focused on developing real products through collaboration, problem-solving, and hands-on coding. Members work together to design, build, and refine software — turning concepts into functioning solutions that solve real problems.",
-    image: "/images/home/ivlab2.png"
+    image: "/images/lifestyle/tech.JPG"
   },
   {
     id: "02",
     title: "Research",
     description: "Where curiosity meets impact. This community is driven by the pursuit of knowledge — exploring new technologies, conducting in-depth research, and publishing work that contributes to both academia and industry. Members dig deeper, question everything, and add to the growing body of tech knowledge.",
-    image: "/images/home/ivlab3.png"
+    image: "/images/lifestyle/research.JPG"
   },
   {
     id: "03",
     title: "Entrepreneur",
     description: "Where technology meets the market. This community focuses on the business side of innovation — studying market trends, identifying gaps, and developing strategies to bring products to the right audience. Members think like founders, learning how to validate ideas and build something people actually want.",
-    image: "/images/home/ivlab4.png"
+    image: "/images/lifestyle/entrepreneur.JPG"
   },
   {
     id: "04",
     title: "Creator",
     description: "Where innovation meets creativity. This community lives at the intersection of technology and digital culture — building brands, creating content, and driving engagement through smart marketing and creative campaigns. Members use the innovation lab as their playground to experiment, create, and make noise in the digital world.",
-    image: "/images/home/ivlab2.png"
+    image: "/images/lifestyle/creator.png"
   }
 ];
 

@@ -144,7 +144,7 @@ const Navbar = () => {
 
                 {/* CTA Button */}
                 <Link href="/contact" onClick={() => setIsMenuOpen(false)} className="w-full min-h-11 shrink-0 px-4 py-3 bg-[#21409A] border border-white/5 rounded-lg text-white text-[9px] font-bold tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/60 transition-all">
-                  <span className="truncate">Schedule a Campus tour</span>
+                  <span className="truncate">Schedule a College Tour</span>
                   <span className="text-base opacity-40">→</span>
                 </Link>
               </div>

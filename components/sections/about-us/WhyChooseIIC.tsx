@@ -44,7 +44,7 @@ const features = [
   },
   {
     title: "World-Class Infrastructure",
-    description: "Experience learning in a modern environment designed for innovation. Our campus features cutting-edge labs, creative spaces, and recreational zones that foster holistic development.",
+    description: "Experience learning in a modern environment designed for innovation. Our college features cutting-edge labs, creative spaces, and recreational zones that foster holistic development.",
     points: ["High-tech Computer Labs", "Creative Innovation Zones", "Modern Student Lounge"],
     image: "/images/about/infra.png",
     icon: (

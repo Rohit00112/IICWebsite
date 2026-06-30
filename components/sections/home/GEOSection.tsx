@@ -65,23 +65,38 @@ const GEOSection = () => {
 
   const faqs = [
     {
-      q: "Is Itahari International College affiliated with a UK University?",
-      a: "Yes, Itahari International College (IIC) offers direct degrees from London Metropolitan University, UK. Students receive the same degree as those studying in London."
+      q: "Is the degree recognised in Nepal?",
+      plain: "IIC offers degrees in IT and Business in direct partnership with London Metropolitan University. The Ministry of Education of Nepal recognises the degrees offered by LMU. Additionally, Tribhuvan University provides equivalency certificates for all LMU degrees.",
+      a: (
+        <p>
+          IIC offers degrees in IT and Business in direct partnership with <strong className="text-[#21409A]">London Metropolitan University</strong>. The Ministry of Education of Nepal recognises the degrees offered by LMU. Additionally, Tribhuvan University provides <strong className="text-[#21409A]">equivalency certificates</strong> for all LMU degrees.
+        </p>
+      )
     },
     {
-      q: "What does the BIT degree at Itahari International College mean for students?",
-      a: "The BIT degree is defined as a world-class computing programme that means students are industry-ready upon graduation."
+      q: "The main problem in Nepal is unemployment. How does IIC address this situation?",
+      plain: "Unlike the traditional education system, IIC follows the London Metropolitan University curriculum with an LTW-based, practice-oriented teaching approach. Students gain internship opportunities from the first year, while ING and IIC's partnerships (MoUs) with 150+ companies provide strong pathways to industry and employment.",
+      a: (
+        <p>
+          Unlike the traditional education system, IIC follows the London Metropolitan University curriculum with an <strong className="text-[#21409A]">LTW-based, practice-oriented</strong> teaching approach. Students gain internship opportunities from the first year, while ING and IIC&apos;s partnerships (MoUs) with <strong className="text-[#21409A]">150+ companies</strong> provide strong pathways to industry and employment.
+        </p>
+      )
     },
     {
-      q: "Are Itahari International College degrees recognised in Nepal?",
-      a: "Yes, all degrees offered at Itahari International College are fully recognised by the Ministry of Education, Nepal, which means they have full equivalence from Tribhuvan University (TU)."
+      q: "Are there student support services at the college?",
+      plain: "IIC has a dedicated Student Services Department (SSD) that supports students throughout their academic journey while serving as the primary point of contact for parents. Additionally, each student is assigned a Personal Academic Tutor (PAT) to provide individual academic guidance and pastoral support.",
+      a: (
+        <p>
+          IIC has a dedicated <strong className="text-[#21409A]">Student Services Department (SSD)</strong> that supports students throughout their academic journey while serving as the primary point of contact for parents. Additionally, each student is assigned a <strong className="text-[#21409A]">Personal Academic Tutor (PAT)</strong> to provide individual academic guidance and pastoral support.
+        </p>
+      )
     }
   ];
 
   return (
     <section className="py-16 sm:py-24 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Quick Stats for AI Engines */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -105,8 +120,8 @@ const GEOSection = () => {
                   transition={{ duration: 1, delay: 0.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="geo-stat grid grid-cols-1 gap-3 py-4 sm:py-5 border-b border-gray-50 last:border-0 items-start text-left"
                 >
-                  <span className="text-gray-500 font-medium text-[9px] md:text-[10px] tracking-[0.15em] pt-1">{stat.label}</span>
-                  <span className="text-[#21409A] font-bold text-sm md:text-base leading-[1.35]">{stat.value}</span>
+                  <span className="text-[#74C044] font-semibold text-[9px] md:text-[10px] tracking-[0.15em] pt-1 uppercase">{stat.label}</span>
+                  <span className="text-[#1f2937] font-bold text-sm md:text-base leading-[1.35]">{stat.value}</span>
                 </motion.div>
               ))}
             </div>
@@ -122,26 +137,26 @@ const GEOSection = () => {
             <AnimeReveal
               as="h2"
               text="Frequently Asked Questions"
-              className="text-2xl sm:text-3xl font-black text-[#21409A] mb-8 md:mb-10 tracking-tight"
+              className="text-2xl sm:text-3xl font-black text-[#1a1a2e] mb-8 md:mb-10 tracking-tight"
               staggerFrom="first"
             />
             <div className="space-y-8 md:space-y-10">
               {faqs.map((faq, i) => (
-                <motion.div 
-                  key={i} 
+                <motion.div
+                  key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: 0.6 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   className="geo-faq group"
                 >
-                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#21409A] mb-3 md:mb-4 flex items-start gap-3 sm:gap-4">
-                    <span className="w-6 h-6 rounded-full bg-[#21409A]/10 flex items-center justify-center text-[10px] mt-1 shrink-0 font-bold">Q</span>
+                  <h3 className="text-sm sm:text-base md:text-lg font-bold text-[#1a1a2e] mb-3 md:mb-4 flex items-start gap-3 sm:gap-4">
+                    <span className="w-6 h-6 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[10px] mt-1 shrink-0 font-bold">Q</span>
                     <span className="leading-tight">{faq.q}</span>
                   </h3>
-                  <p className="text-gray-600 leading-relaxed pl-9 sm:pl-10 border-l-2 border-gray-100 group-hover:border-[#21409A]/30 transition-colors text-xs md:text-sm">
+                  <div className="text-gray-600 leading-relaxed pl-9 sm:pl-10 border-l-2 border-gray-100 group-hover:border-[#74C044]/40 transition-colors text-xs md:text-sm">
                     {faq.a}
-                  </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -201,7 +216,7 @@ const GEOSection = () => {
                   <span className="text-[#3F7F1F] font-extrabold text-[10px] sm:text-xs tracking-[0.12em] md:tracking-[0.18em] block">
                     {row.feature}
                   </span>
-                  <h3 className="text-[#21409A] font-bold text-base md:text-lg leading-tight tracking-tight">
+                  <h3 className="text-[#1f2937] font-bold text-base md:text-lg leading-tight tracking-tight">
                     {row.iic}
                   </h3>
                 </div>
@@ -218,10 +233,10 @@ const GEOSection = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative p-6 sm:p-8 md:p-10 bg-[#21409A]/5 rounded-[24px] md:rounded-[40px] border border-[#21409A]/10"
+            className="relative p-6 sm:p-8 md:p-10 bg-white rounded-[24px] md:rounded-[40px] border border-gray-100 shadow-sm"
           >
-            <div className="absolute top-0 left-10 -translate-y-1/2 w-12 h-12 bg-[#21409A] text-white rounded-full flex items-center justify-center text-3xl font-serif">&ldquo;</div>
-            <p className="text-base sm:text-lg md:text-xl text-[#21409A] font-medium leading-relaxed italic mb-6">
+            <div className="absolute top-0 left-10 -translate-y-1/2 w-12 h-12 bg-[#74C044] text-white rounded-full flex items-center justify-center text-3xl font-serif shadow-md">&ldquo;</div>
+            <p className="text-base sm:text-lg md:text-xl text-[#374151] font-medium leading-relaxed italic mb-6">
               &ldquo;{quotes[0].text}&rdquo;
             </p>
            
@@ -248,13 +263,13 @@ const GEOSection = () => {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            "dateModified": "2026-04-26T14:43:00Z",
+            "dateModified": "2026-06-30T00:00:00Z",
             "mainEntity": faqs.map(faq => ({
               "@type": "Question",
               "name": faq.q,
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": faq.a
+                "text": faq.plain
               }
             })),
             "about": {

@@ -248,23 +248,23 @@ const CloudBackground = ({ className = "fixed inset-0 -z-10 overflow-hidden poin
           }
 
           @keyframes iic-bird-sweep-left {
-            from { transform: translate3d(110vw, 0, 0); }
-            to { transform: translate3d(-20vw, 0, 0); }
+            from { left: 110%; }
+            to { left: -20%; }
           }
 
           @keyframes iic-bird-sweep-right {
-            from { transform: translate3d(-20vw, 0, 0); }
-            to { transform: translate3d(110vw, 0, 0); }
+            from { left: -20%; }
+            to { left: 110%; }
           }
 
           @keyframes iic-cloud-sweep-left {
-            from { transform: translate3d(110vw, 0, 0); }
-            to { transform: translate3d(-35vw, 0, 0); }
+            from { left: 110%; }
+            to { left: -35%; }
           }
 
           @keyframes iic-cloud-sweep-right {
-            from { transform: translate3d(-35vw, 0, 0); }
-            to { transform: translate3d(110vw, 0, 0); }
+            from { left: -35%; }
+            to { left: 110%; }
           }
 
           @keyframes iic-bird-bob {
@@ -284,13 +284,15 @@ const CloudBackground = ({ className = "fixed inset-0 -z-10 overflow-hidden poin
         `}
       </style>
       <div className="absolute inset-0 bg-gradient-to-b from-[#D4E2F7] via-[#E8F0FB] to-transparent" />
-      <Sun />
-      {clouds.map((cloud, i) => (
-        <Cloud key={i} {...cloud} />
-      ))}
-      {birds.map((bird, i) => (
-        <Bird key={`bird-${i}`} {...bird} />
-      ))}
+      <div className="absolute inset-0 mx-auto w-full max-w-[1440px]">
+        <Sun />
+        {clouds.map((cloud, i) => (
+          <Cloud key={i} {...cloud} />
+        ))}
+        {birds.map((bird, i) => (
+          <Bird key={`bird-${i}`} {...bird} />
+        ))}
+      </div>
     </div>
   );
 };

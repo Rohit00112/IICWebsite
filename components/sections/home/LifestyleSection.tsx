@@ -154,7 +154,7 @@ const LifestyleSection = () => {
             />
           </Magnetic>
           <RevealText
-            text="Beyond academics, a vibrant campus, diverse student community, and state-of-the-art facilities designed for holistic growth."
+            text="Beyond academics, a vibrant college, diverse student community, and state-of-the-art facilities designed for holistic growth."
             className="max-w-3xl text-gray-500 text-sm sm:text-base md:text-lg font-medium leading-relaxed justify-center"
           />
         </div>

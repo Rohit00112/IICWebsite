@@ -8,7 +8,7 @@ import { ArrowRight, CirclePlay, X } from 'lucide-react';
 import RevealText from '../../effects/RevealText';
 import GlassSurprise from '../../effects/GlassSurprise';
 
-const CAMPUS_VIDEO_EMBED_URL =
+const COLLEGE_VIDEO_EMBED_URL =
   'https://www.youtube.com/embed/uV1UTKs1hso?autoplay=1&rel=0&modestbranding=1';
 
 const LifeHero = () => {
@@ -113,7 +113,7 @@ const LifeHero = () => {
             transition={{ duration: 1.2, delay: 1, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-[750px] mx-auto text-[#333333] text-sm md:text-base font-medium leading-relaxed mb-8 font-iic opacity-80"
           >
-            Beyond the classroom, IIC creates a supportive campus culture where students build confidence, leadership, creativity, and friendships that last.
+            Beyond the classroom, IIC creates a supportive college culture where students build confidence, leadership, creativity, and friendships that last.
           </motion.p>
 
           {/* Action Buttons */}
@@ -130,7 +130,7 @@ const LifeHero = () => {
                 href="/contact"
                 className="w-full sm:w-auto px-8 py-4 bg-[#21409A] text-white rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-[#21409A] transition-all"
               >
-                Schedule a Campus Tour
+                Schedule a College Tour
                 <ArrowRight className="h-[18px] w-[18px]" aria-hidden="true" strokeWidth={2.5} />
               </Link>
             </motion.div>
@@ -148,7 +148,7 @@ const LifeHero = () => {
                 onClick={() => setIsVideoOpen(true)}
                 className="w-full sm:w-auto px-8 py-4 bg-white/60 backdrop-blur-md border border-white/70 text-[#21409A] rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-white/80 transition-all shadow-sm"
               >
-                Watch Campus Video
+                Watch College Video
                 <CirclePlay className="h-[18px] w-[18px]" aria-hidden="true" strokeWidth={2.5} />
               </button>
             </motion.div>
@@ -162,7 +162,7 @@ const LifeHero = () => {
             className="fixed inset-0 z-[10003] flex items-center justify-center bg-black/80 px-4 py-6 backdrop-blur-md sm:px-6"
             role="dialog"
             aria-modal="true"
-            aria-labelledby="campus-video-title"
+            aria-labelledby="college-video-title"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -181,7 +181,7 @@ const LifeHero = () => {
                 type="button"
                 onClick={closeVideo}
                 className="absolute -right-2 -top-14 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 focus:outline-none focus:ring-4 focus:ring-white/30 sm:right-0"
-                aria-label="Close campus video"
+                aria-label="Close college video"
               >
                 <X className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -190,8 +190,8 @@ const LifeHero = () => {
                 <div className="aspect-video w-full">
                   <iframe
                     className="h-full w-full"
-                    src={CAMPUS_VIDEO_EMBED_URL}
-                    title="Campus Video"
+                    src={COLLEGE_VIDEO_EMBED_URL}
+                    title="College Video"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
@@ -199,8 +199,8 @@ const LifeHero = () => {
                 </div>
               </div>
 
-              <h2 id="campus-video-title" className="sr-only">
-                Campus Video
+              <h2 id="college-video-title" className="sr-only">
+                College Video
               </h2>
             </motion.div>
           </motion.div>

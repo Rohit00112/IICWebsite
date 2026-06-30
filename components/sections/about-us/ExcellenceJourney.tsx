@@ -25,7 +25,7 @@ const historyItems = [
   {
     year: "2024",
     markerLabel: "2024 · Expansion",
-    title: "Campus Expansion",
+    title: "College Expansion",
     description: "Inaugurated the new ING Block — a state-of-the-art facility featuring advanced labs, library, learning zone with lecture theatres, tutorial rooms, and  modern learning environment.",
     stat: "",
     statLabel: "Advanced Learning Environment",

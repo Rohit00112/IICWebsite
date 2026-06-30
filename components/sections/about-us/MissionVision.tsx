@@ -93,7 +93,7 @@ const MissionVision = () => {
             >
               <Image
                 src="/images/about/vision.JPG"
-                alt="Campus Life"
+                alt="College Life"
                 fill
                 className="object-cover transition-transform duration-1000 hover:scale-105"
                 sizes="(max-width: 768px) calc(100vw - 48px), 55vw"

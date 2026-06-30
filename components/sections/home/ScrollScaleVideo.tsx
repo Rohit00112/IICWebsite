@@ -437,7 +437,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
               {/* Branding */}
               <div className="hidden md:flex items-center gap-4 opacity-40">
                 <div className="w-[1px] h-4 bg-white" />
-                <span className="text-[10px] font-bold tracking-[0.3em]">IIC Campus Film</span>
+                <span className="text-[10px] font-bold tracking-[0.3em]">IIC College Film</span>
               </div>
             </div>
           </div>

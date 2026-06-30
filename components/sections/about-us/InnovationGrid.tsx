@@ -5,14 +5,14 @@ import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
 import RevealText from '../../effects/RevealText';
 
-const campusItems = [
+const collegeItems = [
   { 
     title: "Advanced Computing Labs", 
     image: "/images/common/lab.JPG" 
   },
   { 
     title: "Innovation Lab", 
-    image: "/images/common/innovation.JPG" 
+    image: "/images/about/innovation.JPG" 
   },
   { 
     title: "Lecture Theatres",
@@ -45,7 +45,7 @@ const InnovationGrid = () => {
             className="space-y-4"
           >
             <p className="text-2xl md:text-3xl font-medium font-iic text-white/90">
-              A Campus Built For
+              A College Built For
             </p>
             <AnimeReveal
               as="h2"
@@ -63,7 +63,7 @@ const InnovationGrid = () => {
 
         {/* Facilities Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {campusItems.map((item, i) => (
+          {collegeItems.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}

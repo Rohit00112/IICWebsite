@@ -68,7 +68,7 @@ export default async function CoursePage({
       courseWorkload: 'Full-time',
       location: {
         '@type': 'Place',
-        name: 'Itahari International College Campus',
+        name: 'Itahari International College',
         address: {
           '@type': 'PostalAddress',
           'addressLocality': 'Itahari',

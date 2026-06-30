@@ -83,7 +83,7 @@ const HeroSection = () => {
             >
               <Link
                 href="/contact"
-                aria-label="Schedule a campus visit"
+                aria-label="Schedule a college visit"
                 className="w-full sm:w-auto px-6 sm:px-10 py-3.5 sm:py-4 bg-[#21409A] text-white rounded-xl font-bold text-sm sm:text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:brightness-110 transition-all focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
               >
                 <span>Schedule a Visit</span>

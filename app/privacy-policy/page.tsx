@@ -13,7 +13,7 @@ const sections = [
   },
   {
     title: 'How We Use It',
-    body: 'We use submitted information to respond to enquiries, support admissions, provide programme guidance, arrange campus visits, and share relevant college updates.',
+    body: 'We use submitted information to respond to enquiries, support admissions, provide programme guidance, arrange college visits, and share relevant college updates.',
   },
   {
     title: 'Data Sharing',
