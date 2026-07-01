@@ -198,11 +198,12 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
             
             {/* Counsellor Profile */}
             <div className="flex items-center gap-4 mb-8">
-              <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm bg-gray-100">
+              <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 border-white bg-gray-100 shadow-sm md:h-[72px] md:w-[72px]">
                 <Image 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop"
+                  src="/images/admission/riju.png"
                   alt="Riju Bhattarai"
                   fill
+                  sizes="(max-width: 768px) 64px, 72px"
                   className="object-cover"
                 />
               </div>
