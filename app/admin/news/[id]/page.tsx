@@ -1,7 +1,11 @@
 import React from 'react';
+
 import { getNewsById } from '../../../../lib/news';
 import { notFound } from 'next/navigation';
 import EditNewsForm from '../../../../components/admin/EditNewsForm';
+
+export const dynamic = 'force-dynamic';
+
 
 export default async function EditNewsPage({
   params,

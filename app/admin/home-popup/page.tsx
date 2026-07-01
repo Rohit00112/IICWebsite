@@ -1,5 +1,9 @@
 import HomePopupForm from '../../../components/admin/HomePopupForm';
+
 import { getHomePopupSettings } from '../../../lib/home-popup';
+
+export const dynamic = 'force-dynamic';
+
 
 export default async function HomePopupAdminPage() {
   const settings = await getHomePopupSettings();

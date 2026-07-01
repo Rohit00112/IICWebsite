@@ -46,7 +46,7 @@ const features = [
     title: "World-Class Infrastructure",
     description: "Experience learning in a modern environment designed for innovation. Our college features cutting-edge labs, creative spaces, and recreational zones that foster holistic development.",
     points: ["High-tech Computer Labs", "Creative Innovation Zones", "Modern Student Lounge"],
-    image: "/images/about/infra.png",
+    image: "/images/about/infra.webp",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#21409A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />

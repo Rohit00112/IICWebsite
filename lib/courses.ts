@@ -139,7 +139,7 @@ function mapCourse(doc: CourseDocument): CourseItem {
     category: plain.category || '',
     duration: plain.duration || d.duration || '',
     description,
-    image: toSafeImageSrc(plain.image, '/images/courses/course-hero.png'),
+    image: toSafeImageSrc(plain.image, '/images/courses/course-hero.JPG'),
     level: plain.level,
     listing: {
       title: listing.title || '',
@@ -190,7 +190,7 @@ function mapCourse(doc: CourseDocument): CourseItem {
     projects: (plain.projects || []).map((p) => ({
       title: p.title || '',
       cohort: p.cohort || '',
-      image: toSafeImageSrc(p.image, '/images/course-details/course-details-hero.png'),
+      image: toSafeImageSrc(p.image, '/images/course-details/course-details-hero.webp'),
     })),
     faqs: (plain.faqs || []).map((f) => ({
       question: f.question || '',

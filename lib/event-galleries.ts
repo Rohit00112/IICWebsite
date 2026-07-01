@@ -156,7 +156,7 @@ function mapEventGallery(doc: EventGalleryDocument): EventGalleryItem {
     slug: plain.slug || '',
     year: typeof plain.year === 'number' ? plain.year : new Date().getFullYear(),
     summary: plain.summary || '',
-    coverImage: toSafeImageSrc(plain.coverImage, '/images/lifestyle/lifestyle.png'),
+    coverImage: toSafeImageSrc(plain.coverImage, '/images/lifestyle/lifestyle-hero.JPG'),
     images: (plain.images || []).map((image) => toSafeImageSrc(image)).filter(Boolean),
     status: plain.status === 'published' ? 'published' : 'draft',
     sortOrder: typeof plain.sortOrder === 'number' ? plain.sortOrder : 0,
@@ -165,6 +165,10 @@ function mapEventGallery(doc: EventGalleryDocument): EventGalleryItem {
 
 function sortGalleries(galleries: EventGalleryItem[]) {
   return galleries.sort((a, b) => b.year - a.year || a.sortOrder - b.sortOrder || a.title.localeCompare(b.title));
+}
+
+function getDefaultPublishedGalleries() {
+  return sortGalleries([...defaultGalleries]);
 }
 
 function getEventArchiveSlug(title: string) {
@@ -212,7 +216,15 @@ export async function getAllEventGalleries(): Promise<EventGalleryItem[]> {
 }
 
 export async function getPublishedEventGalleries(): Promise<EventGalleryItem[]> {
-  const galleries = await getAllEventGalleries();
+  let galleries: EventGalleryItem[] = [];
+
+  try {
+    galleries = await getAllEventGalleries();
+  } catch (error) {
+    console.error('[event-galleries] DB unavailable, rendering default galleries:', error);
+    return getDefaultPublishedGalleries();
+  }
+
   const published = galleries.filter((gallery) => gallery.status === 'published');
   const galleryBySlug = new Map(published.map((gallery) => [gallery.slug, gallery]));
   const publishedTitles = new Set(published.map((gallery) => gallery.title.trim().toLowerCase()));
@@ -241,9 +253,14 @@ export async function getEventGalleryById(id: string): Promise<EventGalleryItem 
 }
 
 export async function getPublishedEventGalleryBySlug(slug: string): Promise<EventGalleryItem | null> {
-  await dbConnect();
-  const gallery = await EventGallery.findOne({ slug, status: 'published' });
-  if (gallery) return mapEventGallery(gallery);
+  try {
+    await dbConnect();
+    const gallery = await EventGallery.findOne({ slug, status: 'published' });
+    if (gallery) return mapEventGallery(gallery);
+  } catch (error) {
+    console.error('[event-galleries] DB unavailable, rendering default gallery by slug:', error);
+  }
+
   return defaultGalleries.find((item) => item.slug === slug) || null;
 }
 

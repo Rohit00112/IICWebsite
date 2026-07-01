@@ -10,7 +10,14 @@ export const metadata: Metadata = {
 };
 
 export default async function CoursesPage() {
-  const courses = await getAllCourses();
+  let courses: Awaited<ReturnType<typeof getAllCourses>> = [];
+
+  try {
+    courses = await getAllCourses();
+  } catch (err) {
+    console.error('[courses] DB unavailable, rendering default course cards:', err);
+  }
+
   const breadcrumbs = [
     { name: 'Home', item: '/' },
     { name: 'Academic Programmes', item: '/courses' },

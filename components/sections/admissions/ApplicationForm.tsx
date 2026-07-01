@@ -37,18 +37,94 @@ interface ApplicationFormProps {
   setIsSubmitted: (submitted: boolean) => void;
 }
 
+const DEFAULT_FORM_DATA = {
+  fullName: '',
+  email: '',
+  phone: '',
+  address: '',
+  schoolName: '',
+  program: 'BIT',
+};
+
+type ApplicationFormData = typeof DEFAULT_FORM_DATA;
+type ApplicationField = keyof ApplicationFormData;
+type ApplicationErrors = Partial<Record<ApplicationField, string>>;
+type ApplicationTouched = Partial<Record<ApplicationField, boolean>>;
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const getDigits = (value: string) => value.replace(/\D/g, '');
+
+const validateApplicationForm = (values: ApplicationFormData): ApplicationErrors => {
+  const nextErrors: ApplicationErrors = {};
+  const phoneDigits = getDigits(values.phone);
+
+  if (!values.fullName.trim()) {
+    nextErrors.fullName = 'Please enter your full name.';
+  } else if (values.fullName.trim().length < 2) {
+    nextErrors.fullName = 'Name must be at least 2 characters.';
+  }
+
+  if (!values.email.trim()) {
+    nextErrors.email = 'Please enter your email address.';
+  } else if (!EMAIL_PATTERN.test(values.email.trim())) {
+    nextErrors.email = 'Please enter a valid email address.';
+  }
+
+  if (!values.phone.trim()) {
+    nextErrors.phone = 'Please enter your phone number.';
+  } else if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+    nextErrors.phone = 'Please enter a valid phone number.';
+  }
+
+  if (!values.address.trim()) {
+    nextErrors.address = 'Please enter your address.';
+  } else if (values.address.trim().length < 4) {
+    nextErrors.address = 'Please enter a complete address.';
+  }
+
+  if (!values.schoolName.trim()) {
+    nextErrors.schoolName = 'Please enter your school or college name.';
+  } else if (values.schoolName.trim().length < 2) {
+    nextErrors.schoolName = 'School or college name is too short.';
+  }
+
+  if (!values.program) {
+    nextErrors.program = 'Please select a programme.';
+  }
+
+  return nextErrors;
+};
+
+const getInputClassName = (invalid: boolean) => `w-full px-6 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 transition-all font-medium text-gray-900 ${
+  invalid
+    ? 'border-[#ED1C24]/60 focus:border-[#ED1C24] focus:ring-[#ED1C24]/10'
+    : 'border-gray-100 focus:border-[#21409A] focus:ring-[#21409A]/10'
+}`;
+
+function loadSavedFormData(): ApplicationFormData {
+  if (typeof window === 'undefined') return DEFAULT_FORM_DATA;
+
+  try {
+    const savedData = localStorage.getItem('admissions_form_data');
+    if (!savedData) return DEFAULT_FORM_DATA;
+
+    const parsed = JSON.parse(savedData) as Partial<ApplicationFormData>;
+    if (!parsed || typeof parsed !== 'object') return DEFAULT_FORM_DATA;
+
+    return { ...DEFAULT_FORM_DATA, ...parsed };
+  } catch {
+    localStorage.removeItem('admissions_form_data');
+    return DEFAULT_FORM_DATA;
+  }
+}
+
 const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) => {
   const shouldReduceMotion = useReducedMotion();
-  const [selectedProgram, setSelectedProgram] = useState<string | null>('BIT');
-
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    address: '',
-    schoolName: '',
-    program: 'BIT',
-  });
+  const [formData, setFormData] = useState<ApplicationFormData>(() => loadSavedFormData());
+  const [selectedProgram, setSelectedProgram] = useState<string | null>(() => formData.program);
+  const [errors, setErrors] = useState<ApplicationErrors>({});
+  const [touched, setTouched] = useState<ApplicationTouched>({});
 
   const [country, setCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
@@ -73,25 +149,64 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
   });
 
   useEffect(() => {
-    try {
-      const savedData = localStorage.getItem('admissions_form_data');
-      if (savedData) {
-        const parsed = JSON.parse(savedData);
-        setFormData(prev => ({ ...prev, ...parsed }));
-        if (parsed.program) setSelectedProgram(parsed.program);
-      }
-    } catch {
-      localStorage.removeItem('admissions_form_data');
-    }
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem('admissions_form_data', JSON.stringify(formData));
   }, [formData]);
 
+  const hasFieldError = (field: ApplicationField) => Boolean(touched[field] && errors[field]);
+  const getErrorId = (field: ApplicationField) => `application-${field}-error`;
+  const getDescriptionIds = (field: ApplicationField, extraId?: string) => {
+    const ids = [extraId, hasFieldError(field) ? getErrorId(field) : null].filter(Boolean);
+    return ids.length > 0 ? ids.join(' ') : undefined;
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const field = name as ApplicationField;
+    const nextFormData = { ...formData, [field]: value };
+
+    setFormData(nextFormData);
+
+    if (touched[field] || errors[field]) {
+      setErrors(validateApplicationForm(nextFormData));
+    }
+  };
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const field = e.target.name as ApplicationField;
+    setTouched(prev => ({ ...prev, [field]: true }));
+    setErrors(validateApplicationForm(formData));
+  };
+
+  const handleProgramSelect = (program: string) => {
+    const nextFormData = { ...formData, program };
+    setSelectedProgram(program);
+    setFormData(nextFormData);
+
+    if (touched.program || errors.program) {
+      setErrors(validateApplicationForm(nextFormData));
+    }
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const nextErrors = validateApplicationForm(formData);
+
+    setErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      setTouched({
+        fullName: true,
+        email: true,
+        phone: true,
+        address: true,
+        schoolName: true,
+        program: true,
+      });
+      return;
+    }
+
+    localStorage.removeItem('admissions_form_data');
+    setIsSubmitted(true);
   };
 
   if (isSubmitted) {
@@ -123,7 +238,11 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
   const sectionInitial = shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 };
 
   return (
-    <div className="w-full h-full bg-white rounded-3xl p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col">
+    <form
+      className="w-full h-full bg-white rounded-3xl p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col"
+      onSubmit={handleSubmit}
+      noValidate
+    >
       <div className="flex flex-col mb-10">
         <h2 className="text-2xl md:text-3xl font-black text-[#1a1a1a] mb-2 font-iic tracking-tight">
           Application Form
@@ -143,30 +262,48 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
           <h3 className="text-[11px] font-black text-[#21409A] tracking-[0.2em] mb-6">Personal</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="md:col-span-2 flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Full Name <span className="text-[#ED1C24]">*</span></label>
+              <label htmlFor="application-fullName" className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Full Name <span className="text-[#ED1C24]">*</span></label>
               <input
+                id="application-fullName"
                 type="text"
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                aria-invalid={hasFieldError('fullName')}
+                aria-describedby={getDescriptionIds('fullName')}
                 placeholder="John Doe"
-                className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#21409A]/10 focus:border-[#21409A] transition-all font-medium text-gray-900"
+                className={getInputClassName(hasFieldError('fullName'))}
               />
+              {hasFieldError('fullName') && (
+                <p id={getErrorId('fullName')} className="text-xs font-semibold text-[#ED1C24] ml-1">
+                  {errors.fullName}
+                </p>
+              )}
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Email Address <span className="text-[#ED1C24]">*</span></label>
+              <label htmlFor="application-email" className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Email Address <span className="text-[#ED1C24]">*</span></label>
               <input
+                id="application-email"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                aria-invalid={hasFieldError('email')}
+                aria-describedby={getDescriptionIds('email', 'application-email-help')}
                 placeholder="john.doe@example.com"
-                className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#21409A]/10 focus:border-[#21409A] transition-all font-medium text-gray-900"
+                className={getInputClassName(hasFieldError('email'))}
               />
-              <span className="text-[10px] text-gray-400 italic ml-1">We'll use this for all official correspondence</span>
+              <span id="application-email-help" className="text-[10px] text-gray-400 italic ml-1">We&apos;ll use this for all official correspondence</span>
+              {hasFieldError('email') && (
+                <p id={getErrorId('email')} className="text-xs font-semibold text-[#ED1C24] ml-1">
+                  {errors.email}
+                </p>
+              )}
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Phone Number <span className="text-[#ED1C24]">*</span></label>
+              <label htmlFor="application-phone" className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Phone Number <span className="text-[#ED1C24]">*</span></label>
               <div ref={countryRef} className="relative">
                 <button
                   type="button"
@@ -184,12 +321,16 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
                 </button>
                 <span className="absolute left-[120px] top-1/2 -translate-y-1/2 h-6 w-px bg-gray-200 z-10 pointer-events-none" aria-hidden />
                 <input
+                  id="application-phone"
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
+                  onBlur={handleInputBlur}
+                  aria-invalid={hasFieldError('phone')}
+                  aria-describedby={getDescriptionIds('phone')}
                   placeholder="98xxxxxxxx"
-                  className="w-full pl-[136px] pr-6 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#21409A]/10 focus:border-[#21409A] transition-all font-medium text-gray-900"
+                  className={`${getInputClassName(hasFieldError('phone'))} pl-[136px]`}
                 />
                 <AnimatePresence>
                   {countryOpen && (
@@ -246,17 +387,31 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
                   )}
                 </AnimatePresence>
               </div>
+              {hasFieldError('phone') && (
+                <p id={getErrorId('phone')} className="text-xs font-semibold text-[#ED1C24] ml-1">
+                  {errors.phone}
+                </p>
+              )}
             </div>
             <div className="md:col-span-2 flex flex-col gap-2">
-              <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Address <span className="text-[#ED1C24]">*</span></label>
+              <label htmlFor="application-address" className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Address <span className="text-[#ED1C24]">*</span></label>
               <input
+                id="application-address"
                 type="text"
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                aria-invalid={hasFieldError('address')}
+                aria-describedby={getDescriptionIds('address')}
                 placeholder="Street, City, District"
-                className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#21409A]/10 focus:border-[#21409A] transition-all font-medium text-gray-900"
+                className={getInputClassName(hasFieldError('address'))}
               />
+              {hasFieldError('address') && (
+                <p id={getErrorId('address')} className="text-xs font-semibold text-[#ED1C24] ml-1">
+                  {errors.address}
+                </p>
+              )}
             </div>
           </div>
         </motion.section>
@@ -269,15 +424,24 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
         >
           <h3 className="text-[11px] font-black text-[#21409A] tracking-[0.2em] mb-6">Academic</h3>
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">School / College Name <span className="text-[#ED1C24]">*</span></label>
+            <label htmlFor="application-schoolName" className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">School / College Name <span className="text-[#ED1C24]">*</span></label>
             <input
+              id="application-schoolName"
               type="text"
               name="schoolName"
               value={formData.schoolName}
               onChange={handleInputChange}
+              onBlur={handleInputBlur}
+              aria-invalid={hasFieldError('schoolName')}
+              aria-describedby={getDescriptionIds('schoolName')}
               placeholder="Enter your last attended institution"
-              className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#21409A]/10 focus:border-[#21409A] transition-all font-medium text-gray-900"
+              className={getInputClassName(hasFieldError('schoolName'))}
             />
+            {hasFieldError('schoolName') && (
+              <p id={getErrorId('schoolName')} className="text-xs font-semibold text-[#ED1C24] ml-1">
+                {errors.schoolName}
+              </p>
+            )}
           </div>
         </motion.section>
 
@@ -290,16 +454,22 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
           <h3 className="text-[11px] font-black text-[#21409A] tracking-[0.2em] mb-6">Programme</h3>
           <div className="flex flex-col gap-2">
             <label className="text-[11px] font-bold text-gray-400 tracking-[0.15em] ml-1">Interested Programme <span className="text-[#ED1C24]">*</span></label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+              role="radiogroup"
+              aria-invalid={hasFieldError('program')}
+              aria-describedby={getDescriptionIds('program')}
+            >
               <button
                 type="button"
-                onClick={() => {
-                  setSelectedProgram('BIT');
-                  setFormData(prev => ({ ...prev, program: 'BIT' }));
-                }}
+                role="radio"
+                aria-checked={selectedProgram === 'BIT'}
+                onClick={() => handleProgramSelect('BIT')}
                 className={`p-6 border-2 rounded-2xl text-left transition-all ${selectedProgram === 'BIT'
                     ? 'border-[#21409A] bg-[#21409A]/5'
-                    : 'border-gray-100 bg-gray-50 hover:border-[#21409A]/20'
+                    : hasFieldError('program')
+                      ? 'border-[#ED1C24]/60 bg-[#ED1C24]/5'
+                      : 'border-gray-100 bg-gray-50 hover:border-[#21409A]/20'
                   }`}
               >
                 <div className={`font-bold mb-1 ${selectedProgram === 'BIT' ? 'text-[#21409A]' : 'text-gray-700'}`}>BSc (Hons) Computing</div>
@@ -307,19 +477,25 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  setSelectedProgram('BBA');
-                  setFormData(prev => ({ ...prev, program: 'BBA' }));
-                }}
+                role="radio"
+                aria-checked={selectedProgram === 'BBA'}
+                onClick={() => handleProgramSelect('BBA')}
                 className={`p-6 border-2 rounded-2xl text-left transition-all ${selectedProgram === 'BBA'
                     ? 'border-[#21409A] bg-[#21409A]/5'
-                    : 'border-gray-100 bg-gray-50 hover:border-[#21409A]/20'
+                    : hasFieldError('program')
+                      ? 'border-[#ED1C24]/60 bg-[#ED1C24]/5'
+                      : 'border-gray-100 bg-gray-50 hover:border-[#21409A]/20'
                   }`}
               >
                 <div className={`font-bold mb-1 ${selectedProgram === 'BBA' ? 'text-[#21409A]' : 'text-gray-700'}`}>BA (Hons) Business Administration</div>
                 <div className={`text-[10px] tracking-widest font-bold ${selectedProgram === 'BBA' ? 'text-gray-500' : 'text-gray-400'}`}>BBA - 3 Years</div>
               </button>
             </div>
+            {hasFieldError('program') && (
+              <p id={getErrorId('program')} className="text-xs font-semibold text-[#ED1C24] ml-1">
+                {errors.program}
+              </p>
+            )}
           </div>
         </motion.section>
       </motion.div>
@@ -328,15 +504,14 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
       <div className="flex justify-end items-center pt-10 border-t border-gray-100/50 mt-12">
         <Magnetic strength={0.2} maxDistance={15}>
           <button
-            type="button"
+            type="submit"
             className="px-10 py-3.5 bg-[#21409A] text-white rounded-xl font-bold text-[14px] flex items-center gap-3 shadow-xl shadow-[#21409A]/10 hover:brightness-110 transition-all active:scale-[0.98]"
-            onClick={() => setIsSubmitted(true)}
           >
             Submit Application <span className="text-lg">→</span>
           </button>
         </Magnetic>
       </div>
-    </div>
+    </form>
   );
 };
 

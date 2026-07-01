@@ -336,7 +336,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
       <section className="relative w-full min-h-[70vh] flex flex-col items-center justify-center pt-20 pb-16 md:pt-24 md:pb-20 overflow-hidden bg-[#1a1a1a]">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/course-details/course-details-hero.png"
+            src="/images/course-details/course-details-hero.webp"
             alt={course.title}
             fill
             className="object-cover opacity-40 brightness-50"
@@ -742,7 +742,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   className="group relative aspect-[16/9] rounded-[40px] overflow-hidden shadow-2xl bg-gray-100"
                 >
                   <Image 
-                    src={project.image || '/images/common/project-placeholder.png'} 
+                    src={project.image || '/images/course-details/course-details-hero.webp'} 
                     alt={project.title || "Student Project"} 
                     fill 
                     className="object-cover transition-transform duration-700 group-hover:scale-110" 
@@ -786,7 +786,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                   <div className="relative mb-8 flex h-32 w-32 items-center justify-center rounded-full bg-[#f0f4f8]">
                     <div className="relative h-28 w-28 overflow-hidden rounded-full bg-white shadow-inner">
                       <Image 
-                        src={member.image || '/images/common/avatar-placeholder.png'} 
+                        src={member.image || '/images/common/iic_logo.png'} 
                         alt={member.name || 'Faculty Member'} 
                         fill 
                         className="scale-[1.08] object-cover object-[50%_12%] [transform-origin:50%_12%]"

@@ -12,7 +12,7 @@ const Footer = () => {
       {/* Background Image with Dark Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/common/footer-bg.png"
+          src="/images/common/footer-bg.webp"
           alt="Successful Students Celebrating Graduation at Itahari International College"
           fill
           className="object-cover"

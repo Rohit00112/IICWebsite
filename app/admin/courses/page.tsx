@@ -1,7 +1,11 @@
 import React from 'react';
+
 import Link from 'next/link';
 import { getAllCourses } from '../../../lib/courses';
 import CourseTable from '../../../components/admin/CourseTable';
+
+export const dynamic = 'force-dynamic';
+
 
 const AdminCoursesPage = async () => {
   const courses = await getAllCourses();

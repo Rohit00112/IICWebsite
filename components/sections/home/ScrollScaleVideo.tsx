@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform }
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const VIDEO_SRC = '/videos/iic.mp4';
-const POSTER_SRC = '/images/home/tower_block.png';
+const POSTER_SRC = '/images/common/tower_block.JPG';
 type PinState = 'before' | 'active' | 'after';
 
 const ScrollScaleVideo = () => {

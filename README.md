@@ -31,8 +31,7 @@ components/
 lib/
   auth.ts db.ts courses.ts news.ts rate-limit.ts sanitize.ts validations/
 models/               # Mongoose models: Admin, Course, News
-data/                 # Seed JSON for courses & news
-scripts/seed.ts       # Seed script (DB + admin user)
+scripts/seed.ts       # Seed script (admin user)
 public/               # Static assets (images, fonts, icons)
 proxy.ts              # Edge proxy / middleware helper
 ```
@@ -66,13 +65,13 @@ proxy.ts              # Edge proxy / middleware helper
    admins enroll, because it encrypts their authenticator secrets and protects
    recovery-code hashes.
 
-3. (Optional) Seed the database with initial news, courses, and an admin user:
+3. (Optional) Seed the database with an admin user:
 
    ```bash
-   npx tsx scripts/seed.ts
+   MONGODB_URI=<your-mongodb-uri> ADMIN_PASSWORD=<temporary-admin-password> npx tsx scripts/seed.ts
    ```
 
-   > Note: `scripts/seed.ts` currently contains a hardcoded `MONGODB_URI` constant — replace it with `process.env.MONGODB_URI` before running in any shared environment, and rotate the embedded credential.
+   If `ADMIN_PASSWORD` is omitted, the local development fallback is `admin123`.
 
 4. Start the dev server:
 

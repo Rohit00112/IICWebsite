@@ -24,11 +24,11 @@ const collegeItems = [
   },
   {
     title: "Cafeteria",
-    image: "/images/about/cafeteria.png"
+    image: "/images/about/cafeteria.webp"
   },
   {
     title: "Seminar Hall",
-    image: "/images/common/seminar.png"
+    image: "/images/common/seminar.webp"
   }
 ];
 

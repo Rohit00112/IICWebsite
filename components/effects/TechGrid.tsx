@@ -5,6 +5,11 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useReducedMotion } from 'framer-motion';
 
+function seededNoise(index: number) {
+  const value = Math.sin(index * 12.9898) * 43758.5453;
+  return value - Math.floor(value);
+}
+
 function GridParticles({ count = 400, shouldReduceMotion }: { count?: number; shouldReduceMotion: boolean | null }) {
   const points = useRef<THREE.Points>(null!);
 
@@ -16,7 +21,7 @@ function GridParticles({ count = 400, shouldReduceMotion }: { count?: number; sh
     for (let i = 0; i < count; i++) {
       const x = (i % step) / step * 4 - 2;
       const y = Math.floor(i / step) / step * 4 - 2;
-      const z = (Math.random() - 0.5) * 0.5;
+      const z = (seededNoise(i) - 0.5) * 0.5;
 
       positions[i * 3] = x;
       positions[i * 3 + 1] = y;

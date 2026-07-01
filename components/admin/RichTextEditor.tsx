@@ -9,13 +9,16 @@ interface RichTextEditorProps {
   placeholder?: string;
 }
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange, placeholder }) => {
-  // Dynamically import ReactQuill to avoid SSR issues
-  const ReactQuill = useMemo(() => dynamic(() => import('react-quill-new'), { 
-    ssr: false,
-    loading: () => <div className="h-[400px] w-full bg-gray-50 animate-pulse rounded-xl border-2 border-gray-100 flex items-center justify-center text-gray-400 font-bold">Loading Visual Editor...</div>
-  }), []);
+const ReactQuill = dynamic(() => import('react-quill-new'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[400px] w-full bg-gray-50 animate-pulse rounded-xl border-2 border-gray-100 flex items-center justify-center text-gray-400 font-bold">
+      Loading Visual Editor...
+    </div>
+  ),
+});
 
+const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange, placeholder }) => {
   const modules = useMemo(() => ({
     toolbar: [
       [{ 'header': [1, 2, false] }],

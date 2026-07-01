@@ -143,7 +143,7 @@ const HeroSection = () => {
           className="absolute inset-x-0 bottom-0 w-full h-full"
         >
           <Image
-            src="/images/home/hero.png"
+            src="/images/home/hero.webp"
             alt="Itahari International College ING Block Building"
             fill
             sizes="(max-width: 1536px) 100vw, 1536px"

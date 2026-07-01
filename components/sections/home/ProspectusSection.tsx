@@ -5,6 +5,51 @@ import Image from 'next/image';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
 
+type ProspectusField = 'fullName' | 'email' | 'programme' | 'contactNumber';
+type ProspectusFormData = Record<ProspectusField, string>;
+type ProspectusErrors = Partial<Record<ProspectusField, string>>;
+type ProspectusTouched = Partial<Record<ProspectusField, boolean>>;
+
+const INITIAL_PROSPECTUS_FORM: ProspectusFormData = {
+  fullName: '',
+  email: '',
+  programme: '',
+  contactNumber: '',
+};
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const getDigits = (value: string) => value.replace(/\D/g, '');
+
+const validateProspectusForm = (values: ProspectusFormData): ProspectusErrors => {
+  const nextErrors: ProspectusErrors = {};
+  const phoneDigits = getDigits(values.contactNumber);
+
+  if (!values.fullName.trim()) {
+    nextErrors.fullName = 'Please enter your full name.';
+  } else if (values.fullName.trim().length < 2) {
+    nextErrors.fullName = 'Name must be at least 2 characters.';
+  }
+
+  if (!values.email.trim()) {
+    nextErrors.email = 'Please enter your email address.';
+  } else if (!EMAIL_PATTERN.test(values.email.trim())) {
+    nextErrors.email = 'Please enter a valid email address.';
+  }
+
+  if (!values.programme) {
+    nextErrors.programme = 'Please select a programme.';
+  }
+
+  if (!values.contactNumber.trim()) {
+    nextErrors.contactNumber = 'Please enter your contact number.';
+  } else if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+    nextErrors.contactNumber = 'Please enter a valid contact number.';
+  }
+
+  return nextErrors;
+};
+
 const alumniStory = {
   name: 'Utsav Dhungana',
   quote: 'The final year project at IIC was instrumental in my career development. It allowed me to apply my knowledge and skills to a real-world problem, showcasing my abilities and preparing me for the workforce.',
@@ -16,9 +61,65 @@ const alumniStory = {
 
 const ProspectusSection = () => {
   const brochureUrl = 'https://iic.edu.np/pdf/iic_brochure.pdf';
+  const [formData, setFormData] = React.useState<ProspectusFormData>(INITIAL_PROSPECTUS_FORM);
+  const [errors, setErrors] = React.useState<ProspectusErrors>({});
+  const [touched, setTouched] = React.useState<ProspectusTouched>({});
+
+  const hasFieldError = (field: ProspectusField) => Boolean(touched[field] && errors[field]);
+  const getErrorId = (field: ProspectusField) => `prospectus-${field}-error`;
+
+  const getInputClassName = (field: ProspectusField) => {
+    const invalid = hasFieldError(field);
+    return `w-full rounded-2xl border py-3.5 text-sm sm:text-base text-white transition-all focus:outline-none focus:ring-2 ${
+      invalid
+        ? 'border-[#FFB4B4]/80 bg-[#ED1C24]/10 placeholder:text-white/35 focus:border-[#FFB4B4] focus:ring-[#ED1C24]/25'
+        : 'border-white/12 bg-white/[0.06] placeholder:text-white/30 focus:border-[#74C044]/60 focus:bg-white/[0.1] focus:ring-[#74C044]/40'
+    }`;
+  };
+
+  const getSelectClassName = () => {
+    const invalid = hasFieldError('programme');
+    return `w-full appearance-none cursor-pointer rounded-2xl border py-3.5 pl-4 pr-10 text-sm sm:text-base text-white/70 transition-all focus:outline-none focus:ring-2 [&>option]:bg-[#21409A] [&>option]:text-white ${
+      invalid
+        ? 'border-[#FFB4B4]/80 bg-[#ED1C24]/10 focus:border-[#FFB4B4] focus:ring-[#ED1C24]/25'
+        : 'border-white/12 bg-white/[0.06] focus:border-[#74C044]/60 focus:bg-white/[0.1] focus:ring-[#74C044]/40'
+    }`;
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = event.target;
+    const field = name as ProspectusField;
+    const nextFormData = { ...formData, [field]: value };
+
+    setFormData(nextFormData);
+
+    if (touched[field] || errors[field]) {
+      setErrors(validateProspectusForm(nextFormData));
+    }
+  };
+
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const field = event.target.name as ProspectusField;
+    setTouched(prev => ({ ...prev, [field]: true }));
+    setErrors(validateProspectusForm(formData));
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const nextErrors = validateProspectusForm(formData);
+
+    setErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      setTouched({
+        fullName: true,
+        email: true,
+        programme: true,
+        contactNumber: true,
+      });
+      return;
+    }
+
     window.open(brochureUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -121,62 +222,112 @@ const ProspectusSection = () => {
             </div>
 
             {/* Form Fields */}
-            <form className="relative flex flex-1 flex-col space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
+            <form className="relative flex flex-1 flex-col space-y-4 sm:space-y-5" onSubmit={handleSubmit} noValidate>
               <div className="space-y-2">
-                <label className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Full Name</label>
+                <label htmlFor="prospectus-fullName" className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Full Name <span className="text-[#74C044]">*</span></label>
                 <div className="group relative">
                   <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35 transition-colors group-focus-within:text-[#74C044]">
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                   </span>
                   <input
+                    id="prospectus-fullName"
+                    name="fullName"
                     type="text"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    onBlur={handleInputBlur}
+                    aria-invalid={hasFieldError('fullName')}
+                    aria-describedby={hasFieldError('fullName') ? getErrorId('fullName') : undefined}
                     placeholder="John Doe"
-                    className="w-full rounded-2xl border border-white/12 bg-white/[0.06] py-3.5 pl-12 pr-4 text-sm sm:text-base text-white placeholder:text-white/30 transition-all focus:border-[#74C044]/60 focus:bg-white/[0.1] focus:outline-none focus:ring-2 focus:ring-[#74C044]/40"
+                    className={`${getInputClassName('fullName')} pl-12 pr-4`}
                   />
                 </div>
+                {hasFieldError('fullName') && (
+                  <p id={getErrorId('fullName')} className="ml-1 text-xs font-semibold text-[#FFE3E3]">
+                    {errors.fullName}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
-                <label className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Email Address</label>
+                <label htmlFor="prospectus-email" className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Email Address <span className="text-[#74C044]">*</span></label>
                 <div className="group relative">
                   <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35 transition-colors group-focus-within:text-[#74C044]">
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l9 6 9-6M3 8v8a2 2 0 002 2h14a2 2 0 002-2V8M3 8a2 2 0 012-2h14a2 2 0 012 2" /></svg>
                   </span>
                   <input
+                    id="prospectus-email"
+                    name="email"
                     type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    onBlur={handleInputBlur}
+                    aria-invalid={hasFieldError('email')}
+                    aria-describedby={hasFieldError('email') ? getErrorId('email') : undefined}
                     placeholder="john@example.com"
-                    className="w-full rounded-2xl border border-white/12 bg-white/[0.06] py-3.5 pl-12 pr-4 text-sm sm:text-base text-white placeholder:text-white/30 transition-all focus:border-[#74C044]/60 focus:bg-white/[0.1] focus:outline-none focus:ring-2 focus:ring-[#74C044]/40"
+                    className={`${getInputClassName('email')} pl-12 pr-4`}
                   />
                 </div>
+                {hasFieldError('email') && (
+                  <p id={getErrorId('email')} className="ml-1 text-xs font-semibold text-[#FFE3E3]">
+                    {errors.email}
+                  </p>
+                )}
               </div>
 
               <div className="grid gap-4 sm:gap-5 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Programme</label>
+                  <label htmlFor="prospectus-programme" className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Programme <span className="text-[#74C044]">*</span></label>
                   <div className="group relative">
-                    <select className="w-full appearance-none cursor-pointer rounded-2xl border border-white/12 bg-white/[0.06] py-3.5 pl-4 pr-10 text-sm sm:text-base text-white/70 transition-all focus:border-[#74C044]/60 focus:bg-white/[0.1] focus:outline-none focus:ring-2 focus:ring-[#74C044]/40 [&>option]:bg-[#21409A] [&>option]:text-white">
-                      <option>Select a Programme</option>
-                      <option>BSc (Hons) Computing</option>
-                      <option>BBA (Hons) Business Administration</option>
+                    <select
+                      id="prospectus-programme"
+                      name="programme"
+                      value={formData.programme}
+                      onChange={handleInputChange}
+                      onBlur={handleInputBlur}
+                      aria-invalid={hasFieldError('programme')}
+                      aria-describedby={hasFieldError('programme') ? getErrorId('programme') : undefined}
+                      className={getSelectClassName()}
+                    >
+                      <option value="">Select a Programme</option>
+                      <option value="BSc (Hons) Computing">BSc (Hons) Computing</option>
+                      <option value="BBA (Hons) Business Administration">BBA (Hons) Business Administration</option>
                     </select>
                     <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/40 transition-colors group-focus-within:text-[#74C044]">
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M6 9l6 6 6-6" /></svg>
                     </span>
                   </div>
+                  {hasFieldError('programme') && (
+                    <p id={getErrorId('programme')} className="ml-1 text-xs font-semibold text-[#FFE3E3]">
+                      {errors.programme}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
-                  <label className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Contact Number</label>
+                  <label htmlFor="prospectus-contactNumber" className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Contact Number <span className="text-[#74C044]">*</span></label>
                   <div className="group relative">
                     <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35 transition-colors group-focus-within:text-[#74C044]">
                       <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.2 3.6a1 1 0 01-.5 1.21l-1.7.85a11 11 0 005.5 5.5l.85-1.7a1 1 0 011.2-.5l3.6 1.2a1 1 0 01.69.95V19a2 2 0 01-2 2h-1C9.7 21 3 14.3 3 6V5z" /></svg>
                     </span>
                     <input
+                      id="prospectus-contactNumber"
+                      name="contactNumber"
                       type="tel"
+                      value={formData.contactNumber}
+                      onChange={handleInputChange}
+                      onBlur={handleInputBlur}
+                      aria-invalid={hasFieldError('contactNumber')}
+                      aria-describedby={hasFieldError('contactNumber') ? getErrorId('contactNumber') : undefined}
                       placeholder="+977 9800000000"
-                      className="w-full rounded-2xl border border-white/12 bg-white/[0.06] py-3.5 pl-12 pr-4 text-sm sm:text-base text-white placeholder:text-white/30 transition-all focus:border-[#74C044]/60 focus:bg-white/[0.1] focus:outline-none focus:ring-2 focus:ring-[#74C044]/40"
+                      className={`${getInputClassName('contactNumber')} pl-12 pr-4`}
                     />
                   </div>
+                  {hasFieldError('contactNumber') && (
+                    <p id={getErrorId('contactNumber')} className="ml-1 text-xs font-semibold text-[#FFE3E3]">
+                      {errors.contactNumber}
+                    </p>
+                  )}
                 </div>
               </div>
 

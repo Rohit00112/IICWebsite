@@ -1,7 +1,11 @@
 import React from 'react';
+
 import Link from 'next/link';
 import { getAllScholarshipBatches } from '@/lib/scholarships';
 import ScholarshipBatchTable from '@/components/admin/ScholarshipBatchTable';
+
+export const dynamic = 'force-dynamic';
+
 
 const AdminScholarshipsPage = async () => {
   const batches = await getAllScholarshipBatches();

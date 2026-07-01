@@ -86,7 +86,7 @@ function mapNewsItem(doc: NewsDocument): NewsItem {
     title: doc.title,
     description: doc.description,
     content: doc.content,
-    image: toSafeImageSrc(doc.image, '/images/home/tower_block.png'),
+    image: toSafeImageSrc(doc.image, '/images/common/tower_block.JPG'),
     slug: doc.slug || id,
     featured: doc.featured,
     author: {

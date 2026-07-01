@@ -120,7 +120,7 @@ export default function RootLayout({
                     "width": "450",
                     "height": "80"
                   },
-                  "image": "https://iic.edu.np/images/home/hero.png",
+                  "image": "https://iic.edu.np/images/home/hero.webp",
                   "description": "Itahari International College (IIC) develops impactful industry-ready graduates through UK-awarded IT and Business degrees in partnership with London Metropolitan University.",
                   "foundingDate": "2017",
                   "knowsAbout": ["Information Technology", "Business Administration", "Higher Education", "UK Degrees"],

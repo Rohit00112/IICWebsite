@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useReducedMotion } from 'framer-motion';
@@ -89,39 +89,53 @@ interface FluidPlaneProps {
   shouldReduceMotion: boolean | null;
 }
 
+type FluidUniforms = {
+  uTime: { value: number };
+  uResolution: { value: THREE.Vector2 };
+  uMouse: { value: THREE.Vector2 };
+  uScroll: { value: number };
+};
+
 function FluidPlane({ shouldReduceMotion }: FluidPlaneProps) {
   const meshRef = useRef<THREE.Mesh>(null!);
+  const materialRef = useRef<THREE.ShaderMaterial>(null!);
   const { size } = useThree();
-
-  const uniforms = useMemo(() => ({
+  const uniforms = useMemo<FluidUniforms>(() => ({
     uTime: { value: 0 },
-    uResolution: { value: new THREE.Vector2(size.width, size.height) },
+    uResolution: { value: new THREE.Vector2(0, 0) },
     uMouse: { value: new THREE.Vector2(0.5, 0.5) },
     uScroll: { value: 0 }
-  }), [size]);
+  }), []);
+
+  useEffect(() => {
+    const currentUniforms = materialRef.current.uniforms as unknown as FluidUniforms;
+    currentUniforms.uResolution.value.set(size.width, size.height);
+  }, [size.width, size.height]);
 
   useFrame((state, delta) => {
     const { mouse: stateMouse } = state;
+    const currentUniforms = materialRef.current.uniforms as unknown as FluidUniforms;
     
     // Slow down time significantly for reduced motion
     const timeScale = shouldReduceMotion ? 0.05 : 0.15;
     // Manual increment to avoid THREE.Clock deprecation warnings
-    uniforms.uTime.value += delta * timeScale;
+    currentUniforms.uTime.value += delta * timeScale;
     
     // Smooth mouse and scroll follow (slower for reduced motion)
     const lerpFactor = shouldReduceMotion ? 0.01 : 0.05;
-    uniforms.uMouse.value.x += (stateMouse.x * 0.5 + 0.5 - uniforms.uMouse.value.x) * lerpFactor;
-    uniforms.uMouse.value.y += (stateMouse.y * 0.5 + 0.5 - uniforms.uMouse.value.y) * lerpFactor;
+    currentUniforms.uMouse.value.x += (stateMouse.x * 0.5 + 0.5 - currentUniforms.uMouse.value.x) * lerpFactor;
+    currentUniforms.uMouse.value.y += (stateMouse.y * 0.5 + 0.5 - currentUniforms.uMouse.value.y) * lerpFactor;
     
     // Smooth scroll follow
     const targetScroll = typeof window !== 'undefined' ? window.scrollY * 0.001 : 0;
-    uniforms.uScroll.value += (targetScroll - uniforms.uScroll.value) * lerpFactor;
+    currentUniforms.uScroll.value += (targetScroll - currentUniforms.uScroll.value) * lerpFactor;
   });
 
   return (
     <mesh ref={meshRef}>
       <planeGeometry args={[2, 2]} />
       <shaderMaterial
+        ref={materialRef}
         fragmentShader={fragmentShader}
         vertexShader={vertexShader}
         uniforms={uniforms}

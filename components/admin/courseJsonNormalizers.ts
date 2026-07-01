@@ -130,14 +130,14 @@ export const courseJsonExamples = {
     name: "Dr. Jane Smith",
     role: "Senior Lecturer",
     description: "Academic background and expertise.",
-    image: "/images/profiles/sarah.png"
+    image: "/images/common/iic_logo.png"
   }
 ]`,
   projects: `projects: [
   {
     title: "Smart Attendance System",
     cohort: "Class of 2026",
-    image: "/images/course-details/course-details-hero.png"
+    image: "/images/course-details/course-details-hero.webp"
   }
 ]`,
   faqs: `faqs: [

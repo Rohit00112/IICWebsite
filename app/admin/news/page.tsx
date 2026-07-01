@@ -1,7 +1,11 @@
 import React from 'react';
+
 import Link from 'next/link';
 import { getAllNews } from '../../../lib/news';
 import NewsTable from '../../../components/admin/NewsTable';
+
+export const dynamic = 'force-dynamic';
+
 
 const AdminNewsPage = async () => {
   const news = await getAllNews();

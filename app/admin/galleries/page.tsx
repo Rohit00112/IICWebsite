@@ -1,6 +1,10 @@
 import Link from 'next/link';
+
 import EventGalleryTable from '@/components/admin/EventGalleryTable';
 import { getAllEventGalleries } from '@/lib/event-galleries';
+
+export const dynamic = 'force-dynamic';
+
 
 export default async function AdminGalleriesPage() {
   const galleries = await getAllEventGalleries();

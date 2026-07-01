@@ -81,7 +81,7 @@ const PartnerSection = () => {
         <div className="relative w-full mb-10 md:mb-16">
           <div className="relative w-full aspect-[2000/1164] overflow-hidden">
             <Image
-              src="/images/home/lmu building.png"
+              src="/images/home/lmu building.webp"
               alt="LMU Building"
               fill
               sizes="100vw"

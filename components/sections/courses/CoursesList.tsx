@@ -35,7 +35,7 @@ const courseDefaults: Record<string, Partial<CourseListItem>> = {
     description: 'A programme for future-ready technologists. Study software engineering, application development, artificial intelligence, and systems analysis through practical projects that connect theory with real industry expectations.',
     credits: '360 Credits',
     modules: '17 Modules',
-    image: '/images/courses/bit.png',
+    image: '/images/courses/bit.webp',
     imagePosition: '50% center',
     features: ['Software Engineering', 'AI'],
   },
@@ -136,12 +136,28 @@ const toCourseListItem = (course: CourseItem): CourseListItem => {
     description: listing.description || course.description || defaults.description || 'Explore a London Metropolitan University awarded programme designed for practical learning and career readiness.',
     credits: listing.creditsLabel || (creditTotal ? `${creditTotal} Credits` : defaults.credits) || '360 Credits',
     modules: listing.modulesLabel || (moduleCount ? `${moduleCount} Modules` : defaults.modules) || '17 Modules',
-    image: listing.image || defaults.image || course.image || '/images/courses/course-hero.png',
+    image: listing.image || defaults.image || course.image || '/images/courses/course-hero.JPG',
     imagePosition: defaults.imagePosition || '50% center',
     slug: course.slug,
     features: topModulePills.length > 0 ? topModulePills.slice(0, 2) : (defaults.features || ['Career Ready', 'Practical Learning']),
   };
 };
+
+const fallbackCourseCards = Object.entries(courseDefaults).map(([slug, defaults]) => ({
+  title: defaults.title || '',
+  specialism: defaults.specialism || '',
+  officialTitle: defaults.category || defaults.title || '',
+  category: defaults.category || 'Undergraduate',
+  duration: defaults.duration || '3 Years',
+  bg: defaults.bg || '#21409A',
+  description: defaults.description || 'Explore a London Metropolitan University awarded programme designed for practical learning and career readiness.',
+  credits: defaults.credits || '360 Credits',
+  modules: defaults.modules || '17 Modules',
+  image: defaults.image || '/images/courses/course-hero.JPG',
+  imagePosition: defaults.imagePosition || '50% center',
+  slug,
+  features: defaults.features || ['Career Ready', 'Practical Learning'],
+}));
 
 const CourseCard = ({ course, index, total }: { course: CourseListItem, index: number, total: number }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -361,11 +377,7 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
 };
 
 const CoursesList = ({ courses }: { courses: CourseItem[] }) => {
-  const courseCards = courses.map(toCourseListItem);
-
-  if (courseCards.length === 0) {
-    return null;
-  }
+  const courseCards = courses.length > 0 ? courses.map(toCourseListItem) : fallbackCourseCards;
 
   return (
     <section className="relative w-full py-14 md:py-24 bg-[#f3f6fb] overflow-hidden">

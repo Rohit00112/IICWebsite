@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import Magnetic from '@/components/effects/Magnetic';
 
 export default function NotFound() {
@@ -40,7 +39,7 @@ export default function NotFound() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-gray-500 text-lg md:text-xl font-medium mb-12 leading-relaxed font-iic"
           >
-            The page you're looking for does not exist or has moved. Let's get you back to IIC.
+            The page you&apos;re looking for does not exist or has moved. Let&apos;s get you back to IIC.
           </motion.p>
 
           <motion.div

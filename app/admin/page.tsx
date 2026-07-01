@@ -1,10 +1,14 @@
 import React from 'react';
+
 import News from '../../models/News';
 import Course from '../../models/Course';
 import dbConnect from '../../lib/db';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { toSafeImageSrc } from '../../lib/image-source';
+
+export const dynamic = 'force-dynamic';
+
 
 const AdminDashboard = async () => {
   await dbConnect();
@@ -69,7 +73,7 @@ const AdminDashboard = async () => {
           </div>
           <div className="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden">
             {latestNews.map((item, idx) => {
-              const imageSrc = toSafeImageSrc(item.image, '/images/home/tower_block.png');
+              const imageSrc = toSafeImageSrc(item.image, '/images/common/tower_block.JPG');
 
               return (
                 <div key={item._id.toString()} className={`p-6 flex items-center gap-6 ${idx !== latestNews.length - 1 ? 'border-b border-gray-50' : ''}`}>

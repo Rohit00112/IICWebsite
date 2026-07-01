@@ -50,7 +50,7 @@ const Leadership = () => {
             <div className={portraitBackdropClass} />
 
             <Image
-              src="/images/about/ing-ceo.png"
+              src="/images/about/ing-ceo.webp"
               alt="Chairman"
               fill
               className="object-contain object-bottom relative z-10"
@@ -96,7 +96,7 @@ const Leadership = () => {
             <div className={portraitBackdropClass} />
 
             <Image
-              src="/images/about/iic-ceo.png"
+              src="/images/about/iic-ceo.webp"
               alt="CEO"
               fill
               className="object-contain object-bottom relative z-10"

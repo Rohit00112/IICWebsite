@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '@/components/layout/Footer';
 import AboutHero from '@/components/sections/about-us/AboutHero';
 import MissionVision from '@/components/sections/about-us/MissionVision';
 import IngSection from '@/components/sections/about-us/IngSection';
