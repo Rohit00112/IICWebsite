@@ -505,11 +505,11 @@ const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) =>
               onFocus={() => setIsAutoScrollPaused(true)}
               onBlur={() => setIsAutoScrollPaused(false)}
               onScroll={updateActiveIndexFromScroll}
-              className="-mx-6 overflow-x-auto px-6 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="-mx-6 overflow-x-auto scroll-smooth px-6 pb-6 [scrollbar-width:thin]"
             >
-              <div ref={trackRef} className="flex snap-x snap-mandatory gap-8">
+              <div ref={trackRef} className="flex w-max snap-x snap-mandatory gap-8">
                 {batches.map((batch) => (
-                  <div key={batch.id} className="min-w-full snap-start">
+                  <div key={batch.id} className="w-[calc(100vw-3rem)] max-w-[1120px] shrink-0 snap-start md:w-[82vw] lg:w-[78vw] xl:w-[72vw]">
                     <IngSpotlight batch={batch} recipient={batch.recipients[0]} />
                   </div>
                 ))}
