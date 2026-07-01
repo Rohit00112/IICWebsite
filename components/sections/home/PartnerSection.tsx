@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import RevealText from '../../effects/RevealText';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
@@ -10,13 +10,6 @@ import AnimeReveal from '../../effects/AnimeReveal';
 const PartnerSection = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const yBuilding = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
 
   const awardCards = [
     '/images/home/Awards-03.png',
@@ -86,18 +79,16 @@ const PartnerSection = () => {
         </div>
 
         <div className="relative w-full mb-10 md:mb-16">
-          <div className="relative w-full aspect-[16/9] md:aspect-[21/6] overflow-hidden">
-            <motion.div style={{ y: yBuilding }} className="absolute inset-0 w-full h-[130%] -top-[15%]">
-              <Image
-                src="/images/home/lmu building.png"
-                alt="LMU Building"
-                fill
-                sizes="100vw"
-                priority
-                loading="eager"
-                className="object-cover"
-              />
-            </motion.div>
+          <div className="relative w-full aspect-[2000/1164] overflow-hidden">
+            <Image
+              src="/images/home/lmu building.png"
+              alt="LMU Building"
+              fill
+              sizes="100vw"
+              priority
+              loading="eager"
+              className="object-cover"
+            />
             <div className="absolute inset-0 bg-black/5 opacity-20"></div>
           </div>
 

@@ -7,8 +7,8 @@ import { motion } from 'framer-motion';
 
 const IngSection = () => {
   return (
-    <section className="py-16 md:py-24 bg-[#FAFAFA]">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-6">
+    <section className="bg-white py-16 md:py-24">
+      <div className="mx-auto max-w-[1680px] px-4 md:px-6">
         {/* Top Header */}
         <div className="flex flex-col items-center justify-center mb-10 md:mb-16 text-center">
           <div className="relative w-56 h-24 md:w-72 md:h-32">
@@ -115,6 +115,34 @@ const IngSection = () => {
                 All our programs are fully approved by the Government of Nepal and recognized by Tribhuvan University as equivalent to their respective degrees.
               </p>
             </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true, margin: "-60px", amount: 0.18 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto mt-16 max-w-[1600px] md:mt-24"
+        >
+          <div className="mb-8 text-center md:mb-10">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-[#74C044] md:text-xs">
+              ING Ecosystem
+            </p>
+            <h3 className="font-iic text-3xl font-black leading-tight tracking-tight text-[#4A4A4A] md:text-5xl">
+              <span className="text-[#74C044]">ING</span> Today
+            </h3>
+          </div>
+
+          <div className="overflow-hidden bg-transparent">
+            <Image
+              src="/images/about/ING-today.jpg"
+              alt="ING Today overview of Innovate Nepal Group"
+              width={1920}
+              height={1080}
+              className="h-auto w-full"
+              sizes="(max-width: 768px) calc(100vw - 32px), (max-width: 1680px) calc(100vw - 48px), 1600px"
+            />
           </div>
         </motion.div>
       </div>

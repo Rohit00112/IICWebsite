@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
 
+const portraitBackdropClass = "pointer-events-none absolute bottom-[-8%] left-1/2 h-[52%] w-[90%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(ellipse_at_50%_28%,#365CC2_0%,#284BAA_55%,#1F3D94_100%)] shadow-[0_28px_80px_rgba(33,64,154,0.14)] transition-transform duration-500 group-hover:scale-[1.025] md:w-[88%]";
+
 const Leadership = () => {
   return (
     <section className="pt-16 md:pt-20 bg-white">
@@ -42,10 +44,10 @@ const Leadership = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group"
+            className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group overflow-hidden"
           >
             {/* Background Shape */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] h-[45%] bg-[#21409A] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
+            <div className={portraitBackdropClass} />
 
             <Image
               src="/images/about/ing-ceo.png"
@@ -88,10 +90,10 @@ const Leadership = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group"
+            className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group overflow-hidden"
           >
             {/* Background Shape */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] h-[45%] bg-[#21409A] rounded-t-[160px] md:rounded-t-[200px] shadow-2xl transition-all duration-500 group-hover:scale-105" />
+            <div className={portraitBackdropClass} />
 
             <Image
               src="/images/about/iic-ceo.png"
