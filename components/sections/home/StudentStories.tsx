@@ -75,10 +75,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
     >
       <Tilt strength={4} className="h-full">
         <div
-          className={`relative overflow-hidden p-6 sm:p-8 md:p-12 rounded-[24px] md:rounded-[32px] transition-all duration-300 h-full ${item.featured
-            ? 'bg-[#21409A] text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)]'
-            : 'bg-white text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] border border-gray-100'
-            }`}
+          className="relative h-full overflow-hidden rounded-[24px] border border-gray-100 bg-white p-6 text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] transition-all duration-300 sm:p-8 md:rounded-[32px] md:p-12"
           style={{ willChange: 'transform, opacity' }}
         >
           {/* Image layer - clip-path bloom from corner reveals image over card */}
@@ -121,15 +118,14 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
             className="relative z-10 flex h-full flex-col"
           >
             {/* Quote Icon */}
-            <div className={`shrink-0 text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 leading-none ${item.featured ? 'text-white/40' : 'text-blue-200'} font-serif`}>
+            <div className="mb-4 shrink-0 font-serif text-4xl font-bold leading-none text-blue-200 sm:mb-6 sm:text-5xl md:text-6xl">
               &ldquo;
             </div>
 
             {/* Quote Text */}
             <RevealText
               text={item.quote}
-              className={`min-h-[180px] md:min-h-[196px] content-start text-sm sm:text-base md:text-lg font-medium leading-relaxed italic mb-6 sm:mb-8 ${item.featured ? 'text-white/90' : 'text-gray-700'
-                }`}
+              className="mb-6 min-h-[180px] content-start text-sm font-medium italic leading-relaxed text-gray-700 sm:mb-8 sm:text-base md:min-h-[196px] md:text-lg"
               delay={0.4}
             />
 
@@ -146,10 +142,10 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
                 />
               </div>
               <div>
-                <h4 className={`text-base md:text-lg font-bold font-iic ${item.featured ? 'text-white' : 'text-[#1a1a1a]'}`}>
+                <h4 className="font-iic text-base font-bold text-[#1a1a1a] md:text-lg">
                   {item.name}
                 </h4>
-                <p className={`text-xs md:text-sm font-medium ${item.featured ? 'text-white/60' : 'text-gray-400'}`}>
+                <p className="text-xs font-medium text-gray-400 md:text-sm">
                   {item.degree}
                 </p>
               </div>
@@ -182,7 +178,7 @@ const StudentStories = () => {
   const containerRef = useRef(null);
 
   return (
-    <section ref={containerRef} className="relative w-full bg-[#f8fafc] pt-16 pb-8 overflow-hidden md:pt-24 md:pb-8">
+    <section ref={containerRef} className="relative w-full overflow-hidden bg-white pt-16 pb-8 md:pt-24 md:pb-8">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-16">

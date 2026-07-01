@@ -402,7 +402,7 @@ const IngSpotlight = ({ batch, recipient }: { batch: ScholarshipBatch; recipient
       transition={{ duration: 0.8, ease: EASE }}
       className="grid items-stretch gap-8 md:grid-cols-2 md:gap-12"
     >
-      <div className="group relative aspect-[4/5] overflow-hidden rounded-3xl bg-[#EEF7EA] shadow-xl shadow-[#74C044]/15">
+      <div className="group relative aspect-[3/4] overflow-hidden rounded-3xl bg-[#EEF7EA] shadow-xl shadow-[#74C044]/15">
         <Image
           src={recipient?.image || batch.groupImage || fallbackGroupImage}
           alt={recipient?.name || `${batch.year} ING Postgraduate Scholar`}

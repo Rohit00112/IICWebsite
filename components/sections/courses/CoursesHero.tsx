@@ -41,7 +41,7 @@ const CoursesHero = () => {
 
           <AnimeReveal
             as="h1"
-            text="Compete globally"
+            text="Compete Globally"
             className="text-4xl md:text-6xl lg:text-[100px] font-black text-[#21409A] mb-8 leading-[1] tracking-tight justify-center"
             staggerFrom="center"
             delay={0.2}
