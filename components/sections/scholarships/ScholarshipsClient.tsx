@@ -444,7 +444,6 @@ const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) =>
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const activeIndexRef = useRef(0);
-  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
 
   const updateActiveIndexFromScroll = () => {
     const viewport = viewportRef.current;
@@ -470,14 +469,25 @@ const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) =>
   };
 
   useEffect(() => {
-    if (batches.length <= 1 || isAutoScrollPaused) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (batches.length <= 1) return;
 
-    const timer = window.setInterval(() => {
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let timeoutId: number | undefined;
+    let frameId: number | undefined;
+
+    const stopAutoScroll = () => {
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      if (frameId !== undefined) window.cancelAnimationFrame(frameId);
+      timeoutId = undefined;
+      frameId = undefined;
+    };
+
+    const scrollToNextBatch = () => {
       const viewport = viewportRef.current;
       const track = trackRef.current;
 
       if (!viewport || !track) return;
+      if (document.visibilityState !== 'visible' || motionQuery.matches) return;
 
       const nextIndex = (activeIndexRef.current + 1) % batches.length;
       const nextSlide = track.children[nextIndex] as HTMLElement | undefined;
@@ -487,10 +497,49 @@ const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) =>
         left: nextSlide ? nextSlide.offsetLeft - track.offsetLeft : viewport.clientWidth * nextIndex,
         behavior: 'smooth',
       });
-    }, 3000);
+    };
 
-    return () => window.clearInterval(timer);
-  }, [batches.length, isAutoScrollPaused]);
+    const scheduleAutoScroll = (delay = 3000) => {
+      stopAutoScroll();
+      timeoutId = window.setTimeout(() => {
+        frameId = window.requestAnimationFrame(() => {
+          scrollToNextBatch();
+          scheduleAutoScroll();
+        });
+      }, delay);
+    };
+
+    const startAutoScroll = (delay = 1000) => {
+      if (document.visibilityState !== 'visible' || motionQuery.matches) return;
+      scheduleAutoScroll(delay);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        startAutoScroll(600);
+      } else {
+        stopAutoScroll();
+      }
+    };
+
+    const handleMotionPreferenceChange = () => {
+      if (motionQuery.matches) {
+        stopAutoScroll();
+      } else {
+        startAutoScroll(600);
+      }
+    };
+
+    startAutoScroll();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    motionQuery.addEventListener('change', handleMotionPreferenceChange);
+
+    return () => {
+      stopAutoScroll();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      motionQuery.removeEventListener('change', handleMotionPreferenceChange);
+    };
+  }, [batches.length]);
 
   return (
     <section id="ing-postgraduate-scholarship" className="scroll-mt-8 bg-[#F4F7FA] py-16 md:py-24">
@@ -500,10 +549,6 @@ const FullScholarshipSection = ({ batches }: { batches: ScholarshipBatch[] }) =>
           {latestBatch ? (
             <div
               ref={viewportRef}
-              onMouseEnter={() => setIsAutoScrollPaused(true)}
-              onMouseLeave={() => setIsAutoScrollPaused(false)}
-              onFocus={() => setIsAutoScrollPaused(true)}
-              onBlur={() => setIsAutoScrollPaused(false)}
               onScroll={updateActiveIndexFromScroll}
               className="-mx-6 overflow-x-auto px-6 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
