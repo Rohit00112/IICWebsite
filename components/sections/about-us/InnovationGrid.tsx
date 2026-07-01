@@ -12,7 +12,7 @@ const collegeItems = [
   },
   { 
     title: "Innovation Lab", 
-    image: "/images/about/innovation.JPG" 
+    image: "/images/common/innovation.JPG" 
   },
   { 
     title: "Lecture Theatres",
@@ -24,7 +24,7 @@ const collegeItems = [
   },
   {
     title: "Cafeteria",
-    image: "/images/about/img1.png"
+    image: "/images/about/cafeteria.png"
   },
   {
     title: "Seminar Hall",
