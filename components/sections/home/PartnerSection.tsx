@@ -46,34 +46,34 @@ const PartnerSection = () => {
           </div>
         </div>
 
-        <div className="grid w-full grid-cols-1 items-center justify-items-center gap-6 px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-10 max-w-[1180px] mb-10 md:mb-14">
+        <div className="grid w-full max-w-[1240px] grid-cols-1 items-center justify-items-center gap-7 px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-8 mb-10 md:mb-14">
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.5 }}
-            className="relative h-[118px] w-full max-w-[390px] overflow-hidden sm:h-[138px] sm:max-w-[470px] md:h-[150px] md:max-w-[540px] md:justify-self-end"
+            className="relative h-[120px] w-full max-w-[500px] overflow-hidden sm:h-[136px] md:h-[150px] md:max-w-[540px] md:justify-self-end"
           >
             <Image
               src="/images/home/lmu brand 2.png"
               alt="London Metropolitan University Official Logo"
               fill
-              sizes="(max-width: 640px) 390px, (max-width: 768px) 470px, 540px"
+              sizes="(max-width: 768px) min(100vw - 32px, 500px), 540px"
               className="object-cover object-[50%_34%]"
             />
           </motion.div>
-          <div className="hidden h-20 w-[1.5px] bg-gray-300 md:block"></div>
+          <div className="hidden h-24 w-[1.5px] bg-gray-300 md:block"></div>
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.7 }}
-            className="relative h-[92px] w-full max-w-[300px] overflow-hidden sm:h-[108px] sm:max-w-[360px] md:h-[118px] md:max-w-[390px] md:justify-self-start"
+            className="relative h-[120px] w-full max-w-[500px] overflow-hidden sm:h-[136px] md:h-[150px] md:max-w-[540px] md:justify-self-start"
           >
             <Image
-              src="/images/home/lmu brand 1.jpeg"
+              src="/images/home/lmu brand 1.png"
               alt="Times Higher Education World University Ranking 2025"
               fill
-              sizes="(max-width: 640px) 300px, (max-width: 768px) 360px, 390px"
-              className="object-cover object-center"
+              sizes="(max-width: 768px) min(100vw - 32px, 500px), 540px"
+              className="object-contain object-center"
             />
           </motion.div>
         </div>
