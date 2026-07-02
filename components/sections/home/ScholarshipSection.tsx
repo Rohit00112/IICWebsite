@@ -481,7 +481,7 @@ const ScholarshipSection = () => {
           />
         </div>
 
-        <div className="my-20 flex w-full max-w-3xl items-center gap-4 md:my-28">
+        <div className="my-10 flex w-full max-w-3xl items-center gap-4 md:my-16">
           <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6CA8FF]/24 to-transparent" />
           <motion.span
             animate={twinkleAnimation}
@@ -493,23 +493,13 @@ const ScholarshipSection = () => {
           <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6CA8FF]/24 to-transparent" />
         </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-4 text-center text-[10px] font-black tracking-[0.16em] text-[#8DBAFF] sm:text-xs md:text-sm font-iic"
-        >
-          ING Postgraduate Scholarship
-        </motion.p>
-
         <motion.div
           initial={{ opacity: 0, y: 32, scale: 0.94 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
-          className="relative mb-6 flex w-full max-w-6xl items-center justify-center sm:mb-8"
+          className="relative mb-5 flex w-full max-w-6xl items-center justify-center sm:mb-7"
         >
-          <div className="absolute inset-x-4 top-1/2 h-48 -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(108,168,255,0.32)_0%,transparent_68%)] blur-3xl" />
           <svg
             viewBox="0 0 920 250"
             className="relative z-10 h-auto w-full max-w-[920px] overflow-visible"
@@ -521,20 +511,12 @@ const ScholarshipSection = () => {
                 <stop offset="55%" stopColor="#6CA8FF" />
                 <stop offset="100%" stopColor="#4269C5" />
               </linearGradient>
-              <filter id="ing-scholarship-glow" x="-35%" y="-45%" width="170%" height="190%">
-                <feGaussianBlur stdDeviation="9" result="coloredBlur" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
             </defs>
             <text
               x="460"
               y="130"
               textAnchor="middle"
               fill="url(#ing-scholarship-grad)"
-              filter="url(#ing-scholarship-glow)"
               style={{
                 fontFamily: 'var(--font-iic), sans-serif',
                 fontWeight: 900,
@@ -549,7 +531,6 @@ const ScholarshipSection = () => {
               y="212"
               textAnchor="middle"
               fill="url(#ing-scholarship-grad)"
-              filter="url(#ing-scholarship-glow)"
               style={{
                 fontFamily: 'var(--font-iic), sans-serif',
                 fontWeight: 900,

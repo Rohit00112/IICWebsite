@@ -3,6 +3,13 @@ import { notFound } from 'next/navigation';
 import { getCourseBySlug, getAllCourses } from '@/lib/courses';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
+import JsonLd from '@/components/common/JsonLd';
+import {
+  buildCourseNode,
+  buildFaqPageNode,
+  buildSchemaGraph,
+  buildWebPageNode,
+} from '@/lib/seo-schema';
 
 export async function generateMetadata({ 
   params 
@@ -17,9 +24,11 @@ export async function generateMetadata({
   return {
     title: `${course.title} | London Metropolitan University | Itahari International College`,
     description: `${course.description} Study ${course.title} in Itahari, Nepal. Direct UK degree in partnership with London Metropolitan University.`,
+    alternates: { canonical: `/courses/${slug}` },
     openGraph: {
       title: `${course.title} - London Metropolitan University UK Degree`,
       description: course.description,
+      url: `/courses/${slug}`,
       images: [course.image],
     },
   };
@@ -44,101 +53,34 @@ export default async function CoursePage({
     .filter(c => c.slug !== slug)
     .slice(0, 3);
 
-  // Structured Data for Course
-  const courseJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Course',
-    name: course.title,
-    description: course.description,
-    provider: {
-      '@type': 'CollegeOrUniversity',
-      name: 'Itahari International College',
-      url: 'https://iic.edu.np',
-      logo: 'https://iic.edu.np/images/common/iic_logo.png',
-    },
-    educationalLevel: course.details?.level || 'Undergraduate',
-    about: {
-      '@type': 'Thing',
-      name: course.category,
-    },
-    hasCourseInstance: {
-      '@type': 'CourseInstance',
-      courseMode: 'Full-time',
-      duration: course.duration === '3 Years' ? 'P3Y' : 'P1Y',
-      courseWorkload: 'Full-time',
-      location: {
-        '@type': 'Place',
-        name: 'Itahari International College',
-        address: {
-          '@type': 'PostalAddress',
-          'addressLocality': 'Itahari',
-          'addressRegion': 'Sunsari',
-          'addressCountry': 'NP'
-        }
-      }
-    },
-    educationalCredentialAwarded: course.details?.awardingBody ? `Degree from ${course.details.awardingBody}` : 'Undergraduate Degree',
-    image: course.image,
-    syllabusSections: course.curriculum?.map(year => ({
-      '@type': 'Syllabus',
-      name: year.title,
-      description: year.modules?.map(m => m.name).join(', ')
-    })),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      reviewCount: '124'
-    },
-    review: course.quote?.text ? [
-      {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: '5'
-        },
-        author: {
-          '@type': 'Person',
-          name: course.quote.author || 'Alumni'
-        },
-        reviewBody: course.quote.text
-      }
-    ] : []
-  };
-
-  // Structured Data for FAQ if available
-  const faqJsonLd = course.faqs && course.faqs.length > 0 ? {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: course.faqs.map(faq => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer
-      }
-    }))
-  } : null;
-
-
   const breadcrumbs = [
     { name: 'Home', item: '/' },
     { name: 'Courses', item: '/courses' },
     { name: course.title, item: `/courses/${course.slug}` },
   ];
+  const courseSchema = buildCourseNode(course);
+  const faqSchema = buildFaqPageNode(
+    course.faqs || [],
+    `https://iic.edu.np/courses/${course.slug}#faq`
+  );
+  const pageDescription = `${course.description} Study ${course.title} in Itahari, Nepal. Direct UK degree in partnership with London Metropolitan University.`;
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      <JsonLd
+        data={buildSchemaGraph([
+          buildWebPageNode({
+            path: `/courses/${course.slug}`,
+            name: course.title,
+            description: pageDescription,
+            image: course.image,
+            mainEntity: { '@id': courseSchema['@id'] },
+          }),
+          courseSchema,
+          faqSchema,
+        ])}
       />
-      {faqJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
-      )}
       <CourseTemplate course={course} relatedCourses={relatedCourses} />
     </>
   );

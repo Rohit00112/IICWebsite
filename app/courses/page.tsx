@@ -3,10 +3,26 @@ import CoursesList from '@/components/sections/courses/CoursesList';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import { getAllCourses } from '@/lib/courses';
+import JsonLd from '@/components/common/JsonLd';
+import {
+  buildCourseItemListNode,
+  buildCourseNode,
+  buildSchemaGraph,
+  buildWebPageNode,
+} from '@/lib/seo-schema';
+
+const pageDescription = 'Explore London Metropolitan University awarded IT and Business programmes at IIC, designed for practical learning and global career readiness.';
 
 export const metadata: Metadata = {
   title: 'UK Degree Programmes in Itahari | IT & Business | Itahari International College',
-  description: 'Explore London Metropolitan University awarded IT and Business programmes at IIC, designed for practical learning and global career readiness.',
+  description: pageDescription,
+  alternates: { canonical: '/courses' },
+  openGraph: {
+    title: 'UK Degree Programmes in Itahari | IT & Business',
+    description: pageDescription,
+    url: '/courses',
+    type: 'website',
+  },
 };
 
 export default async function CoursesPage() {
@@ -22,36 +38,22 @@ export default async function CoursesPage() {
     { name: 'Home', item: '/' },
     { name: 'Academic Programmes', item: '/courses' },
   ];
-  const courseJsonLd = {
-    "@context": "https://schema.org",
-    "@graph": courses.map((course) => ({
-      "@type": "Course",
-      "name": course.title,
-      "description": course.description,
-      "provider": {
-        "@type": "CollegeOrUniversity",
-        "name": "Itahari International College",
-        "url": "https://iic.edu.np"
-      },
-      "educationalLevel": course.details?.level || course.level || "Undergraduate",
-      "courseCode": course.slug.toUpperCase(),
-      "occupationalCategory": course.category,
-      "hasCourseInstance": {
-        "@type": "CourseInstance",
-        "courseMode": "Full-time",
-        "location": "Itahari, Nepal"
-      }
-    }))
-  };
 
   return (
     <main className="bg-[#f3f6fb]">
       <BreadcrumbSchema items={breadcrumbs} />
-      
-      {/* Course & Program Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      <JsonLd
+        data={buildSchemaGraph([
+          buildWebPageNode({
+            path: '/courses',
+            name: 'UK Degree Programmes at Itahari International College',
+            description: pageDescription,
+            type: 'CollectionPage',
+            image: '/images/courses/course-hero.JPG',
+          }),
+          buildCourseItemListNode(courses),
+          ...courses.map(buildCourseNode),
+        ])}
       />
 
       <CoursesHero />

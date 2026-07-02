@@ -5,6 +5,13 @@ import NewsDetailContent from '../../../components/sections/news/NewsDetailConte
 import { getNewsBySlug, getRelatedNews } from '../../../lib/news';
 import { notFound } from 'next/navigation';
 import RelatedNews from '../../../components/sections/news/RelatedNews';
+import JsonLd from '@/components/common/JsonLd';
+import {
+  buildEventNode,
+  buildNewsArticleNode,
+  buildSchemaGraph,
+  buildWebPageNode,
+} from '@/lib/seo-schema';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -15,9 +22,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${item.title} | Itahari International College`,
     description: item.description,
+    alternates: { canonical: `/news/${slug}` },
     openGraph: {
       title: item.title,
       description: item.description,
+      url: `/news/${slug}`,
       images: [item.image],
       type: 'article',
     },
@@ -40,64 +49,29 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
 
   const relatedNews = await getRelatedNews(item.category, item.id);
 
-  // Structured Data (JSON-LD) for SEO
-  const isEvent = item.category === 'Event';
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': isEvent ? 'Event' : 'NewsArticle',
-    ...(isEvent ? {
-      name: item.title,
-      startDate: new Date(item.date).toISOString(),
-      location: {
-        '@type': 'Place',
-        name: item.location || "Itahari International College",
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: "Sundar Haraicha 04",
-          addressLocality: "Itahari",
-          addressCountry: "NP"
-        }
-      },
-      eventStatus: 'https://schema.org/EventScheduled',
-      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode'
-    } : {
-      headline: item.title,
-      datePublished: new Date(item.date).toISOString(),
-      dateModified: new Date(item.date).toISOString(),
-      author: {
-        '@type': 'Person',
-        name: item.author?.name || 'Itahari International College Editorial Team',
-        jobTitle: item.author?.role || 'Contributor'
-      }
-    }),
-    description: item.description,
-    image: item.image,
-    publisher: {
-      '@type': 'CollegeOrUniversity',
-      name: 'Itahari International College',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://iic.edu.np/images/common/iic_logo.png'
-      }
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://iic.edu.np/news/${slug}`
-    }
-  };
-
   const breadcrumbs = [
     { name: 'Home', item: '/' },
     { name: 'News & Events', item: '/news' },
     { name: item.title, item: `/news/${slug}` },
   ];
+  const itemSchema = item.category === 'Event'
+    ? buildEventNode(item)
+    : buildNewsArticleNode(item);
 
   return (
     <>
       <BreadcrumbSchema items={breadcrumbs} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <JsonLd
+        data={buildSchemaGraph([
+          buildWebPageNode({
+            path: `/news/${slug}`,
+            name: item.title,
+            description: item.description,
+            image: item.image,
+            mainEntity: { '@id': itemSchema['@id'] },
+          }),
+          itemSchema,
+        ])}
       />
       <main className="bg-white min-h-screen">
         <NewsDetailHero item={item} />

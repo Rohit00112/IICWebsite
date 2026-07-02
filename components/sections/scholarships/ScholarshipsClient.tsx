@@ -98,7 +98,7 @@ const formatProgrammeName = (programme?: string) => {
 
   const preferredCase: Record<string, string> = {
     BA: 'BA',
-    BBA: 'BBA',
+    BBA: 'BA',
     BIT: 'BIT',
     BSC: 'BSc',
     HONS: 'Hons',

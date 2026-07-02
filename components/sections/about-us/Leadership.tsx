@@ -5,8 +5,12 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
+import JsonLd from '@/components/common/JsonLd';
+import { buildSchemaGraph, COLLEGE_ID } from '@/lib/seo-schema';
 
-const portraitBackdropClass = "pointer-events-none absolute bottom-[-8%] left-1/2 h-[52%] w-[90%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(ellipse_at_50%_28%,#365CC2_0%,#284BAA_55%,#1F3D94_100%)] shadow-[0_28px_80px_rgba(33,64,154,0.14)] transition-transform duration-500 group-hover:scale-[1.025] md:w-[88%]";
+const portraitFrameClass = "lg:w-1/2 relative h-[420px] md:h-[620px] w-full group overflow-hidden bg-white shadow-[0_34px_90px_-70px_rgba(22,19,47,0.3)]";
+const portraitBlendClass = "pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_50%_42%,#EEF3FB_0%,#F6F9FE_58%,#FFFFFF_88%)]";
+const portraitArchClass = "pointer-events-none absolute bottom-0 left-1/2 z-0 h-[30%] w-[84%] -translate-x-1/2 rounded-t-[999px] bg-[#191430] shadow-[0_-22px_70px_-42px_rgba(25,20,48,0.75)] transition-transform duration-500 group-hover:scale-[1.025] md:h-[34%] md:w-[86%]";
 
 const Leadership = () => {
   return (
@@ -36,7 +40,7 @@ const Leadership = () => {
             </AnimeStagger>
             <div className="mt-12">
               <p className="text-xl font-bold text-[#1a1a1a]">Mr. Sulav Budhathoki</p>
-              <p className="text-[#74C044] font-bold tracking-widest text-sm mt-1">Chairman, ING Group</p>
+              <p className="text-[#74C044] font-bold tracking-widest text-sm mt-1">Chairman, Innovative Nepal Group</p>
             </div>
           </motion.div>
 
@@ -44,10 +48,11 @@ const Leadership = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group overflow-hidden"
+            className={portraitFrameClass}
           >
             {/* Background Shape */}
-            <div className={portraitBackdropClass} />
+            <div className={portraitBlendClass} />
+            <div className={portraitArchClass} />
 
             <Image
               src="/images/about/ing-ceo.webp"
@@ -90,10 +95,11 @@ const Leadership = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="lg:w-1/2 relative h-[400px] md:h-[600px] w-full group overflow-hidden"
+            className={portraitFrameClass}
           >
             {/* Background Shape */}
-            <div className={portraitBackdropClass} />
+            <div className={portraitBlendClass} />
+            <div className={portraitArchClass} />
 
             <Image
               src="/images/about/iic-ceo.webp"
@@ -107,34 +113,12 @@ const Leadership = () => {
 
       </div>
 
-      {/* Quote Banner */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="bg-[#21409A] py-20 md:py-24 px-6 text-center"
-      >
-        <div className="max-w-[1200px] mx-auto text-white">
-          <span className="text-white/40 font-bold tracking-[0.3em] text-xs mb-10 block font-iic">
-            The Itahari International College Experience
-          </span>
-          <AnimeReveal
-            as="h2"
-            text="Education here extends far beyond the classrooms, developing strong values, encouraging creativity, and building a vibrant community that empowers confident leaders to global professionals ready to make a real world impact."
-            className="text-2xl md:text-4xl lg:text-5xl font-iic leading-[1.5] font-extralight text-white/80 justify-center"
-            staggerFrom="center"
-            stagger={10}
-          />
-        </div>
-      </motion.div>
       {/* Leadership Schema for GEO Authority */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
+      <JsonLd
+        data={buildSchemaGraph([
             {
-              "@context": "https://schema.org",
               "@type": "Person",
+              "@id": "https://iic.edu.np/about-us#sulav-budhathoki",
               "name": "Mr. Sulav Budhathoki",
               "jobTitle": "Chairman",
               "worksFor": {
@@ -144,18 +128,14 @@ const Leadership = () => {
               "description": "Chairman of ING Group and Itahari International College, dedicated to bringing global education standards to Nepal."
             },
             {
-              "@context": "https://schema.org",
               "@type": "Person",
+              "@id": "https://iic.edu.np/about-us#satyabrat-koirala",
               "name": "Mr. Satyabrat Koirala",
               "jobTitle": "CEO",
-              "worksFor": {
-                "@type": "CollegeOrUniversity",
-                "name": "Itahari International College"
-              },
+              "worksFor": { "@id": COLLEGE_ID },
               "description": "CEO of Itahari International College, focusing on practical learning and industry exposure."
             }
-          ])
-        }}
+          ])}
       />
     </section>
   );

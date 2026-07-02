@@ -8,10 +8,21 @@ import WhyChooseIIC from '@/components/sections/about-us/WhyChooseIIC';
 import InnovationGrid from '@/components/sections/about-us/InnovationGrid';
 import ExperienceCTA from '@/components/sections/about-us/ExperienceCTA';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
+import JsonLd from '@/components/common/JsonLd';
+import { buildWebPageNode, withContext } from '@/lib/seo-schema';
+
+const pageDescription = 'Learn how IIC combines London Metropolitan University standards, practical learning, and student-centred support to develop globally competitive graduates in Itahari.';
 
 export const metadata = {
   title: 'Mission, Values & UK Partnership | Itahari International College',
-  description: 'Learn how IIC combines London Metropolitan University standards, practical learning, and student-centred support to develop globally competitive graduates in Itahari.',
+  description: pageDescription,
+  alternates: { canonical: '/about-us' },
+  openGraph: {
+    title: 'Mission, Values & UK Partnership | Itahari International College',
+    description: pageDescription,
+    url: '/about-us',
+    type: 'website',
+  },
 };
 
 export default function AboutUsPage() {
@@ -20,27 +31,17 @@ export default function AboutUsPage() {
     { name: 'About Us', item: '/about-us' },
   ];
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'AboutPage',
-    name: 'About Itahari International College',
-    description: 'Learn how IIC combines London Metropolitan University standards, practical learning, and student-centred support to develop globally competitive graduates in Itahari.',
-    publisher: {
-      '@type': 'CollegeOrUniversity',
-      name: 'Itahari International College',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://iic.edu.np/images/common/iic_logo.png'
-      }
-    }
-  };
-
   return (
     <main className="relative bg-[#0a0a0a]">
       <BreadcrumbSchema items={breadcrumbs} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <JsonLd
+        data={withContext(buildWebPageNode({
+          path: '/about-us',
+          name: 'About Itahari International College',
+          description: pageDescription,
+          type: 'AboutPage',
+          image: '/images/about/about-hero.JPG',
+        }))}
       />
       <AboutHero />
       <MissionVision />

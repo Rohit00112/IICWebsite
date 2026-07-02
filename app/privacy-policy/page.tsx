@@ -1,9 +1,20 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import JsonLd from '@/components/common/JsonLd';
+import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode } from '@/lib/seo-schema';
+
+const pageDescription = 'Learn how Itahari International College handles information submitted through its website forms.';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Itahari International College',
-  description: 'Learn how Itahari International College handles information submitted through its website forms.',
+  description: pageDescription,
+  alternates: { canonical: '/privacy-policy' },
+  openGraph: {
+    title: 'Privacy Policy | Itahari International College',
+    description: pageDescription,
+    url: '/privacy-policy',
+    type: 'website',
+  },
 };
 
 const sections = [
@@ -26,8 +37,23 @@ const sections = [
 ];
 
 export default function PrivacyPolicyPage() {
+  const breadcrumbs = [
+    { name: 'Home', item: '/' },
+    { name: 'Privacy Policy', item: '/privacy-policy' },
+  ];
+
   return (
     <main className="min-h-screen bg-[#f4f7fa] pt-24 pb-16 md:pt-28 md:pb-20">
+      <JsonLd
+        data={buildSchemaGraph([
+          buildWebPageNode({
+            path: '/privacy-policy',
+            name: 'Privacy Policy',
+            description: pageDescription,
+          }),
+          buildBreadcrumbListNode(breadcrumbs),
+        ])}
+      />
       <section className="mx-auto max-w-4xl px-6">
         <Link href="/" className="text-sm font-bold text-[#21409A] hover:underline">
           Back to home

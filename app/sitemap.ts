@@ -1,55 +1,71 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
+
 import { getAllCourses } from '@/lib/courses';
+import { getPublishedEventGalleryArchives } from '@/lib/event-galleries';
 import { getAllNews } from '@/lib/news';
+import { absoluteUrl, toIsoDate } from '@/lib/seo-schema';
+
+// Refresh the sitemap hourly so admin-added courses/news/galleries appear
+// without needing a full rebuild.
+export const revalidate = 3600;
+
+type Entry = MetadataRoute.Sitemap[number];
+
+const staticRoutes: Array<{
+  path: string;
+  changeFrequency: Entry['changeFrequency'];
+  priority: number;
+}> = [
+  { path: '/', changeFrequency: 'weekly', priority: 1 },
+  { path: '/about-us', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/admissions', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/courses', changeFrequency: 'weekly', priority: 0.9 },
+  { path: '/scholarships', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/life-at-iic', changeFrequency: 'weekly', priority: 0.7 },
+  { path: '/news', changeFrequency: 'daily', priority: 0.7 },
+  { path: '/contact', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/privacy-policy', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/terms-of-service', changeFrequency: 'yearly', priority: 0.3 },
+];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://iic.edu.np';
+  const now = new Date();
 
-  // Define static routes
-  const staticRoutes = [
-    '',
-    '/about-us',
-    '/contact',
-    '/courses',
-    '/scholarships',
-    '/news',
-    '/life-at-iic',
-    '/admissions',
-    '/privacy-policy',
-    '/terms-of-service',
-  ];
-
-  const staticEntries = staticRoutes.map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
+  const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
+    url: absoluteUrl(route.path),
+    lastModified: now,
+    changeFrequency: route.changeFrequency,
+    priority: route.priority,
   }));
 
-  // Fetch dynamic routes
-  try {
-    const [courses, news] = await Promise.all([
-      getAllCourses(),
-      getAllNews(),
-    ]);
+  const [courses, news, galleries] = await Promise.all([
+    getAllCourses().catch(() => []),
+    getAllNews().catch(() => []),
+    getPublishedEventGalleryArchives().catch(() => []),
+  ]);
 
-    const courseEntries = courses.map((course) => ({
-      url: `${baseUrl}/courses/${course.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    }));
+  const courseEntries: MetadataRoute.Sitemap = courses.map((course) => ({
+    url: absoluteUrl(`/courses/${course.slug}`),
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
 
-    const newsEntries = news.map((item) => ({
-      url: `${baseUrl}/news/${item.slug || item.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+  const newsEntries: MetadataRoute.Sitemap = news
+    .filter((item) => item.slug)
+    .map((item) => ({
+      url: absoluteUrl(`/news/${item.slug}`),
+      lastModified: toIsoDate(item.date) ?? now,
+      changeFrequency: 'monthly',
       priority: 0.6,
     }));
 
-    return [...staticEntries, ...courseEntries, ...newsEntries];
-  } catch (error) {
-    console.error('Error generating dynamic sitemap:', error);
-    return staticEntries;
-  }
+  const galleryEntries: MetadataRoute.Sitemap = galleries.map((gallery) => ({
+    url: absoluteUrl(`/life-at-iic/events/${gallery.slug}`),
+    lastModified: now,
+    changeFrequency: 'monthly',
+    priority: 0.5,
+  }));
+
+  return [...staticEntries, ...courseEntries, ...newsEntries, ...galleryEntries];
 }

@@ -5,6 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+import JsonLd from '@/components/common/JsonLd';
+import { buildSiteNavigationNode, withContext } from '@/lib/seo-schema';
 
 type LeafLink = { name: string; href: string; external?: boolean };
 type NavItem =
@@ -33,25 +36,30 @@ const navItems: NavItem[] = [
   { name: 'Contact', href: '/contact' },
 ];
 
-const allLeafLinks: LeafLink[] = navItems.flatMap((item) =>
-  item.children ? item.children : [{ name: item.name, href: item.href!, external: item.external }]
-);
-
-const getAbsoluteUrl = (href: string) =>
-  href.startsWith('http') ? href : `https://iic.edu.np${href}`;
-
-const navigationJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  itemListElement: allLeafLinks.map((link, index) => ({
-    '@type': 'SiteNavigationElement',
-    position: index + 1,
-    name: link.name,
-    url: getAbsoluteUrl(link.href),
-  })),
-};
-
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+const desktopNavItemClass = (active: boolean, gap = 'gap-1') =>
+  `group relative flex items-center ${gap} rounded-full px-3.5 py-2 text-[12.5px] font-bold uppercase tracking-[0.14em] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] ${
+    active
+      ? 'bg-[#21409A] text-white shadow-[0_12px_28px_-18px_rgba(33,64,154,0.85)] ring-1 ring-[#21409A]/25'
+      : 'text-[#1e2733] hover:bg-[#21409A]/8 hover:text-[#21409A]'
+  }`;
+
+const dropdownIconClass = (emphasized: boolean, inActiveNav = false) =>
+  `flex h-5 w-5 items-center justify-center rounded-full ring-1 transition-colors ${
+    inActiveNav
+      ? 'bg-white/20 text-white ring-white/35'
+      : emphasized
+      ? 'bg-[#21409A] text-white ring-[#21409A]'
+      : 'bg-[#21409A]/10 text-[#21409A] ring-[#21409A]/20 group-hover:bg-[#21409A] group-hover:text-white group-hover:ring-[#21409A]'
+  }`;
+
+const mobileDropdownIconClass = (emphasized: boolean) =>
+  `flex h-7 w-7 items-center justify-center rounded-full ring-1 transition-colors ${
+    emphasized
+      ? 'bg-[#21409A] text-white ring-[#21409A]'
+      : 'bg-[#21409A]/10 text-[#21409A] ring-[#21409A]/20 group-hover:bg-[#21409A] group-hover:text-white group-hover:ring-[#21409A]'
+  }`;
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -116,10 +124,7 @@ const Navbar = () => {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationJsonLd) }}
-      />
+      <JsonLd data={withContext(buildSiteNavigationNode())} />
 
       {/* Mobile backdrop dimmer */}
       <AnimatePresence>
@@ -173,18 +178,10 @@ const Navbar = () => {
                       target={item.external ? '_blank' : undefined}
                       rel={item.external ? 'noopener noreferrer' : undefined}
                       prefetch={item.external ? false : undefined}
-                      className={`group relative flex items-center gap-1 text-[12.5px] font-bold uppercase tracking-[0.14em] transition-colors focus-visible:outline-none ${
-                        active ? 'text-[#21409A]' : 'text-[#1e2733] hover:text-[#21409A]'
-                      }`}
+                      className={desktopNavItemClass(active)}
                     >
                       {item.name}
-                      {item.external && <span aria-hidden className="text-[9px] opacity-60">↗</span>}
-                      <span
-                        aria-hidden
-                        className={`absolute -bottom-2 left-1/2 -translate-x-1/2 h-0 w-0 border-x-[5px] border-x-transparent border-t-[6px] border-t-[#74C044] transition-all duration-300 ${
-                          active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                        }`}
-                      />
+                      {item.external && <span aria-hidden className="text-[9px] opacity-70">↗</span>}
                     </Link>
                   </li>
                 );
@@ -203,25 +200,17 @@ const Navbar = () => {
                     aria-haspopup="menu"
                     onClick={() => setOpenDropdown(open ? null : item.name)}
                     onFocus={() => handleEnter(item.name)}
-                    className={`group relative flex items-center gap-1.5 text-[12.5px] font-bold uppercase tracking-[0.14em] transition-colors focus-visible:outline-none ${
-                      active ? 'text-[#21409A]' : 'text-[#1e2733] hover:text-[#21409A]'
-                    }`}
+                    className={desktopNavItemClass(active, 'gap-2')}
                   >
                     {item.name}
                     <motion.span
                       aria-hidden
                       animate={{ rotate: open ? 180 : 0 }}
                       transition={{ duration: 0.25 }}
-                      className="text-[8px] opacity-70"
+                      className={dropdownIconClass(open, active)}
                     >
-                      ▾
+                      <ChevronDown className="h-3.5 w-3.5 stroke-[3]" />
                     </motion.span>
-                    <span
-                      aria-hidden
-                      className={`absolute -bottom-2 left-1/2 -translate-x-1/2 h-0 w-0 border-x-[5px] border-x-transparent border-t-[6px] border-t-[#74C044] transition-all duration-300 ${
-                        active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                      }`}
-                    />
                   </button>
 
                   <AnimatePresence>
@@ -347,16 +336,16 @@ const Navbar = () => {
                           type="button"
                           aria-expanded={accOpen}
                           onClick={() => setOpenAccordion(accOpen ? null : item.name)}
-                          className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-[15px] font-bold uppercase tracking-[0.1em] text-[#1e2733] transition-colors hover:bg-[#21409A]/6"
+                          className="group flex w-full items-center justify-between rounded-2xl px-4 py-3 text-[15px] font-bold uppercase tracking-[0.1em] text-[#1e2733] transition-colors hover:bg-[#21409A]/6"
                         >
                           {item.name}
                           <motion.span
                             aria-hidden
                             animate={{ rotate: accOpen ? 180 : 0 }}
                             transition={{ duration: 0.25 }}
-                            className="text-xs opacity-70"
+                            className={mobileDropdownIconClass(accOpen)}
                           >
-                            ▾
+                            <ChevronDown className="h-4 w-4 stroke-[3]" />
                           </motion.span>
                         </button>
                         <AnimatePresence initial={false}>

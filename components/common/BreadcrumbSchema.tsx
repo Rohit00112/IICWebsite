@@ -1,34 +1,14 @@
 import React from 'react';
 
-interface BreadcrumbItem {
-  name: string;
-  item: string;
-}
+import JsonLd from '@/components/common/JsonLd';
+import { buildBreadcrumbListNode, withContext, type BreadcrumbItem } from '@/lib/seo-schema';
 
 interface BreadcrumbSchemaProps {
   items: BreadcrumbItem[];
 }
 
 const BreadcrumbSchema = ({ items }: BreadcrumbSchemaProps) => {
-  const baseUrl = 'https://iic.edu.np';
-  
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: item.item.startsWith('http') ? item.item : `${baseUrl}${item.item.startsWith('/') ? '' : '/'}${item.item}`,
-    })),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
-  );
+  return <JsonLd data={withContext(buildBreadcrumbListNode(items))} />;
 };
 
 export default BreadcrumbSchema;

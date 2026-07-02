@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { createPortal } from 'react-dom';
 import Magnetic from '../../effects/Magnetic';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
@@ -47,13 +46,6 @@ interface FAQ {
   answer?: string;
 }
 
-type ModulePopoverState = {
-  yearIndex: number;
-  moduleIndex: number;
-  left: number;
-  top: number;
-  opensAbove: boolean;
-};
 
 const formatCredits = (credits?: string) => {
   const value = credits?.trim();
@@ -255,53 +247,21 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
   const [activeYear, setActiveYear] = useState(0);
   const [activeTab, setActiveTab] = useState<'overview' | 'outcomes'>('overview');
   const [activeFAQ, setActiveFAQ] = useState(0);
-  const [activeModule, setActiveModule] = useState<ModulePopoverState | null>(null);
-  const modulePopoverTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [expandedModule, setExpandedModule] = useState<string | null>(null);
   const heroTitle = course.listing?.displayTitle || course.title;
   const heroSpecialism = course.listing?.specialism || '';
   const heroDescription = course.title === 'BSc (Hons) Computing' && course.description?.trim().toLowerCase() === 'hacked_by_inred'
     ? ''
     : course.description?.trim();
 
-  const clearModulePopoverTimeout = () => {
-    if (!modulePopoverTimeout.current) return;
-    clearTimeout(modulePopoverTimeout.current);
-    modulePopoverTimeout.current = null;
+  const toggleModule = (key: string) => {
+    setExpandedModule((current) => (current === key ? null : key));
   };
 
-  const closeModulePopover = () => {
-    clearModulePopoverTimeout();
-    setActiveModule(null);
-  };
-
-  const scheduleModulePopoverClose = () => {
-    clearModulePopoverTimeout();
-    modulePopoverTimeout.current = setTimeout(() => setActiveModule(null), 140);
-  };
-
-  const openModulePopover = (element: HTMLElement, yearIndex: number, moduleIndex: number) => {
-    clearModulePopoverTimeout();
-
-    const rect = element.getBoundingClientRect();
-    const popoverWidth = Math.min(380, window.innerWidth - 32);
-    const left = Math.min(
-      Math.max(rect.left + rect.width / 2, popoverWidth / 2 + 16),
-      window.innerWidth - popoverWidth / 2 - 16
-    );
-    const opensAbove = rect.bottom + 300 > window.innerHeight && rect.top > 300;
-
-    setActiveModule({
-      yearIndex,
-      moduleIndex,
-      left,
-      top: opensAbove ? rect.top - 12 : rect.bottom + 12,
-      opensAbove,
-    });
-  };
-
-  const popoverModule = activeModule
-    ? course.curriculum?.[activeModule.yearIndex]?.modules?.[activeModule.moduleIndex]
-    : undefined;
+  const curriculumYears = course.curriculum ?? [];
+  const safeActiveYear =
+    activeYear >= 0 && activeYear < curriculumYears.length ? activeYear : 0;
+  const activeYearModules = curriculumYears[safeActiveYear]?.modules ?? [];
 
   const sanitizedOverview = React.useMemo(() => {
     const overviewHtml = course.overview || `
@@ -525,79 +485,116 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            {/* Left side: Accordions */}
-            <div className="lg:col-span-8 space-y-6">
-              {course.curriculum?.map((year, i) => {
-                return (
-                <div key={i} className="bg-white rounded-[24px] overflow-hidden shadow-sm border border-gray-100">
-                  <button
-                    onClick={() => {
-                      const isClosing = activeYear === i;
-                      setActiveYear(isClosing ? -1 : i);
-                      if (isClosing) closeModulePopover();
-                    }}
-                    className="w-full px-8 py-7 flex items-center justify-between hover:bg-gray-50 transition-colors"
-                  >
-                    <span className="text-xl font-bold text-[#1a1a1a]">{year.title}</span>
-                    <div className={`w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center transition-transform duration-300 ${activeYear === i ? 'rotate-180' : ''}`}>
-                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
-                  </button>
-                  <AnimatePresence>
-                    {activeYear === i && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden"
+            {/* Left side: Year tabs + module list */}
+            <div className="lg:col-span-8">
+              {/* Year tab bar */}
+              <div className="flex gap-1.5 rounded-2xl bg-white p-1.5 shadow-sm border border-gray-100">
+                {course.curriculum?.map((year, i) => {
+                  const isActive = safeActiveYear === i;
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => {
+                        setActiveYear(i);
+                        setExpandedModule(null);
+                      }}
+                      aria-selected={isActive}
+                      role="tab"
+                      className="relative flex-1 rounded-xl px-4 py-3.5 text-center text-base font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:ring-offset-2"
+                    >
+                      {isActive && (
+                        <motion.span
+                          layoutId="curriculum-year-pill"
+                          className="absolute inset-0 rounded-xl bg-[#21409A] shadow-md"
+                          transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+                        />
+                      )}
+                      <span className={`relative z-10 ${isActive ? 'text-white' : 'text-[#21409A]'}`}>
+                        {year.title}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Module list for active year */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={safeActiveYear}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  className="mt-6 flex flex-col gap-4"
+                >
+                  {activeYearModules.map((mod, moduleIndex) => {
+                    const moduleKey = `${safeActiveYear}-${moduleIndex}`;
+                    const isOpen = expandedModule === moduleKey;
+                    const hasDescription = Boolean(mod.description?.trim());
+
+                    return (
+                      <div
+                        key={moduleIndex}
+                        className={`overflow-hidden rounded-2xl border transition-colors ${
+                          isOpen
+                            ? 'border-[#21409A]/40 bg-[#f7f9fd] shadow-[0_14px_30px_rgba(33,64,154,0.08)]'
+                            : 'border-gray-200 bg-white hover:border-[#21409A]/30'
+                        }`}
                       >
-                        <div className="grid grid-cols-1 gap-3 px-8 pb-8 sm:grid-cols-2 lg:grid-cols-3">
-                            {year.modules?.map((mod, moduleIndex) => {
-                              const isSelected = activeModule?.yearIndex === i && activeModule.moduleIndex === moduleIndex;
-
-                              return (
-                                <button
-                                  key={moduleIndex}
-                                  type="button"
-                                  onMouseEnter={(event) => openModulePopover(event.currentTarget, i, moduleIndex)}
-                                  onMouseLeave={scheduleModulePopoverClose}
-                                  onFocus={(event) => openModulePopover(event.currentTarget, i, moduleIndex)}
-                                  onBlur={scheduleModulePopoverClose}
-                                  onClick={(event) => openModulePopover(event.currentTarget, i, moduleIndex)}
-                                  onKeyDown={(event) => {
-                                    if (event.key === 'Escape') closeModulePopover();
-                                  }}
-                                  aria-expanded={isSelected}
-                                  className={`flex min-h-[124px] items-center rounded-md border p-5 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:ring-offset-2 ${
-                                    isSelected
-                                      ? 'border-[#21409A] bg-[#f3f6fb] shadow-[0_14px_30px_rgba(33,64,154,0.1)]'
-                                      : 'border-gray-200 bg-white hover:-translate-y-1 hover:border-[#21409A]/55 hover:shadow-[0_14px_30px_rgba(33,64,154,0.1)]'
-                                  }`}
-                                >
-                                  <span className="flex flex-col items-start gap-2">
-                                    {mod.code && (
-                                      <span className="font-mono text-[11px] font-bold tracking-[0.12em] text-[#21409A]">
-                                        {mod.code}
-                                      </span>
-                                    )}
-                                    <span className="block text-[17px] font-bold leading-snug text-[#1a1a1a]">
-                                      {mod.name}
-                                    </span>
-                                  </span>
-                                </button>
-                              );
-                            })}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-                );
-              })}
-
-
+                        <button
+                          type="button"
+                          onClick={() => hasDescription && toggleModule(moduleKey)}
+                          aria-expanded={isOpen}
+                          disabled={!hasDescription}
+                          className={`flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:ring-offset-2 ${
+                            hasDescription ? 'cursor-pointer' : 'cursor-default'
+                          }`}
+                        >
+                          <span className="flex flex-1 flex-col gap-1.5">
+                            <span className="block text-lg font-bold leading-snug text-[#21409A]">
+                              {mod.name}
+                            </span>
+                            <span className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-gray-500">
+                              {mod.code && <span>Module: {mod.code}</span>}
+                              {mod.credits && <span>{formatCredits(mod.credits)}</span>}
+                            </span>
+                          </span>
+                          {hasDescription && (
+                            <span
+                              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                                isOpen
+                                  ? 'rotate-180 border-[#21409A] bg-[#21409A] text-white'
+                                  : 'border-gray-200 bg-gray-50 text-gray-400'
+                              }`}
+                              aria-hidden="true"
+                            >
+                              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </span>
+                          )}
+                        </button>
+                        <AnimatePresence initial={false}>
+                          {isOpen && hasDescription && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.28, ease: 'easeInOut' }}
+                              className="overflow-hidden"
+                            >
+                              <p className="border-t border-gray-100 px-6 py-5 text-sm leading-relaxed text-gray-600">
+                                {mod.description}
+                              </p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })}
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             {/* Right side: Image & CTAs */}
@@ -618,12 +615,6 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
                     Apply for this Programme
                   </Link>
                 </Magnetic>
-                <a href={brochureHref} target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-white text-[#1a1a1a] font-bold rounded-2xl shadow-md border border-gray-100 flex items-center justify-center gap-3 hover:bg-gray-50 transition-all">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M7 10l5 5m0 0l5-5m-5 5V3" />
-                  </svg>
-                  Download Brochure
-                </a>
               </div>
             </div>
           </div>
@@ -667,7 +658,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
               <p className="text-gray-700 font-semibold leading-relaxed mb-4">
                 Applicants not meeting the aforementioned criteria for English or Math can demonstrate their English or Math proficiency with the following internationally recognised English or Math Tests.
               </p>
-              <p className="text-[#1a1a1a] font-bold mb-3">For Level 4 or Year 1 BIT / BBA</p>
+              <p className="text-[#1a1a1a] font-bold mb-3">For Level 4 or Year 1 BIT / BA</p>
               <ul className="list-disc pl-5 space-y-3 text-gray-500 font-medium leading-relaxed">
                 <li>Pass in General Paper or English Language or IELTS 6.0 with a minimum of 5.5 in each sub-element or PTE 57.</li>
                 <li>Pass in English or Math Test approved by London Metropolitan University.</li>
@@ -937,57 +928,6 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
           </AnimeStagger>
         </div>
       </section>
-
-      {activeModule && popoverModule && typeof document !== 'undefined' && createPortal(
-        <div
-          role="dialog"
-          aria-label={`${popoverModule.name} module details`}
-          onMouseEnter={clearModulePopoverTimeout}
-          onMouseLeave={scheduleModulePopoverClose}
-          style={{
-            left: activeModule.left,
-            top: activeModule.top,
-            transform: activeModule.opensAbove ? 'translate(-50%, -100%)' : 'translateX(-50%)',
-          }}
-          className="fixed z-[300] w-[min(380px,calc(100vw-2rem))] rounded-md border border-[#21409A]/20 bg-white p-6 shadow-[0_24px_60px_rgba(15,23,42,0.24)]"
-        >
-          <div className="flex items-start justify-between gap-5">
-            <div>
-              {(popoverModule.code || popoverModule.credits) && (
-                <div className="mb-3 flex flex-wrap gap-2">
-                  {popoverModule.code && (
-                    <span className="inline-flex rounded-full bg-gray-100 px-3 py-1 font-mono text-[10px] font-bold tracking-[0.12em] text-gray-600">
-                      {popoverModule.code}
-                    </span>
-                  )}
-                  {popoverModule.credits && (
-                    <span className="inline-flex rounded-full bg-[#21409A]/10 px-3 py-1 text-[10px] font-bold tracking-[0.16em] text-[#21409A]">
-                      {formatCredits(popoverModule.credits)}
-                    </span>
-                  )}
-                </div>
-              )}
-              <h3 className="text-xl font-bold leading-tight text-[#1a1a1a]">{popoverModule.name}</h3>
-            </div>
-            <button
-              type="button"
-              onClick={closeModulePopover}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-gray-400 transition-colors hover:bg-gray-100 hover:text-[#1a1a1a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#21409A]"
-              aria-label="Close module details"
-            >
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m6 6 12 12M18 6 6 18" />
-              </svg>
-            </button>
-          </div>
-          {popoverModule.description && (
-            <p className="mt-4 max-h-[min(360px,calc(100vh-2rem))] overflow-y-auto pr-2 text-sm leading-relaxed text-gray-500">
-              {popoverModule.description}
-            </p>
-          )}
-        </div>,
-        document.body
-      )}
     </main>
   );
 };

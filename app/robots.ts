@@ -1,12 +1,15 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
+
+import { SITE_URL, absoluteUrl } from '@/lib/seo-schema';
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/login/'],
+      disallow: ['/admin/', '/login', '/api/'],
     },
-    sitemap: 'https://iic.edu.np/sitemap.xml',
+    sitemap: absoluteUrl('/sitemap.xml'),
+    host: SITE_URL,
   };
 }

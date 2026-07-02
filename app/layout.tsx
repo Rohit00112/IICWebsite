@@ -2,6 +2,8 @@ import React from "react";
 import { Geist, Geist_Mono, Sora, Roboto } from "next/font/google";
 import "./globals.css";
 import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
+import JsonLd from "@/components/common/JsonLd";
+import { buildGlobalSchema } from "@/lib/seo-schema";
 import { Metadata, Viewport } from "next";
 
 const geistSans = Geist({
@@ -39,7 +41,7 @@ export const metadata: Metadata = {
     template: "%s | Itahari International College",
   },
   description: "Itahari International College (IIC) develops impactful industry-ready graduates through UK-awarded IT and Business programmes in partnership with London Metropolitan University.",
-  keywords: ["IIC", "Itahari International College", "Education in Nepal", "IT College Nepal", "BBA Nepal", "BIT Nepal", "London Metropolitan University"],
+  keywords: ["IIC", "Itahari International College", "Education in Nepal", "IT College Nepal", "BA Nepal", "BIT Nepal", "London Metropolitan University"],
   authors: [{ name: "Itahari International College" }],
   creator: "Itahari International College",
   publisher: "Itahari International College",
@@ -103,88 +105,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-white">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "CollegeOrUniversity",
-                  "@id": "https://iic.edu.np/#college",
-                  "name": "Itahari International College",
-                  "url": "https://iic.edu.np",
-                  "logo": {
-                    "@type": "ImageObject",
-                    "url": "https://iic.edu.np/images/common/iic_logo.png",
-                    "width": "450",
-                    "height": "80"
-                  },
-                  "image": "https://iic.edu.np/images/home/hero.webp",
-                  "description": "Itahari International College (IIC) develops impactful industry-ready graduates through UK-awarded IT and Business degrees in partnership with London Metropolitan University.",
-                  "foundingDate": "2017",
-                  "knowsAbout": ["Information Technology", "Business Administration", "Higher Education", "UK Degrees"],
-                  "sameAs": [
-                    "https://www.facebook.com/iic.nepal",
-                    "https://www.instagram.com/iic_nepal",
-                    "https://www.linkedin.com/school/itahari-international-college/",
-                    "https://www.youtube.com/@itahariinternationalcollege"
-                  ],
-                  "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "Sundarharaicha-4, Dulari",
-                    "addressLocality": "Dulari",
-                    "addressRegion": "Morang, Koshi Province",
-                    "postalCode": "56705",
-                    "addressCountry": "NP"
-                  },
-                  "geo": {
-                    "@type": "GeoCoordinates",
-                    "latitude": "26.6644",
-                    "longitude": "87.2718"
-                  },
-                  "telephone": "+977-25-581111",
-                  "contactPoint": [
-                    {
-                      "@type": "ContactPoint",
-                      "telephone": "+977-25-581111",
-                      "contactType": "admissions",
-                      "areaServed": "NP",
-                      "availableLanguage": "Nepali, English"
-                    },
-                    {
-                      "@type": "ContactPoint",
-                      "telephone": "+977-25-581112",
-                      "contactType": "customer service",
-                      "areaServed": "NP",
-                      "availableLanguage": "Nepali, English"
-                    }
-                  ],
-                  "openingHoursSpecification": [
-                    {
-                      "@type": "OpeningHoursSpecification",
-                      "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                      "opens": "07:00",
-                      "closes": "17:00"
-                    }
-                  ]
-                },
-                {
-                  "@type": "WebSite",
-                  "@id": "https://iic.edu.np/#website",
-                  "url": "https://iic.edu.np",
-                  "name": "Itahari International College",
-                  "publisher": { "@id": "https://iic.edu.np/#college" },
-                  "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "https://iic.edu.np/search?q={search_term_string}",
-                    "query-input": "required name=search_term_string"
-                  }
-                }
-              ]
-            })
-          }}
-        />
+        <JsonLd data={buildGlobalSchema()} />
         <ClientLayoutWrapper>
           {children}
         </ClientLayoutWrapper>

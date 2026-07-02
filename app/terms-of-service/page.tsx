@@ -1,9 +1,20 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import JsonLd from '@/components/common/JsonLd';
+import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode } from '@/lib/seo-schema';
+
+const pageDescription = 'Review the website terms for using the Itahari International College website.';
 
 export const metadata: Metadata = {
   title: 'Terms of Service | Itahari International College',
-  description: 'Review the website terms for using the Itahari International College website.',
+  description: pageDescription,
+  alternates: { canonical: '/terms-of-service' },
+  openGraph: {
+    title: 'Terms of Service | Itahari International College',
+    description: pageDescription,
+    url: '/terms-of-service',
+    type: 'website',
+  },
 };
 
 const sections = [
@@ -26,8 +37,23 @@ const sections = [
 ];
 
 export default function TermsOfServicePage() {
+  const breadcrumbs = [
+    { name: 'Home', item: '/' },
+    { name: 'Terms of Service', item: '/terms-of-service' },
+  ];
+
   return (
     <main className="min-h-screen bg-[#f4f7fa] pt-24 pb-16 md:pt-28 md:pb-20">
+      <JsonLd
+        data={buildSchemaGraph([
+          buildWebPageNode({
+            path: '/terms-of-service',
+            name: 'Terms of Service',
+            description: pageDescription,
+          }),
+          buildBreadcrumbListNode(breadcrumbs),
+        ])}
+      />
       <section className="mx-auto max-w-4xl px-6">
         <Link href="/" className="text-sm font-bold text-[#21409A] hover:underline">
           Back to home

@@ -3,6 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
+import JsonLd from '@/components/common/JsonLd';
+import { buildFaqPageNode, withContext } from '@/lib/seo-schema';
 
 const GEOSection = () => {
   const stats = [
@@ -257,37 +259,14 @@ const GEOSection = () => {
       </div>
 
       {/* FAQ Schema for GEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "dateModified": "2026-06-30T00:00:00Z",
-            "mainEntity": faqs.map(faq => ({
-              "@type": "Question",
-              "name": faq.q,
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": faq.plain
-              }
-            })),
-            "about": {
-              "@type": "CollegeOrUniversity",
-              "name": "Itahari International College",
-              "description": "Itahari International College offers world-class UK degrees in partnership with London Metropolitan University.",
-              "hasOfferCatalog": {
-                "@type": "OfferCatalog",
-                "name": "Academic Programmes",
-                "itemListElement": [
-                  { "@type": "Course", "name": "BSc (Hons) Computing (BIT)" },
-                  { "@type": "Course", "name": "BA (Hons) Business Administration (BBA)" }
-                ]
-              }
-            }
-          })
-        }}
-      />
+      {(() => {
+        const faqSchema = buildFaqPageNode(
+          faqs.map((faq) => ({ question: faq.q, answer: faq.plain })),
+          'https://iic.edu.np/#home-faq'
+        );
+
+        return faqSchema ? <JsonLd data={withContext(faqSchema)} /> : null;
+      })()}
     </section>
   );
 };

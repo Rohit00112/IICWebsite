@@ -422,7 +422,7 @@ export default function AddCourseForm() {
                     value={formData.listing.mnemonic}
                     onChange={(e) => setFormData({...formData, listing: {...formData.listing, mnemonic: e.target.value}})}
                     className="form-input-admin"
-                    placeholder={'BBA\nDIGITAL BUSINESS MANAGEMENT'}
+                    placeholder={'BA\nDIGITAL BUSINESS MANAGEMENT'}
                   />
                   <p className="text-xs font-medium text-gray-500">Used only when no mnemonic image is uploaded.</p>
                 </div>

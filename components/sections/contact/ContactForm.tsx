@@ -16,7 +16,7 @@ const REASONS = [
 
 const PROGRAMMES = [
   'BIT',
-  'BBA',
+  'BA',
   'Not sure yet',
 ];
 

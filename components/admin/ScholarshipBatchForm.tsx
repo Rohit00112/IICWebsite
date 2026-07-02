@@ -21,8 +21,6 @@ const currentYear = new Date().getFullYear();
 const PROGRAMME_OPTIONS = [
   'BSc (Hons) Computing',
   'BA (Hons) Business Administration',
-  'BBA (Hons) Business Administration',
-  'MBA',
 ];
 
 const defaultFormData: ScholarshipFormData = {

@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, CalendarCheck } from 'lucide-react';
 import StatsStrip from './StatsStrip';
 import RevealText from '../../effects/RevealText';
 import CloudBackground from '../../effects/CloudBackground';
@@ -52,7 +53,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <CloudBackground className="absolute inset-x-0 top-0 z-0 h-[100svh] overflow-hidden pointer-events-none select-none" />
+      <CloudBackground className="absolute inset-x-0 top-0 z-0 h-[760px] overflow-hidden pointer-events-none select-none opacity-75 sm:h-[100svh] sm:opacity-100" />
 
       {/* Decorative Floating Blobs */}
       <motion.div
@@ -65,54 +66,56 @@ const HeroSection = () => {
       />
 
       {/* Hero Content Layer */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 flex flex-col items-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-center px-5 sm:px-6">
         {/* Centered Logo - Specifically for Home Page Hero */}
-        <div className="w-full pt-14 sm:pt-16 md:pt-20 pb-3 md:pb-4 flex items-center justify-center relative z-40">
+        <div className="relative z-40 flex w-full items-center justify-center pb-2 pt-10 sm:pb-3 sm:pt-16 md:pb-4 md:pt-20">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="relative h-[87px] w-[min(360px,calc(100vw-2rem))] overflow-hidden sm:h-[102px] sm:w-[420px] md:h-[112px] md:w-[460px]"
+            className="relative h-[64px] w-[min(292px,calc(100vw-3rem))] overflow-hidden sm:h-[102px] sm:w-[420px] md:h-[112px] md:w-[460px]"
           >
             <Image
               src="/images/common/iic_logo.png"
               alt="Itahari International College Logo"
               fill
               sizes="(max-width: 640px) 360px, (max-width: 768px) 420px, 460px"
-              className="object-cover"
+              className="object-contain sm:object-cover"
               loading="eager"
               fetchPriority="high"
             />
           </motion.div>
         </div>
 
-        <div className="pt-2 md:pt-4 text-center flex flex-col items-center">
+        <div className="flex w-full flex-col items-center pt-4 text-center sm:pt-2 md:pt-4">
           <RevealText
             as="h1"
             text="UK Degrees in Itahari"
-            className="w-full max-w-[1180px] text-[44px] sm:text-[68px] md:text-[88px] lg:text-[104px] xl:text-[112px] font-black uppercase text-[#21409A] leading-[0.98] sm:leading-[1.02] mb-5 md:mb-8 tracking-normal font-iic justify-center text-center"
+            className="mb-4 w-full max-w-[340px] text-center font-iic text-[38px] font-black uppercase leading-[1.04] tracking-normal text-[#21409A] sm:mb-5 sm:max-w-[1180px] sm:text-[68px] sm:leading-[1.02] md:mb-8 md:text-[88px] lg:text-[104px] xl:text-[112px] justify-center"
             delay={0.4}
           />
           <RevealText
             as="p"
             text="Launch your global career with IT and Business programmes from London Metropolitan University."
-            className="text-base sm:text-lg md:text-[24px] lg:text-[28px] font-medium text-gray-500 leading-[1.55] md:leading-[1.6] mb-8 md:mb-12 max-w-4xl px-2 sm:px-4 font-iic justify-center"
+            className="mb-6 max-w-[320px] px-1 font-iic text-[15px] font-semibold leading-[1.55] text-gray-500 sm:mb-8 sm:max-w-4xl sm:px-4 sm:text-lg sm:font-medium md:mb-12 md:text-[24px] md:leading-[1.6] lg:text-[28px] justify-center"
             delay={0.7}
           />
 
-          <div className="flex w-full max-w-sm flex-col sm:max-w-none sm:w-auto sm:flex-row gap-4 sm:gap-6 md:gap-8 mb-14 sm:mb-20 md:mb-44 relative">
+          <div className="relative z-20 mb-8 flex w-full max-w-[320px] flex-col gap-3 sm:mb-20 sm:w-auto sm:max-w-none sm:flex-row sm:gap-6 md:mb-44 md:gap-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              className="w-full sm:w-auto"
             >
               <Link
                 href="/contact"
                 aria-label="Schedule a college visit"
-                className="w-full sm:w-auto px-6 sm:px-10 py-3.5 sm:py-4 bg-[#21409A] text-white rounded-xl font-bold text-sm sm:text-[16px] flex items-center justify-center gap-3 shadow-2xl hover:brightness-110 transition-all focus-visible:ring-2 focus-visible:ring-[#74C044] focus-visible:outline-none"
+                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#21409A] px-6 py-3 text-sm font-bold text-white shadow-[0_16px_36px_-20px_rgba(33,64,154,0.95)] transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:w-auto sm:rounded-xl sm:px-10 sm:py-4 sm:text-[16px] sm:shadow-2xl"
               >
+                <CalendarCheck className="h-4 w-4 sm:hidden" aria-hidden />
                 <span>Schedule a Visit</span>
               </Link>
             </motion.div>
@@ -123,13 +126,15 @@ const HeroSection = () => {
               transition={{ delay: 1.4 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              className="w-full sm:w-auto"
             >
               <Link
                 href="/courses"
                 aria-label="Browse our degree programmes"
-                className="w-full sm:w-auto px-6 sm:px-10 py-3.5 sm:py-4 bg-white text-[#21409A] border-2 border-[#dbeafe] rounded-xl font-bold text-sm sm:text-[16px] flex items-center justify-center shadow-lg hover:bg-gray-50 transition-all focus-visible:ring-2 focus-visible:ring-[#21409A] focus-visible:outline-none"
+                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-[#BED5FF] bg-white/95 px-6 py-3 text-sm font-bold text-[#21409A] shadow-[0_14px_34px_-24px_rgba(33,64,154,0.8)] transition-all hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#21409A] sm:w-auto sm:rounded-xl sm:border-2 sm:border-[#dbeafe] sm:px-10 sm:py-4 sm:text-[16px] sm:shadow-lg sm:hover:bg-gray-50"
               >
-                Explore Programmes
+                <span>Explore Programmes</span>
+                <ArrowRight className="h-4 w-4 sm:hidden" aria-hidden />
               </Link>
             </motion.div>
           </div>
@@ -137,10 +142,10 @@ const HeroSection = () => {
       </div>
 
       {/* Building Image Layer — Pinned to bottom, separate from content flow */}
-      <div className="w-full relative h-[320px] sm:h-[400px] md:h-[650px] mt-auto -mt-8 sm:-mt-12 md:-mt-24 overflow-visible z-0">
+      <div className="relative z-0 mt-auto h-[260px] w-full -mt-6 overflow-visible sm:h-[400px] sm:-mt-12 md:h-[650px] md:-mt-24">
         <motion.div
           style={{ y, opacity, scale }}
-          className="absolute inset-x-0 bottom-0 w-full h-full"
+          className="absolute inset-x-[-22%] bottom-0 h-full sm:inset-x-0"
         >
           <Image
             src="/images/home/hero.webp"
@@ -154,7 +159,7 @@ const HeroSection = () => {
       </div>
 
       {/* Stats Bar — Naturally follows the building */}
-      <div className="relative z-20 w-full bg-white mt-6 md:-mt-16">
+      <div className="relative z-20 mt-0 w-full bg-white sm:mt-6 md:-mt-16">
         <StatsStrip />
       </div>
     </section >
