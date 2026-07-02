@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import JsonLd from '@/components/common/JsonLd';
-import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode } from '@/lib/seo-schema';
+import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, POLICY_PAGE_KEYWORDS } from '@/lib/seo-schema';
 
 const pageDescription = 'Review the website terms for using the Itahari International College website.';
 
 export const metadata: Metadata = {
   title: 'Terms of Service | Itahari International College',
   description: pageDescription,
+  keywords: POLICY_PAGE_KEYWORDS,
   alternates: { canonical: '/terms-of-service' },
   openGraph: {
     title: 'Terms of Service | Itahari International College',
@@ -50,6 +51,7 @@ export default function TermsOfServicePage() {
             path: '/terms-of-service',
             name: 'Terms of Service',
             description: pageDescription,
+            keywords: POLICY_PAGE_KEYWORDS,
           }),
           buildBreadcrumbListNode(breadcrumbs),
         ])}

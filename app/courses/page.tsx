@@ -9,6 +9,7 @@ import {
   buildCourseNode,
   buildSchemaGraph,
   buildWebPageNode,
+  COURSES_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
 const pageDescription = 'Explore London Metropolitan University awarded IT and Business programmes at IIC, designed for practical learning and global career readiness.';
@@ -16,6 +17,7 @@ const pageDescription = 'Explore London Metropolitan University awarded IT and B
 export const metadata: Metadata = {
   title: 'UK Degree Programmes in Itahari | IT & Business | Itahari International College',
   description: pageDescription,
+  keywords: COURSES_PAGE_KEYWORDS,
   alternates: { canonical: '/courses' },
   openGraph: {
     title: 'UK Degree Programmes in Itahari | IT & Business',
@@ -50,6 +52,7 @@ export default async function CoursesPage() {
             description: pageDescription,
             type: 'CollectionPage',
             image: '/images/courses/course-hero.JPG',
+            keywords: COURSES_PAGE_KEYWORDS,
           }),
           buildCourseItemListNode(courses),
           ...courses.map(buildCourseNode),

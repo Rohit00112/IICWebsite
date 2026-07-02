@@ -8,16 +8,20 @@ import {
   buildImageGalleryNode,
   buildSchemaGraph,
   buildWebPageNode,
+  LIFE_PAGE_KEYWORDS,
+  mergeKeywords,
 } from '@/lib/seo-schema';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const gallery = await getPublishedEventGalleryArchiveBySlug(slug);
   if (!gallery) return { title: 'Gallery Not Found' };
+  const keywords = mergeKeywords(LIFE_PAGE_KEYWORDS, [gallery.title, `${gallery.title} photos`]);
 
   return {
     title: `${gallery.title} Gallery | Itahari International College`,
     description: gallery.summary,
+    keywords,
     alternates: { canonical: `/life-at-iic/events/${slug}` },
     openGraph: {
       title: `${gallery.title} Gallery`,
@@ -50,6 +54,7 @@ export default async function EventGalleryRoute({ params }: { params: Promise<{ 
             name: `${gallery.title} Gallery`,
             description: gallery.summary,
             image: gallery.coverImage,
+            keywords: mergeKeywords(LIFE_PAGE_KEYWORDS, [gallery.title, `${gallery.title} photos`]),
             mainEntity: { '@id': gallerySchema['@id'] },
           }),
           gallerySchema,

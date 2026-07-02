@@ -7,6 +7,7 @@ import {
   buildSchemaGraph,
   buildScholarshipListNode,
   buildWebPageNode,
+  SCHOLARSHIPS_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
 const pageDescription = 'Explore AAA and ING postgraduate scholarship opportunities at Itahari International College, including yearwise recipient stories and award archives.';
@@ -14,7 +15,7 @@ const pageDescription = 'Explore AAA and ING postgraduate scholarship opportunit
 export const metadata: Metadata = {
   title: 'Scholarships at IIC | Itahari International College',
   description: pageDescription,
-  keywords: ['IIC scholarships', 'Itahari International College scholarship', 'AAA Scholarship Nepal', 'ING Postgraduate Scholarship'],
+  keywords: SCHOLARSHIPS_PAGE_KEYWORDS,
   alternates: { canonical: '/scholarships' },
   openGraph: {
     title: 'Scholarships at Itahari International College',
@@ -49,6 +50,7 @@ export default async function ScholarshipsPage() {
             name: 'Scholarships at Itahari International College',
             description: pageDescription,
             image: '/api/og?title=Scholarships%20at%20IIC&subtitle=Recognition%20that%20moves%20students%20forward&section=Scholarships',
+            keywords: SCHOLARSHIPS_PAGE_KEYWORDS,
           }),
           buildScholarshipListNode(batches),
         ])}

@@ -9,6 +9,8 @@ import {
   buildFaqPageNode,
   buildSchemaGraph,
   buildWebPageNode,
+  COURSES_PAGE_KEYWORDS,
+  mergeKeywords,
 } from '@/lib/seo-schema';
 
 export async function generateMetadata({ 
@@ -20,10 +22,18 @@ export async function generateMetadata({
   const course = await getCourseBySlug(slug);
 
   if (!course) return { title: 'Course Not Found' };
+  const keywords = mergeKeywords(COURSES_PAGE_KEYWORDS, [
+    course.title,
+    course.subtitle,
+    course.category,
+    course.listing?.displayTitle,
+    course.listing?.specialism,
+  ]);
 
   return {
     title: `${course.title} | London Metropolitan University | Itahari International College`,
     description: `${course.description} Study ${course.title} in Itahari, Nepal. Direct UK degree in partnership with London Metropolitan University.`,
+    keywords,
     alternates: { canonical: `/courses/${slug}` },
     openGraph: {
       title: `${course.title} - London Metropolitan University UK Degree`,
@@ -64,6 +74,13 @@ export default async function CoursePage({
     `https://iic.edu.np/courses/${course.slug}#faq`
   );
   const pageDescription = `${course.description} Study ${course.title} in Itahari, Nepal. Direct UK degree in partnership with London Metropolitan University.`;
+  const pageKeywords = mergeKeywords(COURSES_PAGE_KEYWORDS, [
+    course.title,
+    course.subtitle,
+    course.category,
+    course.listing?.displayTitle,
+    course.listing?.specialism,
+  ]);
 
   return (
     <>
@@ -75,6 +92,7 @@ export default async function CoursePage({
             name: course.title,
             description: pageDescription,
             image: course.image,
+            keywords: pageKeywords,
             mainEntity: { '@id': courseSchema['@id'] },
           }),
           courseSchema,

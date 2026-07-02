@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import JsonLd from '@/components/common/JsonLd';
-import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode } from '@/lib/seo-schema';
+import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, POLICY_PAGE_KEYWORDS } from '@/lib/seo-schema';
 
 const pageDescription = 'Learn how Itahari International College handles information submitted through its website forms.';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Itahari International College',
   description: pageDescription,
+  keywords: POLICY_PAGE_KEYWORDS,
   alternates: { canonical: '/privacy-policy' },
   openGraph: {
     title: 'Privacy Policy | Itahari International College',
@@ -50,6 +51,7 @@ export default function PrivacyPolicyPage() {
             path: '/privacy-policy',
             name: 'Privacy Policy',
             description: pageDescription,
+            keywords: POLICY_PAGE_KEYWORDS,
           }),
           buildBreadcrumbListNode(breadcrumbs),
         ])}

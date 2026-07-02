@@ -10,6 +10,7 @@ import {
   buildNewsItemListNode,
   buildSchemaGraph,
   buildWebPageNode,
+  NEWS_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
 const pageDescription = 'Read the latest IIC news, events, student achievements, and academic updates from our globally connected college in Itahari.';
@@ -17,6 +18,7 @@ const pageDescription = 'Read the latest IIC news, events, student achievements,
 export const metadata: Metadata = {
   title: 'Latest News & Events | Itahari International College',
   description: pageDescription,
+  keywords: NEWS_PAGE_KEYWORDS,
   alternates: { canonical: '/news' },
   openGraph: {
     title: 'Latest News & Events | Itahari International College',
@@ -59,6 +61,7 @@ const NewsPage = async () => {
             description: pageDescription,
             type: 'CollectionPage',
             image: '/images/common/seminar.webp',
+            keywords: NEWS_PAGE_KEYWORDS,
           }),
           buildNewsItemListNode(allNews),
           ...allNews.filter((item) => item.category === 'Event').map(buildEventNode),

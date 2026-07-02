@@ -9,13 +9,14 @@ import InnovationGrid from '@/components/sections/about-us/InnovationGrid';
 import ExperienceCTA from '@/components/sections/about-us/ExperienceCTA';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
-import { buildWebPageNode, withContext } from '@/lib/seo-schema';
+import { ABOUT_PAGE_KEYWORDS, buildWebPageNode, withContext } from '@/lib/seo-schema';
 
 const pageDescription = 'Learn how IIC combines London Metropolitan University standards, practical learning, and student-centred support to develop globally competitive graduates in Itahari.';
 
 export const metadata = {
   title: 'Mission, Values & UK Partnership | Itahari International College',
   description: pageDescription,
+  keywords: ABOUT_PAGE_KEYWORDS,
   alternates: { canonical: '/about-us' },
   openGraph: {
     title: 'Mission, Values & UK Partnership | Itahari International College',
@@ -41,6 +42,7 @@ export default function AboutUsPage() {
           description: pageDescription,
           type: 'AboutPage',
           image: '/images/about/about-hero.JPG',
+          keywords: ABOUT_PAGE_KEYWORDS,
         }))}
       />
       <AboutHero />

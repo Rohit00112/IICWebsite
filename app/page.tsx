@@ -9,7 +9,7 @@ import GEOSection from "@/components/sections/home/GEOSection";
 import HomePopup from "@/components/sections/home/HomePopup";
 import { getHomePopupSettings } from "@/lib/home-popup";
 import JsonLd from "@/components/common/JsonLd";
-import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode } from "@/lib/seo-schema";
+import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, HOME_PAGE_KEYWORDS } from "@/lib/seo-schema";
 
 const PartnerSection = dynamic(() => import("@/components/sections/home/PartnerSection"), { ssr: true });
 const ScholarshipSection = dynamic(() => import("@/components/sections/home/ScholarshipSection"), { ssr: true });
@@ -24,6 +24,7 @@ const pageDescription = "Developing impactful industry-ready graduates through U
 export const metadata: Metadata = {
   title: "Itahari International College | UK Degrees in IT & Business",
   description: pageDescription,
+  keywords: HOME_PAGE_KEYWORDS,
   alternates: { canonical: "/" },
   openGraph: {
     title: "Itahari International College | UK Degrees in IT & Business",
@@ -46,6 +47,7 @@ export default async function Home() {
             name: 'Itahari International College',
             description: pageDescription,
             image: '/images/home/hero.webp',
+            keywords: HOME_PAGE_KEYWORDS,
           }),
           buildBreadcrumbListNode(breadcrumbs),
         ])}

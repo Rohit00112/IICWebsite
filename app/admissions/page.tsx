@@ -7,6 +7,7 @@ import {
   buildFaqPageNode,
   buildSchemaGraph,
   buildWebPageNode,
+  ADMISSIONS_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
 const pageDescription = 'Apply to Itahari International College for UK-awarded IT and Business programmes delivered in partnership with London Metropolitan University.';
@@ -14,7 +15,7 @@ const pageDescription = 'Apply to Itahari International College for UK-awarded I
 export const metadata: Metadata = {
   title: 'Apply Now | Admissions 2026',
   description: pageDescription,
-  keywords: ['Apply to Itahari International College', 'College Admission Nepal', 'IT Admission Itahari', 'BA Admission Nepal', 'Online Application Itahari International College'],
+  keywords: ADMISSIONS_PAGE_KEYWORDS,
   alternates: { canonical: '/admissions' },
   openGraph: {
     title: 'Apply Now | Admissions - Itahari International College',
@@ -63,6 +64,7 @@ export default function AdmissionsPage() {
             name: 'Admissions at Itahari International College',
             description: pageDescription,
             image: '/images/admission/riju.png',
+            keywords: ADMISSIONS_PAGE_KEYWORDS,
           }),
           buildBreadcrumbListNode(breadcrumbs),
           ...buildAdmissionProgramNodes(),

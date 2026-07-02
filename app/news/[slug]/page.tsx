@@ -11,6 +11,8 @@ import {
   buildNewsArticleNode,
   buildSchemaGraph,
   buildWebPageNode,
+  mergeKeywords,
+  NEWS_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -18,10 +20,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const item = await getNewsBySlug(slug);
   
   if (!item) return { title: 'Not Found' };
+  const keywords = mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category]);
 
   return {
     title: `${item.title} | Itahari International College`,
     description: item.description,
+    keywords,
     alternates: { canonical: `/news/${slug}` },
     openGraph: {
       title: item.title,
@@ -68,6 +72,7 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
             name: item.title,
             description: item.description,
             image: item.image,
+            keywords: mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category]),
             mainEntity: { '@id': itemSchema['@id'] },
           }),
           itemSchema,

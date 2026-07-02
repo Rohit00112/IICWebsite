@@ -12,6 +12,7 @@ import {
   buildEventGalleryItemListNode,
   buildSchemaGraph,
   buildWebPageNode,
+  LIFE_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
 const pageDescription = 'Discover student life at IIC, from college events and practical learning to the supportive community behind #LifeAtIIC.';
@@ -19,6 +20,7 @@ const pageDescription = 'Discover student life at IIC, from college events and p
 export const metadata = {
   title: 'Life at IIC | Student Experience | Itahari International College',
   description: pageDescription,
+  keywords: LIFE_PAGE_KEYWORDS,
   alternates: { canonical: '/life-at-iic' },
   openGraph: {
     title: 'Life at Itahari International College',
@@ -53,6 +55,7 @@ export default async function LifeAtIicPage() {
             description: pageDescription,
             type: 'CollectionPage',
             image: '/images/lifestyle/lifestyle-hero.JPG',
+            keywords: LIFE_PAGE_KEYWORDS,
           }),
           buildEventGalleryItemListNode(galleries),
         ])}

@@ -24,6 +24,7 @@ interface WebPageNodeOptions {
   image?: string;
   mainEntity?: SchemaNode;
   dateModified?: string;
+  keywords?: string[];
 }
 
 export const SITE_URL = 'https://iic.edu.np';
@@ -32,6 +33,168 @@ export const WEBSITE_ID = `${SITE_URL}/#website`;
 
 const defaultCollegeImage = '/images/home/hero.webp';
 const defaultLogo = '/images/common/iic_logo.png';
+
+export function mergeKeywords(...groups: Array<Array<string | undefined> | undefined>): string[] {
+  const seen = new Set<string>();
+
+  return groups
+    .flatMap((group) => group || [])
+    .map((keyword) => keyword?.trim())
+    .filter((keyword): keyword is string => {
+      if (!keyword) return false;
+      const key = keyword.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+export const BRAND_SEARCH_KEYWORDS = [
+  'Itahari International College',
+  'IIC',
+  'IIC Itahari',
+  'IIC Nepal',
+  'IIC College',
+  'IIC website',
+  'Ithari International College',
+];
+
+export const LOCATION_SEARCH_KEYWORDS = [
+  'Itahari college',
+  'college in Itahari',
+  'IT college in Itahari',
+  'top 5 best college in Itahari',
+  'Itahari college name',
+  'Itahari International College location',
+  'IIC location',
+  'British affiliated colleges in Nepal',
+  'international college in Nepal',
+];
+
+export const COURSE_SEARCH_KEYWORDS = [
+  'IIC courses',
+  'IIC course',
+  'BIT course',
+  'BSc (Hons) Computing',
+  'BSc Computing in Itahari',
+  'BA (Hons) Business Administration',
+  'BA Business Administration in Itahari',
+  'BBA college in Itahari',
+  'BBA in Itahari',
+  'UK degrees in Itahari',
+  'London Metropolitan University courses in Nepal',
+];
+
+export const ADMISSION_SEARCH_KEYWORDS = [
+  'Itahari International College fee structure',
+  'IIC admissions',
+  'IIC guidelines',
+  'IIC finance',
+  'college admission in Itahari',
+];
+
+export const CONTACT_SEARCH_KEYWORDS = [
+  'IIC contact number',
+  'Itahari International College contact number',
+  'IIC location',
+  'Itahari International College location',
+  'IIC finance',
+];
+
+export const SCHOLARSHIP_SEARCH_KEYWORDS = [
+  'AAA scholarship',
+  'IIC scholarship',
+  'IIC scholarships',
+  'Itahari International College scholarship',
+  'scholarship',
+  'ING Postgraduate Scholarship',
+];
+
+export const MEDIA_SEARCH_KEYWORDS = [
+  'Itahari International College photos',
+  'Itahari International College logo',
+  'IIC logo',
+  'Life at IIC',
+  'IIC events',
+];
+
+export const ABOUT_SEARCH_KEYWORDS = [
+  'about IIC',
+  'about Itahari International College',
+  'Itahari International College photos',
+  'Itahari International College logo',
+  'IIC logo',
+];
+
+export const GLOBAL_METADATA_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS,
+  COURSE_SEARCH_KEYWORDS,
+  ADMISSION_SEARCH_KEYWORDS,
+  CONTACT_SEARCH_KEYWORDS,
+  SCHOLARSHIP_SEARCH_KEYWORDS,
+  MEDIA_SEARCH_KEYWORDS
+);
+
+export const HOME_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS,
+  COURSE_SEARCH_KEYWORDS,
+  SCHOLARSHIP_SEARCH_KEYWORDS,
+  CONTACT_SEARCH_KEYWORDS,
+  MEDIA_SEARCH_KEYWORDS
+);
+
+export const COURSES_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  COURSE_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS,
+  ADMISSION_SEARCH_KEYWORDS
+);
+
+export const ADMISSIONS_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  ADMISSION_SEARCH_KEYWORDS,
+  COURSE_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS
+);
+
+export const CONTACT_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  CONTACT_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS
+);
+
+export const SCHOLARSHIPS_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  SCHOLARSHIP_SEARCH_KEYWORDS,
+  ADMISSION_SEARCH_KEYWORDS
+);
+
+export const ABOUT_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  ABOUT_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS,
+  COURSE_SEARCH_KEYWORDS
+);
+
+export const LIFE_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  MEDIA_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS
+);
+
+export const NEWS_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  MEDIA_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS,
+  ['IIC news', 'IIC events']
+);
+
+export const POLICY_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  CONTACT_SEARCH_KEYWORDS
+);
 
 function compactNode<T extends SchemaNode>(node: T): T {
   return Object.fromEntries(
@@ -107,12 +270,19 @@ export function buildCollegeNode(): SchemaNode {
     image: absoluteImageUrl(defaultCollegeImage),
     description:
       'Itahari International College develops industry-ready graduates through UK-awarded IT and Business degrees in partnership with London Metropolitan University.',
+    keywords: GLOBAL_METADATA_KEYWORDS,
     foundingDate: '2017',
     knowsAbout: [
       'Information Technology',
       'Business Administration',
       'Higher Education',
       'UK Degrees',
+      'BIT course',
+      'BSc Computing',
+      'BA Business Administration',
+      'AAA Scholarship',
+      'Itahari college',
+      'British affiliated colleges in Nepal',
     ],
     sameAs: [
       'https://www.facebook.com/iic.nepal',
@@ -176,6 +346,7 @@ export function buildWebsiteNode(): SchemaNode {
     url: SITE_URL,
     name: 'Itahari International College',
     inLanguage: 'en-NP',
+    keywords: GLOBAL_METADATA_KEYWORDS,
     publisher: { '@id': COLLEGE_ID },
   };
 }
@@ -233,8 +404,10 @@ export function buildWebPageNode({
   image,
   mainEntity,
   dateModified,
+  keywords,
 }: WebPageNodeOptions): SchemaNode {
   const url = absoluteUrl(path);
+  const pageKeywords = mergeKeywords(BRAND_SEARCH_KEYWORDS, keywords);
 
   return compactNode({
     '@type': type,
@@ -245,6 +418,7 @@ export function buildWebPageNode({
     inLanguage: 'en-NP',
     isPartOf: { '@id': WEBSITE_ID },
     about: { '@id': COLLEGE_ID },
+    keywords: pageKeywords,
     publisher: { '@id': COLLEGE_ID },
     breadcrumb: { '@id': `${url}#breadcrumb` },
     primaryImageOfPage: image
@@ -284,6 +458,13 @@ export function buildCourseNode(course: CourseItem): SchemaNode {
   const url = absoluteUrl(path);
   const duration = course.details?.duration || course.duration;
   const description = course.description || course.overview || course.listing?.description;
+  const courseKeywords = mergeKeywords(COURSES_PAGE_KEYWORDS, [
+    course.title,
+    course.subtitle,
+    course.category,
+    course.listing?.displayTitle,
+    course.listing?.specialism,
+  ]);
 
   return compactNode({
     '@type': 'Course',
@@ -291,6 +472,7 @@ export function buildCourseNode(course: CourseItem): SchemaNode {
     name: course.title,
     alternateName: course.listing?.displayTitle || course.subtitle,
     description,
+    keywords: courseKeywords,
     url,
     image: absoluteImageUrl(course.image),
     provider: { '@id': COLLEGE_ID },
@@ -321,6 +503,7 @@ export function buildCourseItemListNode(courses: CourseItem[]): SchemaNode {
     '@type': 'ItemList',
     '@id': `${SITE_URL}/courses#course-list`,
     name: 'Academic programmes at Itahari International College',
+    keywords: COURSES_PAGE_KEYWORDS,
     numberOfItems: courses.length,
     itemListElement: courses.map((course, index) => ({
       '@type': 'ListItem',
@@ -357,6 +540,7 @@ export function buildNewsArticleNode(item: NewsItem): SchemaNode {
     '@id': `${url}#article`,
     headline: item.title,
     description: item.description,
+    keywords: mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category]),
     image: absoluteImageUrl(item.image),
     datePublished: publishedDate,
     dateModified: publishedDate,
@@ -380,6 +564,7 @@ export function buildEventNode(item: NewsItem): SchemaNode {
     '@id': `${url}#event`,
     name: item.title,
     description: item.description,
+    keywords: mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category, item.location]),
     image: absoluteImageUrl(item.image),
     url,
     startDate: toIsoDate(item.date),
@@ -409,6 +594,10 @@ export function buildAdmissionProgramNodes(): SchemaNode[] {
       name: 'BSc (Hons) Computing',
       description:
         "A 3-year undergraduate computing degree delivered through IIC's partnership with London Metropolitan University.",
+      keywords: mergeKeywords(COURSES_PAGE_KEYWORDS, ADMISSIONS_PAGE_KEYWORDS, [
+        'BIT course',
+        'BSc Computing in Itahari',
+      ]),
       provider: { '@id': COLLEGE_ID },
       programPrerequisites: 'Minimum 2.0 CGPA in +2/NEB or equivalent',
       educationalCredentialAwarded: 'BSc (Hons) Computing',
@@ -424,6 +613,11 @@ export function buildAdmissionProgramNodes(): SchemaNode[] {
       name: 'BA (Hons) Business Administration',
       description:
         'A 3-year business degree focused on international standards, modern management, and entrepreneurship.',
+      keywords: mergeKeywords(COURSES_PAGE_KEYWORDS, ADMISSIONS_PAGE_KEYWORDS, [
+        'BA Business Administration in Itahari',
+        'BBA college in Itahari',
+        'BBA in Itahari',
+      ]),
       provider: { '@id': COLLEGE_ID },
       programPrerequisites: 'Minimum 2.0 CGPA in +2/NEB or equivalent',
       educationalCredentialAwarded: 'BA (Hons) Business Administration',
@@ -443,6 +637,7 @@ export function buildScholarshipListNode(batches: ScholarshipBatch[]): SchemaNod
     '@type': 'ItemList',
     '@id': `${SITE_URL}/scholarships#scholarship-list`,
     name: 'Scholarships at Itahari International College',
+    keywords: SCHOLARSHIPS_PAGE_KEYWORDS,
     numberOfItems: publishedBatches.length,
     itemListElement: publishedBatches.map((batch, index) => ({
       '@type': 'ListItem',
@@ -467,6 +662,7 @@ export function buildImageGalleryNode(gallery: EventGalleryArchive): SchemaNode 
     '@id': `${url}#gallery`,
     name: `${gallery.title} Gallery`,
     description: gallery.summary,
+    keywords: mergeKeywords(LIFE_PAGE_KEYWORDS, [gallery.title, `${gallery.title} photos`]),
     url,
     image: absoluteImageUrl(gallery.coverImage),
     publisher: { '@id': COLLEGE_ID },
@@ -488,6 +684,7 @@ export function buildEventGalleryItemListNode(galleries: EventGalleryArchive[]):
     '@type': 'ItemList',
     '@id': `${SITE_URL}/life-at-iic#event-gallery-list`,
     name: 'Life at IIC event galleries',
+    keywords: LIFE_PAGE_KEYWORDS,
     numberOfItems: galleries.length,
     itemListElement: galleries.map((gallery, index) => ({
       '@type': 'ListItem',

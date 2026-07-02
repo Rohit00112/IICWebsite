@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Sora, Roboto } from "next/font/google";
 import "./globals.css";
 import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
 import JsonLd from "@/components/common/JsonLd";
-import { buildGlobalSchema } from "@/lib/seo-schema";
+import { buildGlobalSchema, GLOBAL_METADATA_KEYWORDS } from "@/lib/seo-schema";
 import { Metadata, Viewport } from "next";
 
 const geistSans = Geist({
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     template: "%s | Itahari International College",
   },
   description: "Itahari International College (IIC) develops impactful industry-ready graduates through UK-awarded IT and Business programmes in partnership with London Metropolitan University.",
-  keywords: ["IIC", "Itahari International College", "Education in Nepal", "IT College Nepal", "BA Nepal", "BIT Nepal", "London Metropolitan University"],
+  keywords: GLOBAL_METADATA_KEYWORDS,
   authors: [{ name: "Itahari International College" }],
   creator: "Itahari International College",
   publisher: "Itahari International College",
