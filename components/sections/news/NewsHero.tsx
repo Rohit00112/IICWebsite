@@ -6,31 +6,33 @@ import AnimeReveal from '../../effects/AnimeReveal';
 
 const NewsHero = () => {
   return (
-    <section className="pt-28 pb-10 md:pt-32 md:pb-12 bg-white">
+    <section className="pt-24 pb-12 md:pt-28 md:pb-14 bg-[#F8FAFC] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <motion.span
-          initial={{ opacity: 0, y: 12 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="inline-block text-[11px] font-bold uppercase tracking-[0.28em] text-[#21409A] mb-6"
+          className="inline-flex items-center px-6 py-2 bg-[#21409A] text-white rounded-full text-[10px] font-bold tracking-widest mb-10 shadow-lg shadow-[#21409A]/20"
         >
-          Newsroom
-        </motion.span>
-
-        <AnimeReveal
-          as="h1"
-          text="News & Events"
-          className="text-5xl md:text-7xl font-black font-iic text-[#1a1a1a] mb-6 justify-center"
-          staggerFrom="center"
-        />
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
-        >
-          College stories, student achievements, academic updates, and events from Itahari International College.
-        </motion.p>
+          IIC Newsroom
+        </motion.div>
+        
+        <div className="flex flex-col items-center">
+          <AnimeReveal
+            as="h1"
+            text="News & Events"
+            className="text-6xl md:text-8xl font-black font-iic text-[#1a1a1a] mb-8 justify-center"
+            staggerFrom="center"
+          />
+          
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 1 }}
+            className="text-gray-500 text-lg md:text-xl max-w-3xl leading-relaxed font-medium"
+          >
+            Follow college stories, student achievements, academic updates, and events that reflect our commitment to global education with local impact.
+          </motion.p>
+        </div>
       </div>
     </section>
   );

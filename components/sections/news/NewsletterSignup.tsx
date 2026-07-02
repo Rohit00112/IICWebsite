@@ -37,12 +37,12 @@ const NewsletterSignup: React.FC = () => {
   };
 
   return (
-    <div className="rounded-3xl border border-gray-200 bg-slate-50 px-8 py-12 text-center md:px-16">
-      <h5 className="mb-3 font-iic text-2xl font-bold tracking-tight text-[#1a1a1a]">Stay Informed</h5>
-      <p className="mx-auto mb-8 max-w-md text-sm leading-relaxed text-slate-500">
+    <div className="bg-[#DDE5F0] p-10 rounded-[24px] shadow-sm">
+      <h5 className="text-xl font-bold font-iic mb-3 text-[#1a1a1a] tracking-tight">Stay Informed</h5>
+      <p className="text-gray-600 text-[14px] mb-8 leading-relaxed font-medium">
         Get the latest news and event updates delivered directly to your inbox.
       </p>
-      <form onSubmit={handleSubmit} className="mx-auto flex max-w-lg flex-col gap-3 sm:flex-row" noValidate>
+      <form onSubmit={handleSubmit} className="space-y-3" noValidate>
         <input
           type="email"
           required
@@ -51,20 +51,20 @@ const NewsletterSignup: React.FC = () => {
           placeholder="Your email address"
           aria-label="Email address"
           disabled={status === 'loading'}
-          className="flex-1 rounded-full border border-gray-200 bg-white px-5 py-3.5 text-sm text-[#1a1a1a] outline-none transition-all placeholder:text-slate-400 focus:border-[#21409A] disabled:opacity-60"
+          className="w-full bg-white border border-transparent rounded-lg py-4 px-5 outline-none focus:border-[#21409A]/40 focus:ring-2 focus:ring-[#21409A]/15 transition-all text-sm text-[#21409A] font-medium placeholder:text-gray-400 disabled:opacity-60"
         />
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="flex items-center justify-center gap-2 rounded-full bg-[#21409A] px-8 py-3.5 text-sm font-bold text-white transition-all hover:opacity-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
+          className="w-full py-4 bg-[#21409A] text-white font-bold rounded-lg text-sm hover:shadow-xl hover:bg-[#21409A] transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {status === 'loading' ? (
             <>
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               <span>Subscribing…</span>
             </>
           ) : (
-            'Subscribe'
+            'Subscribe Newsletter'
           )}
         </button>
       </form>
@@ -76,8 +76,10 @@ const NewsletterSignup: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             role="status"
-            className={`mx-auto mt-4 max-w-lg rounded-full px-4 py-3 text-[12px] font-bold ${
-              status === 'success' ? 'bg-[#74C044]/15 text-[#21409A]' : 'bg-[#ED1C24]/10 text-[#ED1C24]'
+            className={`mt-4 px-4 py-3 rounded-lg text-[12px] font-bold ${
+              status === 'success'
+                ? 'bg-[#74C044]/15 text-[#21409A]'
+                : 'bg-[#ED1C24]/10 text-[#ED1C24]'
             }`}
           >
             {message}

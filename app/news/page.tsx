@@ -1,7 +1,7 @@
 import React from 'react';
 import NewsHero from '../../components/sections/news/NewsHero';
 import NewsContent from '../../components/sections/news/NewsContent';
-import { getAllNews, getFeaturedNews, getUpcomingEvents } from '../../lib/news';
+import { getAllNews, getFeaturedNews, getUpcomingEvents, getNewsArchive } from '../../lib/news';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
@@ -30,12 +30,14 @@ const NewsPage = async () => {
   let allNews: Awaited<ReturnType<typeof getAllNews>> = [];
   let featuredPost: Awaited<ReturnType<typeof getFeaturedNews>> = null;
   let upcomingEvents: Awaited<ReturnType<typeof getUpcomingEvents>> = [];
+  let archive: Awaited<ReturnType<typeof getNewsArchive>> = [];
 
   try {
-    [allNews, featuredPost, upcomingEvents] = await Promise.all([
+    [allNews, featuredPost, upcomingEvents, archive] = await Promise.all([
       getAllNews(),
       getFeaturedNews(),
       getUpcomingEvents(4),
+      getNewsArchive(6),
     ]);
   } catch (err) {
     console.error('[news] DB unavailable, rendering empty state:', err);
@@ -67,6 +69,7 @@ const NewsPage = async () => {
         initialNews={allNews}
         initialFeatured={featuredPost}
         upcomingEvents={upcomingEvents}
+        archive={archive}
       />
     </main>
   );
