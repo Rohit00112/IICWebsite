@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
-import { toSafeImageSrc } from '@/lib/image-source';
+import { Images } from 'lucide-react';
+import { isSafeImageSrc, toSafeImageSrc } from '@/lib/image-source';
 
 interface ImageUploadProps {
   value: string;
@@ -12,11 +13,12 @@ interface ImageUploadProps {
   label?: string;
 }
 
-type CloudinaryUploadResult = {
-  info?: {
-    secure_url?: unknown;
-  };
-};
+interface BulkImageUploadProps {
+  remainingSlots: number;
+  onUpload: (urls: string[]) => void;
+  label?: string;
+  disabled?: boolean;
+}
 
 interface UploadTriggerProps {
   uploadPreset: string;
@@ -24,6 +26,53 @@ interface UploadTriggerProps {
   onClose: () => void;
   compact?: boolean;
 }
+
+const restoreScroll = () => {
+  if (typeof document === 'undefined') return;
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+};
+
+const getUniqueImageUrls = (urls: string[]) => Array.from(new Set(urls.map((url) => url.trim()).filter(isSafeImageSrc)));
+
+const collectUploadedImageUrls = (value: unknown, urls: string[] = [], allowDirectString = false) => {
+  if (typeof value === 'string') {
+    if (allowDirectString && isSafeImageSrc(value) && value.startsWith('https://')) {
+      urls.push(value);
+    }
+    return urls;
+  }
+
+  if (!value || typeof value !== 'object') return urls;
+
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectUploadedImageUrls(item, urls, allowDirectString));
+    return urls;
+  }
+
+  Object.entries(value as Record<string, unknown>).forEach(([key, item]) => {
+    if ((key === 'secure_url' || key === 'secureUrl' || key === 'url') && typeof item === 'string' && isSafeImageSrc(item)) {
+      urls.push(item);
+      return;
+    }
+
+    collectUploadedImageUrls(item, urls, key === 'files');
+  });
+
+  return urls;
+};
+
+const getUploadedImageUrls = (result: unknown) => {
+  const urls = collectUploadedImageUrls(result);
+  return getUniqueImageUrls(urls);
+};
+
+const getUploadedImageUrl = (result: unknown) => {
+  return getUploadedImageUrls(result)[0] || '';
+};
 
 function UploadTrigger({
   uploadPreset,
@@ -59,6 +108,91 @@ function UploadTrigger({
   );
 }
 
+export function BulkImageUpload({
+  remainingSlots,
+  onUpload,
+  label = 'Bulk Upload',
+  disabled = false,
+}: BulkImageUploadProps) {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const pendingUploadUrlsRef = useRef<string[]>([]);
+  const uploadLimit = Math.max(1, remainingSlots);
+  const isDisabled = disabled || remainingSlots <= 0 || !cloudName || !uploadPreset;
+
+  const buttonClassName = `inline-flex h-[46px] shrink-0 items-center gap-2 rounded-lg border px-4 text-xs font-bold transition-colors ${
+    isDisabled
+      ? 'cursor-not-allowed border-gray-200 bg-gray-50 text-gray-400'
+      : 'border-[#21409A]/20 bg-white text-[#21409A] hover:border-[#21409A] hover:bg-blue-50'
+  }`;
+
+  const button = (onClick?: () => void) => (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={isDisabled}
+      className={buttonClassName}
+      title={!cloudName || !uploadPreset ? 'Cloudinary upload is not configured' : undefined}
+    >
+      <Images className="h-4 w-4" aria-hidden="true" />
+      <span>{label}</span>
+    </button>
+  );
+
+  if (!cloudName || !uploadPreset) {
+    return button();
+  }
+
+  const trackUploadResult = (result: unknown) => {
+    const urls = getUploadedImageUrls(result);
+    if (urls.length > 0) {
+      pendingUploadUrlsRef.current = getUniqueImageUrls([...pendingUploadUrlsRef.current, ...urls]);
+    }
+  };
+
+  const flushUploadResults = () => {
+    const urls = pendingUploadUrlsRef.current;
+    pendingUploadUrlsRef.current = [];
+    if (urls.length > 0) {
+      onUpload(urls);
+    }
+  };
+
+  const onSuccess = (result: unknown) => {
+    trackUploadResult(result);
+    setTimeout(restoreScroll, 0);
+  };
+
+  const onQueuesEnd = (result: unknown) => {
+    trackUploadResult(result);
+    flushUploadResults();
+    setTimeout(restoreScroll, 0);
+  };
+
+  const onClose = () => {
+    flushUploadResults();
+    setTimeout(restoreScroll, 0);
+  };
+
+  return (
+    <CldUploadWidget
+      key={`bulk-upload-${uploadPreset}-${uploadLimit}`}
+      onSuccess={onSuccess}
+      onQueuesEnd={onQueuesEnd}
+      onClose={onClose}
+      uploadPreset={uploadPreset}
+      options={{
+        multiple: true,
+        maxFiles: uploadLimit,
+        resourceType: 'image',
+        sources: ['local', 'url'],
+      }}
+    >
+      {({ open }) => button(() => open?.())}
+    </CldUploadWidget>
+  );
+}
+
 const ImageUpload: React.FC<ImageUploadProps> = ({
   value,
   onChange,
@@ -71,18 +205,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const [imageErrorSrc, setImageErrorSrc] = useState('');
   const imageFailed = Boolean(previewSrc && imageErrorSrc === previewSrc);
 
-  const restoreScroll = () => {
-    if (typeof document === 'undefined') return;
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-  };
-
   const onSuccess = (result: unknown) => {
-    const url = (result as CloudinaryUploadResult)?.info?.secure_url;
-    if (typeof url === 'string') {
+    const url = getUploadedImageUrl(result);
+    if (url) {
       onChange(url);
     } else {
       console.error('[ImageUpload] Upload succeeded but secure_url missing:', result);

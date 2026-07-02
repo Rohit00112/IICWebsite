@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import ImageUpload from '@/components/admin/ImageUpload';
+import ImageUpload, { BulkImageUpload } from '@/components/admin/ImageUpload';
 import type { EventGalleryItem, EventGalleryStatus } from '@/lib/event-galleries';
 
 type GalleryFormData = {
@@ -25,6 +25,7 @@ type NewYearCollection = {
 };
 
 const currentYear = new Date().getFullYear();
+const MAX_GALLERY_PHOTOS = 60;
 
 const defaultFormData: GalleryFormData = {
   title: '',
@@ -35,6 +36,26 @@ const defaultFormData: GalleryFormData = {
   images: [],
   status: 'draft',
   sortOrder: 0,
+};
+
+const getRemainingPhotoSlots = (images: string[]) => Math.max(0, MAX_GALLERY_PHOTOS - images.filter(Boolean).length);
+
+const mergeUploadedImages = (images: string[], uploadedImages: string[]) => {
+  const availableSlots = getRemainingPhotoSlots(images);
+  const urls = uploadedImages.map((image) => image.trim()).filter(Boolean).slice(0, availableSlots);
+  if (urls.length === 0) return images;
+
+  const nextImages = [...images];
+  urls.forEach((url) => {
+    const emptyIndex = nextImages.findIndex((image) => !image);
+    if (emptyIndex >= 0) {
+      nextImages[emptyIndex] = url;
+    } else if (nextImages.length < MAX_GALLERY_PHOTOS) {
+      nextImages.push(url);
+    }
+  });
+
+  return nextImages;
 };
 
 type EventGalleryFormProps = {
@@ -78,6 +99,13 @@ export default function EventGalleryForm({ gallery, eventYears = [], initialTitl
     setFormData({ ...formData, images: formData.images.filter((_, itemIndex) => itemIndex !== index) });
   };
 
+  const addBulkImages = (uploadedImages: string[]) => {
+    setFormData((current) => ({
+      ...current,
+      images: mergeUploadedImages(current.images, uploadedImages),
+    }));
+  };
+
   const addYearCollection = () => {
     const clientId = `new-year-${Date.now()}-${newYearCollections.length}`;
     setNewYearCollections([
@@ -93,13 +121,13 @@ export default function EventGalleryForm({ gallery, eventYears = [], initialTitl
   };
 
   const updateYearCollection = (clientId: string, patch: Partial<NewYearCollection>) => {
-    setNewYearCollections(newYearCollections.map((collection) => (
+    setNewYearCollections((collections) => collections.map((collection) => (
       collection.clientId === clientId ? { ...collection, ...patch } : collection
     )));
   };
 
   const removeYearCollection = (clientId: string) => {
-    setNewYearCollections(newYearCollections.filter((collection) => collection.clientId !== clientId));
+    setNewYearCollections((collections) => collections.filter((collection) => collection.clientId !== clientId));
   };
 
   const updateYearCollectionImage = (clientId: string, index: number, image: string) => {
@@ -116,6 +144,14 @@ export default function EventGalleryForm({ gallery, eventYears = [], initialTitl
     if (!collection) return;
 
     updateYearCollection(clientId, { images: collection.images.filter((_, imageIndex) => imageIndex !== index) });
+  };
+
+  const addBulkYearCollectionImages = (clientId: string, uploadedImages: string[]) => {
+    setNewYearCollections((collections) => collections.map((collection) => (
+      collection.clientId === clientId
+        ? { ...collection, images: mergeUploadedImages(collection.images, uploadedImages) }
+        : collection
+    )));
   };
 
   const getResponseError = async (response: Response) => {
@@ -316,12 +352,16 @@ export default function EventGalleryForm({ gallery, eventYears = [], initialTitl
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, images: [...formData.images, ''] })}
-                  disabled={formData.images.length >= 60}
+                  disabled={formData.images.length >= MAX_GALLERY_PHOTOS}
                   className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-[#21409A] px-4 py-3 text-xs font-bold text-white disabled:opacity-40"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
                   Add Photo
                 </button>
+                <BulkImageUpload
+                  remainingSlots={getRemainingPhotoSlots(formData.images)}
+                  onUpload={addBulkImages}
+                />
               </div>
             </div>
 
@@ -377,12 +417,16 @@ export default function EventGalleryForm({ gallery, eventYears = [], initialTitl
                   <button
                     type="button"
                     onClick={() => updateYearCollection(collection.clientId, { images: [...collection.images, ''] })}
-                    disabled={collection.images.length >= 60}
+                    disabled={collection.images.length >= MAX_GALLERY_PHOTOS}
                     className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-[#21409A] px-4 py-3 text-xs font-bold text-white disabled:opacity-40"
                   >
                     <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
                     Add Photo
                   </button>
+                  <BulkImageUpload
+                    remainingSlots={getRemainingPhotoSlots(collection.images)}
+                    onUpload={(uploadedImages) => addBulkYearCollectionImages(collection.clientId, uploadedImages)}
+                  />
                   <button
                     type="button"
                     onClick={() => removeYearCollection(collection.clientId)}
