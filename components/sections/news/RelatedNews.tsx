@@ -16,7 +16,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
   if (items.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-20 bg-[#F8FAFC] border-t border-gray-100">
+    <section className="py-16 md:py-20 bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-16">
           <div>
@@ -51,32 +51,31 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
               className="related-news-card"
               style={{ willChange: 'transform, opacity' }}
             >
-              <Link href={`/news/${item.slug}`} className="group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
-                <div className="relative h-56 overflow-hidden">
+              <Link href={`/news/${item.slug}`} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[#21409A]/40">
+                <div className="relative aspect-[16/9] overflow-hidden">
                   <Image
                     src={item.image || '/images/common/tower_block.JPG'}
                     alt={item.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md text-[#21409A] text-[10px] font-bold tracking-wider rounded-full shadow-sm">
-                      {item.category}
-                    </span>
-                  </div>
                 </div>
-                <div className="p-8 flex flex-col flex-grow">
-                  <div className="text-[10px] font-bold text-gray-400 mb-3">{item.date}</div>
-                  <h4 className="text-xl font-bold text-[#1a1a1a] mb-4 font-iic leading-tight line-clamp-2 group-hover:text-[#21409A] transition-colors">
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="mb-3 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.14em]">
+                    <span className="text-[#21409A]">{item.category}</span>
+                    <span className="text-slate-300">·</span>
+                    <span className="text-slate-400">{item.date}</span>
+                  </div>
+                  <h4 className="mb-3 font-iic text-lg font-bold leading-snug text-[#1a1a1a] line-clamp-2 transition-colors group-hover:text-[#21409A]">
                     {item.title}
                   </h4>
-                  <p className="text-gray-500 text-sm line-clamp-2 mb-6">
+                  <p className="mb-6 text-sm leading-relaxed text-slate-500 line-clamp-2">
                     {item.description}
                   </p>
-                  <div className="mt-auto flex items-center gap-2 text-[#21409A] font-bold text-xs">
+                  <span className="mt-auto flex items-center gap-2 text-xs font-bold text-[#21409A] transition-all group-hover:gap-3">
                     Read Story
-                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                  </div>
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                  </span>
                 </div>
               </Link>
             </motion.div>
