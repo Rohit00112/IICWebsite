@@ -46,6 +46,11 @@ const DEFAULT_FORM_DATA = {
   program: 'BIT',
 };
 
+const PROGRAMME_LABELS: Record<string, string> = {
+  BIT: 'BSc (Hons) Computing',
+  BBA: 'BA (Hons) Business Administration',
+};
+
 type ApplicationFormData = typeof DEFAULT_FORM_DATA;
 type ApplicationField = keyof ApplicationFormData;
 type ApplicationErrors = Partial<Record<ApplicationField, string>>;
@@ -54,6 +59,15 @@ type ApplicationTouched = Partial<Record<ApplicationField, boolean>>;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const getDigits = (value: string) => value.replace(/\D/g, '');
+
+const normalizePhoneNumber = (dial: string, value: string) => {
+  const phoneDigits = getDigits(value);
+  if (!phoneDigits) return '';
+  if (dial === '+977') return phoneDigits;
+
+  const dialDigits = getDigits(dial);
+  return phoneDigits.startsWith(dialDigits) ? phoneDigits : `${dialDigits}${phoneDigits}`;
+};
 
 const validateApplicationForm = (values: ApplicationFormData): ApplicationErrors => {
   const nextErrors: ApplicationErrors = {};
@@ -125,6 +139,8 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
   const [selectedProgram, setSelectedProgram] = useState<string | null>(() => formData.program);
   const [errors, setErrors] = useState<ApplicationErrors>({});
   const [touched, setTouched] = useState<ApplicationTouched>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const [country, setCountry] = useState(COUNTRIES[0]);
   const [countryOpen, setCountryOpen] = useState(false);
@@ -164,6 +180,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
     const field = name as ApplicationField;
     const nextFormData = { ...formData, [field]: value };
 
+    setSubmitError('');
     setFormData(nextFormData);
 
     if (touched[field] || errors[field]) {
@@ -179,6 +196,7 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
 
   const handleProgramSelect = (program: string) => {
     const nextFormData = { ...formData, program };
+    setSubmitError('');
     setSelectedProgram(program);
     setFormData(nextFormData);
 
@@ -187,10 +205,13 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isSubmitting) return;
+
     const nextErrors = validateApplicationForm(formData);
 
+    setSubmitError('');
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
@@ -205,8 +226,38 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
       return;
     }
 
-    localStorage.removeItem('admissions_form_data');
-    setIsSubmitted(true);
+    const course = PROGRAMME_LABELS[formData.program] || formData.program;
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/clms-leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.fullName.trim(),
+          email: formData.email.trim(),
+          phone_number: normalizePhoneNumber(country.dial, formData.phone),
+          address: formData.address.trim(),
+          course,
+          type: 'apply',
+          message: `Application submitted for ${course}. School / College: ${formData.schoolName.trim()}.`,
+        }),
+      });
+      const responseBody = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(responseBody?.error || 'Could not submit your application right now.');
+      }
+
+      localStorage.removeItem('admissions_form_data');
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Could not submit your application right now.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -251,6 +302,12 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
           Please fill in the details carefully. Your progress is automatically saved.
         </p>
       </div>
+
+      {submitError && (
+        <div role="alert" className="mb-8 rounded-2xl border border-[#ED1C24]/20 bg-[#ED1C24]/5 px-4 py-3 text-sm font-bold text-[#B91C1C]">
+          {submitError}
+        </div>
+      )}
 
       <motion.div layout className="flex-grow flex flex-col gap-12">
         {/* Personal Section */}
@@ -505,9 +562,19 @@ const ApplicationForm = ({ isSubmitted, setIsSubmitted }: ApplicationFormProps) 
         <Magnetic strength={0.2} maxDistance={15}>
           <button
             type="submit"
-            className="px-10 py-3.5 bg-[#21409A] text-white rounded-xl font-bold text-[14px] flex items-center gap-3 shadow-xl shadow-[#21409A]/10 hover:brightness-110 transition-all active:scale-[0.98]"
+            disabled={isSubmitting}
+            className={`px-10 py-3.5 bg-[#21409A] text-white rounded-xl font-bold text-[14px] flex items-center gap-3 shadow-xl shadow-[#21409A]/10 hover:brightness-110 transition-all active:scale-[0.98] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
           >
-            Submit Application <span className="text-lg">→</span>
+            {isSubmitting ? (
+              <>
+                <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              <>
+                Submit Application <span className="text-lg">→</span>
+              </>
+            )}
           </button>
         </Magnetic>
       </div>

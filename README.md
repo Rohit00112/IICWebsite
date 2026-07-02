@@ -57,6 +57,9 @@ proxy.ts              # Edge proxy / middleware helper
    MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/iic_website
    JWT_SECRET=<long-random-string>
    TWO_FACTOR_ENCRYPTION_KEY=<separate-long-random-string>
+   CLMS_API_URL=https://api.ingclms.com/api/v2/raw-website-lead-management/sync-lead
+   CLMS_TENANT=<tenant>
+   CLMS_PRIVATE_KEY=<private-key>
    NEXT_PUBLIC_SITE_URL=http://localhost:3000
    ```
 
@@ -119,6 +122,9 @@ Configure these protected GitLab CI/CD variables:
 - `MONGODB_URI`
 - `JWT_SECRET`
 - `TWO_FACTOR_ENCRYPTION_KEY`
+- `CLMS_API_URL`
+- `CLMS_TENANT`
+- `CLMS_PRIVATE_KEY`
 - `NEXT_PUBLIC_SITE_URL`
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` (optional)
 - `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` (optional)

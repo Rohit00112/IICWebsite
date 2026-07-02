@@ -5,7 +5,7 @@ import Image from 'next/image';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
 
-type ProspectusField = 'fullName' | 'email' | 'programme' | 'contactNumber';
+type ProspectusField = 'fullName' | 'email' | 'programme' | 'contactNumber' | 'address';
 type ProspectusFormData = Record<ProspectusField, string>;
 type ProspectusErrors = Partial<Record<ProspectusField, string>>;
 type ProspectusTouched = Partial<Record<ProspectusField, boolean>>;
@@ -15,11 +15,14 @@ const INITIAL_PROSPECTUS_FORM: ProspectusFormData = {
   email: '',
   programme: '',
   contactNumber: '',
+  address: '',
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const getDigits = (value: string) => value.replace(/\D/g, '');
+
+const normalizePhoneNumber = (value: string) => getDigits(value);
 
 const validateProspectusForm = (values: ProspectusFormData): ProspectusErrors => {
   const nextErrors: ProspectusErrors = {};
@@ -47,6 +50,12 @@ const validateProspectusForm = (values: ProspectusFormData): ProspectusErrors =>
     nextErrors.contactNumber = 'Please enter a valid contact number.';
   }
 
+  if (!values.address.trim()) {
+    nextErrors.address = 'Please enter your address.';
+  } else if (values.address.trim().length < 4) {
+    nextErrors.address = 'Please enter a complete address.';
+  }
+
   return nextErrors;
 };
 
@@ -64,6 +73,8 @@ const ProspectusSection = () => {
   const [formData, setFormData] = React.useState<ProspectusFormData>(INITIAL_PROSPECTUS_FORM);
   const [errors, setErrors] = React.useState<ProspectusErrors>({});
   const [touched, setTouched] = React.useState<ProspectusTouched>({});
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState('');
 
   const hasFieldError = (field: ProspectusField) => Boolean(touched[field] && errors[field]);
   const getErrorId = (field: ProspectusField) => `prospectus-${field}-error`;
@@ -91,6 +102,7 @@ const ProspectusSection = () => {
     const field = name as ProspectusField;
     const nextFormData = { ...formData, [field]: value };
 
+    setSubmitError('');
     setFormData(nextFormData);
 
     if (touched[field] || errors[field]) {
@@ -104,10 +116,13 @@ const ProspectusSection = () => {
     setErrors(validateProspectusForm(formData));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isSubmitting) return;
+
     const nextErrors = validateProspectusForm(formData);
 
+    setSubmitError('');
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
@@ -116,11 +131,51 @@ const ProspectusSection = () => {
         email: true,
         programme: true,
         contactNumber: true,
+        address: true,
       });
       return;
     }
 
-    window.open(brochureUrl, '_blank', 'noopener,noreferrer');
+    const brochureWindow = window.open('', '_blank');
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/clms-leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.fullName.trim(),
+          email: formData.email.trim(),
+          phone_number: normalizePhoneNumber(formData.contactNumber),
+          address: formData.address.trim(),
+          course: formData.programme,
+          type: 'contact',
+          message: `Prospectus download requested for ${formData.programme}.`,
+        }),
+      });
+      const responseBody = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(responseBody?.error || 'Could not prepare your prospectus right now.');
+      }
+
+      setFormData(INITIAL_PROSPECTUS_FORM);
+      setTouched({});
+      if (brochureWindow) {
+        brochureWindow.opener = null;
+        brochureWindow.location.href = brochureUrl;
+      } else {
+        window.open(brochureUrl, '_blank', 'noopener,noreferrer');
+      }
+    } catch (error) {
+      brochureWindow?.close();
+      setSubmitError(error instanceof Error ? error.message : 'Could not prepare your prospectus right now.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -223,6 +278,12 @@ const ProspectusSection = () => {
 
             {/* Form Fields */}
             <form className="relative flex flex-1 flex-col space-y-4 sm:space-y-5" onSubmit={handleSubmit} noValidate>
+              {submitError && (
+                <div role="alert" className="rounded-2xl border border-[#FFB4B4]/40 bg-[#ED1C24]/15 px-4 py-3 text-sm font-bold text-[#FFE3E3]">
+                  {submitError}
+                </div>
+              )}
+
               <div className="space-y-2">
                 <label htmlFor="prospectus-fullName" className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Full Name <span className="text-[#74C044]">*</span></label>
                 <div className="group relative">
@@ -331,22 +392,58 @@ const ProspectusSection = () => {
                 </div>
               </div>
 
+              <div className="space-y-2">
+                <label htmlFor="prospectus-address" className="ml-1 text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-white/55">Address <span className="text-[#74C044]">*</span></label>
+                <div className="group relative">
+                  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35 transition-colors group-focus-within:text-[#74C044]">
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 21s7-4.7 7-11a7 7 0 10-14 0c0 6.3 7 11 7 11z" /><circle cx="12" cy="10" r="2.5" /></svg>
+                  </span>
+                  <input
+                    id="prospectus-address"
+                    name="address"
+                    type="text"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    onBlur={handleInputBlur}
+                    aria-invalid={hasFieldError('address')}
+                    aria-describedby={hasFieldError('address') ? getErrorId('address') : undefined}
+                    placeholder="Kathmandu, Nepal"
+                    className={`${getInputClassName('address')} pl-12 pr-4`}
+                  />
+                </div>
+                {hasFieldError('address') && (
+                  <p id={getErrorId('address')} className="ml-1 text-xs font-semibold text-[#FFE3E3]">
+                    {errors.address}
+                  </p>
+                )}
+              </div>
+
               {/* Submit Button */}
               <button
                 type="submit"
-                className="group relative mt-auto w-full overflow-hidden rounded-2xl bg-gradient-to-r from-[#74C044] to-[#62a838] py-4 sm:py-[18px] text-base sm:text-lg font-bold text-white shadow-[0_16px_40px_rgba(116,192,68,0.4)] transition-all hover:shadow-[0_20px_55px_rgba(116,192,68,0.55)] hover:brightness-105 active:scale-[0.99]"
+                disabled={isSubmitting}
+                className={`group relative mt-auto w-full overflow-hidden rounded-2xl bg-gradient-to-r from-[#74C044] to-[#62a838] py-4 sm:py-[18px] text-base sm:text-lg font-bold text-white shadow-[0_16px_40px_rgba(116,192,68,0.4)] transition-all hover:shadow-[0_20px_55px_rgba(116,192,68,0.55)] hover:brightness-105 active:scale-[0.99] ${isSubmitting ? 'cursor-not-allowed opacity-75' : ''}`}
               >
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                 <span className="relative inline-flex items-center justify-center gap-2">
-                  Download Prospectus Now
-                  <svg className="h-5 w-5 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                  {isSubmitting ? (
+                    <>
+                      <span className="h-5 w-5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                      Preparing Prospectus...
+                    </>
+                  ) : (
+                    <>
+                      Download Prospectus Now
+                      <svg className="h-5 w-5 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    </>
+                  )}
                 </span>
               </button>
 
               {/* Trust row */}
               <div className="flex items-center justify-center gap-2 pt-1 text-xs text-white/45">
                 <svg className="h-4 w-4 text-[#74C044]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                No spam. Your details stay private — PDF opens instantly.
+                No spam. Your details stay private.
               </div>
             </form>
           </div>

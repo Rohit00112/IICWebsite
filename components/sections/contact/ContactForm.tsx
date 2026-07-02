@@ -82,11 +82,26 @@ const COUNTRIES = [
 const MESSAGE_MAX = 600;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-type FieldKey = 'firstName' | 'lastName' | 'email' | 'phone' | 'reason' | 'programme' | 'message';
+type FieldKey = 'firstName' | 'lastName' | 'email' | 'phone' | 'address' | 'reason' | 'programme' | 'message';
 type FormErrors = Partial<Record<FieldKey, string>>;
 
 const getFormValue = (formData: FormData, key: FieldKey) => (
   String(formData.get(key) || '').trim()
+);
+
+const getDigits = (value: string) => value.replace(/\D/g, '');
+
+const normalizePhoneNumber = (dial: string, value: string) => {
+  const phoneDigits = getDigits(value);
+  if (!phoneDigits) return '';
+  if (dial === '+977') return phoneDigits;
+
+  const dialDigits = getDigits(dial);
+  return phoneDigits.startsWith(dialDigits) ? phoneDigits : `${dialDigits}${phoneDigits}`;
+};
+
+const getReasonLabel = (value: string) => (
+  REASONS.find(reason => reason.value === value)?.label || 'General Inquiry'
 );
 
 const FieldError = ({ id, message }: { id: string; message?: string }) => {
@@ -102,6 +117,7 @@ const FieldError = ({ id, message }: { id: string; message?: string }) => {
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
   const [reason, setReason] = useState('');
   const [programme, setProgramme] = useState('');
@@ -160,6 +176,7 @@ const ContactForm = () => {
     const lastName = getFormValue(formData, 'lastName');
     const email = getFormValue(formData, 'email');
     const phone = getFormValue(formData, 'phone');
+    const address = getFormValue(formData, 'address');
     const selectedReason = reason.trim();
     const selectedProgramme = programme.trim();
     const trimmedMessage = message.trim();
@@ -172,11 +189,19 @@ const ContactForm = () => {
       nextErrors.email = 'Please enter a valid email address.';
     }
 
-    if (phone) {
-      const digits = phone.replace(/\D/g, '');
+    if (!phone) {
+      nextErrors.phone = 'Please enter your phone number.';
+    } else {
+      const digits = getDigits(phone);
       if (digits.length < 7 || digits.length > 15) {
         nextErrors.phone = 'Please enter a valid phone number.';
       }
+    }
+
+    if (!address) {
+      nextErrors.address = 'Please enter your address.';
+    } else if (address.length < 4) {
+      nextErrors.address = 'Please enter a complete address.';
     }
 
     if (!selectedReason) nextErrors.reason = 'Please select a reason for contact.';
@@ -202,14 +227,52 @@ const ContactForm = () => {
       return;
     }
 
+    setSubmitError('');
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1600));
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    setReason('');
-    setProgramme('');
-    setMessage('');
-    form.reset();
+    const formData = new FormData(form);
+    const firstName = getFormValue(formData, 'firstName');
+    const lastName = getFormValue(formData, 'lastName');
+    const email = getFormValue(formData, 'email');
+    const phone = getFormValue(formData, 'phone');
+    const address = getFormValue(formData, 'address');
+    const selectedReason = reason.trim();
+    const selectedProgramme = programme.trim();
+    const course = showProgramme && selectedProgramme
+      ? selectedProgramme
+      : getReasonLabel(selectedReason);
+
+    try {
+      const response = await fetch('/api/clms-leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${firstName} ${lastName}`.trim(),
+          email,
+          phone_number: normalizePhoneNumber(country.dial, phone),
+          address,
+          course,
+          type: 'contact',
+          message: message.trim(),
+        }),
+      });
+      const responseBody = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(responseBody?.error || 'Could not send your message right now.');
+      }
+
+      setIsSuccess(true);
+      setReason('');
+      setProgramme('');
+      setMessage('');
+      form.reset();
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Could not send your message right now.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fieldClass = "w-full px-5 py-4 bg-white border border-gray-200 rounded-xl focus:border-[#21409A] focus:ring-2 focus:ring-[#21409A]/15 outline-none transition-all placeholder:text-gray-400 font-medium text-sm text-[#1a1a1a]";
@@ -354,6 +417,7 @@ const ContactForm = () => {
                       onClick={() => {
                         setIsSuccess(false);
                         setErrors({});
+                        setSubmitError('');
                       }}
                       className="px-8 py-3 bg-[#21409A] text-white font-bold rounded-xl"
                     >
@@ -389,9 +453,9 @@ const ContactForm = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                {Object.keys(errors).length > 0 && (
+                {(Object.keys(errors).length > 0 || submitError) && (
                   <div role="alert" className="rounded-2xl border border-[#ED1C24]/20 bg-[#ED1C24]/5 px-4 py-3 text-sm font-bold text-[#B91C1C]">
-                    Please fix the highlighted fields before sending.
+                    {submitError || 'Please fix the highlighted fields before sending.'}
                   </div>
                 )}
 
@@ -453,7 +517,7 @@ const ContactForm = () => {
                     <FieldError id="email-error" message={errors.email} />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="phone" className={labelClass}>Phone Number</label>
+                    <label htmlFor="phone" className={labelClass}>Phone Number {requiredMark}</label>
                     <div ref={countryRef} className="relative">
                       <button
                         type="button"
@@ -473,6 +537,7 @@ const ContactForm = () => {
                       <input
                         id="phone"
                         name="phone"
+                        required
                         type="tel"
                         autoComplete="tel"
                         placeholder="98XXXXXXXX"
@@ -538,6 +603,23 @@ const ContactForm = () => {
                     </div>
                     <FieldError id="phone-error" message={errors.phone} />
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="address" className={labelClass}>Address {requiredMark}</label>
+                  <input
+                    id="address"
+                    name="address"
+                    required
+                    type="text"
+                    autoComplete="street-address"
+                    placeholder="Kathmandu, Nepal"
+                    aria-invalid={Boolean(errors.address)}
+                    aria-describedby={errors.address ? 'address-error' : undefined}
+                    onChange={() => clearError('address')}
+                    className={getFieldClass('address')}
+                  />
+                  <FieldError id="address-error" message={errors.address} />
                 </div>
 
                 <div className="space-y-2">
