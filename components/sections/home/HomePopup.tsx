@@ -92,7 +92,7 @@ export default function HomePopup({ settings }: HomePopupProps) {
             width={1920}
             height={1920}
             sizes="(max-width: 768px) 92vw, 620px"
-            priority
+            loading="lazy"
             className="h-auto max-h-[82svh] w-auto max-w-full object-contain"
           />
         </Link>

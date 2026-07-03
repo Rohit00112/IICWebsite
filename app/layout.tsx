@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Sora, Roboto } from "next/font/google";
 import "./globals.css";
 import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
 import JsonLd from "@/components/common/JsonLd";
+import MarketingScripts from "@/components/common/MarketingScripts";
 import { buildGlobalSchema, GLOBAL_METADATA_KEYWORDS } from "@/lib/seo-schema";
 import { Metadata, Viewport } from "next";
 
@@ -110,6 +111,7 @@ export default function RootLayout({
         <ClientLayoutWrapper>
           {children}
         </ClientLayoutWrapper>
+        <MarketingScripts />
       </body>
 
     </html>

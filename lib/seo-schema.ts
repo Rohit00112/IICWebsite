@@ -28,11 +28,32 @@ interface WebPageNodeOptions {
 }
 
 export const SITE_URL = 'https://iic.edu.np';
+export const COLLEGE_NAME = 'Itahari International College';
 export const COLLEGE_ID = `${SITE_URL}/#college`;
+export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+export const LOCAL_BUSINESS_ID = `${SITE_URL}/#local-business`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 
 const defaultCollegeImage = '/images/home/hero.webp';
 const defaultLogo = '/images/common/iic_logo.png';
+export const COLLEGE_PHONE_DISPLAY = '+977 9801003030';
+export const COLLEGE_PHONE_TEL = '+9779801003030';
+export const COLLEGE_ADDRESS = {
+  streetAddress: 'Sundar Haraicha 04, Dulari',
+  addressLocality: 'Dulari',
+  addressRegion: 'Morang, Koshi Province',
+  postalCode: '56705',
+  addressCountry: 'NP',
+};
+export const COLLEGE_ADDRESS_TEXT = 'Sundar Haraicha 04, Dulari, Morang, Nepal';
+export const COLLEGE_SOCIAL_PROFILES = [
+  'https://www.facebook.com/IICNepal/',
+  'https://www.instagram.com/iic_nepal',
+  'https://www.linkedin.com/school/itahari-international-college/',
+  'https://www.youtube.com/@itahariinternationalcolleg4968',
+  'https://www.tiktok.com/@iic.nepal',
+  'https://x.com/iic_nepal',
+];
 
 export function mergeKeywords(...groups: Array<Array<string | undefined> | undefined>): string[] {
   const seen = new Set<string>();
@@ -256,9 +277,9 @@ export function buildSchemaGraph(nodes: Array<SchemaNode | null | undefined>): S
 
 export function buildCollegeNode(): SchemaNode {
   return {
-    '@type': ['CollegeOrUniversity', 'EducationalOrganization'],
+    '@type': ['CollegeOrUniversity', 'EducationalOrganization', 'Organization'],
     '@id': COLLEGE_ID,
-    name: 'Itahari International College',
+    name: COLLEGE_NAME,
     alternateName: 'IIC',
     url: SITE_URL,
     logo: {
@@ -284,30 +305,21 @@ export function buildCollegeNode(): SchemaNode {
       'Itahari college',
       'British affiliated colleges in Nepal',
     ],
-    sameAs: [
-      'https://www.facebook.com/iic.nepal',
-      'https://www.instagram.com/iic_nepal',
-      'https://www.linkedin.com/school/itahari-international-college/',
-      'https://www.youtube.com/@itahariinternationalcollege',
-    ],
+    sameAs: COLLEGE_SOCIAL_PROFILES,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Sundarharaicha-4, Dulari',
-      addressLocality: 'Dulari',
-      addressRegion: 'Morang, Koshi Province',
-      postalCode: '56705',
-      addressCountry: 'NP',
+      ...COLLEGE_ADDRESS,
     },
     geo: {
       '@type': 'GeoCoordinates',
       latitude: 26.6644,
       longitude: 87.2718,
     },
-    telephone: '+977-25-581111',
+    telephone: COLLEGE_PHONE_TEL,
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: '+977-25-581111',
+        telephone: COLLEGE_PHONE_TEL,
         contactType: 'admissions',
         areaServed: 'NP',
         availableLanguage: ['Nepali', 'English'],
@@ -339,20 +351,91 @@ export function buildCollegeNode(): SchemaNode {
   };
 }
 
+export function buildOrganizationNode(): SchemaNode {
+  return {
+    '@type': 'Organization',
+    '@id': ORGANIZATION_ID,
+    name: COLLEGE_NAME,
+    alternateName: 'IIC',
+    url: SITE_URL,
+    logo: absoluteImageUrl(defaultLogo),
+    image: absoluteImageUrl(defaultCollegeImage),
+    description:
+      'Itahari International College is a higher education institution in Morang, Nepal, offering UK-awarded IT and Business degrees in partnership with London Metropolitan University.',
+    sameAs: COLLEGE_SOCIAL_PROFILES,
+    address: {
+      '@type': 'PostalAddress',
+      ...COLLEGE_ADDRESS,
+    },
+    telephone: COLLEGE_PHONE_TEL,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: COLLEGE_PHONE_TEL,
+      contactType: 'admissions',
+      areaServed: 'NP',
+      availableLanguage: ['Nepali', 'English'],
+    },
+  };
+}
+
+export function buildLocalBusinessNode(): SchemaNode {
+  return {
+    '@type': 'LocalBusiness',
+    '@id': LOCAL_BUSINESS_ID,
+    name: COLLEGE_NAME,
+    alternateName: 'IIC',
+    url: SITE_URL,
+    image: absoluteImageUrl(defaultCollegeImage),
+    parentOrganization: { '@id': ORGANIZATION_ID },
+    priceRange: 'Programme fees vary by course',
+    address: {
+      '@type': 'PostalAddress',
+      ...COLLEGE_ADDRESS,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 26.6644,
+      longitude: 87.2718,
+    },
+    telephone: COLLEGE_PHONE_TEL,
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: [
+          'Sunday',
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+        ],
+        opens: '07:00',
+        closes: '17:00',
+      },
+    ],
+  };
+}
+
 export function buildWebsiteNode(): SchemaNode {
   return {
     '@type': 'WebSite',
     '@id': WEBSITE_ID,
     url: SITE_URL,
-    name: 'Itahari International College',
+    name: COLLEGE_NAME,
     inLanguage: 'en-NP',
     keywords: GLOBAL_METADATA_KEYWORDS,
-    publisher: { '@id': COLLEGE_ID },
+    publisher: { '@id': ORGANIZATION_ID },
   };
 }
 
 export function buildGlobalSchema() {
-  return buildSchemaGraph([buildCollegeNode(), buildWebsiteNode()]);
+  return buildSchemaGraph([
+    buildOrganizationNode(),
+    buildLocalBusinessNode(),
+    buildCollegeNode(),
+    buildWebsiteNode(),
+  ]);
 }
 
 export function buildSiteNavigationNode(): SchemaNode {
