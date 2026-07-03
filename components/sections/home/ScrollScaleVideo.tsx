@@ -1,66 +1,19 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const VIDEO_SRC = '/videos/iic.mp4';
 const POSTER_SRC = '/images/common/tower_block.JPG';
-type PinState = 'before' | 'active' | 'after';
 
 const ScrollScaleVideo = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [cursor, setCursor] = useState({ x: 0, y: 0, visible: false });
-  const [pinState, setPinState] = useState<PinState>('before');
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const isMobile = useMediaQuery('(max-width: 767px)');
-  const outerRef = useRef<HTMLElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: outerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    setScrollProgress((currentProgress) =>
-      Math.abs(currentProgress - latest) < 0.001 ? currentProgress : latest
-    );
-  });
-
-  const frameScale = useTransform(scrollYProgress, [0, 0.88, 1], isMobile ? [0.82, 1, 1] : [0.45, 1, 1]);
-  const frameRadius = useTransform(scrollYProgress, [0, 0.88], isMobile ? [18, 0] : [32, 0]);
-  const maskOpacity = Math.min(1, Math.max(0, (scrollProgress - 0.65) / 0.25));
-
-  const updatePinState = useCallback(() => {
-    const section = outerRef.current;
-    if (!section) return;
-
-    const rect = section.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-
-    const nextState: PinState =
-      rect.top > 0 ? 'before' : rect.bottom <= viewportHeight ? 'after' : 'active';
-
-    setPinState((currentState) =>
-      currentState === nextState ? currentState : nextState
-    );
-  }, []);
-
-  useEffect(() => {
-    updatePinState();
-    window.addEventListener('scroll', updatePinState, { passive: true });
-    window.addEventListener('resize', updatePinState);
-
-    return () => {
-      window.removeEventListener('scroll', updatePinState);
-      window.removeEventListener('resize', updatePinState);
-    };
-  }, [updatePinState]);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!stickyRef.current) return;
-    const rect = stickyRef.current.getBoundingClientRect();
+    if (!stageRef.current) return;
+    const rect = stageRef.current.getBoundingClientRect();
     setCursor({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
@@ -91,21 +44,14 @@ const ScrollScaleVideo = () => {
     };
   }, [isFullscreen, closeFullscreen]);
 
-  const stagePositionClass =
-    pinState === 'active'
-      ? 'fixed inset-0 z-30'
-      : pinState === 'after'
-        ? 'absolute inset-x-0 bottom-0 z-10'
-        : 'absolute inset-x-0 top-0 z-10';
-
   return (
-    <section ref={outerRef} className="relative w-full h-[170svh] md:h-[260svh] bg-black">
+    <section className="relative w-full bg-black">
       <div
-        ref={stickyRef}
+        ref={stageRef}
         onClick={openFullscreen}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`${stagePositionClass} h-[100svh] w-full flex items-center justify-center overflow-hidden cursor-pointer md:cursor-none bg-black`}
+        className="relative aspect-[2327/1080] w-full overflow-hidden bg-black cursor-pointer md:cursor-none"
       >
         {/* Side Text Overlays */}
         <motion.div
@@ -190,10 +136,7 @@ const ScrollScaleVideo = () => {
           </div>
         </motion.div>
 
-        <motion.div
-          style={{ scale: frameScale, borderRadius: frameRadius }}
-          className="relative w-full h-full overflow-hidden group origin-center"
-        >
+        <div className="relative h-full w-full overflow-hidden group">
 
           <video
             src={VIDEO_SRC}
@@ -208,10 +151,9 @@ const ScrollScaleVideo = () => {
           />
 
           {/* Edge radial blur mask */}
-          <motion.div
+          <div
             aria-hidden="true"
-            style={{ opacity: maskOpacity }}
-            className="absolute inset-0 z-10 pointer-events-none fluid-edge-mask"
+            className="absolute inset-0 z-10 pointer-events-none opacity-100 fluid-edge-mask"
           />
 
           {/* Vignette & Global Dark Overlay */}
@@ -226,7 +168,7 @@ const ScrollScaleVideo = () => {
           <div className="absolute bottom-0 left-0 w-full h-[1px] bg-white/10 z-20" />
           <div className="absolute top-0 left-0 h-full w-[1px] bg-white/10 z-20" />
           <div className="absolute top-0 right-0 h-full w-[1px] bg-white/10 z-20" />
-        </motion.div>
+        </div>
 
         {/* Custom cursor pill — follows entire section */}
         <AnimatePresence>
