@@ -19,13 +19,13 @@ const InnovationLab = dynamic(() => import("@/components/sections/home/Innovatio
 const IngSection = dynamic(() => import("@/components/sections/home/IngSection"), { ssr: true });
 const ProspectusSection = dynamic(() => import("@/components/sections/home/ProspectusSection"), { ssr: true });
 
-const pageDescription = "Developing impactful industry-ready graduates through UK-awarded IT and Business programmes in partnership with London Metropolitan University.";
+const pageDescription = "Study UK-awarded IT and Business degrees at Itahari International College in Nepal, delivered with London Metropolitan University to build confident, industry-ready graduates.";
 
 export const metadata: Metadata = {
   title: "Itahari International College | UK Degrees in IT & Business",
   description: pageDescription,
   keywords: HOME_PAGE_KEYWORDS,
-  alternates: { canonical: "/" },
+  alternates: { canonical: "https://iic.edu.np/" },
   openGraph: {
     title: "Itahari International College | UK Degrees in IT & Business",
     description: pageDescription,

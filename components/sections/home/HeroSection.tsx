@@ -8,6 +8,7 @@ import { ArrowRight, CalendarCheck } from 'lucide-react';
 import StatsStrip from './StatsStrip';
 import RevealText from '../../effects/RevealText';
 import CloudBackground from '../../effects/CloudBackground';
+import { ObfuscatedEmailLink } from '@/components/common/ObfuscatedEmail';
 
 const HeroSection = () => {
   const containerRef = useRef(null);
@@ -40,16 +41,20 @@ const HeroSection = () => {
             <span className="sm:hidden">Call</span>
           </a>
           <span aria-hidden className="h-3 w-px bg-white/25" />
-          <a
-            href="mailto:info@iic.edu.np"
+          <ObfuscatedEmailLink
+            mailbox="info"
             className="group flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] rounded sm:text-xs"
           >
-            <svg aria-hidden viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 shrink-0 text-[#74C044]">
-              <path d="M3 6.5A1.5 1.5 0 014.5 5h15A1.5 1.5 0 0121 6.5v11a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 17.5v-11z" stroke="currentColor" strokeWidth="1.6" />
-              <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            <span>info@iic.edu.np</span>
-          </a>
+            {({ label }) => (
+              <>
+                <svg aria-hidden viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 shrink-0 text-[#74C044]">
+                  <path d="M3 6.5A1.5 1.5 0 014.5 5h15A1.5 1.5 0 0121 6.5v11a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 17.5v-11z" stroke="currentColor" strokeWidth="1.6" />
+                  <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span suppressHydrationWarning>{label}</span>
+              </>
+            )}
+          </ObfuscatedEmailLink>
         </div>
       </div>
 

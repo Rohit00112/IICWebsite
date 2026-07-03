@@ -33,7 +33,7 @@ const sections = [
   },
   {
     title: 'Contact',
-    body: 'For questions about these website terms, contact info@iic.edu.np or reach the college through the contact page.',
+    body: 'For questions about these website terms, reach the college through the contact page.',
   },
 ];
 

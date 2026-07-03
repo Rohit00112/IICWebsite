@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ObfuscatedEmailText } from '@/components/common/ObfuscatedEmail';
 
 const VIDEO_SRC = '/videos/iic.mp4';
 const POSTER_SRC = '/images/common/tower_block.JPG';
@@ -57,11 +58,11 @@ const ScrollScaleVideo = () => {
         <motion.div
           className="absolute left-0 top-0 bottom-0 w-[45%] z-20 hidden xl:flex items-center pl-[4%] pr-32 bg-gradient-to-r from-black/70 via-black/40 to-transparent pointer-events-none"
         >
-          <h2 className="text-white text-6xl font-light leading-[1.1] tracking-tight font-iic">
+          <div className="text-white text-6xl font-light leading-[1.1] tracking-tight font-iic">
             A place where <br />
             <span className="text-[#74C044] font-semibold">education</span> and <br />
             <span className="text-[#74C044] font-semibold">innovation</span> get connected.
-          </h2>
+          </div>
         </motion.div>
 
         <motion.div
@@ -105,7 +106,7 @@ const ScrollScaleVideo = () => {
                   +977 9801003030
                 </p>
                 <p className="text-white/70 text-base font-light font-iic">
-                  info@iic.edu.np
+                  <ObfuscatedEmailText mailbox="info" />
                 </p>
               </div>
               <div className="shrink-0 w-11 h-11 rounded-full bg-white/5 border border-white/15 flex items-center justify-center backdrop-blur-sm">

@@ -107,7 +107,7 @@ const GEOSection = () => {
             className="bg-white p-5 sm:p-8 md:p-12 rounded-[24px] md:rounded-[32px] shadow-sm border border-gray-100"
           >
             <AnimeReveal
-              as="h2"
+              as="h3"
               text="College at a Glance"
               className="text-xl sm:text-2xl font-bold text-[#21409A] mb-6 md:mb-8"
               staggerFrom="first"
@@ -137,7 +137,7 @@ const GEOSection = () => {
             className="flex flex-col justify-center"
           >
             <AnimeReveal
-              as="h2"
+              as="h3"
               text="Frequently Asked Questions"
               className="text-2xl sm:text-3xl font-black text-[#1a1a2e] mb-8 md:mb-10 tracking-tight"
               staggerFrom="first"
@@ -246,7 +246,7 @@ const GEOSection = () => {
 
           <div className="text-center md:text-left">
             <AnimeReveal
-              as="h2"
+              as="h3"
               text="Verified Excellence in Higher Education."
               className="text-2xl sm:text-3xl font-black text-[#21409A] mb-4 md:mb-6 tracking-tight leading-tight"
               staggerFrom="first"

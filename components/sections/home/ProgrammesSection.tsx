@@ -94,13 +94,13 @@ const ProgrammesSection = () => {
 
         <div className="text-center mb-10 md:mb-16">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-iic">
-            Nepal&apos;s First <span className="text-[#74C044]">UK Degree</span> Programmes in
+            Nepal&apos;s First <span className="text-[#74C044]">UK Degree</span> Programmes in<span className="sr-only"> Itahari</span>
           </h2>
           <div className="overflow-hidden py-2">
             <Magnetic strength={0.1}>
               <AnimeReveal
                 text="Itahari"
-                as="h2"
+                as="div"
                 className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center uppercase"
                 staggerFrom="center"
                 delay={0.2}

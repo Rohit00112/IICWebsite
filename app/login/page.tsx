@@ -79,7 +79,7 @@ const LoginPage = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@iic.edu.np"
+                  placeholder="Admin account email"
                   className="w-full bg-gray-50 border-none rounded-2xl py-4 px-6 outline-none focus:ring-2 focus:ring-[#21409A]/10 transition-all font-medium text-[#1A2B56]"
                 />
               </div>

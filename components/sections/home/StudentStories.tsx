@@ -186,10 +186,10 @@ const StudentStories = () => {
             Insights
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-iic">
-            Success Stories From
+            Success Stories From<span className="sr-only"> Students</span>
           </h2>
           <AnimeReveal
-            as="h2"
+            as="div"
             text="Students"
             className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.9] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
             staggerFrom="center"

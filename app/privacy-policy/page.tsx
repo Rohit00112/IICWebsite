@@ -33,7 +33,7 @@ const sections = [
   },
   {
     title: 'Contact',
-    body: 'For privacy questions or data requests, contact us at info@iic.edu.np or visit the admissions office at Itahari International College.',
+    body: 'For privacy questions or data requests, use the contact page or visit the admissions office at Itahari International College.',
   },
 ];
 

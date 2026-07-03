@@ -199,7 +199,7 @@ const ProspectusSection = () => {
       >
         <div className="prospectus-panel mb-10 max-w-4xl md:mb-14" style={{ willChange: 'transform, opacity' }}>
           <AnimeReveal
-            as="h2"
+            as="h3"
             text="Student Success Stories"
             className="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl md:mb-6 md:text-[64px] lg:text-[72px] font-iic"
             staggerFrom="first"

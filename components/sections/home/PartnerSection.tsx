@@ -26,18 +26,18 @@ const PartnerSection = () => {
     <section ref={containerRef} className="relative w-full bg-white pt-6 pb-14 overflow-hidden sm:pt-8 sm:pb-20 md:pt-8 md:pb-24">
       <div className="w-full flex flex-col items-center">
         <div className="w-full text-center mb-12 px-6 max-w-[1600px]">
-          <motion.span
+          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             className="text-[#1a1a1a] text-2xl sm:text-3xl md:text-4xl font-bold font-iic block mb-3"
           >
-            Partner
-          </motion.span>
+            Partner<span className="sr-only"> University</span>
+          </motion.h2>
           <div className="overflow-hidden py-4">
             <Magnetic strength={0.1}>
               <AnimeReveal
                 text="UNIVERSITY"
-                as="h2"
+                as="div"
                 className="w-full text-[44px] sm:text-6xl md:text-8xl font-black uppercase text-[#74C044] tracking-tight leading-[1.05] font-iic justify-center"
                 staggerFrom="center"
                 delay={0.2}

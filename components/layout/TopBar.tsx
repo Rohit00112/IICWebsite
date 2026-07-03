@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ObfuscatedEmailLink } from '@/components/common/ObfuscatedEmail';
 
 const TopBar = () => {
   return (
@@ -12,7 +13,7 @@ const TopBar = () => {
         </div>
         <div className="flex items-center gap-2 border-l border-gray-200 pl-8">
           <span className="text-[#21409A]">📧</span>
-          <a href="mailto:admissions@iic.edu.np" className="hover:text-[#21409A] transition-colors tracking-tight">admissions@iic.edu.np</a>
+          <ObfuscatedEmailLink mailbox="admissions" className="hover:text-[#21409A] transition-colors tracking-tight" />
         </div>
       </div>
     </div>

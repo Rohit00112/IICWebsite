@@ -19,20 +19,23 @@ const RevealText = ({ text, className = '', delay = 0, as: Tag = 'div' }: Reveal
   return (
     <Tag ref={ref} className={`flex flex-wrap ${className}`}>
       {words.map((word, i) => (
-        <span key={i} className="relative overflow-hidden inline-block mr-[0.2em] px-1 -mx-1 py-1 -my-1">
-          <motion.span
-            initial={{ y: "100%" }}
-            animate={isInView ? { y: 0 } : { y: "100%" }}
-            transition={{
-              duration: 0.6,
-              delay: delay + i * 0.03,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="inline-block"
-          >
-            {word}
-          </motion.span>
-        </span>
+        <React.Fragment key={i}>
+          <span className="relative overflow-hidden inline-block mr-[0.2em] px-1 -mx-1 py-1 -my-1">
+            <motion.span
+              initial={{ y: "100%" }}
+              animate={isInView ? { y: 0 } : { y: "100%" }}
+              transition={{
+                duration: 0.6,
+                delay: delay + i * 0.03,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="inline-block"
+            >
+              {word}
+            </motion.span>
+          </span>
+          {i < words.length - 1 && <span className="sr-only"> </span>}
+        </React.Fragment>
       ))}
     </Tag>
   );

@@ -52,14 +52,15 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://iic.edu.np"),
   alternates: {
+    canonical: "/",
     languages: {
-      "en-NP": "https://iic.edu.np",
+      "en-NP": "/",
     },
   },
   openGraph: {
     title: "Itahari International College | UK Degrees in Itahari",
     description: "Study globally connected IT and Business degrees in Itahari through IIC's partnership with London Metropolitan University.",
-    url: "https://iic.edu.np",
+    url: "https://iic.edu.np/",
     siteName: "Itahari International College",
     images: [
       {

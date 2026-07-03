@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Magnetic from '../effects/Magnetic';
 import AnimeStagger from '../effects/AnimeStagger';
+import { ObfuscatedEmailText } from '@/components/common/ObfuscatedEmail';
 
 const Footer = () => {
   return (
@@ -151,7 +152,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-4">
                 <svg className="w-6 h-6 text-[#74C044] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                <span className="text-white/60 text-base font-iic">info@iic.edu.np</span>
+                <ObfuscatedEmailText mailbox="info" className="text-white/60 text-base font-iic" />
               </li>
             </ul>
           </div>

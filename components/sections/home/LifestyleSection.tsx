@@ -141,13 +141,13 @@ const LifestyleSection = () => {
           </span>
           <Magnetic strength={0.1}>
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#1a1a1a] leading-tight mb-2 font-iic">
-              Student Lifestyle at
+              Student Lifestyle at<span className="sr-only"> Itahari International College</span>
             </h2>
           </Magnetic>
           <Magnetic strength={0.2}>
             <AnimeReveal
               text="Itahari International College"
-              as="h2"
+              as="div"
               className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
               staggerFrom="center"
               delay={0.2}

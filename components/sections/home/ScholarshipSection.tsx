@@ -395,7 +395,7 @@ const ScholarshipSection = () => {
           </div>
         </div>
 
-        <motion.h2
+        <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -403,7 +403,7 @@ const ScholarshipSection = () => {
           className="max-w-4xl text-center text-3xl font-black leading-[1.08] text-white sm:text-5xl md:text-6xl font-iic"
         >
           Scholarship at <br />Itahari International College
-        </motion.h2>
+        </motion.h3>
 
         <RevealText
           text="Earn up to 100% tuition waiver by mastering the three pillars of student excellence."
@@ -590,7 +590,7 @@ const ScholarshipSection = () => {
           </div>
         </motion.div>
 
-        <motion.h2
+        <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -598,7 +598,7 @@ const ScholarshipSection = () => {
           className="mt-5 max-w-4xl text-center text-3xl font-black leading-[1.08] text-white sm:text-5xl md:text-6xl font-iic"
         >
           Fully Funded Master&apos;s Degree
-        </motion.h2>
+        </motion.h3>
 
         <RevealText
           text="A special scholarship opportunity for one eligible graduate to pursue quality postgraduate study at ING colleges in Nepal."

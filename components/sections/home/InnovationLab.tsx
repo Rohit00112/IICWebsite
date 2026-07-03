@@ -30,19 +30,20 @@ const InnovationLab = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               className="text-xl sm:text-2xl md:text-4xl font-bold text-[#1a1a1a] mb-2 font-iic"
             >
-              Life beyond the
+              Life beyond the<span className="sr-only"> Classroom</span>
             </motion.h2>
           </Magnetic>
           <div className="overflow-hidden px-12 py-8">
             <Magnetic strength={0.2}>
-              <motion.h1
+              <motion.div
+                aria-hidden="true"
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: 0 } : {}}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter font-iic"
               >
                 Classroom
-              </motion.h1>
+              </motion.div>
             </Magnetic>
           </div>
         </div>
