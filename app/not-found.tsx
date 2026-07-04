@@ -58,7 +58,7 @@ export default function NotFound() {
             </Magnetic>
             <Magnetic strength={0.2}>
               <Link
-                href="/contact"
+                href="/contact-us"
                 className="px-10 py-4 bg-white text-[#21409A] border border-gray-100 rounded-xl font-bold hover:bg-gray-50 transition-all text-base inline-block"
               >
                 Contact Support

@@ -445,10 +445,10 @@ export function buildSiteNavigationNode(): SchemaNode {
     { name: 'Life at IIC', href: '/life-at-iic' },
     { name: 'Courses', href: '/courses' },
     { name: 'Admissions', href: '/admissions' },
-    { name: 'Scholarships', href: '/scholarships' },
+    { name: 'Scholarships', href: '/scholarship' },
     { name: 'Innovation Lab', href: 'https://innovation.iic.edu.np' },
-    { name: 'News & Events', href: '/news' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'News & Events', href: '/news-and-events' },
+    { name: 'Contact', href: '/contact-us' },
   ];
 
   return {
@@ -537,7 +537,7 @@ export function buildFaqPageNode(
 }
 
 export function buildCourseNode(course: CourseItem): SchemaNode {
-  const path = `/courses/${course.slug}`;
+  const path = `/${course.slug}`;
   const url = absoluteUrl(path);
   const duration = course.details?.duration || course.duration;
   const description = course.description || course.overview || course.listing?.description;
@@ -592,8 +592,8 @@ export function buildCourseItemListNode(courses: CourseItem[]): SchemaNode {
       '@type': 'ListItem',
       position: index + 1,
       name: course.title,
-      url: absoluteUrl(`/courses/${course.slug}`),
-      item: { '@id': `${absoluteUrl(`/courses/${course.slug}`)}#course` },
+      url: absoluteUrl(`/${course.slug}`),
+      item: { '@id': `${absoluteUrl(`/${course.slug}`)}#course` },
     })),
   };
 }
@@ -601,20 +601,20 @@ export function buildCourseItemListNode(courses: CourseItem[]): SchemaNode {
 export function buildNewsItemListNode(items: NewsItem[]): SchemaNode {
   return {
     '@type': 'ItemList',
-    '@id': `${SITE_URL}/news#news-list`,
+    '@id': `${SITE_URL}/news-and-events#news-list`,
     name: 'Latest news and events from Itahari International College',
     numberOfItems: items.length,
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.title,
-      url: absoluteUrl(`/news/${item.slug}`),
+      url: absoluteUrl(`/news-and-events/${item.slug}`),
     })),
   };
 }
 
 export function buildNewsArticleNode(item: NewsItem): SchemaNode {
-  const url = absoluteUrl(`/news/${item.slug}`);
+  const url = absoluteUrl(`/news-and-events/${item.slug}`);
   const publishedDate = toIsoDate(item.date);
   const authorName = item.author?.name?.trim();
 
@@ -640,7 +640,7 @@ export function buildNewsArticleNode(item: NewsItem): SchemaNode {
 }
 
 export function buildEventNode(item: NewsItem): SchemaNode {
-  const url = absoluteUrl(`/news/${item.slug}`);
+  const url = absoluteUrl(`/news-and-events/${item.slug}`);
 
   return compactNode({
     '@type': 'Event',
@@ -718,7 +718,7 @@ export function buildScholarshipListNode(batches: ScholarshipBatch[]): SchemaNod
 
   return {
     '@type': 'ItemList',
-    '@id': `${SITE_URL}/scholarships#scholarship-list`,
+    '@id': `${SITE_URL}/scholarship#scholarship-list`,
     name: 'Scholarships at Itahari International College',
     keywords: SCHOLARSHIPS_PAGE_KEYWORDS,
     numberOfItems: publishedBatches.length,

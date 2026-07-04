@@ -80,13 +80,15 @@ const LifeHero = () => {
           </motion.div>
 
           {/* Main Title */}
-          <div className="flex flex-wrap items-center justify-center gap-x-4 mb-8">
+          <h1 className="mb-8 flex flex-wrap items-center justify-center gap-x-4">
             <RevealText
+              as="span"
               text="Life At"
               className="text-4xl md:text-6xl lg:text-[80px] font-black leading-[1.1] tracking-tight font-iic text-[#1a1a1a]"
             />
             <div className="text-[#21409A] relative inline-block">
               <RevealText
+                as="span"
                 text="IIC"
                 className="text-4xl md:text-6xl lg:text-[80px] font-black leading-[1.1] tracking-tight font-iic"
                 delay={0.4}
@@ -104,7 +106,7 @@ const LifeHero = () => {
                 <path d="M 5 10 Q 100 25 195 10" stroke="#74C044" strokeWidth="10" strokeLinecap="round" />
               </motion.svg>
             </div>
-          </div>
+          </h1>
 
           {/* Paragraph text */}
           <motion.p
@@ -127,7 +129,7 @@ const LifeHero = () => {
               className="w-full sm:w-auto"
             >
               <Link
-                href="/contact"
+                href="/contact-us"
                 className="w-full sm:w-auto px-8 py-4 bg-[#21409A] text-white rounded-md font-semibold text-sm md:text-base flex items-center justify-center gap-3 hover:bg-[#21409A] transition-all"
               >
                 Schedule a College Tour

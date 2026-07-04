@@ -38,6 +38,35 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react', 'three', '@react-three/fiber', '@react-three/drei'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/contact',
+        destination: '/contact-us',
+        statusCode: 301,
+      },
+      {
+        source: '/news',
+        destination: '/news-and-events',
+        statusCode: 301,
+      },
+      {
+        source: '/news/:slug',
+        destination: '/news-and-events/:slug',
+        statusCode: 301,
+      },
+      {
+        source: '/scholarships',
+        destination: '/scholarship',
+        statusCode: 301,
+      },
+      {
+        source: '/courses/:slug',
+        destination: '/:slug',
+        statusCode: 301,
+      },
+    ];
+  },
   async headers() {
     return [
       {

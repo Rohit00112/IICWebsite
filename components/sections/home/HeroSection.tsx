@@ -116,7 +116,7 @@ const HeroSection = () => {
               className="w-full sm:w-auto"
             >
               <Link
-                href="/contact"
+                href="/contact-us"
                 aria-label="Schedule a college visit"
                 className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#21409A] px-6 py-3 text-sm font-bold text-white shadow-[0_16px_36px_-20px_rgba(33,64,154,0.95)] transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:w-auto sm:rounded-xl sm:px-10 sm:py-4 sm:text-[16px] sm:shadow-2xl"
               >

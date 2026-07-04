@@ -13,7 +13,7 @@ const pageDescription = 'Get in touch with Itahari International College for adm
 export default function ContactPage() {
   const breadcrumbs = [
     { name: 'Home', item: '/' },
-    { name: 'Contact Us', item: '/contact' },
+    { name: 'Contact Us', item: '/contact-us' },
   ];
 
   return (
@@ -21,7 +21,7 @@ export default function ContactPage() {
       <BreadcrumbSchema items={breadcrumbs} />
       <JsonLd
         data={withContext(buildWebPageNode({
-          path: '/contact',
+          path: '/contact-us',
           name: 'Contact Itahari International College',
           description: pageDescription,
           type: 'ContactPage',

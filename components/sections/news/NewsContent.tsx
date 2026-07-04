@@ -148,7 +148,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
             
             {/* Featured Post Card */}
             {showFeatured && featuredPost && (
-              <Link href={`/news/${featuredPost.slug}`} className="block mb-10">
+              <Link href={`/news-and-events/${featuredPost.slug}`} className="block mb-10">
                 <motion.div 
                   layout
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -213,7 +213,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
             >
               <AnimatePresence mode="popLayout">
                 {paginatedItems.map((item, idx) => (
-                  <Link key={item.id} href={`/news/${item.slug}`} className="news-card-wrapper">
+                  <Link key={item.id} href={`/news-and-events/${item.slug}`} className="news-card-wrapper">
                     <Tilt strength={12} className="h-full">
                       <motion.div
                         layout
@@ -257,7 +257,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                           </div>
                           <ShareMenu
-                            url={`/news/${item.slug}`}
+                            url={`/news-and-events/${item.slug}`}
                             title={item.title}
                             description={item.description}
                           />
@@ -371,7 +371,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                         {group.events.map((event) => (
                           <Link
                             key={event.id}
-                            href={`/news/${event.slug}`}
+                            href={`/news-and-events/${event.slug}`}
                             className="group relative flex items-center gap-3 rounded-xl py-3 pl-1 pr-3 transition-colors hover:bg-[#F5F9F2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044]/45"
                           >
                             <span className="absolute -left-[26px] top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-white bg-[#74C044] shadow-[0_0_0_3px_rgba(116,192,68,0.18)]" />

@@ -700,7 +700,7 @@ const NextStepCTA = () => (
             Talk with our admissions team about eligibility, deadlines, and how scholarship decisions are published each year.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
-            <Link href="/contact" className="inline-flex items-center gap-3 rounded-full border-2 border-white/70 px-7 py-3.5 text-sm font-black text-white transition-colors hover:border-white hover:bg-white hover:text-[#3C7D25]">
+            <Link href="/contact-us" className="inline-flex items-center gap-3 rounded-full border-2 border-white/70 px-7 py-3.5 text-sm font-black text-white transition-colors hover:border-white hover:bg-white hover:text-[#3C7D25]">
               Schedule a Visit
             </Link>
             <Link href="/admissions" className="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-3.5 text-sm font-black text-[#3C7D25] shadow-lg shadow-black/15 transition-transform hover:-translate-y-0.5">

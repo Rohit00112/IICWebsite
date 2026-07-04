@@ -19,11 +19,11 @@ Updated: 2026-07-03
 - [Home](https://iic.edu.np/): Overview of IIC, UK-awarded degrees, student life, scholarships, and admissions.
 - [Courses](https://iic.edu.np/courses): Academic programmes offered by Itahari International College.
 - [Admissions](https://iic.edu.np/admissions): Application guidance, admissions process, and eligibility information.
-- [Scholarships](https://iic.edu.np/scholarships): Scholarship opportunities including merit and achievement-based awards.
+- [Scholarship](https://iic.edu.np/scholarship): Scholarship opportunities including merit and achievement-based awards.
 - [About IIC](https://iic.edu.np/about-us): College mission, values, UK partnership, and institutional background.
 - [Life at IIC](https://iic.edu.np/life-at-iic): Campus life, student experiences, and event galleries.
-- [News and Events](https://iic.edu.np/news): Current announcements and college updates.
-- [Contact](https://iic.edu.np/contact): Official contact form, location, and admissions support.
+- [News and Events](https://iic.edu.np/news-and-events): Current announcements and college updates.
+- [Contact](https://iic.edu.np/contact-us): Official contact form, location, and admissions support.
 
 ## Entity Relationships
 

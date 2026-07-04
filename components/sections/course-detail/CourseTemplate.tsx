@@ -875,7 +875,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
 
               return (
                 <Link
-                  href={`/courses/${relCourse.slug}`}
+                  href={`/${relCourse.slug}`}
                   key={relCourse.slug}
                   className="related-course-card group block h-full"
                   style={{ willChange: 'transform, opacity' }}

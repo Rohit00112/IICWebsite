@@ -60,7 +60,7 @@ const AboutHero = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link href="/contact" className="inline-flex px-10 py-4 bg-white/50 text-[#21409A] border border-[#CBD5E0] rounded-md font-bold text-sm hover:bg-white transition-all">
+            <Link href="/contact-us" className="inline-flex px-10 py-4 bg-white/50 text-[#21409A] border border-[#CBD5E0] rounded-md font-bold text-sm hover:bg-white transition-all">
               Schedule a College Visit
             </Link>
           </motion.div>

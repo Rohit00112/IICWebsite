@@ -5,14 +5,14 @@ const pageDescription =
   'Contact IIC for admissions guidance, college visits, partnerships, and support for UK-awarded IT and Business programmes in Itahari.';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Admissions & Directions in Itahari | Itahari International College',
+  title: 'Contact Us | Admissions & Directions in Itahari',
   description: pageDescription,
   keywords: CONTACT_PAGE_KEYWORDS,
-  alternates: { canonical: '/contact' },
+  alternates: { canonical: '/contact-us' },
   openGraph: {
     title: 'Contact Us | Itahari International College',
     description: pageDescription,
-    url: '/contact',
+    url: '/contact-us',
     type: 'website',
   },
 };

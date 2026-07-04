@@ -38,7 +38,7 @@ const ExperienceCTA = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link href="/contact" className="inline-flex justify-center px-10 py-5 bg-white text-[#21409A] font-bold rounded-xl shadow-xl transition-all duration-300 font-iic w-full sm:w-auto">
+              <Link href="/contact-us" className="inline-flex justify-center px-10 py-5 bg-white text-[#21409A] font-bold rounded-xl shadow-xl transition-all duration-300 font-iic w-full sm:w-auto">
                 Schedule a College Tour
               </Link>
             </motion.div>

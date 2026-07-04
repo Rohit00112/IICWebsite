@@ -39,7 +39,7 @@ const ProgrammesSection = () => {
       pillColor: 'bg-[#459DB7]',
       featurePillColor: 'bg-[#3391AE]',
       tags: ['Artificial Intelligence', 'Application Development', 'Cloud Computing and the Internet of Things'],
-      href: '/courses/bsc-hons-computing',
+      href: '/bsc-hons-computing',
       parallax: y1
     },
     {
@@ -58,9 +58,9 @@ const ProgrammesSection = () => {
       tags: ['Principles of Finance', 'Company and Business Law', 'Dissertation'],
       href: '/courses',
       specializations: [
-        { name: 'International Business', href: '/courses/bba-international-business' },
-        { name: 'Digital Business Management', href: '/courses/bba-digital-business-management' },
-        { name: 'Advertising and Marketing', href: '/courses/bba-advertising-and-marketing' },
+        { name: 'International Business', href: '/bba-international-business' },
+        { name: 'Digital Business Management', href: '/bba-digital-business-management' },
+        { name: 'Advertising and Marketing', href: '/bba-advertising-and-marketing' },
       ],
       parallax: y1
     },

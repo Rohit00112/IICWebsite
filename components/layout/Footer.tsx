@@ -107,7 +107,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/scholarships" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
+                <Link href="/scholarship" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
                   Scholarships
                 </Link>
               </li>
@@ -129,13 +129,13 @@ const Footer = () => {
             <h4 className="text-xl font-bold mb-8 font-iic text-white">Resources</h4>
             <ul className="flex flex-col gap-4">
               <li>
-                <Link href="/news" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
+                <Link href="/news-and-events" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
                   News & Events
                 </Link>
               </li>
              
               <li>
-                <Link href="/contact" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
+                <Link href="/contact-us" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
                   Contact
                 </Link>
               </li>

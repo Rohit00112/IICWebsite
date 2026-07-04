@@ -18,7 +18,7 @@ import {
 const pageDescription = 'Discover student life at IIC, from college events and practical learning to the supportive community behind #LifeAtIIC.';
 
 export const metadata = {
-  title: 'Life at IIC | Student Experience | Itahari International College',
+  title: 'Life at IIC | Student Experience',
   description: pageDescription,
   keywords: LIFE_PAGE_KEYWORDS,
   alternates: { canonical: '/life-at-iic' },

@@ -20,10 +20,10 @@ const staticRoutes: Array<{
   { path: '/about-us', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/admissions', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/courses', changeFrequency: 'weekly', priority: 0.9 },
-  { path: '/scholarships', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/scholarship', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/life-at-iic', changeFrequency: 'weekly', priority: 0.7 },
-  { path: '/news', changeFrequency: 'daily', priority: 0.7 },
-  { path: '/contact', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/news-and-events', changeFrequency: 'daily', priority: 0.7 },
+  { path: '/contact-us', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/privacy-policy', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/terms-of-service', changeFrequency: 'yearly', priority: 0.3 },
 ];
@@ -45,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const courseEntries: MetadataRoute.Sitemap = courses.map((course) => ({
-    url: absoluteUrl(`/courses/${course.slug}`),
+    url: absoluteUrl(`/${course.slug}`),
     lastModified: now,
     changeFrequency: 'monthly',
     priority: 0.8,
@@ -54,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const newsEntries: MetadataRoute.Sitemap = news
     .filter((item) => item.slug)
     .map((item) => ({
-      url: absoluteUrl(`/news/${item.slug}`),
+      url: absoluteUrl(`/news-and-events/${item.slug}`),
       lastModified: toIsoDate(item.date) ?? now,
       changeFrequency: 'monthly',
       priority: 0.6,

@@ -193,7 +193,7 @@ const CourseCard = ({ course, index, total }: { course: CourseListItem, index: n
   );
 
   const topOffset = 80 + index * 24;
-  const courseHref = `/courses/${course.slug}`;
+  const courseHref = `/${course.slug}`;
 
   return (
     <motion.div

@@ -13,14 +13,14 @@ import {
 const pageDescription = 'Explore AAA and ING postgraduate scholarship opportunities at Itahari International College, including yearwise recipient stories and award archives.';
 
 export const metadata: Metadata = {
-  title: 'Scholarships at IIC | Itahari International College',
+  title: 'Scholarships at IIC',
   description: pageDescription,
   keywords: SCHOLARSHIPS_PAGE_KEYWORDS,
-  alternates: { canonical: '/scholarships' },
+  alternates: { canonical: '/scholarship' },
   openGraph: {
     title: 'Scholarships at Itahari International College',
     description: 'Recognition for academic excellence, attendance, attitude, and outstanding graduate achievement.',
-    url: '/scholarships',
+    url: '/scholarship',
     images: [
       {
         url: '/api/og?title=Scholarships%20at%20IIC&subtitle=Recognition%20that%20moves%20students%20forward&section=Scholarships',
@@ -37,7 +37,7 @@ export default async function ScholarshipsPage() {
 
   const breadcrumbs = [
     { name: 'Home', item: '/' },
-    { name: 'Scholarships', item: '/scholarships' },
+    { name: 'Scholarships', item: '/scholarship' },
   ];
 
   return (
@@ -46,7 +46,7 @@ export default async function ScholarshipsPage() {
       <JsonLd
         data={buildSchemaGraph([
           buildWebPageNode({
-            path: '/scholarships',
+            path: '/scholarship',
             name: 'Scholarships at Itahari International College',
             description: pageDescription,
             image: '/api/og?title=Scholarships%20at%20IIC&subtitle=Recognition%20that%20moves%20students%20forward&section=Scholarships',

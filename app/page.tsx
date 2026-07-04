@@ -22,7 +22,9 @@ const ProspectusSection = dynamic(() => import("@/components/sections/home/Prosp
 const pageDescription = "Study UK-awarded IT and Business degrees at Itahari International College in Nepal, delivered with London Metropolitan University to build confident, industry-ready graduates.";
 
 export const metadata: Metadata = {
-  title: "Itahari International College | UK Degrees in IT & Business",
+  title: {
+    absolute: "Itahari International College | UK Degrees in IT & Business",
+  },
   description: pageDescription,
   keywords: HOME_PAGE_KEYWORDS,
   alternates: { canonical: "https://iic.edu.np/" },

@@ -28,24 +28,24 @@ const ContactHero = () => {
       <div className="relative z-10 w-full">
         <GlassSurprise>
           <div className="flex flex-col items-center">
-            <div className="flex flex-col items-center md:hidden">
-              <h1 className="mb-5 text-4xl font-bold leading-tight text-white drop-shadow-md font-iic">
+            <h1 className="mb-5 flex flex-col items-center text-center font-iic text-4xl font-bold leading-tight text-white drop-shadow-md md:mb-6 md:text-6xl">
+              <span className="md:hidden">
                 Connect with<br />
                 Itahari International College
-              </h1>
-            </div>
-            <div className="hidden flex-col items-center md:flex">
-              <RevealText
-                as="h1"
-                text="Connect with"
-                className="mb-2 text-4xl font-bold leading-tight text-[#ffffff] drop-shadow-md font-iic justify-center md:mb-3 md:text-6xl"
-              />
-              <RevealText
-                as="h1"
-                text="Itahari International College"
-                className="mb-6 text-4xl font-bold leading-tight text-[#ffffff] drop-shadow-md font-iic justify-center md:text-6xl"
-              />
-            </div>
+              </span>
+              <span className="hidden flex-col items-center md:flex">
+                <RevealText
+                  as="span"
+                  text="Connect with"
+                  className="mb-2 justify-center md:mb-3"
+                />
+                <RevealText
+                  as="span"
+                  text="Itahari International College"
+                  className="justify-center"
+                />
+              </span>
+            </h1>
 
             <motion.div 
               initial={{ opacity: 0, y: 20 }}

@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const keywords = mergeKeywords(LIFE_PAGE_KEYWORDS, [gallery.title, `${gallery.title} photos`]);
 
   return {
-    title: `${gallery.title} Gallery | Itahari International College`,
+    title: `${gallery.title} Gallery`,
     description: gallery.summary,
     keywords,
     alternates: { canonical: `/life-at-iic/events/${slug}` },

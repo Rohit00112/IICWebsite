@@ -28,7 +28,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
             />
             <p className="text-gray-500 max-w-md">Continue exploring the latest updates, events, and announcements from Itahari International College.</p>
           </div>
-          <Link href="/news" className="hidden md:flex items-center gap-2 text-[#21409A] font-bold text-sm hover:gap-3 transition-all">
+          <Link href="/news-and-events" className="hidden md:flex items-center gap-2 text-[#21409A] font-bold text-sm hover:gap-3 transition-all">
             View All News
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </Link>
@@ -51,7 +51,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ items }) => {
               className="related-news-card"
               style={{ willChange: 'transform, opacity' }}
             >
-              <Link href={`/news/${item.slug}`} className="group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
+              <Link href={`/news-and-events/${item.slug}`} className="group block bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all h-full flex flex-col">
                 <div className="relative h-56 overflow-hidden">
                   <Image
                     src={item.image || '/images/common/tower_block.JPG'}

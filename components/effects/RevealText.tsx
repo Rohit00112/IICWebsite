@@ -7,7 +7,7 @@ interface RevealTextProps {
   text: string;
   className?: string;
   delay?: number;
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'div';
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'div' | 'span';
 }
 
 const RevealText = ({ text, className = '', delay = 0, as: Tag = 'div' }: RevealTextProps) => {

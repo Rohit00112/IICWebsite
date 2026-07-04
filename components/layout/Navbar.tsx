@@ -28,12 +28,12 @@ const navItems: NavItem[] = [
     children: [
       { name: 'Courses', href: '/courses' },
       { name: 'Admission', href: '/admissions' },
-      { name: 'Scholarships', href: '/scholarships' },
+      { name: 'Scholarship', href: '/scholarship' },
     ],
   },
   { name: 'Innovation Lab', href: 'https://innovation.iic.edu.np', external: true },
-  { name: 'News & Events', href: '/news' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'News & Events', href: '/news-and-events' },
+  { name: 'Contact', href: '/contact-us' },
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;

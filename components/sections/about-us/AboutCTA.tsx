@@ -24,7 +24,7 @@ const AboutCTA = () => {
             <Link href="/admissions" className="px-10 py-5 bg-white text-[#21409A] font-black rounded-xl hover:bg-gray-100 transition-colors tracking-widest text-sm">
               Apply Now
             </Link>
-            <Link href="/contact" className="px-10 py-5 border border-white text-white font-black rounded-xl hover:bg-white/10 transition-colors tracking-widest text-sm">
+            <Link href="/contact-us" className="px-10 py-5 border border-white text-white font-black rounded-xl hover:bg-white/10 transition-colors tracking-widest text-sm">
               Visit College
             </Link>
           </div>

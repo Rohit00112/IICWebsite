@@ -15,7 +15,7 @@ import {
 const pageDescription = 'Explore London Metropolitan University awarded IT and Business programmes at IIC, designed for practical learning and global career readiness.';
 
 export const metadata: Metadata = {
-  title: 'UK Degree Programmes in Itahari | IT & Business | Itahari International College',
+  title: 'UK Degree Programmes in Itahari | IT & Business',
   description: pageDescription,
   keywords: COURSES_PAGE_KEYWORDS,
   alternates: { canonical: '/courses' },

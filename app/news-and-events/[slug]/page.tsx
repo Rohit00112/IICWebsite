@@ -23,14 +23,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const keywords = mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category]);
 
   return {
-    title: `${item.title} | Itahari International College`,
+    title: item.title,
     description: item.description,
     keywords,
-    alternates: { canonical: `/news/${slug}` },
+    alternates: { canonical: `/news-and-events/${slug}` },
     openGraph: {
       title: item.title,
       description: item.description,
-      url: `/news/${slug}`,
+      url: `/news-and-events/${slug}`,
       images: [item.image],
       type: 'article',
     },
@@ -55,8 +55,8 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
 
   const breadcrumbs = [
     { name: 'Home', item: '/' },
-    { name: 'News & Events', item: '/news' },
-    { name: item.title, item: `/news/${slug}` },
+    { name: 'News & Events', item: '/news-and-events' },
+    { name: item.title, item: `/news-and-events/${slug}` },
   ];
   const itemSchema = item.category === 'Event'
     ? buildEventNode(item)
@@ -68,7 +68,7 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
       <JsonLd
         data={buildSchemaGraph([
           buildWebPageNode({
-            path: `/news/${slug}`,
+            path: `/news-and-events/${slug}`,
             name: item.title,
             description: item.description,
             image: item.image,

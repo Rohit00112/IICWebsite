@@ -16,14 +16,14 @@ import {
 const pageDescription = 'Read the latest IIC news, events, student achievements, and academic updates from our globally connected college in Itahari.';
 
 export const metadata: Metadata = {
-  title: 'Latest News & Events | Itahari International College',
+  title: 'Latest News & Events',
   description: pageDescription,
   keywords: NEWS_PAGE_KEYWORDS,
-  alternates: { canonical: '/news' },
+  alternates: { canonical: '/news-and-events' },
   openGraph: {
     title: 'Latest News & Events | Itahari International College',
     description: pageDescription,
-    url: '/news',
+    url: '/news-and-events',
     type: 'website',
   },
 };
@@ -47,7 +47,7 @@ const NewsPage = async () => {
 
   const breadcrumbs = [
     { name: 'Home', item: '/' },
-    { name: 'News & Events', item: '/news' },
+    { name: 'News & Events', item: '/news-and-events' },
   ];
 
   return (
@@ -56,7 +56,7 @@ const NewsPage = async () => {
       <JsonLd
         data={buildSchemaGraph([
           buildWebPageNode({
-            path: '/news',
+            path: '/news-and-events',
             name: 'Latest News & Events',
             description: pageDescription,
             type: 'CollectionPage',

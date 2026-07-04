@@ -6,7 +6,7 @@ import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, POLICY_PAG
 const pageDescription = 'Learn how Itahari International College handles information submitted through its website forms.';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Itahari International College',
+  title: 'Privacy Policy',
   description: pageDescription,
   keywords: POLICY_PAGE_KEYWORDS,
   alternates: { canonical: '/privacy-policy' },

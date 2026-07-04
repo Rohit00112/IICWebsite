@@ -55,7 +55,7 @@ const NewsDetailHero: React.FC<NewsDetailHeroProps> = ({ item }) => {
           >
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>/</span>
-            <Link href="/news" className="hover:text-white transition-colors">News & Events</Link>
+            <Link href="/news-and-events" className="hover:text-white transition-colors">News & Events</Link>
             <span>/</span>
             <span className="text-[#74C044] font-black">{item.category}</span>
           </motion.div>

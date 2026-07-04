@@ -6,7 +6,7 @@ import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, POLICY_PAG
 const pageDescription = 'Review the website terms for using the Itahari International College website.';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Itahari International College',
+  title: 'Terms of Service',
   description: pageDescription,
   keywords: POLICY_PAGE_KEYWORDS,
   alternates: { canonical: '/terms-of-service' },

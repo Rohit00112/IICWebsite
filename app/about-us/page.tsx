@@ -14,7 +14,7 @@ import { ABOUT_PAGE_KEYWORDS, buildWebPageNode, withContext } from '@/lib/seo-sc
 const pageDescription = 'Learn how IIC combines London Metropolitan University standards, practical learning, and student-centred support to develop globally competitive graduates in Itahari.';
 
 export const metadata = {
-  title: 'Mission, Values & UK Partnership | Itahari International College',
+  title: 'Mission, Values & UK Partnership',
   description: pageDescription,
   keywords: ABOUT_PAGE_KEYWORDS,
   alternates: { canonical: '/about-us' },

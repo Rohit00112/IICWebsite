@@ -47,7 +47,7 @@ const useObfuscatedEmail = (
     const label = isReady ? email : fallbackLabel || buildFallbackLabel(mailbox, domainParts);
     const href = isReady
       ? `mailto:${email}${subject ? `?subject=${encodeURIComponent(subject)}` : ''}`
-      : '/contact';
+      : '/contact-us';
 
     return { label, href, isReady };
   }, [domainParts, fallbackLabel, isReady, mailbox, subject]);
