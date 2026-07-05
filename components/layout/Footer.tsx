@@ -117,6 +117,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/our-infrastructure" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
+                  Infrastructure
+                </Link>
+              </li>
+              <li>
                 <Link href="/about-us" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
                   About Us
                 </Link>
@@ -137,6 +142,11 @@ const Footer = () => {
               <li>
                 <Link href="/contact-us" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/industry-exposure" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
+                  Industry Exposure
                 </Link>
               </li>
               <li>

@@ -8,7 +8,6 @@ import { ArrowRight, CalendarCheck } from 'lucide-react';
 import StatsStrip from './StatsStrip';
 import RevealText from '../../effects/RevealText';
 import CloudBackground from '../../effects/CloudBackground';
-import { ObfuscatedEmailLink } from '@/components/common/ObfuscatedEmail';
 
 const HeroSection = () => {
   const containerRef = useRef(null);
@@ -27,37 +26,6 @@ const HeroSection = () => {
 
   return (
     <section ref={containerRef} className="relative w-full flex flex-col items-center overflow-hidden min-h-[100svh] bg-white">
-      {/* Top utility strip: phone + email */}
-      <div className="relative z-40 w-full border-b border-white/20 bg-[#21409A]">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-center gap-5 px-4 py-2 sm:gap-7 sm:px-6">
-          <a
-            href="tel:+9779801003030"
-            className="group flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] rounded sm:text-xs"
-          >
-            <svg aria-hidden viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 shrink-0 text-[#74C044]">
-              <path d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.24 11.4 11.4 0 003.6.58 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.4 11.4 0 00.58 3.6 1 1 0 01-.24 1l-2.24 2.2z" fill="currentColor" />
-            </svg>
-            <span className="hidden sm:inline">+977 9801003030</span>
-            <span className="sm:hidden">Call</span>
-          </a>
-          <span aria-hidden className="h-3 w-px bg-white/25" />
-          <ObfuscatedEmailLink
-            mailbox="info"
-            className="group flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-white/85 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] rounded sm:text-xs"
-          >
-            {({ label }) => (
-              <>
-                <svg aria-hidden viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 shrink-0 text-[#74C044]">
-                  <path d="M3 6.5A1.5 1.5 0 014.5 5h15A1.5 1.5 0 0121 6.5v11a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 17.5v-11z" stroke="currentColor" strokeWidth="1.6" />
-                  <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span suppressHydrationWarning>{label}</span>
-              </>
-            )}
-          </ObfuscatedEmailLink>
-        </div>
-      </div>
-
       <CloudBackground className="absolute inset-x-0 top-0 z-0 h-[760px] overflow-hidden pointer-events-none select-none opacity-75 sm:h-[100svh] sm:opacity-100" />
 
       {/* Decorative Floating Blobs */}

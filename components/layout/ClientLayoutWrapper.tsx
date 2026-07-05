@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import TopBar from "@/components/layout/TopBar";
 import SmoothScroll from "@/components/effects/SmoothScroll";
 import PageTransition from "@/components/layout/PageTransition";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -118,6 +119,7 @@ export default function ClientLayoutWrapper({
 
       {!isAdminPage ? (
         <SmoothScroll>
+          <TopBar />
           <Navbar />
           <PageTransition>
             {children}

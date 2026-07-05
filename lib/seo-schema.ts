@@ -147,6 +147,26 @@ export const ABOUT_SEARCH_KEYWORDS = [
   'IIC logo',
 ];
 
+export const INFRASTRUCTURE_SEARCH_KEYWORDS = [
+  'IIC infrastructure',
+  'Itahari International College infrastructure',
+  'IIC facilities',
+  'college facilities in Itahari',
+  'computer labs in Itahari college',
+  'IIC library',
+  'IIC campus',
+];
+
+export const INDUSTRY_EXPOSURE_SEARCH_KEYWORDS = [
+  'IIC industry exposure',
+  'Itahari International College industry exposure',
+  'IIC placement support',
+  'IIC career readiness',
+  'career development college in Itahari',
+  'industry visits in college',
+  'job fair at IIC',
+];
+
 export const GLOBAL_METADATA_KEYWORDS = mergeKeywords(
   BRAND_SEARCH_KEYWORDS,
   LOCATION_SEARCH_KEYWORDS,
@@ -197,6 +217,22 @@ export const ABOUT_PAGE_KEYWORDS = mergeKeywords(
   ABOUT_SEARCH_KEYWORDS,
   LOCATION_SEARCH_KEYWORDS,
   COURSE_SEARCH_KEYWORDS
+);
+
+export const INFRASTRUCTURE_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  INFRASTRUCTURE_SEARCH_KEYWORDS,
+  ABOUT_SEARCH_KEYWORDS,
+  MEDIA_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS
+);
+
+export const INDUSTRY_EXPOSURE_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  INDUSTRY_EXPOSURE_SEARCH_KEYWORDS,
+  COURSE_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS,
+  ADMISSION_SEARCH_KEYWORDS
 );
 
 export const LIFE_PAGE_KEYWORDS = mergeKeywords(
@@ -442,6 +478,8 @@ export function buildSiteNavigationNode(): SchemaNode {
   const links = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about-us' },
+    { name: 'Our Infrastructure', href: '/our-infrastructure' },
+    { name: 'Industry Exposure', href: '/industry-exposure' },
     { name: 'Life at IIC', href: '/life-at-iic' },
     { name: 'Courses', href: '/courses' },
     { name: 'Admissions', href: '/admissions' },

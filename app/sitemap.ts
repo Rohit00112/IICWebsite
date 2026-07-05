@@ -18,6 +18,8 @@ const staticRoutes: Array<{
 }> = [
   { path: '/', changeFrequency: 'weekly', priority: 1 },
   { path: '/about-us', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/our-infrastructure', changeFrequency: 'monthly', priority: 0.75 },
+  { path: '/industry-exposure', changeFrequency: 'monthly', priority: 0.75 },
   { path: '/admissions', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/courses', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/scholarship', changeFrequency: 'weekly', priority: 0.8 },

@@ -20,6 +20,8 @@ const navItems: NavItem[] = [
     name: 'About',
     children: [
       { name: 'About Us', href: '/about-us' },
+      { name: 'Our Infrastructure', href: '/our-infrastructure' },
+      { name: 'Industry Exposure', href: '/industry-exposure' },
       { name: 'Life at IIC', href: '/life-at-iic' },
     ],
   },
