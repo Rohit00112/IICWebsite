@@ -31,6 +31,7 @@ const navItems: NavItem[] = [
       { name: 'Courses', href: '/courses' },
       { name: 'Admission', href: '/admissions' },
       { name: 'Scholarship', href: '/scholarship' },
+      { name: 'Research Committee', href: '/research-management-committee' },
     ],
   },
   { name: 'Innovation Lab', href: 'https://innovation.iic.edu.np', external: true },

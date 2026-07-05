@@ -150,6 +150,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/research-management-committee" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
+                  Research Committee
+                </Link>
+              </li>
+              <li>
                 <Link href="https://innovation.iic.edu.np" target="_blank" rel="noopener noreferrer" prefetch={false} className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
                   Innovation Lab
                 </Link>

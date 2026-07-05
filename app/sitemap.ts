@@ -23,6 +23,7 @@ const staticRoutes: Array<{
   { path: '/admissions', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/courses', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/scholarship', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/research-management-committee', changeFrequency: 'monthly', priority: 0.65 },
   { path: '/life-at-iic', changeFrequency: 'weekly', priority: 0.7 },
   { path: '/news-and-events', changeFrequency: 'daily', priority: 0.7 },
   { path: '/contact-us', changeFrequency: 'yearly', priority: 0.6 },

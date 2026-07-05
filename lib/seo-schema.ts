@@ -167,6 +167,15 @@ export const INDUSTRY_EXPOSURE_SEARCH_KEYWORDS = [
   'job fair at IIC',
 ];
 
+export const RMC_SEARCH_KEYWORDS = [
+  'IIC research management committee',
+  'Itahari International College research committee',
+  'Research Management Committee IIC',
+  'IIC RMC',
+  'college research committee in Itahari',
+  'academic research at IIC',
+];
+
 export const GLOBAL_METADATA_KEYWORDS = mergeKeywords(
   BRAND_SEARCH_KEYWORDS,
   LOCATION_SEARCH_KEYWORDS,
@@ -233,6 +242,13 @@ export const INDUSTRY_EXPOSURE_PAGE_KEYWORDS = mergeKeywords(
   COURSE_SEARCH_KEYWORDS,
   LOCATION_SEARCH_KEYWORDS,
   ADMISSION_SEARCH_KEYWORDS
+);
+
+export const RMC_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  RMC_SEARCH_KEYWORDS,
+  COURSE_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS
 );
 
 export const LIFE_PAGE_KEYWORDS = mergeKeywords(
@@ -484,6 +500,7 @@ export function buildSiteNavigationNode(): SchemaNode {
     { name: 'Courses', href: '/courses' },
     { name: 'Admissions', href: '/admissions' },
     { name: 'Scholarships', href: '/scholarship' },
+    { name: 'Research Management Committee', href: '/research-management-committee' },
     { name: 'Innovation Lab', href: 'https://innovation.iic.edu.np' },
     { name: 'News & Events', href: '/news-and-events' },
     { name: 'Contact', href: '/contact-us' },
