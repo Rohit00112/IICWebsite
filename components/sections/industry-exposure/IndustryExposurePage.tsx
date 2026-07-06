@@ -233,25 +233,7 @@ export default function IndustryExposurePage() {
         </div>
       </section>
 
-      <section className="bg-white px-5 py-16 sm:px-8 md:py-24">
-        <div className="mx-auto max-w-[1180px]">
-          <div className="mb-10 max-w-3xl">
-            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#74C044]">How students grow</p>
-            <h2 className="mt-4 text-4xl font-black tracking-tight text-[#172033] md:text-5xl">
-              Practical support at every step
-            </h2>
-          </div>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {supportCards.map(({ icon: Icon, title, text }) => (
-              <article key={title} className="border border-[#dce5f2] bg-[#f8fbff] p-6 shadow-[0_14px_40px_rgba(33,64,154,0.06)]">
-                <Icon className="h-8 w-8 text-[#21409A]" aria-hidden="true" />
-                <h3 className="mt-5 text-xl font-black text-[#172033]">{title}</h3>
-                <p className="mt-3 text-sm font-semibold leading-relaxed text-[#64748b]">{text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       <section className="bg-[#21409A] px-5 py-16 text-white sm:px-8 md:py-24">
         <div className="mx-auto max-w-4xl text-center">
