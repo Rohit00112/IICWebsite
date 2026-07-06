@@ -257,6 +257,12 @@ export const LIFE_PAGE_KEYWORDS = mergeKeywords(
   LOCATION_SEARCH_KEYWORDS
 );
 
+export const ALUMNI_PAGE_KEYWORDS = mergeKeywords(
+  BRAND_SEARCH_KEYWORDS,
+  LOCATION_SEARCH_KEYWORDS,
+  ['IIC alumni', 'IIC alumni network', 'Itahari International College graduates', 'alumni directory']
+);
+
 export const NEWS_PAGE_KEYWORDS = mergeKeywords(
   BRAND_SEARCH_KEYWORDS,
   MEDIA_SEARCH_KEYWORDS,

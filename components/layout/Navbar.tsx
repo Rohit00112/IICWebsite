@@ -23,6 +23,7 @@ const navItems: NavItem[] = [
       { name: 'Our Infrastructure', href: '/our-infrastructure' },
       { name: 'Industry Exposure', href: '/industry-exposure' },
       { name: 'Life at IIC', href: '/life-at-iic' },
+      { name: 'Alumni Network', href: '/alumni' },
     ],
   },
   {

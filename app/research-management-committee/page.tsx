@@ -57,7 +57,7 @@ export default function ResearchManagementCommitteeRoutePage() {
             name: 'Research Management Committee',
             description: pageDescription,
             type: 'WebPage',
-            image: '/images/lifestyle/research.JPG',
+            image: '/images/rmc/hero.png',
             keywords: RMC_PAGE_KEYWORDS,
           }),
         ])}

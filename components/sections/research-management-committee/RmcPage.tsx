@@ -5,51 +5,52 @@ import { Home, SearchCheck, UsersRound } from 'lucide-react';
 const committeeRows = [
   {
     sn: '01',
-    name: '—',
-    position: '—',
-    degree: '—',
-    expertise: '—',
-    remarks: 'Convener',
+    name: 'Mr. Achyut Raj Bhattarai',
+    position: 'Course Leader, BA (Hons) Business Administration',
+    degree: 'M.Phil.',
+    expertise: 'Advance Communication',
+    remarks: 'Head, RMC',
   },
   {
     sn: '02',
-    name: '—',
-    position: '—',
-    degree: '—',
-    expertise: '—',
-    remarks: 'Secretariat',
+    name: 'Er. Nishesh Bishwas',
+    position: 'Course Leader, BSc (Hons) Computing',
+    degree: 'Masters',
+    expertise: 'Information System',
+    remarks: 'Managing Editor',
   },
   {
     sn: '03',
-    name: '—',
-    position: '—',
-    degree: '—',
-    expertise: '—',
-    remarks: 'Member',
+    name: 'Mr. Nishan Gautam',
+    position: 'PAT',
+    degree: 'Masters',
+    expertise: 'Management',
+    remarks: 'Editor-in-Chief',
   },
   {
     sn: '04',
-    name: '—',
-    position: '—',
-    degree: '—',
-    expertise: '—',
+    name: 'Mr. Abhay Sah',
+    position: 'Lecturer',
+    degree: 'Masters',
+    expertise: 'Economics',
     remarks: 'Member',
   },
+  
   {
     sn: '05',
-    name: '—',
-    position: '—',
-    degree: '—',
-    expertise: '—',
+    name: 'Mr. Diwakar Luitel',
+    position: 'Lecturer',
+    degree: 'Masters',
+    expertise: 'Management',
     remarks: 'Member',
-  },
+  }
 ];
 
 function CommitteeTable() {
   return (
     <>
       <div className="hidden overflow-hidden border border-[#e0e6ef] bg-white shadow-[0_20px_60px_rgba(22,36,60,0.08)] md:block">
-        <div className="bg-[#ED1C24] px-6 py-6 text-white">
+        <div className="bg-[#15275c] px-6 py-6 text-white">
           <p className="text-xs font-black uppercase tracking-[0.24em] text-white/72">RMC</p>
           <h2 className="mt-2 text-3xl font-black leading-tight md:text-4xl">Committee Structure</h2>
         </div>
@@ -68,7 +69,7 @@ function CommitteeTable() {
           <tbody>
             {committeeRows.map((row) => (
               <tr key={row.sn} className="border-b border-[#e8edf4] last:border-b-0">
-                <td className="px-5 py-6 text-sm font-black text-[#ED1C24]">{row.sn}</td>
+                <td className="px-5 py-6 text-sm font-black text-[#21409A]">{row.sn}</td>
                 <td className="px-5 py-6 text-sm font-black text-[#172033]">{row.name}</td>
                 <td className="px-5 py-6 text-sm font-semibold leading-relaxed text-[#64748b]">{row.position}</td>
                 <td className="px-5 py-6 text-sm font-semibold leading-relaxed text-[#4f5f75]">{row.degree}</td>
@@ -81,14 +82,14 @@ function CommitteeTable() {
       </div>
 
       <div className="grid gap-4 md:hidden">
-        <div className="bg-[#ED1C24] px-5 py-6 text-white">
+        <div className="bg-[#15275c] px-5 py-6 text-white">
           <p className="text-xs font-black uppercase tracking-[0.24em] text-white/72">RMC</p>
           <h2 className="mt-2 text-3xl font-black leading-tight">Committee Structure</h2>
         </div>
         {committeeRows.map((row) => (
           <article key={row.sn} className="border border-[#e0e6ef] bg-white p-5 shadow-[0_14px_34px_rgba(22,36,60,0.07)]">
             <div className="flex items-start justify-between gap-4">
-              <span className="grid h-10 w-10 shrink-0 place-items-center bg-[#ED1C24] text-sm font-black text-white">
+              <span className="grid h-10 w-10 shrink-0 place-items-center bg-[#21409A] text-sm font-black text-white">
                 {row.sn}
               </span>
               <span className="text-right text-xs font-black uppercase tracking-[0.16em] text-[#21409A]">
@@ -116,22 +117,22 @@ function HeroSection() {
   return (
     <section className="relative isolate min-h-[70svh] overflow-hidden bg-[#15275c]">
       <Image
-        src="/images/lifestyle/research.JPG"
+        src="/images/rmc/hero.png"
         alt="Students collaborating on research at Itahari International College"
         fill
         priority
         className="object-cover"
         sizes="100vw"
       />
-      <div className="absolute inset-0 bg-[#15275c]/70" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#15275c]/96 via-[#15275c]/72 to-[#15275c]/22" />
+      <div className="absolute inset-0 bg-[#15275c]/25" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#15275c]/85 via-[#15275c]/40 to-transparent" />
       <div
         className="absolute bottom-0 right-0 h-28 w-[52vw] bg-[#21409A]"
         style={{ clipPath: 'polygon(18% 42%, 100% 0, 100% 100%, 0 100%)' }}
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-0 right-0 h-2 w-[52vw] bg-[#ED1C24]"
+        className="absolute bottom-0 right-0 h-2 w-[52vw] bg-[#74C044]"
         style={{ clipPath: 'polygon(18% 42%, 100% 0, 100% 100%, 0 100%)' }}
         aria-hidden="true"
       />
@@ -184,20 +185,20 @@ function ResearchEcosystemCta() {
         </p>
 
         <div className="mt-12 flex flex-wrap items-center justify-center gap-8">
-          <div className="relative h-24 w-80">
+          <div className="relative h-40 w-[28rem] max-w-full">
             <Image
               src="/images/common/iic_logo.png"
               alt="Itahari International College"
               fill
               className="object-contain"
-              sizes="320px"
+              sizes="448px"
             />
           </div>
         </div>
 
         <Link
           href="/admissions"
-          className="mt-12 inline-flex w-full items-center justify-center gap-3 bg-[#ED1C24] px-10 py-4 text-sm font-black text-white transition hover:bg-[#c0141b] sm:w-auto"
+          className="mt-12 inline-flex w-full items-center justify-center gap-3 bg-[#21409A] px-10 py-4 text-sm font-black text-white transition hover:bg-[#15275c] sm:w-auto"
         >
           Apply Now
           <UsersRound className="h-4 w-4" aria-hidden="true" />

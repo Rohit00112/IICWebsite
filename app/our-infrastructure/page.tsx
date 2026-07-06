@@ -54,7 +54,7 @@ export default function InfrastructureRoutePage() {
             name: 'Our Infrastructure and Campus Facilities',
             description: pageDescription,
             type: 'WebPage',
-            image: '/images/common/tower_block.JPG',
+            image: '/images/our-infrastructure/infra.png',
             keywords: INFRASTRUCTURE_PAGE_KEYWORDS,
           }),
         ])}

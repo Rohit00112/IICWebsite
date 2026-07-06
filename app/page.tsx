@@ -13,7 +13,6 @@ import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, HOME_PAGE_
 
 const PartnerSection = dynamic(() => import("@/components/sections/home/PartnerSection"), { ssr: true });
 const ScholarshipSection = dynamic(() => import("@/components/sections/home/ScholarshipSection"), { ssr: true });
-const LifestyleSection = dynamic(() => import("@/components/sections/home/LifestyleSection"), { ssr: true });
 const StudentStories = dynamic(() => import("@/components/sections/home/StudentStories"), { ssr: true });
 const InnovationLab = dynamic(() => import("@/components/sections/home/InnovationLab"), { ssr: true });
 const IngSection = dynamic(() => import("@/components/sections/home/IngSection"), { ssr: true });
@@ -62,7 +61,6 @@ export default async function Home() {
       <ProgrammesSection />
       <PartnerSection />
       <ScholarshipSection />
-      <LifestyleSection />
       <StudentStories />
       <InnovationLab />
       <IngSection />

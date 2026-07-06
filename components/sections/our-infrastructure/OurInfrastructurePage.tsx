@@ -3,8 +3,12 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 const stats = [
-  { value: '2017', label: 'Established Since', accent: 'border-[#ED1C24]' },
-  { value: '50+', label: 'Modern Labs', accent: 'border-[#24C7A6]' },
+  { value: '78', label: 'Enterprise Wi-Fi Access Points', accent: 'border-[#21409A]' },
+  { value: '24/7', label: 'Smart Surveillance', accent: 'border-[#24C7A6]' },
+  { value: 'Biometric', label: 'Attendance', accent: 'border-[#74C044]', valueClass: 'text-[20px] md:text-[22px]' },
+  { value: 'Enterprise', label: 'Servers', accent: 'border-[#F4A51C]', valueClass: 'text-[20px] md:text-[22px]' },
+  { value: 'High-End', label: 'Workstations', accent: 'border-[#23A8F2]', valueClass: 'text-[20px] md:text-[22px]' },
+  { value: 'Hardware & IoT', label: 'Labs', accent: 'border-[#ED1C24]', valueClass: 'text-[18px] md:text-[20px]' },
 ];
 
 const facilityCards = [
@@ -20,16 +24,16 @@ const facilityCards = [
   {
     label: 'Lecture Theatres',
     labelClass: 'bg-[#F4A51C]',
-    title: 'Cutting-edge Tech',
-    description: '',
+    title: 'Immersive Learning Environments',
+    description: 'Spacious tiered halls with high-quality AV setups, designed for engaging lectures and dynamic seminars.',
     image: '/images/common/lecture.JPG',
     className: 'min-h-[240px] md:min-h-[273px]',
   },
   {
     label: 'Computer Labs',
     labelClass: 'bg-[#19B985]',
-    title: 'Advanced Software',
-    description: '',
+    title: 'Cutting-edge Workstations',
+    description: 'High-performance workstations loaded with industry-standard software for hands-on technical learning.',
     image: '/images/common/lab.JPG',
     className: 'min-h-[240px] md:min-h-[273px]',
   },
@@ -58,7 +62,7 @@ const featureRows = [
     cardTitle: 'Cafeteria',
     cardDescription:
       'Indulge in delightful delicacies at our vibrant cafe providing the perfect spot for relaxation and socializing.',
-    bullets: ['Diverse healthy menu options', 'Spacious indoor & outdoor seating', 'Wi-fi enabled lounge areas'],
+    bullets: ['Diverse healthy menu options', 'Spacious indoor seating', 'Wi-fi enabled lounge areas'],
     bulletColor: 'bg-[#23A8F2]',
     reverse: true,
   },
@@ -67,7 +71,7 @@ const featureRows = [
     title: 'Inspiring Environments',
     description:
       'The architectural elegance of our academic blocks is designed to foster a sense of pride and inspiration, providing naturally lit, well-ventilated spaces for all faculties.',
-    image: '/images/common/tower_block.JPG',
+    image: '/images/our-infrastructure/academic-block.JPG',
     cardTitle: 'Academic Blocks',
     cardDescription:
       'Discover a campus decorated with modern architectural blocks creating an inspiring environment.',
@@ -78,11 +82,11 @@ const featureRows = [
 ];
 
 
-function HeroStat({ value, label, accent }: (typeof stats)[number]) {
+function HeroStat({ value, label, accent, valueClass }: (typeof stats)[number]) {
   return (
-    <div className={`min-w-[190px] border-l-4 ${accent} rounded-xl bg-white px-7 py-4 shadow-[0_15px_38px_rgba(30,42,70,0.08)]`}>
-      <p className="text-[32px] font-black leading-none tracking-tight text-[#172033]">{value}</p>
-      <p className="mt-2 text-[10px] font-black uppercase tracking-[0.12em] text-[#758196]">{label}</p>
+    <div className={`min-h-[82px] border-l-4 ${accent} rounded-xl bg-white px-5 py-3.5 shadow-[0_12px_28px_rgba(30,42,70,0.07)]`}>
+      <p className={`font-black leading-[1.05] tracking-tight text-[#172033] ${valueClass ?? 'text-[28px]'}`}>{value}</p>
+      <p className="mt-1.5 text-[9px] font-black uppercase leading-snug tracking-[0.11em] text-[#758196]">{label}</p>
     </div>
   );
 }
@@ -96,7 +100,7 @@ function FacilityCard({
   className,
 }: (typeof facilityCards)[number]) {
   return (
-    <article className={`group relative overflow-hidden rounded-[22px] bg-[#0f1f36] shadow-[0_16px_36px_rgba(20,34,59,0.22)] ${className}`}>
+    <article className={`group relative h-full overflow-hidden rounded-[22px] bg-[#0f1f36] shadow-[0_16px_36px_rgba(20,34,59,0.22)] ${className}`}>
       <Image
         src={image}
         alt={`${title} at Itahari International College`}
@@ -211,92 +215,99 @@ export default function OurInfrastructurePage() {
   return (
     <div className="bg-[#eef3fb] font-iic text-[#172033]">
 
-      <section className="mx-auto grid max-w-[1260px] items-center gap-12 px-6 pb-24 pt-20 md:grid-cols-[0.93fr_1.07fr] md:px-8 md:pb-28 md:pt-24">
+      <section className="mx-auto grid max-w-[1260px] items-center gap-14 px-6 pb-24 pt-20 md:grid-cols-[0.86fr_1.14fr] md:px-8 md:pb-28 md:pt-24">
         <div>
           <h1 className="max-w-[575px] text-[42px] font-black leading-[1.02] tracking-tight text-[#172033] md:text-[56px]">
             Top-Tier Infrastructure and Facilities for our Students
           </h1>
-          <p className="mt-7 max-w-[545px] text-[14px] font-bold leading-[1.75] text-[#65738a]">
+          <p className="mt-7 max-w-[545px] text-[14px] font-medium leading-[1.75] text-[#65738a]">
             IIC has top-notch facilities and equipment that support advanced and innovative learning methods providing students with access to cutting-edge technology, modern amenities, and comfortable spaces to enhance their academic experience.
           </p>
-          <div className="mt-8 flex flex-col gap-5 sm:flex-row">
+          <div className="mt-8 grid max-w-[545px] grid-cols-2 gap-3">
             {stats.map((stat) => (
               <HeroStat key={stat.label} {...stat} />
             ))}
           </div>
         </div>
 
-        <div className="relative min-h-[410px] md:min-h-[520px]">
-          <div className="absolute right-0 top-0 h-[390px] w-full overflow-hidden rounded-[22px] shadow-[0_22px_46px_rgba(21,35,58,0.18)] md:h-[488px] md:w-[520px]">
+        <div className="relative pb-24 md:pb-16">
+          {/* decorative accents */}
+          <div className="absolute -right-3 -top-6 hidden h-28 w-28 rounded-[22px] border-[3px] border-[#74C044]/45 md:block" aria-hidden="true" />
+          <div className="absolute bottom-6 right-6 hidden h-20 w-20 rounded-full bg-[#21409A]/[0.06] md:block" aria-hidden="true" />
+
+          {/* image */}
+          <div className="relative h-[360px] w-full overflow-hidden rounded-[24px] shadow-[0_30px_70px_-30px_rgba(21,35,58,0.5)] md:h-[540px]">
             <Image
-              src="/images/common/tower_block.JPG"
+              src="/images/our-infrastructure/infra.png"
               alt="Itahari International College Tower Block"
               fill
-              priority
+              preload
               className="object-cover object-center"
-              sizes="(max-width: 768px) 100vw, 520px"
+              sizes="(max-width: 768px) 100vw, 640px"
             />
           </div>
 
-          <div className="absolute bottom-5 left-0 w-[340px] rounded-[20px] bg-white/94 p-6 shadow-[0_24px_56px_rgba(21,35,58,0.18)] backdrop-blur-md md:bottom-0 md:left-[44px] md:w-[380px]">
+          {/* testimonial card — overhangs outside the image, bottom-left */}
+          <div className="absolute bottom-0 left-4 w-[calc(100%-2rem)] max-w-[24rem] rounded-[22px] bg-white p-6 shadow-[0_30px_70px_-24px_rgba(21,35,58,0.45)] md:-left-5 md:bottom-4 md:w-[21rem] md:max-w-[21rem] md:p-7">
             <div className="flex items-center gap-4">
-              <div className="relative h-12 w-12 overflow-hidden rounded-full bg-[#dce6f2]">
-                <Image src="/images/home/utsav.png" alt="Aasav Sharma" fill className="object-cover" sizes="48px" />
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full bg-[#dce6f2] ring-2 ring-[#74C044] ring-offset-2">
+                <Image src="/images/home/utsav.png" alt="Aasav Sharma" fill className="object-cover" sizes="56px" />
               </div>
-              <div>
-                <p className="text-[15px] font-black leading-tight text-[#172033]">Aasav Sharma</p>
-                <p className="text-xs font-bold text-[#7a8597]">Class of 2024</p>
+              <div className="flex-1">
+                <p className="text-lg font-black leading-tight text-[#172033]">Aasav Sharma</p>
+                <p className="text-sm font-bold text-[#7a8597]">Class of 2024</p>
               </div>
+              <span className="font-[family-name:var(--font-sora)] text-5xl font-black leading-none text-[#74C044]/50" aria-hidden="true">&rdquo;</span>
             </div>
-            <p className="mt-5 text-[13px] font-bold italic leading-relaxed text-[#2e3a4d]">
-              &ldquo;The laboratories and library provided the perfect ecosystem for my research and academic growth.&rdquo;
+            <p className="mt-6 text-[15px] font-bold italic leading-relaxed text-[#2e3a4d] md:text-base">
+              The laboratories and library provided the perfect ecosystem for my research and academic growth.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1120px] px-6 pb-28 md:px-8">
+      <section className="mx-auto max-w-[1320px] px-6 pb-28 md:px-8">
         <div className="mb-11 text-center">
           <p className="text-[34px] font-black text-[#2d2f36] md:text-[40px]">Our</p>
           <h2 className="mt-3 text-[58px] font-black uppercase leading-none tracking-tight text-[#65BD53] md:text-[78px] lg:text-[86px]">
             Infrastructure
           </h2>
-          <p className="mx-auto mt-7 max-w-[760px] text-[13px] font-semibold leading-relaxed text-[#1f2937]">
+          <p className="mx-auto mt-7 max-w-[760px] text-[13px] font-medium leading-relaxed text-[#1f2937]">
             Our State-Of-The-Art Facilities Are Meticulously Designed To Meet The Demands Of Modern Education, Providing You With The Perfect Environment To Thrive And Innovate.
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[2.08fr_1fr]">
+        <div className="grid gap-6 lg:grid-cols-[1.7fr_1fr]">
           <FacilityCard {...facilityCards[0]} />
-          <div className="grid gap-6">
+          <div className="grid gap-6 lg:grid-rows-2">
             <FacilityCard {...facilityCards[1]} />
             <FacilityCard {...facilityCards[2]} />
           </div>
         </div>
       </section>
 
-      <div className="mx-auto grid max-w-[1120px] gap-28 px-6 pb-28 md:px-8 md:pb-36">
+      <div className="mx-auto grid max-w-[1320px] gap-28 px-6 pb-28 md:px-8 md:pb-36">
         {featureRows.map((row) => (
           <FeatureRow key={row.title} {...row} />
         ))}
       </div>
 
-      <section className="bg-[#073044] px-6 py-28 text-center text-white md:px-8">
+      <section className="bg-[#21409A] px-6 py-28 text-center text-white md:px-8">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-[42px] font-black tracking-tight md:text-[62px]">What&apos;s Your Next Step?</h2>
-          <p className="mx-auto mt-6 max-w-[620px] text-lg font-bold leading-relaxed text-white/68">
+          <p className="mx-auto mt-6 max-w-[620px] text-lg font-bold leading-relaxed text-white/76">
             Experience our world-class facilities firsthand and take the first step towards your successful career.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-5 sm:flex-row">
             <Link
               href="/contact-us"
-              className="inline-flex min-w-[165px] items-center justify-center rounded-full border-2 border-white/80 px-7 py-3.5 text-sm font-black text-white transition hover:bg-white hover:text-[#073044]"
+              className="inline-flex min-w-[165px] items-center justify-center rounded-full bg-white px-7 py-3.5 text-sm font-black text-[#21409A] transition hover:bg-[#eef3fb]"
             >
               Schedule a Visit
             </Link>
             <Link
               href="/admissions"
-              className="inline-flex min-w-[150px] items-center justify-center gap-2 rounded-full bg-[#294FC4] px-7 py-3.5 text-sm font-black text-white transition hover:bg-[#21409A]"
+              className="inline-flex min-w-[150px] items-center justify-center gap-2 rounded-full bg-[#74C044] px-7 py-3.5 text-sm font-black text-white transition hover:bg-[#65ad3b]"
             >
               Apply Now
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
