@@ -27,7 +27,7 @@ interface WebPageNodeOptions {
   keywords?: string[];
 }
 
-export const SITE_URL = 'https://iic.edu.np';
+export const SITE_URL = 'https://iic-website-wine.vercel.app';
 export const COLLEGE_NAME = 'Itahari International College';
 export const COLLEGE_ID = `${SITE_URL}/#college`;
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
