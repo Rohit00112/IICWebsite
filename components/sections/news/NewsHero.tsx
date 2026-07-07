@@ -30,7 +30,7 @@ const NewsHero = () => {
             transition={{ delay: 0.8, duration: 1 }}
             className="text-gray-500 text-lg md:text-xl max-w-3xl leading-relaxed font-medium"
           >
-            Follow college stories, student achievements, academic updates, and events that reflect our commitment to global education with local impact.
+            Follow Itahari International College news, IIC events, student achievements, academic updates, workshops, admissions notices, and campus stories from Itahari, Nepal.
           </motion.p>
         </div>
       </div>

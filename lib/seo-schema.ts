@@ -139,6 +139,24 @@ export const MEDIA_SEARCH_KEYWORDS = [
   'IIC events',
 ];
 
+export const NEWS_SEARCH_KEYWORDS = [
+  'IIC news',
+  'IIC events',
+  'Itahari International College news',
+  'Itahari International College events',
+  'IIC newsroom',
+  'IIC campus news',
+  'IIC student achievements',
+  'IIC workshops',
+  'IIC seminars',
+  'IIC admissions updates',
+  'IIC event calendar',
+  'college news in Itahari',
+  'college events in Itahari',
+  'Itahari college news',
+  'Itahari college events',
+];
+
 export const ABOUT_SEARCH_KEYWORDS = [
   'about IIC',
   'about Itahari International College',
@@ -282,9 +300,11 @@ export const ALUMNI_PAGE_KEYWORDS = mergeKeywords(
 
 export const NEWS_PAGE_KEYWORDS = mergeKeywords(
   BRAND_SEARCH_KEYWORDS,
+  NEWS_SEARCH_KEYWORDS,
   MEDIA_SEARCH_KEYWORDS,
   LOCATION_SEARCH_KEYWORDS,
-  ['IIC news', 'IIC events']
+  COURSE_SEARCH_KEYWORDS,
+  ADMISSION_SEARCH_KEYWORDS
 );
 
 export const POLICY_PAGE_KEYWORDS = mergeKeywords(
@@ -319,6 +339,31 @@ export function toIsoDate(value?: string) {
   if (!value) return undefined;
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+}
+
+function stripHtml(value?: string) {
+  if (!value) return undefined;
+  const text = value
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return text || undefined;
+}
+
+function estimateWordCount(value?: string) {
+  const text = stripHtml(value);
+  if (!text) return undefined;
+
+  return text.split(/\s+/).length;
+}
+
+function newsSchemaId(item: NewsItem) {
+  const url = absoluteUrl(`/news-and-events/${item.slug}`);
+  return `${url}#${item.category === 'Event' ? 'event' : 'article'}`;
 }
 
 export function durationToIso(value?: string) {
@@ -677,34 +722,101 @@ export function buildCourseItemListNode(courses: CourseItem[]): SchemaNode {
 }
 
 export function buildNewsItemListNode(items: NewsItem[]): SchemaNode {
+  const publishedItems = items.filter((item) => item.slug && item.title);
+
   return {
     '@type': 'ItemList',
     '@id': `${SITE_URL}/news-and-events#news-list`,
     name: 'Latest news and events from Itahari International College',
-    numberOfItems: items.length,
-    itemListElement: items.map((item, index) => ({
+    description:
+      'A reverse-chronological list of IIC news, campus stories, student achievements, workshops, seminars, admissions updates, and college events.',
+    keywords: NEWS_PAGE_KEYWORDS,
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: publishedItems.length,
+    itemListElement: publishedItems.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.title,
       url: absoluteUrl(`/news-and-events/${item.slug}`),
+      item: { '@id': newsSchemaId(item) },
     })),
   };
+}
+
+export function buildNewsAndEventsCollectionNode(
+  items: NewsItem[],
+  description: string,
+  dateModified?: string
+): SchemaNode {
+  const url = absoluteUrl('/news-and-events');
+  const visibleItems = items.filter((item) => item.slug && item.title).slice(0, 12);
+  const latestDate = dateModified || toIsoDate(visibleItems[0]?.date);
+
+  return compactNode({
+    '@type': ['CollectionPage', 'WebPage'],
+    '@id': `${url}#webpage`,
+    url,
+    name: 'IIC News & Events',
+    headline: 'News & Events from Itahari International College',
+    description,
+    inLanguage: 'en-NP',
+    isPartOf: { '@id': WEBSITE_ID },
+    about: [
+      { '@id': COLLEGE_ID },
+      { '@type': 'Thing', name: 'IIC news' },
+      { '@type': 'Thing', name: 'IIC events' },
+      { '@type': 'Thing', name: 'College events in Itahari' },
+      { '@type': 'Thing', name: 'Student achievements at IIC' },
+    ],
+    keywords: NEWS_PAGE_KEYWORDS,
+    publisher: { '@id': COLLEGE_ID },
+    breadcrumb: { '@id': `${url}#breadcrumb` },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: absoluteImageUrl('/images/common/seminar.webp'),
+    },
+    mainEntity: { '@id': `${SITE_URL}/news-and-events#news-list` },
+    hasPart: visibleItems.map((item) => ({ '@id': newsSchemaId(item) })),
+    audience: [
+      { '@type': 'EducationalAudience', educationalRole: 'Prospective student' },
+      { '@type': 'EducationalAudience', educationalRole: 'Student' },
+      { '@type': 'Audience', audienceType: 'Parents and guardians' },
+    ],
+    significantLink: [
+      absoluteUrl('/courses'),
+      absoluteUrl('/admissions'),
+      absoluteUrl('/life-at-iic'),
+      absoluteUrl('/industry-exposure'),
+    ],
+    dateModified: latestDate,
+  });
 }
 
 export function buildNewsArticleNode(item: NewsItem): SchemaNode {
   const url = absoluteUrl(`/news-and-events/${item.slug}`);
   const publishedDate = toIsoDate(item.date);
   const authorName = item.author?.name?.trim();
+  const articleText = stripHtml(item.content || item.description);
 
   return compactNode({
     '@type': 'NewsArticle',
-    '@id': `${url}#article`,
+    '@id': newsSchemaId(item),
+    url,
     headline: item.title,
+    name: item.title,
     description: item.description,
     keywords: mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category]),
-    image: absoluteImageUrl(item.image),
+    image: {
+      '@type': 'ImageObject',
+      url: absoluteImageUrl(item.image),
+    },
+    thumbnailUrl: absoluteImageUrl(item.image),
     datePublished: publishedDate,
     dateModified: publishedDate,
+    articleSection: item.category,
+    wordCount: estimateWordCount(articleText),
+    isAccessibleForFree: true,
+    inLanguage: 'en-NP',
     author: authorName
       ? {
           '@type': 'Person',
@@ -713,34 +825,38 @@ export function buildNewsArticleNode(item: NewsItem): SchemaNode {
         }
       : { '@id': COLLEGE_ID },
     publisher: { '@id': COLLEGE_ID },
+    about: { '@id': COLLEGE_ID },
     mainEntityOfPage: { '@id': `${url}#webpage` },
   });
 }
 
 export function buildEventNode(item: NewsItem): SchemaNode {
   const url = absoluteUrl(`/news-and-events/${item.slug}`);
+  const startDate = toIsoDate(item.date);
 
   return compactNode({
     '@type': 'Event',
-    '@id': `${url}#event`,
+    '@id': newsSchemaId(item),
     name: item.title,
     description: item.description,
     keywords: mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category, item.location]),
-    image: absoluteImageUrl(item.image),
+    image: {
+      '@type': 'ImageObject',
+      url: absoluteImageUrl(item.image),
+    },
     url,
-    startDate: toIsoDate(item.date),
+    startDate,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     organizer: { '@id': COLLEGE_ID },
+    about: { '@id': COLLEGE_ID },
+    audience: { '@type': 'EducationalAudience', educationalRole: 'Student' },
     location: {
       '@type': 'Place',
       name: item.location || 'Itahari International College',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Sundarharaicha-4, Dulari',
-        addressLocality: 'Dulari',
-        addressRegion: 'Morang, Koshi Province',
-        addressCountry: 'NP',
+        ...COLLEGE_ADDRESS,
       },
     },
     mainEntityOfPage: { '@id': `${url}#webpage` },
@@ -950,7 +1066,7 @@ export function buildIndustryExposureItemListNode(): SchemaNode {
       serviceType: 'Global learning exposure',
       description:
         'International learning opportunities in the UK and Thailand with academic, cultural, classroom, and field-visit experiences.',
-      image: '/images/about/about-hero.JPG',
+      image: '/images/industry-exposure/international-exposure.JPG',
       keywords: ['international exposure', 'global learning', 'cross-cultural learning'],
     },
     {

@@ -3,12 +3,19 @@
 import { ReactLenis, useLenis } from 'lenis/react';
 import { usePathname } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const shouldUseLenis = useMediaQuery('(min-width: 768px) and (pointer: fine)');
   const lenis = useLenis();
 
   useEffect(() => {
+    if (!shouldUseLenis) {
+      window.scrollTo(0, 0);
+      return;
+    }
+
     if (!lenis) return;
 
     // Refresh on route change
@@ -33,15 +40,20 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
         mutationObserver.disconnect();
       };
     }
-  }, [pathname, lenis]);
+  }, [pathname, lenis, shouldUseLenis]);
+
+  if (!shouldUseLenis) {
+    return <>{children}</>;
+  }
 
   return (
     <ReactLenis root options={{ 
       lerp: 0.1, 
       duration: 1.2, 
       smoothWheel: true,
+      syncTouch: false,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
+      touchMultiplier: 1,
       autoResize: true,
     }}>
       {children}

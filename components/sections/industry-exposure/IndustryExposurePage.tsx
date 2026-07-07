@@ -1,5 +1,9 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
 import {
   ArrowRight,
@@ -17,8 +21,51 @@ import {
   UsersRound,
 } from 'lucide-react';
 
+const EASE = [0.22, 1, 0.36, 1] as const;
 
+function useReliableReveal<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || isVisible) return;
+
+    const reveal = () => setIsVisible(true);
+    const checkVisibility = () => {
+      const rect = element.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+      if (rect.top < viewportHeight * 0.84 && rect.bottom > viewportHeight * 0.08) {
+        reveal();
+      }
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const reducedMotionFrame = requestAnimationFrame(reveal);
+      return () => cancelAnimationFrame(reducedMotionFrame);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) reveal();
+      },
+      { root: null, rootMargin: '0px 0px -16% 0px', threshold: 0.08 }
+    );
+
+    observer.observe(element);
+    const firstFrame = requestAnimationFrame(checkVisibility);
+    const timeouts = [450, 1100, 1500].map((delay) => window.setTimeout(checkVisibility, delay));
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(firstFrame);
+      timeouts.forEach((timeout) => window.clearTimeout(timeout));
+    };
+  }, [isVisible]);
+
+  return [ref, isVisible] as const;
+}
 
 const exposureSections: Array<{
   title: string;
@@ -36,7 +83,7 @@ const exposureSections: Array<{
     kicker: 'Global mindset',
     description:
       'Itahari International College provides students with international experience opportunities in the UK and Thailand, offering academic and cultural immersion through classroom observations, field visits, and cross-cultural learning that broadens global perspectives and supports professional development.',
-    image: '/images/about/about-hero.JPG',
+    image: '/images/industry-exposure/international-exposure.JPG',
     icon: Globe2,
     tags: ['Global Leaders', 'Cross-cultural learning', 'Global outlook'],
     points: ['Life-Changing International Experience', 'International Education Practices'],
@@ -50,7 +97,7 @@ const exposureSections: Array<{
     image: '/images/industry-exposure/placement-and-job-fair.jpg',
     icon: BriefcaseBusiness,
     tags: ['20+ Companies', 'Walk-in Interviews', 'Career Opportunities'],
-    points: ['Direct company access', 'Intenship and Graduate Roles'],
+    points: ['Direct company access', 'Internship and Graduate Roles'],
   },
   {
     title: 'Career Development Learning',
@@ -69,7 +116,7 @@ const exposureSections: Array<{
     kicker: 'Professional habits',
     description:
       'Structured guidance helps students understand workplace expectations, communication, teamwork, leadership, and the habits that support long-term employability.',
-    image: '/images/about/networking.JPG',
+    image: '/images/industry-exposure/career-readiness.jpeg',
     icon: BadgeCheck,
     tags: ['Career Counseling', 'Mock Interviews', 'Resume Building'],
     points: ['One-to-one career guidance', 'Internship and Placement Preparation'],
@@ -131,9 +178,15 @@ function ExposureBlock({
   points,
   reverse,
 }: (typeof exposureSections)[number] & { reverse?: boolean }) {
+  const [blockRef, isVisible] = useReliableReveal<HTMLElement>();
+
   return (
-    <section className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-16 ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
-      <div className="relative min-h-[360px] overflow-hidden bg-[#dce6f2] shadow-[0_28px_70px_rgba(33,64,154,0.14)] md:min-h-[470px]">
+    <section ref={blockRef} className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-16 ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+      <motion.div
+        initial={false}
+        animate={isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: reverse ? 64 : -64 }}
+        transition={{ duration: 0.7, ease: EASE }}
+        className="relative min-h-[360px] overflow-hidden bg-[#dce6f2] shadow-[0_28px_70px_rgba(33,64,154,0.14)] md:min-h-[470px]">
         <Image
           src={image}
           alt={`${title} at Itahari International College`}
@@ -151,9 +204,14 @@ function ExposureBlock({
             <p className="mt-4 max-w-sm text-2xl font-black leading-tight text-white">{title}</p>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="relative">
+      <motion.div
+        initial={false}
+        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+        transition={{ duration: 0.7, ease: EASE, delay: 0.12 }}
+        className="relative"
+      >
         <p className="mb-4 text-xs font-black uppercase tracking-[0.28em] text-[#74C044]">{eyebrow}</p>
         <h2 className="text-4xl font-black leading-[1.02] tracking-tight text-[#16306b] md:text-6xl">
           {title}
@@ -174,7 +232,7 @@ function ExposureBlock({
             </li>
           ))}
         </ul>
-      </div>
+      </motion.div>
     </section>
   );
 }
@@ -185,7 +243,7 @@ export default function IndustryExposurePage() {
       <section className="relative overflow-hidden bg-[#071633]">
         <div className="absolute inset-0">
           <Image
-            src="/images/industry-exposure/exposure-banner.jpg"
+            src="/images/industry-exposure/exposure-banner.JPG"
             alt="IIC students preparing for industry-focused careers"
             fill
             priority
@@ -196,7 +254,12 @@ export default function IndustryExposurePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#071633] via-transparent to-[#071633]/25" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[86svh] max-w-[900px] flex-col items-center justify-center px-5 pb-14 pt-24 text-center sm:px-8 md:pb-20">
+        <motion.div
+          className="relative z-10 mx-auto flex min-h-[86svh] max-w-[900px] flex-col items-center justify-center px-5 pb-14 pt-24 text-center sm:px-8 md:pb-20"
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: EASE }}
+        >
           <p className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-5 py-2.5 text-xs font-black uppercase tracking-[0.24em] text-white backdrop-blur-md">
             <Globe2 className="h-4 w-4 text-[#74C044]" aria-hidden="true" />
             Global opportunities
@@ -222,7 +285,7 @@ export default function IndustryExposurePage() {
               Schedule a Visit
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       <section className="mx-auto max-w-[1280px] px-5 py-20 sm:px-8 md:py-28">
@@ -236,7 +299,13 @@ export default function IndustryExposurePage() {
 
 
       <section className="bg-[#21409A] px-5 py-16 text-white sm:px-8 md:py-24">
-        <div className="mx-auto max-w-4xl text-center">
+        <motion.div
+          className="mx-auto max-w-4xl text-center"
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '0px 0px -16% 0px' }}
+          transition={{ duration: 0.6, ease: EASE }}
+        >
           <p className="inline-flex items-center justify-center gap-2 text-xs font-black uppercase tracking-[0.28em] text-[#a8df87]">
             <Sparkles className="h-4 w-4" aria-hidden="true" />
             Your next step
@@ -261,7 +330,7 @@ export default function IndustryExposurePage() {
               <UsersRound className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
     </div>
   );

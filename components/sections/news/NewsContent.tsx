@@ -180,7 +180,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                       {featuredPost.title}
                     </h3>
                     <p className="text-slate-700 mb-10 leading-relaxed text-[15px] font-medium">
-                      Join industry leaders and leading academics for a full day of keynotes, workshops, and networking focused on...
+                      {featuredPost.description}
                     </p>
                     
                     <div className="space-y-4 mb-10">
@@ -195,7 +195,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                     </div>
 
                     <div className="self-start px-8 py-3.5 bg-[#21409A] text-white rounded-lg font-bold text-xs shadow-lg group-hover:bg-[#21409A] transition-all flex items-center gap-3">
-                      Register Now
+                      {featuredPost.category === 'Event' ? 'View Event Details' : 'Read Full Story'}
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </div>
                   </div>

@@ -4,6 +4,7 @@ import { AnimatePresence, motion, Transition, useReducedMotion, Variants } from 
 import { usePathname } from 'next/navigation';
 import { ReactNode, useContext, useState } from 'react';
 import { LayoutRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 function FrozenRoute({ children }: { children: ReactNode }) {
   const context = useContext(LayoutRouterContext);
@@ -66,9 +67,10 @@ const shadeVariants: Variants = {
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
+  const isMobileViewport = useMediaQuery('(max-width: 767px), (pointer: coarse)');
   const isHomeRoute = pathname === '/';
 
-  if (shouldReduceMotion) {
+  if (shouldReduceMotion || isMobileViewport) {
     return (
       <div key={pathname} className="relative min-h-screen bg-white overflow-x-clip">
         <FrozenRoute>{children}</FrozenRoute>

@@ -58,7 +58,7 @@ export default function IndustryExposureRoutePage() {
             name: 'Industry Exposure and Placement Support at Itahari International College',
             description: pageDescription,
             type: 'CollectionPage',
-            image: '/images/industry-exposure/exposure-banner.jpg',
+            image: '/images/industry-exposure/exposure-banner.JPG',
             keywords: INDUSTRY_EXPOSURE_PAGE_KEYWORDS,
             mainEntity: { '@id': exposureListSchema['@id'] },
           }),

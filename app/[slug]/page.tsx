@@ -24,7 +24,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const course = await getCourseBySlug(slug);
 
-  if (!course) return { title: 'Course Not Found' };
+  if (!course) {
+    return {
+      title: 'Page Not Found',
+      description: "The page you're looking for doesn't exist.",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
 
   const keywords = mergeKeywords(COURSES_PAGE_KEYWORDS, [
     course.title,

@@ -20,6 +20,22 @@ const CURSOR_OFFSET = CURSOR_SIZE / 2;
 const DOT_OFFSET = 12;
 const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, label, summary, [role="button"], [data-cursor-hover]';
 
+function DesktopScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-1 bg-[#74C044] origin-left z-[10000]"
+      style={{ scaleX }}
+    />
+  );
+}
+
 export default function ClientLayoutWrapper({
   children,
 }: {
@@ -76,21 +92,11 @@ export default function ClientLayoutWrapper({
     };
   }, [mouseX, mouseY]);
 
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
   return (
-    <div className={`relative flex flex-col ${isAdminPage ? 'font-sora cursor-default' : 'font-iic cursor-none'}`}>
+    <div className={`relative flex flex-col ${isAdminPage ? 'font-sora cursor-default' : 'font-iic md:cursor-none'}`}>
       {!isAdminPage && (
         <>
-          <motion.div
-            className="fixed top-0 left-0 right-0 h-1 bg-[#74C044] origin-left z-[10000]"
-            style={{ scaleX }}
-          />
+          {hasDesktopViewport && <DesktopScrollProgress />}
 
           <motion.div
             className="fixed top-0 left-0 w-8 h-8 bg-[#21409A]/20 border border-[#21409A]/40 rounded-full pointer-events-none z-[9999] hidden md:block will-change-transform"

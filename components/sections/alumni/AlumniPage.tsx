@@ -202,11 +202,6 @@ function useReliableReveal<T extends HTMLElement>() {
     const element = ref.current;
     if (!element || isVisible) return;
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setIsVisible(true);
-      return;
-    }
-
     const reveal = () => setIsVisible(true);
     const checkVisibility = () => {
       const rect = element.getBoundingClientRect();
@@ -217,6 +212,11 @@ function useReliableReveal<T extends HTMLElement>() {
       }
     };
 
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const reducedMotionFrame = requestAnimationFrame(reveal);
+      return () => cancelAnimationFrame(reducedMotionFrame);
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) reveal();
@@ -226,17 +226,12 @@ function useReliableReveal<T extends HTMLElement>() {
 
     observer.observe(element);
     const firstFrame = requestAnimationFrame(checkVisibility);
-    const timeout = window.setTimeout(checkVisibility, 450);
-
-    window.addEventListener('scroll', checkVisibility, { passive: true });
-    window.addEventListener('resize', checkVisibility, { passive: true });
+    const timeouts = [450, 1100, 1500].map((delay) => window.setTimeout(checkVisibility, delay));
 
     return () => {
       observer.disconnect();
       cancelAnimationFrame(firstFrame);
-      window.clearTimeout(timeout);
-      window.removeEventListener('scroll', checkVisibility);
-      window.removeEventListener('resize', checkVisibility);
+      timeouts.forEach((timeout) => window.clearTimeout(timeout));
     };
   }, [isVisible]);
 

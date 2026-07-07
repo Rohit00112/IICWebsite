@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 import { getAllCourses } from '@/lib/courses';
 import { getPublishedEventGalleryArchives } from '@/lib/event-galleries';
 import { getAllNews } from '@/lib/news';
-import { absoluteUrl, toIsoDate } from '@/lib/seo-schema';
+import { absoluteImageUrl, absoluteUrl, toIsoDate } from '@/lib/seo-schema';
 
 // Refresh the sitemap hourly so admin-added courses/news/galleries appear
 // without needing a full rebuild.
@@ -26,7 +26,7 @@ const staticRoutes: Array<{
   { path: '/scholarship', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/research-management-committee', changeFrequency: 'monthly', priority: 0.65 },
   { path: '/life-at-iic', changeFrequency: 'weekly', priority: 0.7 },
-  { path: '/news-and-events', changeFrequency: 'daily', priority: 0.7 },
+  { path: '/news-and-events', changeFrequency: 'daily', priority: 0.9 },
   { path: '/contact-us', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/privacy-policy', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/terms-of-service', changeFrequency: 'yearly', priority: 0.3 },
@@ -57,12 +57,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const newsEntries: MetadataRoute.Sitemap = news
     .filter((item) => item.slug)
-    .map((item) => ({
-      url: absoluteUrl(`/news-and-events/${item.slug}`),
-      lastModified: toIsoDate(item.date) ?? now,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    }));
+    .map((item) => {
+      const image = absoluteImageUrl(item.image);
+
+      return {
+        url: absoluteUrl(`/news-and-events/${item.slug}`),
+        lastModified: toIsoDate(item.date) ?? now,
+        changeFrequency: item.category === 'Event' ? 'weekly' : 'monthly',
+        priority: item.category === 'Event' ? 0.72 : 0.68,
+        images: image ? [image] : undefined,
+      };
+    });
 
   const galleryEntries: MetadataRoute.Sitemap = galleries.map((gallery) => ({
     url: absoluteUrl(`/life-at-iic/events/${gallery.slug}`),

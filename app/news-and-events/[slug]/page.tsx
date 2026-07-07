@@ -11,28 +11,69 @@ import {
   buildNewsArticleNode,
   buildSchemaGraph,
   buildWebPageNode,
+  COLLEGE_NAME,
   mergeKeywords,
   NEWS_PAGE_KEYWORDS,
+  toIsoDate,
 } from '@/lib/seo-schema';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const item = await getNewsBySlug(slug);
   
-  if (!item) return { title: 'Not Found' };
-  const keywords = mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category]);
+  if (!item) {
+    return {
+      title: 'News Not Found',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const canonicalPath = `/news-and-events/${item.slug || slug}`;
+  const section = item.category === 'Event' ? 'IIC Events' : 'IIC News';
+  const authorName = item.author?.name?.trim() || COLLEGE_NAME;
+  const publishedTime = toIsoDate(item.date);
+  const keywords = mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category, item.location, section]);
 
   return {
-    title: item.title,
+    title: {
+      absolute: `${item.title} | Itahari International College`,
+    },
     description: item.description,
     keywords,
-    alternates: { canonical: `/news-and-events/${slug}` },
+    authors: [{ name: authorName }],
+    category: section,
+    alternates: { canonical: canonicalPath },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     openGraph: {
       title: item.title,
       description: item.description,
-      url: `/news-and-events/${slug}`,
-      images: [item.image],
+      url: canonicalPath,
+      siteName: COLLEGE_NAME,
+      locale: 'en_US',
+      images: [
+        {
+          url: item.image,
+          alt: item.title,
+        },
+      ],
       type: 'article',
+      publishedTime,
+      modifiedTime: publishedTime,
+      authors: [authorName],
+      section,
+      tags: keywords.slice(0, 10),
     },
     twitter: {
       card: 'summary_large_image',
@@ -68,12 +109,13 @@ const NewsDetailPage = async ({ params }: { params: Promise<{ slug: string }> })
       <JsonLd
         data={buildSchemaGraph([
           buildWebPageNode({
-            path: `/news-and-events/${slug}`,
+            path: `/news-and-events/${item.slug || slug}`,
             name: item.title,
             description: item.description,
             image: item.image,
             keywords: mergeKeywords(NEWS_PAGE_KEYWORDS, [item.title, item.category]),
             mainEntity: { '@id': itemSchema['@id'] },
+            dateModified: toIsoDate(item.date),
           }),
           itemSchema,
         ])}

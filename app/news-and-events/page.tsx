@@ -7,24 +7,56 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
 import {
   buildEventNode,
+  buildNewsAndEventsCollectionNode,
+  buildNewsArticleNode,
   buildNewsItemListNode,
   buildSchemaGraph,
-  buildWebPageNode,
   NEWS_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
-const pageDescription = 'Read the latest IIC news, events, student achievements, and academic updates from our globally connected college in Itahari.';
+const pageTitle = 'IIC News & Events | Itahari International College Updates';
+const pageDescription = 'Read IIC news and events from Itahari International College, including campus stories, student achievements, workshops, admissions updates, and college events in Itahari, Nepal.';
+const openGraphImage = '/api/og?title=IIC%20News%20%26%20Events&subtitle=Campus%20stories%2C%20student%20achievements%2C%20workshops%20and%20college%20events&section=IIC%20Newsroom';
 
 export const metadata: Metadata = {
-  title: 'Latest News & Events',
+  title: {
+    absolute: pageTitle,
+  },
   description: pageDescription,
   keywords: NEWS_PAGE_KEYWORDS,
   alternates: { canonical: '/news-and-events' },
+  category: 'Education',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: 'Latest News & Events | Itahari International College',
+    title: pageTitle,
     description: pageDescription,
     url: '/news-and-events',
+    siteName: 'Itahari International College',
+    locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: openGraphImage,
+        width: 1200,
+        height: 630,
+        alt: 'IIC News and Events',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: pageTitle,
+    description: pageDescription,
+    images: [openGraphImage],
   },
 };
 
@@ -49,22 +81,16 @@ const NewsPage = async () => {
     { name: 'Home', item: '/' },
     { name: 'News & Events', item: '/news-and-events' },
   ];
+  const schemaItems = allNews.filter((item) => item.slug).slice(0, 12);
 
   return (
     <main className="bg-white min-h-screen">
       <BreadcrumbSchema items={breadcrumbs} />
       <JsonLd
         data={buildSchemaGraph([
-          buildWebPageNode({
-            path: '/news-and-events',
-            name: 'Latest News & Events',
-            description: pageDescription,
-            type: 'CollectionPage',
-            image: '/images/common/seminar.webp',
-            keywords: NEWS_PAGE_KEYWORDS,
-          }),
-          buildNewsItemListNode(allNews),
-          ...allNews.filter((item) => item.category === 'Event').map(buildEventNode),
+          buildNewsAndEventsCollectionNode(schemaItems, pageDescription),
+          buildNewsItemListNode(schemaItems),
+          ...schemaItems.map((item) => (item.category === 'Event' ? buildEventNode(item) : buildNewsArticleNode(item))),
         ])}
       />
       <NewsHero />
