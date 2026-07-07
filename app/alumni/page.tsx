@@ -5,43 +5,47 @@ import JsonLd from '@/components/common/JsonLd';
 import AlumniPage from '@/components/sections/alumni/AlumniPage';
 import {
   ALUMNI_PAGE_KEYWORDS,
+  buildAlumniCareerFieldListNode,
+  buildAlumniNetworkNode,
   buildSchemaGraph,
   buildWebPageNode,
 } from '@/lib/seo-schema';
 
 const pageDescription =
-  'Explore the Itahari International College alumni network — a global community of graduates shaping industries, driving innovation, and building a lasting legacy.';
+  'Meet the IIC alumni network and graduate stories across technology, finance, design, and marketing, with career paths from Nepal to global workplaces.';
+const ogImage =
+  '/api/og?title=IIC%20Alumni%20Network&subtitle=Graduate%20Stories%20%26%20Global%20Career%20Paths&section=Itahari%20International%20College';
 
 export const metadata: Metadata = {
-  title: 'Alumni Network',
+  title: 'IIC Alumni Network & Graduate Stories',
   description: pageDescription,
   keywords: ALUMNI_PAGE_KEYWORDS,
   alternates: { canonical: '/alumni' },
   openGraph: {
-    title: 'Alumni Network | Itahari International College',
+    title: 'IIC Alumni Network & Graduate Stories | Itahari International College',
     description: pageDescription,
     url: '/alumni',
     type: 'website',
     images: [
       {
-        url: '/api/og?title=Alumni Network&subtitle=Our Alumni, Our Pride&section=Itahari International College',
+        url: ogImage,
         width: 1200,
         height: 630,
-        alt: 'Alumni Network at Itahari International College',
+        alt: 'IIC alumni network and graduate stories',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Alumni Network',
+    title: 'IIC Alumni Network & Graduate Stories',
     description: pageDescription,
-    images: [
-      '/api/og?title=Alumni Network&subtitle=Our Alumni, Our Pride&section=Itahari International College',
-    ],
+    images: [ogImage],
   },
 };
 
 export default function AlumniRoutePage() {
+  const alumniNetworkSchema = buildAlumniNetworkNode();
+  const alumniCareerFieldsSchema = buildAlumniCareerFieldListNode();
   const breadcrumbs = [
     { name: 'Home', item: '/' },
     { name: 'Alumni Network', item: '/alumni' },
@@ -54,12 +58,15 @@ export default function AlumniRoutePage() {
         data={buildSchemaGraph([
           buildWebPageNode({
             path: '/alumni',
-            name: 'Alumni Network',
+            name: 'IIC Alumni Network and Graduate Stories',
             description: pageDescription,
-            type: 'WebPage',
-            image: '/images/about/about-hero.JPG',
+            type: 'CollectionPage',
+            image: '/images/alumini/graduate.jpg',
             keywords: ALUMNI_PAGE_KEYWORDS,
+            mainEntity: { '@id': alumniNetworkSchema['@id'] },
           }),
+          alumniNetworkSchema,
+          alumniCareerFieldsSchema,
         ])}
       />
       <AlumniPage />

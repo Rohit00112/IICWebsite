@@ -161,10 +161,26 @@ export const INDUSTRY_EXPOSURE_SEARCH_KEYWORDS = [
   'IIC industry exposure',
   'Itahari International College industry exposure',
   'IIC placement support',
+  'IIC job fair',
+  'IIC career development',
+  'IIC international exposure',
   'IIC career readiness',
   'career development college in Itahari',
   'industry visits in college',
+  'placement support in Itahari college',
+  'industry exposure college in Nepal',
   'job fair at IIC',
+];
+
+export const ALUMNI_SEARCH_KEYWORDS = [
+  'IIC alumni',
+  'IIC alumni network',
+  'Itahari International College alumni',
+  'Itahari International College graduates',
+  'IIC graduate stories',
+  'IIC alumni directory',
+  'alumni network in Itahari',
+  'IIC alumni LinkedIn',
 ];
 
 export const RMC_SEARCH_KEYWORDS = [
@@ -260,7 +276,8 @@ export const LIFE_PAGE_KEYWORDS = mergeKeywords(
 export const ALUMNI_PAGE_KEYWORDS = mergeKeywords(
   BRAND_SEARCH_KEYWORDS,
   LOCATION_SEARCH_KEYWORDS,
-  ['IIC alumni', 'IIC alumni network', 'Itahari International College graduates', 'alumni directory']
+  ALUMNI_SEARCH_KEYWORDS,
+  COURSE_SEARCH_KEYWORDS
 );
 
 export const NEWS_PAGE_KEYWORDS = mergeKeywords(
@@ -835,6 +852,240 @@ export function buildEventGalleryItemListNode(galleries: EventGalleryArchive[]):
       position: index + 1,
       name: `${gallery.title} Gallery`,
       url: absoluteUrl(`/life-at-iic/events/${gallery.slug}`),
+    })),
+  };
+}
+
+export function buildInfrastructureFacilityListNode(): SchemaNode {
+  const facilities = [
+    {
+      id: 'library',
+      name: 'Library',
+      description:
+        'Digital and print library resources that support student research, reading, and independent academic work.',
+      image: '/images/common/library.JPG',
+      features: ['Digital resources', 'Print collections', 'Research support'],
+    },
+    {
+      id: 'lecture-theatres',
+      name: 'Lecture Theatres',
+      description:
+        'Spacious lecture theatres with audio-visual setups for lectures, seminars, and academic presentations.',
+      image: '/images/common/lecture.JPG',
+      features: ['Audio-visual setup', 'Tiered seating', 'Seminar-ready space'],
+    },
+    {
+      id: 'computer-labs',
+      name: 'Computer Labs',
+      description:
+        'Computer labs with high-performance workstations and industry-standard software for practical technical learning.',
+      image: '/images/common/lab.JPG',
+      features: ['High-performance workstations', 'Industry-standard software', 'Hands-on learning'],
+    },
+    {
+      id: 'seminar-halls',
+      name: 'Seminar Halls',
+      description:
+        'Seminar halls designed for workshops, guest lectures, student presentations, and collaborative discussions.',
+      image: '/images/common/seminar.webp',
+      features: ['Projection systems', 'Acoustic clarity', 'Collaborative seating'],
+    },
+    {
+      id: 'cafeteria',
+      name: 'Cafeteria',
+      description:
+        'A hygienic social space where students can relax, dine, collaborate, and recharge between classes.',
+      image: '/images/about/cafeteria.webp',
+      features: ['Healthy menu options', 'Indoor seating', 'Wi-Fi enabled lounge areas'],
+    },
+    {
+      id: 'academic-blocks',
+      name: 'Academic Blocks',
+      description:
+        'Modern academic blocks with naturally lit, well-ventilated learning spaces for students and faculty.',
+      image: '/images/our-infrastructure/academic-block.JPG',
+      features: ['Modern design', 'Sustainable features', 'Accessible infrastructure'],
+    },
+  ];
+
+  return {
+    '@type': 'ItemList',
+    '@id': `${SITE_URL}/our-infrastructure#facility-list`,
+    name: 'Campus facilities at Itahari International College',
+    description:
+      'A structured overview of IIC campus facilities, including the library, lecture theatres, computer labs, seminar halls, cafeteria, and academic blocks.',
+    keywords: INFRASTRUCTURE_PAGE_KEYWORDS,
+    numberOfItems: facilities.length,
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'Enterprise Wi-Fi access points', value: '60+' },
+      { '@type': 'PropertyValue', name: 'Smart surveillance', value: '24/7' },
+      { '@type': 'PropertyValue', name: 'Biometric attendance devices', value: '40+' },
+      { '@type': 'PropertyValue', name: 'Enterprise servers', value: '5+' },
+    ],
+    itemListElement: facilities.map((facility, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: compactNode({
+        '@type': 'Place',
+        '@id': `${SITE_URL}/our-infrastructure#${facility.id}`,
+        name: facility.name,
+        description: facility.description,
+        image: absoluteImageUrl(facility.image),
+        containedInPlace: { '@id': COLLEGE_ID },
+        amenityFeature: facility.features.map((feature) => ({
+          '@type': 'LocationFeatureSpecification',
+          name: feature,
+          value: true,
+        })),
+      }),
+    })),
+  };
+}
+
+export function buildIndustryExposureItemListNode(): SchemaNode {
+  const opportunities = [
+    {
+      id: 'international-exposure',
+      name: 'International Exposure',
+      serviceType: 'Global learning exposure',
+      description:
+        'International learning opportunities in the UK and Thailand with academic, cultural, classroom, and field-visit experiences.',
+      image: '/images/about/about-hero.JPG',
+      keywords: ['international exposure', 'global learning', 'cross-cultural learning'],
+    },
+    {
+      id: 'placement-and-job-fair',
+      name: 'Placement and Job Fair',
+      serviceType: 'Placement support',
+      description:
+        'Employer connections, job fair preparation, walk-in interviews, internship access, and graduate role opportunities.',
+      image: '/images/industry-exposure/placement-and-job-fair.jpg',
+      keywords: ['job fair', 'placement support', 'internship opportunities'],
+    },
+    {
+      id: 'career-development-learning',
+      name: 'Career Development Learning',
+      serviceType: 'Career development',
+      description:
+        'Seminars, certifications, professional development, academic projects, and industry trend awareness for career growth.',
+      image: '/images/industry-exposure/career-development-learning.png',
+      keywords: ['career development', 'professional development', 'project-based learning'],
+    },
+    {
+      id: 'career-readiness-programme',
+      name: 'Career Readiness Programme',
+      serviceType: 'Career readiness',
+      description:
+        'Career counseling, mock interviews, resume building, workplace communication, teamwork, and leadership preparation.',
+      image: '/images/about/networking.JPG',
+      keywords: ['career readiness', 'mock interviews', 'resume building'],
+    },
+    {
+      id: 'industry-visits',
+      name: 'Industry Visits',
+      serviceType: 'Industry visits',
+      description:
+        'Professional visits and industry interactions that connect classroom learning with real organization operations.',
+      image: '/images/industry-exposure/industry-exposure.JPG',
+      keywords: ['industry visits', 'industry networking', 'applied learning'],
+    },
+  ];
+
+  return {
+    '@type': 'ItemList',
+    '@id': `${SITE_URL}/industry-exposure#exposure-list`,
+    name: 'Industry exposure opportunities at Itahari International College',
+    description:
+      'A structured overview of IIC industry exposure, including international exposure, job fairs, career development, career readiness, and industry visits.',
+    keywords: INDUSTRY_EXPOSURE_PAGE_KEYWORDS,
+    numberOfItems: opportunities.length,
+    itemListElement: opportunities.map((opportunity, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: compactNode({
+        '@type': 'Service',
+        '@id': `${SITE_URL}/industry-exposure#${opportunity.id}`,
+        name: opportunity.name,
+        serviceType: opportunity.serviceType,
+        description: opportunity.description,
+        keywords: mergeKeywords(INDUSTRY_EXPOSURE_PAGE_KEYWORDS, opportunity.keywords),
+        image: absoluteImageUrl(opportunity.image),
+        provider: { '@id': COLLEGE_ID },
+        audience: {
+          '@type': 'EducationalAudience',
+          educationalRole: 'student',
+        },
+        areaServed: 'Nepal',
+      }),
+    })),
+  };
+}
+
+export function buildAlumniNetworkNode(): SchemaNode {
+  return {
+    '@type': 'Organization',
+    '@id': `${SITE_URL}/alumni#alumni-network`,
+    name: 'Itahari International College Alumni Network',
+    alternateName: 'IIC Alumni Network',
+    url: absoluteUrl('/alumni'),
+    description:
+      'The IIC alumni network connects graduates building careers across technology, finance, design, marketing, entrepreneurship, and global professional communities.',
+    keywords: ALUMNI_PAGE_KEYWORDS,
+    parentOrganization: { '@id': COLLEGE_ID },
+    image: absoluteImageUrl('/images/alumini/graduate.jpg'),
+    sameAs: ['https://www.linkedin.com/school/itahari-international-college/'],
+    knowsAbout: [
+      'Technology careers',
+      'Finance careers',
+      'Design careers',
+      'Marketing careers',
+      'Entrepreneurship',
+      'Professional networking',
+      'Graduate employability',
+    ],
+  };
+}
+
+export function buildAlumniCareerFieldListNode(): SchemaNode {
+  const fields = [
+    {
+      name: 'Technology',
+      description:
+        'IIC alumni pursue technology careers including software engineering, quality assurance, data work, and product roles.',
+    },
+    {
+      name: 'Finance',
+      description:
+        'IIC alumni pursue finance and business careers including financial analysis, investment, operations, and client success.',
+    },
+    {
+      name: 'Design',
+      description:
+        'IIC alumni pursue design careers that combine user experience, prototyping, communication, and evidence-based decision making.',
+    },
+    {
+      name: 'Marketing',
+      description:
+        'IIC alumni pursue marketing and brand careers that combine strategy, audience insight, campaigns, and communication.',
+    },
+  ];
+
+  return {
+    '@type': 'ItemList',
+    '@id': `${SITE_URL}/alumni#career-field-list`,
+    name: 'IIC alumni career fields',
+    description: 'Career fields represented across the Itahari International College alumni network.',
+    keywords: ALUMNI_PAGE_KEYWORDS,
+    numberOfItems: fields.length,
+    itemListElement: fields.map((field, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'DefinedTerm',
+        name: field.name,
+        description: field.description,
+        inDefinedTermSet: `${SITE_URL}/alumni#career-fields`,
+      },
     })),
   };
 }

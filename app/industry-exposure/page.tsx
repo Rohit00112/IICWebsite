@@ -3,42 +3,46 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
 import IndustryExposurePage from '@/components/sections/industry-exposure/IndustryExposurePage';
 import {
+  buildIndustryExposureItemListNode,
   buildSchemaGraph,
   buildWebPageNode,
   INDUSTRY_EXPOSURE_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
 const pageDescription =
-  'Discover IIC industry exposure through career development, employer connections, job fair preparation, mentoring, global learning, and practical workplace insight.';
+  'See how IIC builds career readiness through international exposure, job fairs, industry visits, employer networking, mentoring, mock interviews, and projects.';
+const ogImage =
+  '/api/og?title=Industry%20Exposure&subtitle=Placement%20Support%20%26%20Career-Ready%20Learning&section=Itahari%20International%20College';
 
 export const metadata: Metadata = {
-  title: 'Industry Exposure & Career Readiness',
+  title: 'Industry Exposure & Placement Support in Itahari',
   description: pageDescription,
   keywords: INDUSTRY_EXPOSURE_PAGE_KEYWORDS,
   alternates: { canonical: '/industry-exposure' },
   openGraph: {
-    title: 'Industry Exposure & Career Readiness | Itahari International College',
+    title: 'Industry Exposure & Placement Support in Itahari | IIC',
     description: pageDescription,
     url: '/industry-exposure',
     type: 'website',
     images: [
       {
-        url: '/api/og?title=Industry Exposure&subtitle=Career-Ready Learning&section=Itahari International College',
+        url: ogImage,
         width: 1200,
         height: 630,
-        alt: 'Industry Exposure at Itahari International College',
+        alt: 'Industry exposure and placement support at Itahari International College',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Industry Exposure & Career Readiness',
+    title: 'Industry Exposure & Placement Support in Itahari',
     description: pageDescription,
-    images: ['/api/og?title=Industry Exposure&subtitle=Career-Ready Learning&section=Itahari International College'],
+    images: [ogImage],
   },
 };
 
 export default function IndustryExposureRoutePage() {
+  const exposureListSchema = buildIndustryExposureItemListNode();
   const breadcrumbs = [
     { name: 'Home', item: '/' },
     { name: 'Industry Exposure', item: '/industry-exposure' },
@@ -51,12 +55,14 @@ export default function IndustryExposureRoutePage() {
         data={buildSchemaGraph([
           buildWebPageNode({
             path: '/industry-exposure',
-            name: 'Industry Exposure and Career Readiness',
+            name: 'Industry Exposure and Placement Support at Itahari International College',
             description: pageDescription,
-            type: 'WebPage',
-            image: '/images/about/career.JPG',
+            type: 'CollectionPage',
+            image: '/images/industry-exposure/exposure-banner.jpg',
             keywords: INDUSTRY_EXPOSURE_PAGE_KEYWORDS,
+            mainEntity: { '@id': exposureListSchema['@id'] },
           }),
+          exposureListSchema,
         ])}
       />
       <IndustryExposurePage />

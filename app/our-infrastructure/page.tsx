@@ -3,42 +3,46 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
 import OurInfrastructurePage from '@/components/sections/our-infrastructure/OurInfrastructurePage';
 import {
+  buildInfrastructureFacilityListNode,
   buildSchemaGraph,
   buildWebPageNode,
   INFRASTRUCTURE_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
 const pageDescription =
-  'Explore IIC infrastructure, including modern labs, library resources, seminar halls, cafeteria spaces, and academic blocks designed for practical learning in Itahari.';
+  'Explore IIC campus infrastructure in Itahari: computer labs, library, lecture theatres, seminar halls, cafeteria, academic blocks, Wi-Fi, and smart facilities.';
+const ogImage =
+  '/api/og?title=Campus%20Infrastructure&subtitle=Labs%2C%20Library%20%26%20Smart%20Facilities&section=Itahari%20International%20College';
 
 export const metadata: Metadata = {
-  title: 'Our Infrastructure & Campus Facilities',
+  title: 'Campus Infrastructure & Facilities in Itahari',
   description: pageDescription,
   keywords: INFRASTRUCTURE_PAGE_KEYWORDS,
   alternates: { canonical: '/our-infrastructure' },
   openGraph: {
-    title: 'Our Infrastructure & Campus Facilities | Itahari International College',
+    title: 'Campus Infrastructure & Facilities in Itahari | IIC',
     description: pageDescription,
     url: '/our-infrastructure',
     type: 'website',
     images: [
       {
-        url: '/api/og?title=Our Infrastructure&subtitle=Modern Campus Facilities&section=Itahari International College',
+        url: ogImage,
         width: 1200,
         height: 630,
-        alt: 'Our Infrastructure at Itahari International College',
+        alt: 'Campus infrastructure and facilities at Itahari International College',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Our Infrastructure & Campus Facilities',
+    title: 'Campus Infrastructure & Facilities in Itahari',
     description: pageDescription,
-    images: ['/api/og?title=Our Infrastructure&subtitle=Modern Campus Facilities&section=Itahari International College'],
+    images: [ogImage],
   },
 };
 
 export default function InfrastructureRoutePage() {
+  const facilityListSchema = buildInfrastructureFacilityListNode();
   const breadcrumbs = [
     { name: 'Home', item: '/' },
     { name: 'Our Infrastructure', item: '/our-infrastructure' },
@@ -51,12 +55,14 @@ export default function InfrastructureRoutePage() {
         data={buildSchemaGraph([
           buildWebPageNode({
             path: '/our-infrastructure',
-            name: 'Our Infrastructure and Campus Facilities',
+            name: 'Campus Infrastructure and Facilities at Itahari International College',
             description: pageDescription,
-            type: 'WebPage',
+            type: 'CollectionPage',
             image: '/images/our-infrastructure/infra.png',
             keywords: INFRASTRUCTURE_PAGE_KEYWORDS,
+            mainEntity: { '@id': facilityListSchema['@id'] },
           }),
+          facilityListSchema,
         ])}
       />
       <OurInfrastructurePage />
