@@ -106,6 +106,19 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${roboto.variable} antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BT97QHRHWH"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-BT97QHRHWH');
+            `,
+          }}
+        />
+      </head>
       <body className="bg-white">
         <JsonLd data={buildGlobalSchema()} />
         <ClientLayoutWrapper>
