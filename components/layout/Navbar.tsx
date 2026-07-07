@@ -151,14 +151,14 @@ const Navbar = () => {
           opacity: visible ? 1 : 0,
         }}
         transition={{ duration: 0.4, ease: EASE }}
-        className="fixed top-0 inset-x-0 z-[200] bg-white/70 backdrop-blur-2xl backdrop-saturate-200 border-b border-white/60 [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.8),0_8px_32px_-8px_rgba(33,64,154,0.22)]"
+        className="fixed left-3 right-3 top-3 z-[200] rounded-full border border-white/70 bg-white/[0.88] backdrop-blur-2xl backdrop-saturate-200 shadow-[0_14px_40px_-24px_rgba(33,64,154,0.65)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.85),0_14px_40px_-24px_rgba(33,64,154,0.65)] sm:left-5 sm:right-5 lg:inset-x-0 lg:top-0 lg:rounded-none lg:border-x-0 lg:border-t-0 lg:border-b-white/60 lg:bg-white/70 lg:shadow-none lg:[box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.8),0_8px_32px_-8px_rgba(33,64,154,0.22)]"
       >
-        <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-2.5 sm:px-8">
+        <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-3 py-2 sm:px-4 lg:px-5 lg:py-2.5 xl:px-8">
           {/* Logo */}
           <Link
             href="/"
             aria-label="Itahari International College — Home"
-            className="relative h-12 w-[160px] shrink-0 sm:h-14 sm:w-[188px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] rounded"
+            className="relative h-10 w-[138px] shrink-0 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:h-12 sm:w-[160px] lg:h-12 lg:w-[160px] xl:h-14 xl:w-[188px]"
           >
             <Image
               src="/images/common/iic_logo.png"
@@ -266,7 +266,7 @@ const Navbar = () => {
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
-            className="relative flex h-10 w-10 items-center justify-center rounded-full lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044]"
+            className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#21409A]/8 text-[#21409A] transition-colors hover:bg-[#21409A]/12 lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044]"
           >
             <span className="sr-only">Menu</span>
             <motion.span
@@ -286,29 +286,30 @@ const Navbar = () => {
             />
           </button>
         </nav>
+      </motion.header>
 
-        {/* Mobile dropdown panel */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              id="mobile-menu"
-              initial={{ opacity: 0, y: -12, height: 0 }}
-              animate={{ opacity: 1, y: 0, height: 'auto' }}
-              exit={{ opacity: 0, y: -12, height: 0 }}
-              transition={{ duration: 0.4, ease: EASE }}
-              className="overflow-hidden lg:hidden"
-            >
-              <div className="mx-auto mt-3 max-w-[1400px] px-5 sm:px-8">
-                <div className="max-h-[calc(100svh-6rem)] overflow-y-auto overscroll-contain rounded-3xl border border-black/5 bg-white p-4 shadow-[0_20px_50px_-15px_rgba(33,64,154,0.4)] ring-1 ring-black/5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                <ul className="flex flex-col gap-0.5">
+      {/* Mobile dropdown panel */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.32, ease: EASE }}
+            className="fixed inset-x-0 top-[76px] z-[190] px-3 sm:top-[88px] sm:px-5 lg:hidden"
+          >
+            <div className="mx-auto max-w-md">
+              <div className="max-h-[calc(100svh-5.75rem)] overflow-y-auto overscroll-contain rounded-[28px] border border-white/70 bg-white/[0.96] p-2.5 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.55)] ring-1 ring-[#21409A]/10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <ul className="flex flex-col gap-1">
                   {navItems.map((item, index) => {
                     if (!item.children) {
                       return (
                         <motion.li
                           key={item.name}
-                          initial={{ opacity: 0, x: -10 }}
+                          initial={{ opacity: 0, x: -8 }}
                           animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.06 + index * 0.04 }}
+                          transition={{ delay: 0.04 + index * 0.035 }}
                         >
                           <Link
                             href={item.href!}
@@ -316,12 +317,12 @@ const Navbar = () => {
                             rel={item.external ? 'noopener noreferrer' : undefined}
                             prefetch={item.external ? false : undefined}
                             onClick={() => setIsMenuOpen(false)}
-                            className={`flex items-center justify-between rounded-2xl px-4 py-3 text-[15px] font-bold uppercase tracking-[0.1em] transition-colors ${
+                            className={`flex min-h-12 items-center justify-between rounded-[20px] px-4 py-3 text-[14px] font-black uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] ${
                               isActive(item.href) ? 'bg-[#74C044]/12 text-[#21409A]' : 'text-[#1e2733] hover:bg-[#21409A]/6'
                             }`}
                           >
-                            <span className="flex items-center gap-1.5">
-                              {item.name}
+                            <span className="flex min-w-0 items-center gap-1.5">
+                              <span className="truncate">{item.name}</span>
                               {item.external && <span aria-hidden className="text-xs opacity-60">↗</span>}
                             </span>
                           </Link>
@@ -329,20 +330,23 @@ const Navbar = () => {
                       );
                     }
                     const accOpen = openAccordion === item.name;
+                    const accActive = isItemActive(item);
                     return (
                       <motion.li
                         key={item.name}
-                        initial={{ opacity: 0, x: -10 }}
+                        initial={{ opacity: 0, x: -8 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.06 + index * 0.04 }}
+                        transition={{ delay: 0.04 + index * 0.035 }}
                       >
                         <button
                           type="button"
                           aria-expanded={accOpen}
                           onClick={() => setOpenAccordion(accOpen ? null : item.name)}
-                          className="group flex w-full items-center justify-between rounded-2xl px-4 py-3 text-[15px] font-bold uppercase tracking-[0.1em] text-[#1e2733] transition-colors hover:bg-[#21409A]/6"
+                          className={`group flex min-h-12 w-full items-center justify-between rounded-[20px] px-4 py-3 text-[14px] font-black uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] ${
+                            accActive || accOpen ? 'bg-[#74C044]/12 text-[#21409A]' : 'text-[#1e2733] hover:bg-[#21409A]/6'
+                          }`}
                         >
-                          {item.name}
+                          <span className="truncate pr-3">{item.name}</span>
                           <motion.span
                             aria-hidden
                             animate={{ rotate: accOpen ? 180 : 0 }}
@@ -358,21 +362,21 @@ const Navbar = () => {
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: 'auto', opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.3, ease: EASE }}
-                              className="overflow-hidden pl-3"
+                              transition={{ duration: 0.25, ease: EASE }}
+                              className="overflow-hidden px-2 py-1"
                             >
                               {item.children.map((child) => (
                                 <li key={child.name}>
                                   <Link
                                     href={child.href}
                                     onClick={() => setIsMenuOpen(false)}
-                                    className={`flex items-center justify-between rounded-xl px-4 py-2.5 text-[13px] font-semibold transition-colors ${
-                                      isActive(child.href) ? 'text-[#74C044]' : 'text-[#6b7280] hover:text-[#21409A]'
+                                    className={`flex min-h-10 items-center justify-between rounded-2xl px-4 py-2 text-[13px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] ${
+                                      isActive(child.href) ? 'bg-[#21409A]/8 text-[#21409A]' : 'text-[#5d6675] hover:bg-[#21409A]/6 hover:text-[#21409A]'
                                     }`}
                                   >
-                                    {child.name}
+                                    <span className="truncate pr-3">{child.name}</span>
                                     {isActive(child.href) && (
-                                      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#74C044]" />
+                                      <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#74C044]" />
                                     )}
                                   </Link>
                                 </li>
@@ -384,12 +388,11 @@ const Navbar = () => {
                     );
                   })}
                 </ul>
-                </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.header>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
