@@ -107,7 +107,7 @@ const exposureSections: Array<{
       'Learning does not stop in the classroom. Students build confidence through seminars, certifications, professional development, and practical academic projects.',
     image: '/images/industry-exposure/career-development-learning.png',
     icon: GraduationCap,
-    tags: ['Skill development', 'Real-world Projects', 'Internship Readiness'],
+    tags: ['Skill development', '150+ MoUs', 'Internship Readiness'],
     points: ['Industry Exposure and Networking', 'Up to date with industry trends and practices'],
   },
   {
