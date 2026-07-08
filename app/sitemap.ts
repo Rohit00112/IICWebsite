@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 import { getAllCourses } from '@/lib/courses';
 import { getPublishedEventGalleryArchives } from '@/lib/event-galleries';
 import { getAllNews } from '@/lib/news';
-import { absoluteImageUrl, absoluteUrl, toIsoDate } from '@/lib/seo-schema';
+import { absoluteImageUrl, absoluteUrl } from '@/lib/seo-schema';
 
 // Refresh the sitemap hourly so admin-added courses/news/galleries appear
 // without needing a full rebuild.
@@ -33,11 +33,8 @@ const staticRoutes: Array<{
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
-
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: absoluteUrl(route.path),
-    lastModified: now,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
@@ -50,7 +47,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const courseEntries: MetadataRoute.Sitemap = courses.map((course) => ({
     url: absoluteUrl(`/${course.slug}`),
-    lastModified: now,
     changeFrequency: 'monthly',
     priority: 0.8,
   }));
@@ -62,7 +58,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
       return {
         url: absoluteUrl(`/news-and-events/${item.slug}`),
-        lastModified: toIsoDate(item.date) ?? now,
         changeFrequency: item.category === 'Event' ? 'weekly' : 'monthly',
         priority: item.category === 'Event' ? 0.72 : 0.68,
         images: image ? [image] : undefined,
@@ -71,7 +66,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const galleryEntries: MetadataRoute.Sitemap = galleries.map((gallery) => ({
     url: absoluteUrl(`/life-at-iic/events/${gallery.slug}`),
-    lastModified: now,
     changeFrequency: 'monthly',
     priority: 0.5,
   }));
