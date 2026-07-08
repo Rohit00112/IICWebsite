@@ -30,7 +30,7 @@ type AlumniProfile = {
 
 const alumni: AlumniProfile[] = [
   {
-    name: 'David Kim',
+    name: 'Utsav Adhikari',
     classYear: '2018',
     role: 'Senior Data Scientist',
     company: 'DataDyn',
@@ -41,7 +41,7 @@ const alumni: AlumniProfile[] = [
     image: '/images/home/utsav.png',
   },
   {
-    name: 'Aisha Patel',
+    name: 'Kritika Karki',
     classYear: '2019',
     role: 'Product Manager',
     company: 'Innovate AI',
@@ -52,7 +52,7 @@ const alumni: AlumniProfile[] = [
     image: '/images/home/kritika.JPG',
   },
   {
-    name: 'James Wilson',
+    name: 'Sagar Neupane',
     classYear: '2014',
     role: 'Investment Banker',
     company: 'Capital Partners',
@@ -60,10 +60,10 @@ const alumni: AlumniProfile[] = [
     field: 'Finance',
     quote: 'Presentations, case work, and peer learning helped me communicate numbers as decisions, not just reports.',
     linkedin: LINKEDIN_URL,
-    image: '/images/about/iic-ceo.webp',
+    image: '/images/home/course2.png',
   },
   {
-    name: 'Maria Garcia',
+    name: 'Sweta Shrestha',
     classYear: '2017',
     role: 'UX Lead',
     company: 'DesignCo',
@@ -74,7 +74,7 @@ const alumni: AlumniProfile[] = [
     image: '/images/home/sweta.JPG',
   },
   {
-    name: 'Chen Wei',
+    name: 'Nishan Rai',
     classYear: '2021',
     role: 'Software Engineer',
     company: 'CloudNet',
@@ -84,7 +84,7 @@ const alumni: AlumniProfile[] = [
     linkedin: LINKEDIN_URL,
   },
   {
-    name: 'Sophie Laurent',
+    name: 'Jenisha Thapa',
     classYear: '2013',
     role: 'Marketing Director',
     company: 'LuxeLife',
@@ -95,7 +95,7 @@ const alumni: AlumniProfile[] = [
     image: '/images/home/jen.JPG',
   },
   {
-    name: 'Omar Al-Fayed',
+    name: 'Ronal Niraula',
     classYear: '2016',
     role: 'Operations Head',
     company: 'Logistix',
@@ -103,10 +103,10 @@ const alumni: AlumniProfile[] = [
     field: 'Finance',
     quote: 'I learned to stay calm inside complexity, which matters every day when operations move across borders.',
     linkedin: LINKEDIN_URL,
-    image: '/images/about/ing-ceo.webp',
+    image: '/images/our-infrastructure/ronal-niraula.png',
   },
   {
-    name: 'Chloe Smith',
+    name: 'Riju Bhattarai',
     classYear: '2020',
     role: 'Financial Analyst',
     company: 'Global Bank',
