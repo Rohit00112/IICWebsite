@@ -8,9 +8,28 @@ const normalizeTrackingId = (value?: string) => {
 const GTM_ID = normalizeTrackingId(process.env.NEXT_PUBLIC_GTM_ID);
 const META_PIXEL_ID = normalizeTrackingId(process.env.NEXT_PUBLIC_META_PIXEL_ID);
 const CLARITY_ID = normalizeTrackingId(process.env.NEXT_PUBLIC_CLARITY_ID) || 'xj4daxfxrz';
+const GA4_ID = normalizeTrackingId(process.env.NEXT_PUBLIC_GA4_ID) || 'G-BT97QHRHWH';
 
 const MarketingScripts = () => (
   <>
+    {GA4_ID && (
+      <>
+        <Script
+          id="ga4-loader"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA4_ID}');
+          `}
+        </Script>
+      </>
+    )}
+
     {GTM_ID && (
       <Script id="google-tag-manager" strategy="afterInteractive">
         {`
