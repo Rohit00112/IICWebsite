@@ -23,9 +23,9 @@ const PartnerSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full bg-white pt-6 pb-14 overflow-hidden sm:pt-8 sm:pb-20 md:pt-8 md:pb-24">
+    <section ref={containerRef} className="relative w-full bg-white pt-4 pb-12 overflow-hidden sm:pt-8 sm:pb-20 md:pt-8 md:pb-24">
       <div className="w-full flex flex-col items-center">
-        <div className="w-full text-center mb-12 px-6 max-w-[1600px]">
+        <div className="mb-8 w-full max-w-[1600px] px-4 text-center sm:mb-12 sm:px-6">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -38,7 +38,7 @@ const PartnerSection = () => {
               <AnimeReveal
                 text="UNIVERSITY"
                 as="div"
-                className="w-full text-[44px] sm:text-6xl md:text-8xl font-black uppercase text-[#74C044] tracking-tight leading-[1.05] font-iic justify-center"
+                className="w-full text-[40px] sm:text-6xl md:text-8xl font-black uppercase text-[#74C044] tracking-tight leading-[1.05] font-iic justify-center"
                 staggerFrom="center"
                 delay={0.2}
               />
@@ -46,12 +46,12 @@ const PartnerSection = () => {
           </div>
         </div>
 
-        <div className="grid w-full max-w-[1240px] grid-cols-1 items-center justify-items-center gap-7 px-4 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-8 mb-10 md:mb-14">
+        <div className="mb-8 grid w-full max-w-[1240px] grid-cols-1 items-center justify-items-center gap-5 px-4 sm:mb-10 sm:gap-7 sm:px-6 md:mb-14 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-8">
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.5 }}
-            className="relative h-[120px] w-full max-w-[500px] overflow-hidden sm:h-[136px] md:h-[150px] md:max-w-[540px] md:justify-self-end"
+            className="relative h-[88px] w-full max-w-[500px] overflow-hidden sm:h-[136px] md:h-[150px] md:max-w-[540px] md:justify-self-end"
           >
             <Image
               src="/images/home/lmu brand 2.png"
@@ -66,7 +66,7 @@ const PartnerSection = () => {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.7 }}
-            className="relative h-[120px] w-full max-w-[500px] overflow-hidden sm:h-[136px] md:h-[150px] md:max-w-[540px] md:justify-self-start"
+            className="relative h-[96px] w-full max-w-[500px] overflow-hidden sm:h-[136px] md:h-[150px] md:max-w-[540px] md:justify-self-start"
           >
             <Image
               src="/images/home/lmu brand 1.png"
@@ -78,7 +78,7 @@ const PartnerSection = () => {
           </motion.div>
         </div>
 
-        <div className="relative w-full mb-10 md:mb-16">
+        <div className="relative mb-8 w-full md:mb-16">
           <div className="relative w-full aspect-[2000/1164] overflow-hidden">
             <Image
               src="/images/home/lmu building.webp"
@@ -112,7 +112,7 @@ const PartnerSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 md:gap-8 w-full mb-10 md:mb-14 px-4 sm:px-6 max-w-[1300px]">
+        <div className="mb-8 grid w-full max-w-[1300px] grid-cols-2 gap-2.5 px-4 sm:mb-10 sm:grid-cols-4 sm:gap-4 sm:px-6 md:mb-14 md:gap-8">
           {awardCards.map((card, index) => (
             <motion.div
               key={card}
@@ -137,7 +137,7 @@ const PartnerSection = () => {
           ))}
         </div>
 
-        <div className="max-w-4xl text-center px-6 flex flex-col items-center">
+        <div className="flex max-w-4xl flex-col items-center px-4 text-center sm:px-6">
           <RevealText
             text="London Metropolitan University believes that education has the power to transform lives
 — and that belief shapes everything we do. We welcome students from all

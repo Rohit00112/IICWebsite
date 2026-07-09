@@ -78,8 +78,8 @@ const StatsStrip = () => {
   ];
 
   return (
-    <div className="bg-[#21409A] py-6 sm:py-8 md:py-14 relative z-10 w-full overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/20">
+    <div className="bg-[#21409A] py-4 sm:py-8 md:py-14 relative z-10 w-full overflow-hidden">
+      <div className="max-w-[1440px] mx-auto grid grid-cols-3 divide-x divide-white/20 px-2 sm:px-6">
         {stats.map((stat, index) => (
           <motion.div
             key={index}
@@ -87,12 +87,12 @@ const StatsStrip = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="flex flex-col items-center justify-center text-white py-5 sm:py-6 md:py-0 px-4"
+            className="flex flex-col items-center justify-center text-white px-2 py-3 sm:px-4 sm:py-6 md:py-0"
           >
-            <span className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight md:tracking-tighter mb-1 font-iic">
+            <span className="mb-1 font-iic text-[28px] font-extrabold tracking-tight sm:text-5xl md:text-6xl md:tracking-tighter">
               <AnimatedNumber value={stat.value} suffix={stat.suffix} />
             </span>
-            <span className="text-xs sm:text-sm md:text-lg font-medium opacity-80 text-center tracking-[0.22em] md:tracking-widest leading-snug">
+            <span className="text-center text-[9px] font-medium uppercase leading-snug tracking-[0.08em] opacity-80 sm:text-sm sm:tracking-[0.22em] md:text-lg md:tracking-widest">
               {stat.label}
             </span>
           </motion.div>

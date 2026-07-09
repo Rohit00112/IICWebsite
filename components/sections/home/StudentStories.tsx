@@ -69,13 +69,13 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
         duration: 1,
         ease: [0.34, 1.56, 0.64, 1]
       }}
-      className="story-card flex-none w-[min(320px,86vw)] h-[560px] snap-center md:w-full md:flex-auto"
+      className="story-card h-[480px] w-[min(300px,84vw)] flex-none snap-center sm:h-[540px] sm:w-[min(320px,86vw)] md:h-[560px] md:w-full md:flex-auto"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
       <Tilt strength={4} className="h-full">
         <div
-          className="relative h-full overflow-hidden rounded-[24px] border border-gray-100 bg-white p-6 text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] transition-all duration-300 sm:p-8 md:rounded-[32px] md:p-12"
+          className="relative h-full overflow-hidden rounded-[22px] border border-gray-100 bg-white p-5 text-[#1a1a1a] shadow-[0_10px_30px_rgba(0,0,0,0.04)] transition-all duration-300 sm:rounded-[24px] sm:p-8 md:rounded-[32px] md:p-12"
           style={{ willChange: 'transform, opacity' }}
         >
           {/* Image layer - clip-path bloom from corner reveals image over card */}
@@ -125,7 +125,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ item, index }) => {
             {/* Quote Text */}
             <RevealText
               text={item.quote}
-              className="mb-6 min-h-[180px] content-start text-sm font-medium italic leading-relaxed text-gray-700 sm:mb-8 sm:text-base md:min-h-[196px] md:text-lg"
+              className="mb-5 min-h-[168px] content-start text-[13px] font-medium italic leading-relaxed text-gray-700 sm:mb-8 sm:min-h-[180px] sm:text-base md:min-h-[196px] md:text-lg"
               delay={0.4}
             />
 
@@ -181,7 +181,7 @@ const StudentStories = () => {
     <section ref={containerRef} className="relative w-full overflow-hidden bg-white pt-16 pb-8 md:pt-24 md:pb-8">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         {/* Header Section */}
-        <div className="flex flex-col items-center text-center mb-10 md:mb-16">
+        <div className="mb-9 flex flex-col items-center text-center md:mb-16">
           <span className="text-[#74C044] text-xs sm:text-sm md:text-base font-bold tracking-[0.12em] sm:tracking-[0.14em] mb-4 font-iic">
             Insights
           </span>
@@ -191,7 +191,7 @@ const StudentStories = () => {
           <AnimeReveal
             as="div"
             text="Students"
-            className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.9] md:leading-[0.8] tracking-tight mb-6 md:mb-10 font-iic justify-center"
+            className="mb-5 text-[40px] font-black leading-[0.9] tracking-tight text-[#74C044] sm:text-6xl md:mb-10 md:text-8xl md:leading-[0.8] font-iic justify-center"
             staggerFrom="center"
             delay={0.1}
           />
@@ -201,7 +201,7 @@ const StudentStories = () => {
         </div>
 
         {/* Horizontal Scrollable Row */}
-        <div className="flex gap-6 overflow-x-auto pb-6 pt-4 px-2 no-scrollbar snap-x snap-mandatory scroll-smooth md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:snap-none lg:gap-8">
+        <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-5 pt-3 scroll-smooth sm:gap-6 sm:px-2 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:snap-none lg:gap-8">
           {testimonials.map((item, index) => (
             <StoryCard key={index} item={item} index={index} />
           ))}

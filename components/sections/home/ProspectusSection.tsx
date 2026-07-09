@@ -179,7 +179,7 @@ const ProspectusSection = () => {
   };
 
   return (
-    <section id="admission" className="relative w-full overflow-hidden bg-[#21409A] py-14 sm:py-20 md:py-24">
+    <section id="admission" className="relative w-full overflow-hidden bg-[#21409A] py-12 sm:py-20 md:py-24">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.05]"
@@ -197,32 +197,32 @@ const ProspectusSection = () => {
         translateY={44}
         duration={900}
       >
-        <div className="prospectus-panel mb-10 max-w-4xl md:mb-14" style={{ willChange: 'transform, opacity' }}>
+        <div className="prospectus-panel mb-8 max-w-4xl md:mb-14" style={{ willChange: 'transform, opacity' }}>
           <AnimeReveal
             as="h3"
             text="Student Success Stories"
-            className="mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl md:mb-6 md:text-[64px] lg:text-[72px] font-iic"
+            className="mb-4 text-[34px] font-bold leading-tight text-white sm:text-5xl md:mb-6 md:text-[64px] lg:text-[72px] font-iic"
             staggerFrom="first"
           />
-          <p className="max-w-3xl text-base font-medium leading-relaxed text-white/70 md:text-xl">
+          <p className="max-w-3xl text-[15px] font-medium leading-relaxed text-white/70 sm:text-base md:text-xl">
             Hear directly from those who have walked our halls and gone on to achieve remarkable things.
           </p>
         </div>
 
-        <div className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-14">
+        <div className="grid items-stretch gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-14">
           {/* Left Side: Success Stories */}
           <div className="prospectus-panel h-full" style={{ willChange: 'transform, opacity' }}>
-            <div className="relative flex h-full flex-col rounded-[28px] bg-white p-6 shadow-[0_32px_80px_rgba(5,12,40,0.22)] sm:p-8 md:rounded-[36px] md:p-12">
-            <div className="text-6xl font-black leading-none text-[#21409A]/16 font-serif md:text-7xl">
+            <div className="relative flex h-full flex-col rounded-[24px] bg-white p-5 shadow-[0_32px_80px_rgba(5,12,40,0.22)] sm:rounded-[28px] sm:p-8 md:rounded-[36px] md:p-12">
+            <div className="font-serif text-5xl font-black leading-none text-[#21409A]/16 sm:text-6xl md:text-7xl">
               &ldquo;
             </div>
 
-            <p className="mt-3 text-lg font-semibold italic leading-[1.65] text-[#344054] sm:text-xl md:text-[25px]">
+            <p className="mt-3 text-base font-semibold italic leading-[1.6] text-[#344054] sm:text-xl sm:leading-[1.65] md:text-[25px]">
               &ldquo;{alumniStory.quote}&rdquo;
             </p>
 
-            <div className="mt-auto flex flex-col gap-5 border-t border-gray-100 pt-7 sm:flex-row sm:items-center sm:gap-7">
-              <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-full border-4 border-white bg-[#EDF2FF] shadow-[0_16px_36px_rgba(16,24,40,0.18)] md:h-40 md:w-40">
+            <div className="mt-7 flex flex-col gap-4 border-t border-gray-100 pt-6 sm:mt-auto sm:flex-row sm:items-center sm:gap-7 sm:pt-7">
+              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border-4 border-white bg-[#EDF2FF] shadow-[0_16px_36px_rgba(16,24,40,0.18)] sm:h-32 sm:w-32 md:h-40 md:w-40">
                 <Image
                   src={alumniStory.image}
                   alt={alumniStory.name}
@@ -253,7 +253,7 @@ const ProspectusSection = () => {
 
           {/* Right Side: Prospectus Form */}
           <div className="prospectus-panel h-full" style={{ willChange: 'transform, opacity' }}>
-          <div className="relative flex h-full flex-col rounded-[24px] md:rounded-[36px] bg-white/[0.07] backdrop-blur-2xl border border-white/15 p-5 sm:p-8 md:p-11 shadow-[0_40px_120px_rgba(5,12,40,0.45)]">
+          <div className="relative flex h-full flex-col rounded-[24px] border border-white/15 bg-white/[0.07] p-5 shadow-[0_40px_120px_rgba(5,12,40,0.45)] backdrop-blur-2xl sm:p-8 md:rounded-[36px] md:p-11">
             {/* Accent top hairline */}
             <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#74C044]/70 to-transparent" />
             {/* Corner glow */}

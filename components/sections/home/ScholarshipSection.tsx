@@ -189,7 +189,7 @@ const ScholarshipSection = () => {
   const activePillarData = activePillar === null ? null : pillars[activePillar];
 
   return (
-    <section ref={containerRef} className="relative w-full overflow-hidden bg-[#081A39] py-14 text-white sm:py-20 md:py-24">
+    <section ref={containerRef} className="relative w-full overflow-hidden bg-[#081A39] py-12 text-white sm:py-20 md:py-24">
       <div className="absolute inset-x-0 top-0 h-px bg-white/60" />
       <div className="absolute left-0 top-0 h-1 w-[48%] bg-[#74C044]" />
 
@@ -222,14 +222,14 @@ const ScholarshipSection = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-8 text-center text-[10px] font-black tracking-[0.16em] text-[#8DBAFF] sm:text-xs md:text-sm font-iic"
+          className="mb-6 text-center text-[10px] font-black tracking-[0.14em] text-[#8DBAFF] sm:mb-8 sm:text-xs sm:tracking-[0.16em] md:text-sm font-iic"
         >
           Scholarships at Itahari International College
         </motion.p>
 
-        <div className="relative mb-7 w-full max-w-5xl">
+        <div className="relative mb-6 w-full max-w-5xl sm:mb-7">
           <div className="absolute inset-x-8 top-1/2 h-28 -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(108,168,255,0.32)_0%,transparent_68%)] blur-3xl" />
-          <div className="relative flex items-end justify-center gap-3 sm:gap-5 md:gap-8">
+          <div className="relative flex items-end justify-center gap-1.5 sm:gap-5 md:gap-8">
             {pillars.map((pillar, index) => {
               const isActive = activePillar === index;
               const isLive = livePillar === index;
@@ -318,7 +318,7 @@ const ScholarshipSection = () => {
                     }}
                     transition={{ duration: 0.35 }}
                     viewBox="0 0 100 130"
-                    className="relative z-10 h-auto w-[88px] overflow-visible sm:w-[128px] md:w-[170px] lg:w-[190px]"
+                    className="relative z-10 h-auto w-[78px] overflow-visible sm:w-[128px] md:w-[170px] lg:w-[190px]"
                   >
                     <defs>
                       <linearGradient id={`aaa-grad-${index}`} x1="0" y1="0" x2="0" y2="1">
@@ -400,17 +400,17 @@ const ScholarshipSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.25, duration: 0.8 }}
-          className="max-w-4xl text-center text-3xl font-black leading-[1.08] text-white sm:text-5xl md:text-6xl font-iic"
+          className="max-w-4xl text-center text-[28px] font-black leading-[1.08] text-white sm:text-5xl md:text-6xl font-iic"
         >
           Scholarship at <br />Itahari International College
         </motion.h3>
 
         <RevealText
           text="Earn up to 100% tuition waiver by mastering the three pillars of student excellence."
-          className="mt-6 max-w-2xl justify-center text-center text-base font-medium leading-relaxed text-white/62 sm:text-xl md:text-2xl"
+          className="mt-5 max-w-2xl justify-center text-center text-[15px] font-medium leading-relaxed text-white/62 sm:mt-6 sm:text-xl md:text-2xl"
         />
 
-        <div className="mt-12 grid w-full max-w-5xl grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="mt-8 grid w-full max-w-5xl grid-cols-1 gap-4 sm:mt-12 sm:gap-5 md:grid-cols-3">
           {pillars.map((pillar, index) => {
             const isActive = activePillar === index;
             const isDimmed = activePillar !== null && activePillar !== index;
@@ -434,7 +434,7 @@ const ScholarshipSection = () => {
                 }}
                 onFocus={() => setActivePillar(index)}
                 onBlur={() => setActivePillar(null)}
-                className={`group relative overflow-hidden rounded-2xl border p-6 text-left backdrop-blur-xl transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#8DBAFF]/35 sm:p-8 ${
+                className={`group relative overflow-hidden rounded-2xl border p-5 text-left backdrop-blur-xl transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#8DBAFF]/35 sm:p-8 ${
                   isActive
                     ? 'border-[#6CA8FF]/65 bg-[#142850]/88 shadow-[0_26px_80px_-52px_rgba(108,168,255,0.9)]'
                     : 'border-[#6CA8FF]/25 bg-[#122545]/68 hover:border-[#6CA8FF]/55'
@@ -456,7 +456,7 @@ const ScholarshipSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="mt-12 text-center text-base font-black text-white/76 sm:text-xl font-iic"
+          className="mt-9 text-center text-[15px] font-black text-white/76 sm:mt-12 sm:text-xl font-iic"
         >
           Achieve all 3 pillars <span className="text-white/40">→</span> <span className="text-[#8DBAFF]">up to 100% tuition off</span>
         </motion.p>
@@ -466,9 +466,9 @@ const ScholarshipSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.8 }}
-          className="mt-10 max-w-3xl text-center"
+          className="mt-8 max-w-3xl text-center sm:mt-10"
         >
-          <p className="text-base font-medium leading-relaxed text-white/68 sm:text-lg">
+          <p className="text-[15px] font-medium leading-relaxed text-white/68 sm:text-lg">
             The <span className="font-bold text-[#A8C8FF]">AAA (Academics, Attendance, and Attitude) Scholarship Award</span> is awarded to <span className="font-bold text-white">10% of students</span> who excelled during the calendar year in academics, discipline, and active participation. It provides students with an incentive to have <span className="font-bold text-white">100% of their tuition fees waived</span> for the calendar year.
           </p>
           <p className="mt-5 text-sm italic text-white/40">*Excluding University Fee</p>
@@ -481,7 +481,7 @@ const ScholarshipSection = () => {
           />
         </div>
 
-        <div className="my-10 flex w-full max-w-3xl items-center gap-4 md:my-16">
+        <div className="my-8 flex w-full max-w-3xl items-center gap-4 sm:my-10 md:my-16">
           <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#6CA8FF]/24 to-transparent" />
           <motion.span
             animate={twinkleAnimation}
@@ -595,14 +595,14 @@ const ScholarshipSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.25, duration: 0.8 }}
-          className="mt-5 max-w-4xl text-center text-3xl font-black leading-[1.08] text-white sm:text-5xl md:text-6xl font-iic"
+          className="mt-4 max-w-4xl text-center text-[28px] font-black leading-[1.08] text-white sm:mt-5 sm:text-5xl md:text-6xl font-iic"
         >
           Fully Funded Master&apos;s Degree
         </motion.h3>
 
         <RevealText
           text="A special scholarship opportunity for one eligible graduate to pursue quality postgraduate study at ING colleges in Nepal."
-          className="mt-6 max-w-2xl justify-center text-center text-base font-medium leading-relaxed text-white/62 sm:text-xl md:text-2xl"
+          className="mt-5 max-w-2xl justify-center text-center text-[15px] font-medium leading-relaxed text-white/62 sm:mt-6 sm:text-xl md:text-2xl"
         />
 
         <motion.div
@@ -610,12 +610,12 @@ const ScholarshipSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.8 }}
-          className="mt-10 max-w-3xl space-y-5 text-center"
+          className="mt-8 max-w-3xl space-y-4 text-center sm:mt-10 sm:space-y-5"
         >
-          <p className="text-base font-medium leading-relaxed text-white/68 sm:text-lg">
+          <p className="text-[15px] font-medium leading-relaxed text-white/68 sm:text-lg">
             The <span className="font-bold text-[#A8C8FF]">ING Postgraduate Scholarship</span> supports one eligible graduate upon completion of an eligible <span className="font-bold text-[#A8C8FF]">IT or Business programme</span>. We hope this support inspires future generations to pursue meaningful opportunities and build stronger futures.
           </p>
-          <p className="text-base font-medium leading-relaxed text-white/68 sm:text-lg">
+          <p className="text-[15px] font-medium leading-relaxed text-white/68 sm:text-lg">
             We aim to support each student&apos;s <span className="font-bold text-white">professional and personal growth.</span>
           </p>
           <p className="text-sm italic text-white/40">*Job Placement at one of the ING Companies</p>

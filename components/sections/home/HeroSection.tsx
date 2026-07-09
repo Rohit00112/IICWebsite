@@ -25,8 +25,8 @@ const HeroSection = () => {
   const yBlob2 = useTransform(scrollYProgress, [0, 1], ["0%", "-100%"]);
 
   return (
-    <section ref={containerRef} className="relative w-full flex flex-col items-center overflow-hidden min-h-[100svh] bg-white">
-      <CloudBackground className="absolute inset-x-0 top-0 z-0 h-[760px] overflow-hidden pointer-events-none select-none opacity-75 sm:h-[100svh] sm:opacity-100" />
+    <section ref={containerRef} className="relative w-full flex flex-col items-center overflow-hidden bg-white sm:min-h-[100svh]">
+      <CloudBackground className="absolute inset-x-0 top-0 z-0 h-[620px] overflow-hidden pointer-events-none select-none opacity-75 sm:h-[100svh] sm:opacity-100" />
 
       {/* Decorative Floating Blobs */}
       <motion.div
@@ -39,14 +39,14 @@ const HeroSection = () => {
       />
 
       {/* Hero Content Layer */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-center px-5 sm:px-6">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-center px-4 sm:px-6">
         {/* Centered Logo - Specifically for Home Page Hero */}
-        <div className="relative z-40 flex w-full items-center justify-center pb-2 pt-10 sm:pb-3 sm:pt-16 md:pb-4 md:pt-20">
+        <div className="relative z-40 flex w-full items-center justify-center pb-2 pt-8 sm:pb-3 sm:pt-16 md:pb-4 md:pt-20">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="relative h-[64px] w-[min(292px,calc(100vw-3rem))] overflow-hidden sm:h-[102px] sm:w-[420px] md:h-[112px] md:w-[460px]"
+            className="relative h-[56px] w-[min(260px,calc(100vw-3rem))] overflow-hidden sm:h-[102px] sm:w-[420px] md:h-[112px] md:w-[460px]"
           >
             <Image
               src="/images/common/iic_logo.png"
@@ -60,21 +60,21 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        <div className="flex w-full flex-col items-center pt-4 text-center sm:pt-2 md:pt-4">
+        <div className="flex w-full flex-col items-center pt-3 text-center sm:pt-2 md:pt-4">
           <RevealText
             as="h1"
             text="UK Degrees in Itahari"
-            className="mb-4 w-full max-w-[340px] text-center font-iic text-[38px] font-black uppercase leading-[1.04] tracking-normal text-[#21409A] sm:mb-5 sm:max-w-[1180px] sm:text-[68px] sm:leading-[1.02] md:mb-8 md:text-[88px] lg:text-[104px] xl:text-[112px] justify-center"
+            className="mb-3 w-full max-w-[320px] text-center font-iic text-[34px] font-black uppercase leading-[1.04] tracking-normal text-[#21409A] sm:mb-5 sm:max-w-[1180px] sm:text-[68px] sm:leading-[1.02] md:mb-8 md:text-[88px] lg:text-[104px] xl:text-[112px] justify-center"
             delay={0.4}
           />
           <RevealText
             as="p"
             text="Launch your global career with IT and Business programmes from London Metropolitan University."
-            className="mb-6 max-w-[320px] px-1 font-iic text-[15px] font-semibold leading-[1.55] text-gray-500 sm:mb-8 sm:max-w-4xl sm:px-4 sm:text-lg sm:font-medium md:mb-12 md:text-[24px] md:leading-[1.6] lg:text-[28px] justify-center"
+            className="mb-5 max-w-[310px] px-1 font-iic text-[14px] font-semibold leading-[1.55] text-gray-500 sm:mb-8 sm:max-w-4xl sm:px-4 sm:text-lg sm:font-medium md:mb-12 md:text-[24px] md:leading-[1.6] lg:text-[28px] justify-center"
             delay={0.7}
           />
 
-          <div className="relative z-20 mb-8 flex w-full max-w-[320px] flex-col gap-3 sm:mb-20 sm:w-auto sm:max-w-none sm:flex-row sm:gap-6 md:mb-44 md:gap-8">
+          <div className="relative z-20 mb-5 flex w-full max-w-[310px] flex-col gap-2.5 sm:mb-20 sm:w-auto sm:max-w-none sm:flex-row sm:gap-6 md:mb-44 md:gap-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -86,7 +86,7 @@ const HeroSection = () => {
               <Link
                 href="/contact-us"
                 aria-label="Schedule a college visit"
-                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#21409A] px-6 py-3 text-sm font-bold text-white shadow-[0_16px_36px_-20px_rgba(33,64,154,0.95)] transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:w-auto sm:rounded-xl sm:px-10 sm:py-4 sm:text-[16px] sm:shadow-2xl"
+                className="flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl bg-[#21409A] px-5 py-3 text-sm font-bold text-white shadow-[0_16px_36px_-20px_rgba(33,64,154,0.95)] transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:min-h-12 sm:w-auto sm:rounded-xl sm:px-10 sm:py-4 sm:text-[16px] sm:shadow-2xl"
               >
                 <CalendarCheck className="h-4 w-4 sm:hidden" aria-hidden />
                 <span>Schedule a Visit</span>
@@ -104,7 +104,7 @@ const HeroSection = () => {
               <Link
                 href="/courses"
                 aria-label="Browse our degree programmes"
-                className="flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-[#BED5FF] bg-white/95 px-6 py-3 text-sm font-bold text-[#21409A] shadow-[0_14px_34px_-24px_rgba(33,64,154,0.8)] transition-all hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#21409A] sm:w-auto sm:rounded-xl sm:border-2 sm:border-[#dbeafe] sm:px-10 sm:py-4 sm:text-[16px] sm:shadow-lg sm:hover:bg-gray-50"
+                className="flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl border border-[#BED5FF] bg-white/95 px-5 py-3 text-sm font-bold text-[#21409A] shadow-[0_14px_34px_-24px_rgba(33,64,154,0.8)] transition-all hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#21409A] sm:min-h-12 sm:w-auto sm:rounded-xl sm:border-2 sm:border-[#dbeafe] sm:px-10 sm:py-4 sm:text-[16px] sm:shadow-lg sm:hover:bg-gray-50"
               >
                 <span>Explore Programmes</span>
                 <ArrowRight className="h-4 w-4 sm:hidden" aria-hidden />
@@ -115,10 +115,10 @@ const HeroSection = () => {
       </div>
 
       {/* Building Image Layer — Pinned to bottom, separate from content flow */}
-      <div className="relative z-0 mt-auto h-[260px] w-full -mt-6 overflow-visible sm:h-[400px] sm:-mt-12 md:h-[650px] md:-mt-24">
+      <div className="relative z-0 mt-auto h-[210px] w-full -mt-2 overflow-visible sm:h-[400px] sm:-mt-12 md:h-[650px] md:-mt-24">
         <motion.div
           style={{ y, opacity, scale }}
-          className="absolute inset-x-[-22%] bottom-0 h-full sm:inset-x-0"
+          className="absolute inset-x-[-16%] bottom-0 h-full sm:inset-x-0"
         >
           <Image
             src="/images/home/hero.webp"

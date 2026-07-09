@@ -31,9 +31,9 @@ const Footer = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/70"></div>
       </div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 pt-32 pb-16">
+      <div className="relative z-10 mx-auto max-w-[1440px] px-4 pb-10 pt-20 sm:px-6 sm:pb-16 sm:pt-32">
         <AnimeStagger
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20"
+          className="mb-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 lg:mb-20 lg:grid-cols-4 lg:gap-8"
           selector=":scope > div"
           staggerDelay={120}
           translateY={40}
@@ -42,8 +42,8 @@ const Footer = () => {
 
           {/* Brand Column */}
           <div className="flex flex-col gap-8">
-            <div className="inline-flex items-center self-start rounded-2xl px-5 py-4 shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
-              <div className="relative w-64 h-16">
+            <div className="inline-flex items-center self-start rounded-2xl px-0 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.25)] sm:px-5 sm:py-4">
+              <div className="relative h-14 w-56 sm:h-16 sm:w-64">
                 <Image
                   src="/images/common/iic_logo_white.png"
                   alt="Itahari International College Official Logo"
@@ -53,7 +53,7 @@ const Footer = () => {
                 />
               </div>
             </div>
-            <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-sm font-iic">
+            <p className="max-w-sm text-sm leading-relaxed text-white/60 sm:text-base md:text-lg font-iic">
               Developing impactful industry-ready graduates through globally connected IT and Business programmes.
             </p>
             {/* Social Icons */}
@@ -72,7 +72,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     prefetch={false}
-                    className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#74C044] hover:border-[#74C044] transition-all duration-300 group"
+                    className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/20 transition-all duration-300 hover:border-[#74C044] hover:bg-[#74C044] sm:h-12 sm:w-12"
                   >
                     <span className="sr-only">{social.name}</span>
                     <svg
@@ -94,8 +94,8 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xl font-bold mb-8 font-iic text-white">Quick Links</h4>
-            <ul className="flex flex-col gap-4">
+            <h4 className="mb-5 text-lg font-bold text-white sm:mb-8 sm:text-xl font-iic">Quick Links</h4>
+            <ul className="flex flex-col gap-3 sm:gap-4">
               <li>
                 <Link href="/courses" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
                   Academic Programmes
@@ -131,8 +131,8 @@ const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h4 className="text-xl font-bold mb-8 font-iic text-white">Resources</h4>
-            <ul className="flex flex-col gap-4">
+            <h4 className="mb-5 text-lg font-bold text-white sm:mb-8 sm:text-xl font-iic">Resources</h4>
+            <ul className="flex flex-col gap-3 sm:gap-4">
               <li>
                 <Link href="/news-and-events" className="text-white/60 hover:text-[#74C044] transition-colors text-base font-medium inline-block">
                   News & Events
@@ -164,8 +164,8 @@ const Footer = () => {
 
           {/* Contact Us */}
           <div>
-            <h4 className="text-xl font-bold mb-8 font-iic text-white">Contact Us</h4>
-            <ul className="flex flex-col gap-6">
+            <h4 className="mb-5 text-lg font-bold text-white sm:mb-8 sm:text-xl font-iic">Contact Us</h4>
+            <ul className="flex flex-col gap-5 sm:gap-6">
               <li className="flex items-start gap-4" itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
                 <svg className="w-6 h-6 text-[#74C044] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 <span className="text-white/60 text-base leading-relaxed font-iic" aria-label={COLLEGE_ADDRESS_TEXT}>
@@ -187,11 +187,11 @@ const Footer = () => {
         </AnimeStagger>
 
         {/* Bottom Bar */}
-        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-white/40 text-sm font-iic">
+        <div className="flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-8 md:flex-row md:items-center md:pt-12">
+          <p className="text-sm text-white/40 font-iic">
             © 2026 Itahari International College. All rights reserved.
           </p>
-          <div className="flex gap-8">
+          <div className="flex flex-wrap gap-x-6 gap-y-3 md:gap-8">
             <Link href="/privacy-policy" className="text-white/40 hover:text-white transition-colors text-sm font-iic">Privacy Policy</Link>
             <Link href="/terms-of-service" className="text-white/40 hover:text-white transition-colors text-sm font-iic">Terms of Service</Link>
           </div>

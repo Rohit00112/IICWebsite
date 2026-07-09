@@ -82,7 +82,7 @@ const ProgrammesSection = () => {
   }, [activePopup]);
 
   return (
-    <section ref={containerRef} className="relative w-full bg-white pt-14 pb-8 overflow-x-clip overflow-y-visible sm:pt-20 sm:pb-10 md:pt-24 md:pb-10">
+    <section ref={containerRef} className="relative w-full bg-white pt-12 pb-8 overflow-x-clip overflow-y-visible sm:pt-20 sm:pb-10 md:pt-24 md:pb-10">
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.span
           initial={{ opacity: 0, y: 10 }}
@@ -92,7 +92,7 @@ const ProgrammesSection = () => {
           Our Programmes
         </motion.span>
 
-        <div className="text-center mb-10 md:mb-16">
+        <div className="text-center mb-8 md:mb-16">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1a1a1a] mb-2 font-iic">
             Nepal&apos;s First <span className="text-[#74C044]">UK Degree</span> Programmes in<span className="sr-only"> Itahari</span>
           </h2>
@@ -101,7 +101,7 @@ const ProgrammesSection = () => {
               <AnimeReveal
                 text="Itahari"
                 as="div"
-                className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center uppercase"
+                className="text-[40px] sm:text-6xl md:text-8xl font-black text-[#74C044] tracking-tight leading-none font-iic justify-center uppercase"
                 staggerFrom="center"
                 delay={0.2}
               />
@@ -127,7 +127,7 @@ const ProgrammesSection = () => {
                     duration: 1,
                     ease: [0.16, 1, 0.3, 1]
                   }}
-                  className={`${prog.bgColor} rounded-[24px] sm:rounded-[40px] md:rounded-[48px] p-5 sm:p-8 md:p-10 2xl:p-12 relative overflow-hidden flex h-full min-h-[440px] sm:min-h-[500px] md:min-h-[520px] xl:min-h-[500px] 2xl:min-h-[540px] flex-col justify-between group border border-white/5 cursor-pointer`}
+                  className={`${prog.bgColor} rounded-[22px] sm:rounded-[40px] md:rounded-[48px] p-5 sm:p-8 md:p-10 2xl:p-12 relative overflow-hidden flex h-full min-h-[390px] sm:min-h-[500px] md:min-h-[520px] xl:min-h-[500px] 2xl:min-h-[540px] flex-col justify-between group border border-white/5 cursor-pointer`}
                 >
                   <div className="relative z-10 flex flex-col h-full">
                     <motion.div
@@ -135,18 +135,18 @@ const ProgrammesSection = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 + 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                      className="flex flex-wrap items-center gap-2 mb-8 sm:mb-10 max-w-full sm:max-w-[64%] xl:max-w-[58%] relative z-20"
+                      className="relative z-20 mb-6 flex max-w-[74%] flex-wrap items-center gap-2 sm:mb-10 sm:max-w-[64%] xl:max-w-[58%]"
                     >
-                      <span className={`${prog.tagColor} max-w-full truncate text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-4 py-2 rounded-full font-bold tracking-wider border border-white/10 shadow-lg whitespace-nowrap`}>
+                      <span className={`${prog.tagColor} max-w-full truncate rounded-full border border-white/10 px-2.5 py-1.5 text-[8px] font-bold tracking-wider text-white shadow-lg sm:px-4 sm:py-2 sm:text-[10px] md:text-[11px]`}>
                         {prog.type}
                       </span>
-                      <span className={`${prog.pillColor} text-white text-[9px] sm:text-[10px] md:text-[11px] px-3 sm:px-3.5 py-2 rounded-full font-bold border border-white/15 flex items-center gap-1.5 whitespace-nowrap shrink-0`}>
+                      <span className={`${prog.pillColor} flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 px-2.5 py-1.5 text-[8px] font-bold text-white sm:px-3.5 sm:py-2 sm:text-[10px] md:text-[11px]`}>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
                         {prog.duration}
                       </span>
                     </motion.div>
 
-                    <div className="max-w-[82%] sm:max-w-[62%] xl:max-w-[54%] relative z-10">
+                    <div className="relative z-10 max-w-[76%] sm:max-w-[62%] xl:max-w-[54%]">
                       <motion.div
                         variants={{
                           hidden: { opacity: 0, y: 20 },
@@ -154,10 +154,10 @@ const ProgrammesSection = () => {
                         }}
                         transition={{ delay: index * 0.1 + 0.7, duration: 0.8 }}
                       >
-                        <h3 className="text-white/60 text-base sm:text-lg md:text-xl font-medium mb-1 font-iic tracking-tight">
+                        <h3 className="mb-1 font-iic text-sm font-medium tracking-tight text-white/60 sm:text-lg md:text-xl">
                           {prog.title}
                         </h3>
-                        <h3 className="text-white text-[25px] sm:text-4xl md:text-[42px] xl:text-4xl 2xl:text-[44px] font-black leading-[1.05] mb-6 sm:mb-8 font-iic">
+                        <h3 className="mb-5 font-iic text-[23px] font-black leading-[1.05] text-white sm:mb-8 sm:text-4xl md:text-[42px] xl:text-4xl 2xl:text-[44px]">
                           {prog.subtitle}
                         </h3>
                       </motion.div>
@@ -169,14 +169,14 @@ const ProgrammesSection = () => {
                             visible: { opacity: 1, x: 0 }
                           }}
                           transition={{ delay: index * 0.1 + 0.8, duration: 1 }}
-                          className="mb-8"
+                          className="mb-6 sm:mb-8"
                         >
                           <p className="mb-3 text-[10px] font-black uppercase tracking-[0.22em] text-white/60 sm:text-[11px]">
                             Specialization
                           </p>
                           <ul className="space-y-2">
                             {prog.list.map((item, i) => (
-                              <li key={i} className="text-[12px] sm:text-[13px] md:text-[15px] flex items-center gap-2.5 sm:gap-3 font-medium leading-relaxed text-white/80 transition-transform duration-300 hover:translate-x-2">
+                              <li key={i} className="flex items-center gap-2.5 text-[11px] font-medium leading-relaxed text-white/80 transition-transform duration-300 hover:translate-x-2 sm:gap-3 sm:text-[13px] md:text-[15px]">
                                 <span className="w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.6)] shrink-0"></span>
                                 {item}
                               </li>
@@ -209,10 +209,10 @@ const ProgrammesSection = () => {
                           visible: { opacity: 1, y: 0 }
                         }}
                         transition={{ delay: index * 0.1 + 1.1 }}
-                        className="relative flex flex-col gap-4 pt-5 sm:pt-6"
+                        className="relative flex flex-col gap-3 pt-4 sm:gap-4 sm:pt-6"
                       >
                         <span aria-hidden="true" className="pointer-events-none absolute left-0 right-0 top-0 z-0 border-t border-white/10" />
-                        <div className="relative z-10 flex max-w-[72%] flex-col gap-2 min-w-0 sm:max-w-[56%] lg:max-w-[58%]">
+                        <div className="relative z-10 flex max-w-[68%] min-w-0 flex-col gap-2 sm:max-w-[56%] lg:max-w-[58%]">
                           <p className="text-[8px] font-black uppercase tracking-[0.24em] text-white/60">
                             Top Modules
                           </p>
@@ -222,7 +222,7 @@ const ProgrammesSection = () => {
                                 {prog.tags && prog.tags.length > 2 && i === 2 && (
                                   <span aria-hidden="true" className="basis-full h-0" />
                                 )}
-                                <span className={`${moduleBadgeStyles[i % moduleBadgeStyles.length]} max-w-full text-[8px] sm:text-[9px] font-black tracking-[0.08em] sm:tracking-[0.12em] leading-snug px-2.5 sm:px-3 py-1.5 border`}>
+                                  <span className={`${moduleBadgeStyles[i % moduleBadgeStyles.length]} max-w-full px-2 py-1.5 text-[7px] font-black leading-snug tracking-[0.06em] sm:px-3 sm:text-[9px] sm:tracking-[0.12em] border`}>
                                   {item}
                                 </span>
                               </React.Fragment>
@@ -243,7 +243,7 @@ const ProgrammesSection = () => {
                       maskImage: 'linear-gradient(to bottom, black 0%, black 88%, transparent 100%)',
                       WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 88%, transparent 100%)',
                     }}
-                    className="absolute right-2 bottom-8 h-[190px] w-[36%] opacity-50 pointer-events-none z-20 overflow-hidden sm:h-auto sm:opacity-100 sm:right-[-1%] sm:top-8 sm:bottom-10 sm:w-[44%] md:right-0 md:top-10 md:bottom-12 md:w-[42%] xl:top-8 xl:bottom-10 xl:w-[46%]"
+                    className="pointer-events-none absolute bottom-7 right-1 z-20 h-[170px] w-[35%] overflow-hidden opacity-45 sm:bottom-10 sm:right-[-1%] sm:top-8 sm:h-auto sm:w-[44%] sm:opacity-100 md:right-0 md:top-10 md:bottom-12 md:w-[42%] xl:top-8 xl:bottom-10 xl:w-[46%]"
                   >
                     <Image
                       src={prog.image}
@@ -293,7 +293,7 @@ const ProgrammesSection = () => {
             className="text-gray-500 text-sm md:text-base font-medium leading-relaxed mb-8 md:mb-10 px-2 sm:px-4 justify-center"
           />
           <Magnetic strength={0.3}>
-            <Link href="/admissions" className="inline-flex bg-[#21409A] text-white px-8 sm:px-12 py-3.5 sm:py-4 rounded-lg font-bold text-base sm:text-lg shadow-2xl hover:opacity-90 transition-all active:scale-95">
+            <Link href="/admissions" className="inline-flex w-full justify-center rounded-lg bg-[#21409A] px-8 py-3.5 text-base font-bold text-white shadow-2xl transition-all hover:opacity-90 active:scale-95 sm:w-auto sm:px-12 sm:py-4 sm:text-lg">
               Enrol Now
             </Link>
           </Magnetic>

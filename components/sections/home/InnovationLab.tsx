@@ -20,10 +20,10 @@ const InnovationLab = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
-    <section id="innovation-lab" ref={containerRef} className="relative w-full bg-[#f4f7fa] pt-8 pb-14 overflow-hidden sm:pt-10 sm:pb-20 md:pt-10 md:pb-24">
+    <section id="innovation-lab" ref={containerRef} className="relative w-full bg-[#f4f7fa] pt-8 pb-12 overflow-hidden sm:pt-10 sm:pb-20 md:pt-10 md:pb-24">
       <TechGrid />
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-10">
-        <div className="flex flex-col items-center text-center mb-10 md:mb-16">
+        <div className="mb-8 flex flex-col items-center text-center md:mb-16">
           <Magnetic strength={0.1}>
             <motion.h2
               initial={{ opacity: 0, y: 10 }}
@@ -33,14 +33,14 @@ const InnovationLab = () => {
               Life beyond the<span className="sr-only"> Classroom</span>
             </motion.h2>
           </Magnetic>
-          <div className="overflow-hidden px-12 py-8">
+          <div className="overflow-hidden px-0 py-3 sm:px-12 sm:py-8">
             <Magnetic strength={0.2}>
               <motion.div
                 aria-hidden="true"
                 initial={{ y: "100%" }}
                 animate={isInView ? { y: 0 } : {}}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[44px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.9] tracking-tight md:tracking-tighter font-iic"
+                className="text-[40px] sm:text-6xl md:text-8xl font-black text-[#74C044] leading-[0.95] md:leading-[0.9] tracking-tight font-iic"
               >
                 Classroom
               </motion.div>
@@ -48,10 +48,10 @@ const InnovationLab = () => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-stretch md:items-end mb-10 md:mb-12 gap-6 md:gap-8">
+        <div className="mb-8 flex flex-col items-stretch justify-between gap-5 md:mb-12 md:flex-row md:items-end md:gap-8">
           <div className="max-w-2xl">
             <Magnetic strength={0.1}>
-              <h3 className="text-3xl sm:text-4xl md:text-[56px] font-bold text-[#21409A] mb-4 md:mb-6 font-iic">
+              <h3 className="mb-3 text-3xl font-bold text-[#21409A] sm:text-4xl md:mb-6 md:text-[56px] font-iic">
                 Innovation Lab
               </h3>
             </Magnetic>
@@ -79,7 +79,7 @@ growth."
           </Magnetic>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-5 sm:gap-8 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 60, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}

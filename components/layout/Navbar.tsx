@@ -151,14 +151,14 @@ const Navbar = () => {
           opacity: visible ? 1 : 0,
         }}
         transition={{ duration: 0.4, ease: EASE }}
-        className="fixed left-3 right-3 top-3 z-[200] rounded-full border border-white/70 bg-white/[0.88] backdrop-blur-2xl backdrop-saturate-200 shadow-[0_14px_40px_-24px_rgba(33,64,154,0.65)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.85),0_14px_40px_-24px_rgba(33,64,154,0.65)] sm:left-5 sm:right-5 lg:inset-x-0 lg:top-0 lg:rounded-none lg:border-x-0 lg:border-t-0 lg:border-b-white/60 lg:bg-white/70 lg:shadow-none lg:[box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.8),0_8px_32px_-8px_rgba(33,64,154,0.22)]"
+        className="fixed left-2 right-2 top-2 z-[200] rounded-full border border-white/70 bg-white/[0.9] backdrop-blur-2xl backdrop-saturate-200 shadow-[0_14px_40px_-24px_rgba(33,64,154,0.65)] [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.85),0_14px_40px_-24px_rgba(33,64,154,0.65)] sm:left-5 sm:right-5 sm:top-3 lg:inset-x-0 lg:top-0 lg:rounded-none lg:border-x-0 lg:border-t-0 lg:border-b-white/60 lg:bg-white/70 lg:shadow-none lg:[box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.8),0_8px_32px_-8px_rgba(33,64,154,0.22)]"
       >
-        <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-3 py-2 sm:px-4 lg:px-5 lg:py-2.5 xl:px-8">
+        <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-2.5 py-1.5 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 xl:px-8">
           {/* Logo */}
           <Link
             href="/"
             aria-label="Itahari International College — Home"
-            className="relative h-10 w-[138px] shrink-0 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:h-12 sm:w-[160px] lg:h-12 lg:w-[160px] xl:h-14 xl:w-[188px]"
+            className="relative h-9 w-[126px] shrink-0 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:h-12 sm:w-[160px] lg:h-12 lg:w-[160px] xl:h-14 xl:w-[188px]"
           >
             <Image
               src="/images/common/iic_logo.png"
@@ -266,7 +266,7 @@ const Navbar = () => {
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
-            className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#21409A]/8 text-[#21409A] transition-colors hover:bg-[#21409A]/12 lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044]"
+            className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#21409A]/8 text-[#21409A] transition-colors hover:bg-[#21409A]/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:h-10 sm:w-10 lg:hidden"
           >
             <span className="sr-only">Menu</span>
             <motion.span
@@ -297,10 +297,10 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.32, ease: EASE }}
-            className="fixed inset-x-0 top-[76px] z-[190] px-3 sm:top-[88px] sm:px-5 lg:hidden"
+            className="fixed inset-x-0 top-[62px] z-[190] px-2 sm:top-[88px] sm:px-5 lg:hidden"
           >
             <div className="mx-auto max-w-md">
-              <div className="max-h-[calc(100svh-5.75rem)] overflow-y-auto overscroll-contain rounded-[28px] border border-white/70 bg-white/[0.96] p-2.5 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.55)] ring-1 ring-[#21409A]/10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="max-h-[calc(100svh-4.75rem)] overflow-y-auto overscroll-contain rounded-[24px] border border-white/70 bg-white/[0.96] p-2 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.55)] ring-1 ring-[#21409A]/10 [scrollbar-width:none] sm:max-h-[calc(100svh-5.75rem)] sm:rounded-[28px] sm:p-2.5 [&::-webkit-scrollbar]:hidden">
                 <ul className="flex flex-col gap-1">
                   {navItems.map((item, index) => {
                     if (!item.children) {
@@ -317,7 +317,7 @@ const Navbar = () => {
                             rel={item.external ? 'noopener noreferrer' : undefined}
                             prefetch={item.external ? false : undefined}
                             onClick={() => setIsMenuOpen(false)}
-                            className={`flex min-h-12 items-center justify-between rounded-[20px] px-4 py-3 text-[14px] font-black uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] ${
+                            className={`flex min-h-11 items-center justify-between rounded-[18px] px-3.5 py-2.5 text-[13px] font-black uppercase tracking-[0.07em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:min-h-12 sm:rounded-[20px] sm:px-4 sm:py-3 sm:text-[14px] sm:tracking-[0.08em] ${
                               isActive(item.href) ? 'bg-[#74C044]/12 text-[#21409A]' : 'text-[#1e2733] hover:bg-[#21409A]/6'
                             }`}
                           >
@@ -342,7 +342,7 @@ const Navbar = () => {
                           type="button"
                           aria-expanded={accOpen}
                           onClick={() => setOpenAccordion(accOpen ? null : item.name)}
-                          className={`group flex min-h-12 w-full items-center justify-between rounded-[20px] px-4 py-3 text-[14px] font-black uppercase tracking-[0.08em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] ${
+                          className={`group flex min-h-11 w-full items-center justify-between rounded-[18px] px-3.5 py-2.5 text-[13px] font-black uppercase tracking-[0.07em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:min-h-12 sm:rounded-[20px] sm:px-4 sm:py-3 sm:text-[14px] sm:tracking-[0.08em] ${
                             accActive || accOpen ? 'bg-[#74C044]/12 text-[#21409A]' : 'text-[#1e2733] hover:bg-[#21409A]/6'
                           }`}
                         >
@@ -370,7 +370,7 @@ const Navbar = () => {
                                   <Link
                                     href={child.href}
                                     onClick={() => setIsMenuOpen(false)}
-                                    className={`flex min-h-10 items-center justify-between rounded-2xl px-4 py-2 text-[13px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] ${
+                                    className={`flex min-h-10 items-center justify-between rounded-2xl px-3.5 py-2 text-[13px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044] sm:px-4 ${
                                       isActive(child.href) ? 'bg-[#21409A]/8 text-[#21409A]' : 'text-[#5d6675] hover:bg-[#21409A]/6 hover:text-[#21409A]'
                                     }`}
                                   >

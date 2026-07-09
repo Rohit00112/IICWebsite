@@ -52,7 +52,7 @@ const ScrollScaleVideo = () => {
         onClick={openFullscreen}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="relative aspect-[2327/1080] w-full overflow-hidden bg-black cursor-pointer md:cursor-none"
+        className="relative aspect-video w-full overflow-hidden bg-black cursor-pointer sm:aspect-[2327/1080] md:cursor-none"
       >
         {/* Side Text Overlays */}
         <motion.div
@@ -160,9 +160,6 @@ const ScrollScaleVideo = () => {
           {/* Vignette & Global Dark Overlay */}
           <div className="absolute inset-0 z-10 bg-black/10 pointer-events-none" />
           <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/40 via-transparent to-black/15 pointer-events-none" />
-
-          {/* Grain */}
-          <div className="absolute inset-0 z-10 opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
           {/* Framing lines */}
           <div className="absolute top-0 left-0 w-full h-[1px] bg-white/10 z-20" />

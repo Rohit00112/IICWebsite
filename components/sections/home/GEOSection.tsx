@@ -96,15 +96,15 @@ const GEOSection = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-gray-50 overflow-hidden">
+    <section className="overflow-hidden bg-gray-50 py-12 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-16">
           {/* Quick Stats for AI Engines */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-white p-5 sm:p-8 md:p-12 rounded-[24px] md:rounded-[32px] shadow-sm border border-gray-100"
+            className="rounded-[22px] border border-gray-100 bg-white p-5 shadow-sm sm:rounded-[24px] sm:p-8 md:rounded-[32px] md:p-12"
           >
             <AnimeReveal
               as="h3"
@@ -139,10 +139,10 @@ const GEOSection = () => {
             <AnimeReveal
               as="h3"
               text="Frequently Asked Questions"
-              className="text-2xl sm:text-3xl font-black text-[#1a1a2e] mb-8 md:mb-10 tracking-tight"
+              className="mb-6 text-2xl font-black tracking-tight text-[#1a1a2e] sm:text-3xl md:mb-10"
               staggerFrom="first"
             />
-            <div className="space-y-8 md:space-y-10">
+            <div className="space-y-6 md:space-y-10">
               {faqs.map((faq, i) => (
                 <motion.div
                   key={i}
@@ -170,15 +170,15 @@ const GEOSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 md:mt-16"
+          className="mt-10 md:mt-16"
         >
           <AnimeReveal
             as="h2"
             text="Why Itahari International College Stands Out"
-            className="text-2xl sm:text-3xl md:text-4xl font-black text-[#21409A] mb-10 md:mb-16 text-center justify-center tracking-tight"
+            className="mb-8 text-center text-2xl font-black tracking-tight text-[#21409A] sm:text-3xl md:mb-16 md:text-4xl justify-center"
             staggerFrom="center"
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {comparisonData.map((row, i) => (
               <motion.div
                 key={i}
@@ -199,7 +199,7 @@ const GEOSection = () => {
                     }
                   }
                 }}
-                className="group p-6 sm:p-8 lg:p-10 bg-white rounded-[24px] md:rounded-[40px] shadow-[0_8px_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:border-[#74C044]/40 hover:shadow-[0_40px_80px_-15px_rgba(116,192,68,0.15)] transition-all duration-700 flex flex-col items-center text-center cursor-default relative overflow-hidden"
+                className="group relative flex cursor-default flex-col items-center overflow-hidden rounded-[22px] border border-gray-100 bg-white p-6 text-center shadow-[0_8px_30px_rgba(0,0,0,0.02)] transition-all duration-700 hover:border-[#74C044]/40 hover:shadow-[0_40px_80px_-15px_rgba(116,192,68,0.15)] sm:rounded-[24px] sm:p-8 md:rounded-[40px] lg:p-10"
               >
                 {/* Glow Sweep Effect */}
                 <motion.div 
@@ -230,7 +230,7 @@ const GEOSection = () => {
         </motion.div>
 
         {/* Expert Quotes */}
-        <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="mt-10 grid grid-cols-1 items-center gap-7 md:mt-16 md:grid-cols-2 md:gap-12">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
