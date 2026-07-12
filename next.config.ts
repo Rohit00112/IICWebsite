@@ -49,6 +49,26 @@ const nextConfig: NextConfig = {
         destination: '/:slug',
         statusCode: 301,
       },
+      {
+        source: '/our-alumni',
+        destination: '/alumni',
+        statusCode: 301,
+      },
+      {
+        source: '/bachelors-in-information-technology',
+        destination: '/bsc-hons-computing',
+        statusCode: 301,
+      },
+      {
+        source: '/teaching-methodology',
+        destination: '/about-us',
+        statusCode: 301,
+      },
+      {
+        source: '/life-at-iic/:slug',
+        destination: '/life-at-iic/events/:slug',
+        statusCode: 301,
+      },
     ];
   },
   async headers() {

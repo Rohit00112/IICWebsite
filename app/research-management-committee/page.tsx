@@ -15,7 +15,6 @@ const pageDescription =
 export const metadata: Metadata = {
   title: 'Research Management Committee',
   description: pageDescription,
-  keywords: RMC_PAGE_KEYWORDS,
   alternates: { canonical: '/research-management-committee' },
   openGraph: {
     title: 'Research Management Committee | Itahari International College',
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/api/og?title=Research Management Committee&subtitle=Ethical Inquiry and Academic Quality&section=Itahari International College',
+        url: '/og/research.png',
         width: 1200,
         height: 630,
         alt: 'Research Management Committee at Itahari International College',
@@ -36,7 +35,7 @@ export const metadata: Metadata = {
     title: 'Research Management Committee',
     description: pageDescription,
     images: [
-      '/api/og?title=Research Management Committee&subtitle=Ethical Inquiry and Academic Quality&section=Itahari International College',
+      '/og/research.png',
     ],
   },
 };

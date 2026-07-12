@@ -16,13 +16,26 @@ const pageDescription = 'Learn how IIC combines London Metropolitan University s
 export const metadata = {
   title: 'Mission, Values & UK Partnership',
   description: pageDescription,
-  keywords: ABOUT_PAGE_KEYWORDS,
   alternates: { canonical: '/about-us' },
   openGraph: {
     title: 'Mission, Values & UK Partnership | Itahari International College',
     description: pageDescription,
     url: '/about-us',
     type: 'website',
+    images: [
+      {
+        url: '/og/about.png',
+        width: 1200,
+        height: 630,
+        alt: 'Mission, values and UK partnership at Itahari International College',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mission, Values & UK Partnership',
+    description: pageDescription,
+    images: ['/og/about.png'],
   },
 };
 

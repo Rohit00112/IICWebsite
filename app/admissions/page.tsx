@@ -15,7 +15,6 @@ const pageDescription = 'Apply to Itahari International College for UK-awarded I
 export const metadata: Metadata = {
   title: 'Apply Now | Admissions 2026',
   description: pageDescription,
-  keywords: ADMISSIONS_PAGE_KEYWORDS,
   alternates: { canonical: '/admissions' },
   openGraph: {
     title: 'Apply Now | Admissions - Itahari International College',
@@ -23,12 +22,18 @@ export const metadata: Metadata = {
     url: '/admissions',
     images: [
       {
-        url: '/api/og?title=Admissions 2026&subtitle=Start Your Global Journey&section=Apply Now',
+        url: '/og/admissions.png',
         width: 1200,
         height: 630,
         alt: 'Itahari International College Admissions',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Apply Now | Admissions 2026',
+    description: pageDescription,
+    images: ['/og/admissions.png'],
   },
 };
 

@@ -15,18 +15,26 @@ import {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const gallery = await getPublishedEventGalleryArchiveBySlug(slug);
-  if (!gallery) return { title: 'Gallery Not Found' };
-  const keywords = mergeKeywords(LIFE_PAGE_KEYWORDS, [gallery.title, `${gallery.title} photos`]);
-
+  if (!gallery) {
+    return {
+      title: 'Gallery Not Found',
+      robots: { index: false, follow: false },
+    };
+  }
   return {
     title: `${gallery.title} Gallery`,
     description: gallery.summary,
-    keywords,
     alternates: { canonical: `/life-at-iic/events/${slug}` },
     openGraph: {
       title: `${gallery.title} Gallery`,
       description: gallery.summary,
       url: `/life-at-iic/events/${slug}`,
+      images: [gallery.coverImage],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${gallery.title} Gallery`,
+      description: gallery.summary,
       images: [gallery.coverImage],
     },
   };

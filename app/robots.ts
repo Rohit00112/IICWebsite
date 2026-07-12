@@ -1,9 +1,9 @@
 import type { MetadataRoute } from 'next';
 
-import { SITE_URL, absoluteUrl } from '@/lib/seo-schema';
+import { absoluteUrl } from '@/lib/seo-schema';
 
 export default function robots(): MetadataRoute.Robots {
-  const privatePaths = ['/admin/', '/login', '/api/'];
+  const privatePaths = ['/admin', '/admin/', '/login', '/api/'];
   const aiBots = [
     'GPTBot',
     'ChatGPT-User',
@@ -21,12 +21,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: ['/', '/api/og'],
+        allow: '/',
         disallow: privatePaths,
       },
       {
         userAgent: aiBots,
-        allow: ['/', '/api/og'],
+        allow: '/',
         disallow: privatePaths,
       },
     ],

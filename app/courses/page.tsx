@@ -17,13 +17,26 @@ const pageDescription = 'Explore London Metropolitan University awarded IT and B
 export const metadata: Metadata = {
   title: 'UK Degree Programmes in Itahari | IT & Business',
   description: pageDescription,
-  keywords: COURSES_PAGE_KEYWORDS,
   alternates: { canonical: '/courses' },
   openGraph: {
     title: 'UK Degree Programmes in Itahari | IT & Business',
     description: pageDescription,
     url: '/courses',
     type: 'website',
+    images: [
+      {
+        url: '/og/courses.png',
+        width: 1200,
+        height: 630,
+        alt: 'UK degree programmes at Itahari International College',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'UK Degree Programmes in Itahari | IT & Business',
+    description: pageDescription,
+    images: ['/og/courses.png'],
   },
 };
 

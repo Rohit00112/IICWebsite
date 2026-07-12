@@ -351,7 +351,7 @@ export default function OurInfrastructurePage() {
           <div className="absolute bottom-0 left-4 w-[calc(100%-2rem)] max-w-[24rem] rounded-[20px] bg-white p-5 shadow-[0_16px_36px_-24px_rgba(21,35,58,0.42)] md:-left-5 md:bottom-4 md:w-[21rem] md:max-w-[21rem] md:rounded-[22px] md:p-7 md:shadow-[0_30px_70px_-24px_rgba(21,35,58,0.45)]">
             <div className="flex items-center gap-4">
               <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full bg-[#dce6f2] ring-2 ring-[#74C044] ring-offset-2">
-                <Image src="/images/our-infrastructure/ronal-niraula.png" alt="Ronal Niraula" fill quality={70} className="scale-[1.35] object-cover object-[50%_26%]" sizes="56px" />
+                <Image src="/images/our-infrastructure/ronal-niraula.png" alt="Ronal Niraula" fill quality={70} className="object-cover" sizes="56px" />
               </div>
               <div className="flex-1">
                 <p className="text-lg font-black leading-tight text-[#172033]">Ronal Niraula</p>

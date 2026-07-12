@@ -1,5 +1,32 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Page Not Found',
+  robots: {
+    index: false,
+    follow: false,
+  },
+  openGraph: {
+    title: 'Page Not Found | Itahari International College',
+    description: 'The page you are looking for could not be found. Explore IIC’s UK-awarded IT and Business programmes instead.',
+    images: [
+      {
+        url: '/og/home.png',
+        width: 1200,
+        height: 630,
+        alt: 'Itahari International College',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Page Not Found | Itahari International College',
+    description: 'The page you are looking for could not be found. Explore IIC’s UK-awarded IT and Business programmes instead.',
+    images: ['/og/home.png'],
+  },
+};
 
 function CoursesPreview() {
   return (

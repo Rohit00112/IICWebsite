@@ -42,7 +42,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       absolute: `${item.title} | Itahari International College`,
     },
     description: item.description,
-    keywords,
     authors: [{ name: authorName }],
     category: section,
     alternates: { canonical: canonicalPath },
@@ -61,7 +60,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: item.description,
       url: canonicalPath,
       siteName: COLLEGE_NAME,
-      locale: 'en_US',
+      locale: 'en_NP',
       images: [
         {
           url: item.image,

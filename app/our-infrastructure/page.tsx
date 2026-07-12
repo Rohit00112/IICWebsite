@@ -11,13 +11,11 @@ import {
 
 const pageDescription =
   'Explore IIC campus infrastructure in Itahari: computer labs, library, lecture theatres, seminar halls, cafeteria, academic blocks, Wi-Fi, and smart facilities.';
-const ogImage =
-  '/api/og?title=Campus%20Infrastructure&subtitle=Labs%2C%20Library%20%26%20Smart%20Facilities&section=Itahari%20International%20College';
+const ogImage = '/og/infrastructure.png';
 
 export const metadata: Metadata = {
   title: 'Campus Infrastructure & Facilities in Itahari',
   description: pageDescription,
-  keywords: INFRASTRUCTURE_PAGE_KEYWORDS,
   alternates: { canonical: '/our-infrastructure' },
   openGraph: {
     title: 'Campus Infrastructure & Facilities in Itahari | IIC',

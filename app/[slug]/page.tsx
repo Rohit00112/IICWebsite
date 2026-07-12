@@ -35,23 +35,20 @@ export async function generateMetadata({
     };
   }
 
-  const keywords = mergeKeywords(COURSES_PAGE_KEYWORDS, [
-    course.title,
-    course.subtitle,
-    course.category,
-    course.listing?.displayTitle,
-    course.listing?.specialism,
-  ]);
-
   return {
     title: `${course.title} | London Metropolitan University`,
     description: `${course.description} Study ${course.title} in Itahari, Nepal. Direct UK degree in partnership with London Metropolitan University.`,
-    keywords,
     alternates: { canonical: `/${slug}` },
     openGraph: {
       title: `${course.title} - London Metropolitan University UK Degree`,
       description: course.description,
       url: `/${slug}`,
+      images: [course.image],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${course.title} | London Metropolitan University`,
+      description: `${course.description} Study ${course.title} in Itahari, Nepal. Direct UK degree in partnership with London Metropolitan University.`,
       images: [course.image],
     },
   };

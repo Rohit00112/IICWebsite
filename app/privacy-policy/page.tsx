@@ -8,13 +8,26 @@ const pageDescription = 'Learn how Itahari International College handles informa
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: pageDescription,
-  keywords: POLICY_PAGE_KEYWORDS,
   alternates: { canonical: '/privacy-policy' },
   openGraph: {
     title: 'Privacy Policy | Itahari International College',
     description: pageDescription,
     url: '/privacy-policy',
     type: 'website',
+    images: [
+      {
+        url: '/og/privacy.png',
+        width: 1200,
+        height: 630,
+        alt: 'Itahari International College privacy policy',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Privacy Policy | Itahari International College',
+    description: pageDescription,
+    images: ['/og/privacy.png'],
   },
 };
 

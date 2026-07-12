@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 
-import AdminShell from '@/components/admin/AdminShell';
-
 export const metadata: Metadata = {
-  title: 'Administration',
+  title: 'Administration Login',
   robots: {
     index: false,
     follow: false,
@@ -16,6 +14,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return <AdminShell>{children}</AdminShell>;
+export default function LoginLayout({ children }: { children: React.ReactNode }) {
+  return children;
 }

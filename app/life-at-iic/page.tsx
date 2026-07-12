@@ -20,7 +20,6 @@ const pageDescription = 'Discover student life at IIC, from college events and p
 export const metadata = {
   title: 'Life at IIC | Student Experience',
   description: pageDescription,
-  keywords: LIFE_PAGE_KEYWORDS,
   alternates: { canonical: '/life-at-iic' },
   openGraph: {
     title: 'Life at Itahari International College',
@@ -28,12 +27,18 @@ export const metadata = {
     url: '/life-at-iic',
     images: [
       {
-        url: '/api/og?title=Life At Itahari International College&subtitle=Experience Vibrant College Life&section=Student Life',
+        url: '/og/student-life.png',
         width: 1200,
         height: 630,
         alt: 'Life At Itahari International College',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Life at IIC | Student Experience',
+    description: pageDescription,
+    images: ['/og/student-life.png'],
   },
 };
 

@@ -13,13 +13,11 @@ import {
 
 const pageDescription =
   'Meet the IIC alumni network and graduate stories across technology, finance, design, and marketing, with career paths from Nepal to global workplaces.';
-const ogImage =
-  '/api/og?title=IIC%20Alumni%20Network&subtitle=Graduate%20Stories%20%26%20Global%20Career%20Paths&section=Itahari%20International%20College';
+const ogImage = '/og/alumni.png';
 
 export const metadata: Metadata = {
   title: 'IIC Alumni Network & Graduate Stories',
   description: pageDescription,
-  keywords: ALUMNI_PAGE_KEYWORDS,
   alternates: { canonical: '/alumni' },
   openGraph: {
     title: 'IIC Alumni Network & Graduate Stories | Itahari International College',

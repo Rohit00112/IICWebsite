@@ -11,13 +11,11 @@ import {
 
 const pageDescription =
   'See how IIC builds career readiness through international exposure, job fairs, industry visits, employer networking, mentoring, mock interviews, and projects.';
-const ogImage =
-  '/api/og?title=Industry%20Exposure&subtitle=Placement%20Support%20%26%20Career-Ready%20Learning&section=Itahari%20International%20College';
+const ogImage = '/og/industry-exposure.png';
 
 export const metadata: Metadata = {
   title: 'Industry Exposure & Placement Support in Itahari',
   description: pageDescription,
-  keywords: INDUSTRY_EXPOSURE_PAGE_KEYWORDS,
   alternates: { canonical: '/industry-exposure' },
   openGraph: {
     title: 'Industry Exposure & Placement Support in Itahari | IIC',

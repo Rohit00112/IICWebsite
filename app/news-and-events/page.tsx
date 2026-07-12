@@ -11,19 +11,17 @@ import {
   buildNewsArticleNode,
   buildNewsItemListNode,
   buildSchemaGraph,
-  NEWS_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
 const pageTitle = 'IIC News & Events | Itahari International College Updates';
 const pageDescription = 'Read IIC news and events from Itahari International College, including campus stories, student achievements, workshops, admissions updates, and college events in Itahari, Nepal.';
-const openGraphImage = '/api/og?title=IIC%20News%20%26%20Events&subtitle=Campus%20stories%2C%20student%20achievements%2C%20workshops%20and%20college%20events&section=IIC%20Newsroom';
+const openGraphImage = '/og/news.png';
 
 export const metadata: Metadata = {
   title: {
     absolute: pageTitle,
   },
   description: pageDescription,
-  keywords: NEWS_PAGE_KEYWORDS,
   alternates: { canonical: '/news-and-events' },
   category: 'Education',
   robots: {
@@ -41,7 +39,7 @@ export const metadata: Metadata = {
     description: pageDescription,
     url: '/news-and-events',
     siteName: 'Itahari International College',
-    locale: 'en_US',
+    locale: 'en_NP',
     type: 'website',
     images: [
       {
