@@ -9,7 +9,7 @@ import InnovationGrid from '@/components/sections/about-us/InnovationGrid';
 import ExperienceCTA from '@/components/sections/about-us/ExperienceCTA';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
-import { ABOUT_PAGE_KEYWORDS, buildWebPageNode, withContext } from '@/lib/seo-schema';
+import { ABOUT_PAGE_KEYWORDS, absoluteAssetUrl, buildWebPageNode, withContext } from '@/lib/seo-schema';
 
 const pageDescription = 'Learn how IIC combines London Metropolitan University standards, practical learning, and student-centred support to develop globally competitive graduates in Itahari.';
 
@@ -24,7 +24,7 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: '/og/about.png',
+        url: absoluteAssetUrl('/og/about.png'),
         width: 1200,
         height: 630,
         alt: 'Mission, values and UK partnership at Itahari International College',
@@ -35,7 +35,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Mission, Values & UK Partnership',
     description: pageDescription,
-    images: ['/og/about.png'],
+    images: [absoluteAssetUrl('/og/about.png')],
   },
 };
 

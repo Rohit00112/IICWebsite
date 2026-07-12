@@ -3,6 +3,7 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
 import IndustryExposurePage from '@/components/sections/industry-exposure/IndustryExposurePage';
 import {
+  absoluteAssetUrl,
   buildIndustryExposureItemListNode,
   buildSchemaGraph,
   buildWebPageNode,
@@ -11,7 +12,7 @@ import {
 
 const pageDescription =
   'See how IIC builds career readiness through international exposure, job fairs, industry visits, employer networking, mentoring, mock interviews, and projects.';
-const ogImage = '/og/industry-exposure.png';
+const ogImage = absoluteAssetUrl('/og/industry-exposure.png');
 
 export const metadata: Metadata = {
   title: 'Industry Exposure & Placement Support in Itahari',

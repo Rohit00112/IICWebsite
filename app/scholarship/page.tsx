@@ -4,6 +4,7 @@ import ScholarshipsClient from '@/components/sections/scholarships/ScholarshipsC
 import { getPublishedScholarshipBatches } from '@/lib/scholarships';
 import JsonLd from '@/components/common/JsonLd';
 import {
+  absoluteAssetUrl,
   buildSchemaGraph,
   buildScholarshipListNode,
   buildWebPageNode,
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     url: '/scholarship',
     images: [
       {
-        url: '/og/scholarships.png',
+        url: absoluteAssetUrl('/og/scholarships.png'),
         width: 1200,
         height: 630,
         alt: 'Scholarships at Itahari International College',
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Scholarships at IIC',
     description: pageDescription,
-    images: ['/og/scholarships.png'],
+    images: [absoluteAssetUrl('/og/scholarships.png')],
   },
 };
 
@@ -54,7 +55,7 @@ export default async function ScholarshipsPage() {
             path: '/scholarship',
             name: 'Scholarships at Itahari International College',
             description: pageDescription,
-            image: '/og/scholarships.png',
+            image: absoluteAssetUrl('/og/scholarships.png'),
             keywords: SCHOLARSHIPS_PAGE_KEYWORDS,
           }),
           buildScholarshipListNode(batches),

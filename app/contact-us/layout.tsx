@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { absoluteAssetUrl } from '@/lib/seo-schema';
 
 const pageDescription =
   'Contact IIC for admissions guidance, college visits, partnerships, and support for UK-awarded IT and Business programmes in Itahari.';
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og/contact.png',
+        url: absoluteAssetUrl('/og/contact.png'),
         width: 1200,
         height: 630,
         alt: 'Contact Itahari International College',
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Contact Us | Admissions & Directions in Itahari',
     description: pageDescription,
-    images: ['/og/contact.png'],
+    images: [absoluteAssetUrl('/og/contact.png')],
   },
 };
 

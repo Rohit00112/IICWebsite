@@ -4,6 +4,7 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
 import RmcPage from '@/components/sections/research-management-committee/RmcPage';
 import {
+  absoluteAssetUrl,
   buildSchemaGraph,
   buildWebPageNode,
   RMC_PAGE_KEYWORDS,
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og/research.png',
+        url: absoluteAssetUrl('/og/research.png'),
         width: 1200,
         height: 630,
         alt: 'Research Management Committee at Itahari International College',
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     title: 'Research Management Committee',
     description: pageDescription,
     images: [
-      '/og/research.png',
+      absoluteAssetUrl('/og/research.png'),
     ],
   },
 };

@@ -9,7 +9,7 @@ import GEOSection from "@/components/sections/home/GEOSection";
 import HomePopup from "@/components/sections/home/HomePopup";
 import { getHomePopupSettings } from "@/lib/home-popup";
 import JsonLd from "@/components/common/JsonLd";
-import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, HOME_PAGE_KEYWORDS } from "@/lib/seo-schema";
+import { absoluteAssetUrl, buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, HOME_PAGE_KEYWORDS } from "@/lib/seo-schema";
 
 const PartnerSection = dynamic(() => import("@/components/sections/home/PartnerSection"), { ssr: true });
 const ScholarshipSection = dynamic(() => import("@/components/sections/home/ScholarshipSection"), { ssr: true });
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og/home.png",
+        url: absoluteAssetUrl("/og/home.png"),
         width: 1200,
         height: 630,
         alt: "Itahari International College UK degrees in IT and Business",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Itahari International College | UK Degrees in IT & Business",
     description: pageDescription,
-    images: ["/og/home.png"],
+    images: [absoluteAssetUrl("/og/home.png")],
   },
 };
 

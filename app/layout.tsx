@@ -4,7 +4,7 @@ import "./globals.css";
 import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
 import JsonLd from "@/components/common/JsonLd";
 import MarketingScripts from "@/components/common/MarketingScripts";
-import { buildGlobalSchema, SITE_URL } from "@/lib/seo-schema";
+import { absoluteAssetUrl, buildGlobalSchema, SITE_URL } from "@/lib/seo-schema";
 import { Metadata, Viewport } from "next";
 
 const geistSans = Geist({
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     siteName: "Itahari International College",
     images: [
       {
-        url: "/og/home.png",
+        url: absoluteAssetUrl("/og/home.png"),
         width: 1200,
         height: 630,
         alt: "Itahari International College",
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
     description: "UK-awarded undergraduate programmes in IT and Business in Nepal.",
     site: "@iic_nepal",
     creator: "@iic_nepal",
-    images: ["/og/home.png"],
+    images: [absoluteAssetUrl("/og/home.png")],
   },
   robots: {
     index: true,

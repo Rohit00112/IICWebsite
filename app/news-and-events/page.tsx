@@ -6,6 +6,7 @@ import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
 import {
+  absoluteAssetUrl,
   buildEventNode,
   buildNewsAndEventsCollectionNode,
   buildNewsArticleNode,
@@ -15,7 +16,7 @@ import {
 
 const pageTitle = 'IIC News & Events | Itahari International College Updates';
 const pageDescription = 'Read IIC news and events from Itahari International College, including campus stories, student achievements, workshops, admissions updates, and college events in Itahari, Nepal.';
-const openGraphImage = '/og/news.png';
+const openGraphImage = absoluteAssetUrl('/og/news.png');
 
 export const metadata: Metadata = {
   title: {

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
 import JsonLd from '@/components/common/JsonLd';
-import { buildSchemaGraph, COLLEGE_ID } from '@/lib/seo-schema';
+import { absoluteUrl, buildSchemaGraph, COLLEGE_ID } from '@/lib/seo-schema';
 
 const portraitFrameClass = "lg:w-1/2 relative h-[420px] md:h-[620px] w-full group overflow-hidden bg-white shadow-[0_34px_90px_-70px_rgba(22,19,47,0.3)]";
 const portraitBlendClass = "pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_50%_42%,#EEF3FB_0%,#F6F9FE_58%,#FFFFFF_88%)]";
@@ -118,7 +118,7 @@ const Leadership = () => {
         data={buildSchemaGraph([
             {
               "@type": "Person",
-              "@id": "https://iic.edu.np/about-us#sulav-budhathoki",
+              "@id": `${absoluteUrl('/about-us')}#sulav-budhathoki`,
               "name": "Mr. Sulav Budhathoki",
               "jobTitle": "Chairman",
               "worksFor": {
@@ -129,7 +129,7 @@ const Leadership = () => {
             },
             {
               "@type": "Person",
-              "@id": "https://iic.edu.np/about-us#satyabrat-koirala",
+              "@id": `${absoluteUrl('/about-us')}#satyabrat-koirala`,
               "name": "Mr. Satyabrat Koirala",
               "jobTitle": "CEO",
               "worksFor": { "@id": COLLEGE_ID },

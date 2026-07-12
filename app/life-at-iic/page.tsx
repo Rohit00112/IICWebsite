@@ -9,6 +9,7 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
 import { getPublishedEventGalleryArchives } from '@/lib/event-galleries';
 import {
+  absoluteAssetUrl,
   buildEventGalleryItemListNode,
   buildSchemaGraph,
   buildWebPageNode,
@@ -27,7 +28,7 @@ export const metadata = {
     url: '/life-at-iic',
     images: [
       {
-        url: '/og/student-life.png',
+        url: absoluteAssetUrl('/og/student-life.png'),
         width: 1200,
         height: 630,
         alt: 'Life At Itahari International College',
@@ -38,7 +39,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Life at IIC | Student Experience',
     description: pageDescription,
-    images: ['/og/student-life.png'],
+    images: [absoluteAssetUrl('/og/student-life.png')],
   },
 };
 

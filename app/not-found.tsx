@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { absoluteAssetUrl } from '@/lib/seo-schema';
 
 export const metadata: Metadata = {
   title: 'Page Not Found',
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
     description: 'The page you are looking for could not be found. Explore IIC’s UK-awarded IT and Business programmes instead.',
     images: [
       {
-        url: '/og/home.png',
+        url: absoluteAssetUrl('/og/home.png'),
         width: 1200,
         height: 630,
         alt: 'Itahari International College',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Page Not Found | Itahari International College',
     description: 'The page you are looking for could not be found. Explore IIC’s UK-awarded IT and Business programmes instead.',
-    images: ['/og/home.png'],
+    images: [absoluteAssetUrl('/og/home.png')],
   },
 };
 

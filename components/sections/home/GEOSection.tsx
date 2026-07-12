@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import AnimeReveal from '../../effects/AnimeReveal';
 import JsonLd from '@/components/common/JsonLd';
-import { buildFaqPageNode, withContext } from '@/lib/seo-schema';
+import { absoluteUrl, buildFaqPageNode, withContext } from '@/lib/seo-schema';
 
 const GEOSection = () => {
   const stats = [
@@ -262,7 +262,7 @@ const GEOSection = () => {
       {(() => {
         const faqSchema = buildFaqPageNode(
           faqs.map((faq) => ({ question: faq.q, answer: faq.plain })),
-          'https://iic.edu.np/#home-faq'
+          `${absoluteUrl('/')}#home-faq`
         );
 
         return faqSchema ? <JsonLd data={withContext(faqSchema)} /> : null;

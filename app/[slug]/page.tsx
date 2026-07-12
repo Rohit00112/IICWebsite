@@ -6,6 +6,7 @@ import JsonLd from '@/components/common/JsonLd';
 import CourseTemplate from '@/components/sections/course-detail/CourseTemplate';
 import { getAllCourses, getCourseBySlug } from '@/lib/courses';
 import {
+  absoluteUrl,
   buildCourseNode,
   buildFaqPageNode,
   buildSchemaGraph,
@@ -79,7 +80,7 @@ export default async function CoursePage({
   const courseSchema = buildCourseNode(course);
   const faqSchema = buildFaqPageNode(
     course.faqs || [],
-    `https://iic.edu.np/${course.slug}#faq`
+    `${absoluteUrl(`/${course.slug}`)}#faq`
   );
   const pageDescription = `${course.description} Study ${course.title} in Itahari, Nepal. Direct UK degree in partnership with London Metropolitan University.`;
   const pageKeywords = mergeKeywords(COURSES_PAGE_KEYWORDS, [

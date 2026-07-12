@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import JsonLd from '@/components/common/JsonLd';
-import { buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, POLICY_PAGE_KEYWORDS } from '@/lib/seo-schema';
+import { absoluteAssetUrl, buildBreadcrumbListNode, buildSchemaGraph, buildWebPageNode, POLICY_PAGE_KEYWORDS } from '@/lib/seo-schema';
 
 const pageDescription = 'Learn how Itahari International College handles information submitted through its website forms.';
 
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og/privacy.png',
+        url: absoluteAssetUrl('/og/privacy.png'),
         width: 1200,
         height: 630,
         alt: 'Itahari International College privacy policy',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Privacy Policy | Itahari International College',
     description: pageDescription,
-    images: ['/og/privacy.png'],
+    images: [absoluteAssetUrl('/og/privacy.png')],
   },
 };
 

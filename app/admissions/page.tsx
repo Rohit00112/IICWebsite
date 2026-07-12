@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import AdmissionsClient from '@/components/sections/admissions/AdmissionsClient';
 import JsonLd from '@/components/common/JsonLd';
 import {
+  absoluteAssetUrl,
+  absoluteUrl,
   buildAdmissionProgramNodes,
   buildBreadcrumbListNode,
   buildFaqPageNode,
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
     url: '/admissions',
     images: [
       {
-        url: '/og/admissions.png',
+        url: absoluteAssetUrl('/og/admissions.png'),
         width: 1200,
         height: 630,
         alt: 'Itahari International College Admissions',
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Apply Now | Admissions 2026',
     description: pageDescription,
-    images: ['/og/admissions.png'],
+    images: [absoluteAssetUrl('/og/admissions.png')],
   },
 };
 
@@ -57,7 +59,7 @@ export default function AdmissionsPage() {
         answer: 'Yes, our programmes are awarded by London Metropolitan University, UK, and are recognised by the Ministry of Education, Nepal and internationally.',
       },
     ],
-    'https://iic.edu.np/admissions#faq'
+    `${absoluteUrl('/admissions')}#faq`
   );
 
   return (

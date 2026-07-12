@@ -3,6 +3,7 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
 import OurInfrastructurePage from '@/components/sections/our-infrastructure/OurInfrastructurePage';
 import {
+  absoluteAssetUrl,
   buildInfrastructureFacilityListNode,
   buildSchemaGraph,
   buildWebPageNode,
@@ -11,7 +12,7 @@ import {
 
 const pageDescription =
   'Explore IIC campus infrastructure in Itahari: computer labs, library, lecture theatres, seminar halls, cafeteria, academic blocks, Wi-Fi, and smart facilities.';
-const ogImage = '/og/infrastructure.png';
+const ogImage = absoluteAssetUrl('/og/infrastructure.png');
 
 export const metadata: Metadata = {
   title: 'Campus Infrastructure & Facilities in Itahari',

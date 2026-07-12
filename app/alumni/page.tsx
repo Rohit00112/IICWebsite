@@ -5,6 +5,7 @@ import JsonLd from '@/components/common/JsonLd';
 import AlumniPage from '@/components/sections/alumni/AlumniPage';
 import {
   ALUMNI_PAGE_KEYWORDS,
+  absoluteAssetUrl,
   buildAlumniCareerFieldListNode,
   buildAlumniNetworkNode,
   buildSchemaGraph,
@@ -13,7 +14,7 @@ import {
 
 const pageDescription =
   'Meet the IIC alumni network and graduate stories across technology, finance, design, and marketing, with career paths from Nepal to global workplaces.';
-const ogImage = '/og/alumni.png';
+const ogImage = absoluteAssetUrl('/og/alumni.png');
 
 export const metadata: Metadata = {
   title: 'IIC Alumni Network & Graduate Stories',

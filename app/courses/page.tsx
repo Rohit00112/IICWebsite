@@ -5,6 +5,7 @@ import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import { getAllCourses } from '@/lib/courses';
 import JsonLd from '@/components/common/JsonLd';
 import {
+  absoluteAssetUrl,
   buildCourseItemListNode,
   buildCourseNode,
   buildSchemaGraph,
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og/courses.png',
+        url: absoluteAssetUrl('/og/courses.png'),
         width: 1200,
         height: 630,
         alt: 'UK degree programmes at Itahari International College',
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'UK Degree Programmes in Itahari | IT & Business',
     description: pageDescription,
-    images: ['/og/courses.png'],
+    images: [absoluteAssetUrl('/og/courses.png')],
   },
 };
 

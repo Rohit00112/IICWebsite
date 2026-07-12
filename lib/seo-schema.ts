@@ -27,7 +27,29 @@ interface WebPageNodeOptions {
   keywords?: string[];
 }
 
-export const SITE_URL = 'https://iic.edu.np';
+function normalizeSiteUrl(value: string) {
+  const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  return withProtocol.replace(/\/$/, '');
+}
+
+const configuredSiteHost =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+  'https://iic-website-wine.vercel.app';
+
+export const SITE_URL = normalizeSiteUrl(configuredSiteHost);
+
+export const ASSET_URL = normalizeSiteUrl(
+  process.env.NEXT_PUBLIC_ASSET_URL || SITE_URL
+);
+
+export function absoluteAssetUrl(path = '') {
+  if (!path) return ASSET_URL;
+  if (/^https?:\/\//i.test(path)) return path;
+
+  return `${ASSET_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+}
+
 export const COLLEGE_NAME = 'Itahari International College';
 export const COLLEGE_ID = `${SITE_URL}/#college`;
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
@@ -332,7 +354,7 @@ export function absoluteUrl(path = '') {
 
 export function absoluteImageUrl(src?: string) {
   if (!src) return undefined;
-  return absoluteUrl(src);
+  return absoluteAssetUrl(src);
 }
 
 export function toIsoDate(value?: string) {
