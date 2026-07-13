@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: dependencies
+      args:
+        DATABASE_URL: ${DATABASE_URL:-mysql://iic_user:iic_password@127.0.0.1:3306/iic_website}
     depends_on:
       db:
         condition: service_healthy
@@ -18,6 +20,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+        DATABASE_URL: ${DATABASE_URL:-mysql://iic_user:iic_password@127.0.0.1:3306/iic_website}
+        JWT_SECRET: ${JWT_SECRET:-development-only-jwt-secret}
+        TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY:-development-only-two-factor-key}
     restart: unless-stopped
     depends_on:
       migrate:
