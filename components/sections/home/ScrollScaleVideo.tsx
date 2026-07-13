@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ObfuscatedEmailText } from '@/components/common/ObfuscatedEmail';
 
@@ -274,7 +275,7 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -383,7 +384,8 @@ const FullscreenOverlay = ({ src, poster, onClose }: FullscreenOverlayProps) => 
           </div>
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body,
   );
 };
 
