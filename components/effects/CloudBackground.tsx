@@ -3,6 +3,7 @@
 
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import useIsMobileLike from './useIsMobileLike';
 
 interface BirdProps {
   delay: number;
@@ -184,6 +185,7 @@ const Cloud: React.FC<CloudProps> = ({ delay, duration, top, left, width, opacit
 };
 
 const CloudBackground = ({ className = "fixed inset-0 -z-10 overflow-hidden pointer-events-none select-none" }: { className?: string }) => {
+  const isMobileLike = useIsMobileLike();
   const clouds = useMemo(() => [
     { delay: -8, duration: 46, top: '54%', left: '0', width: '200px', opacity: 0.78, blur: 0.4, tint: 'B8C8E0', reverse: false },
     { delay: -23, duration: 58, top: '66%', left: '0', width: '240px', opacity: 0.68, blur: 0.8, tint: 'C8D4E8', reverse: true },
@@ -198,6 +200,14 @@ const CloudBackground = ({ className = "fixed inset-0 -z-10 overflow-hidden poin
     { delay: -25, duration: 32, top: '69%', left: '0', scale: 0.62, reverse: true },
     { delay: -33, duration: 34, top: '63%', left: '0', scale: 0.78, reverse: false },
   ], []);
+
+  if (isMobileLike) {
+    return (
+      <div className={className}>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#D4E2F7] via-[#E8F0FB] to-transparent" />
+      </div>
+    );
+  }
 
   return (
     <div className={className}>

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
+import useIsMobileLike from './useIsMobileLike';
 import usePrefersReducedMotion from './usePrefersReducedMotion';
 
 interface AnimeRevealProps {
@@ -30,16 +31,18 @@ const AnimeReveal = ({
 }: AnimeRevealProps) => {
   const containerRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const isMobileLike = useIsMobileLike();
+  const shouldReduceMotion = prefersReducedMotion || isMobileLike;
   const [isVisible, setIsVisible] = useState(false);
   const hasAnimated = useRef(false);
-  const shouldShow = isVisible || prefersReducedMotion;
+  const shouldShow = isVisible || shouldReduceMotion;
 
   // IntersectionObserver to trigger once
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
-    if (prefersReducedMotion) return;
+    if (shouldReduceMotion) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -53,7 +56,7 @@ const AnimeReveal = ({
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [prefersReducedMotion]);
+  }, [shouldReduceMotion]);
 
   // Run anime.js animation when visible
   useEffect(() => {
@@ -62,7 +65,7 @@ const AnimeReveal = ({
     const chars = containerRef.current.querySelectorAll('.anime-char');
     if (chars.length === 0) return;
 
-    if (prefersReducedMotion) {
+    if (shouldReduceMotion) {
       chars.forEach((c) => {
         (c as HTMLElement).style.opacity = '1';
         (c as HTMLElement).style.transform = 'none';
@@ -105,7 +108,15 @@ const AnimeReveal = ({
     return () => {
       cleanup?.();
     };
-  }, [duration, shouldShow, delay, prefersReducedMotion, staggerFrom, staggerValue]);
+  }, [duration, shouldShow, delay, shouldReduceMotion, staggerFrom, staggerValue]);
+
+  if (shouldReduceMotion) {
+    return (
+      <Tag className={`inline-flex flex-wrap ${className}`} style={style}>
+        {text}
+      </Tag>
+    );
+  }
 
   // Split text into words, then each word into characters
   // Each word is wrapped in a span with whitespace-nowrap to prevent line breaks within words

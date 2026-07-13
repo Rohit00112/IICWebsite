@@ -1,11 +1,15 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import useIsMobileLike from './useIsMobileLike';
 
 const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isMobileLike = useIsMobileLike();
 
   useEffect(() => {
+    if (isMobileLike) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -84,7 +88,9 @@ const ParticleBackground = () => {
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isMobileLike]);
+
+  if (isMobileLike) return null;
 
   return (
     <canvas

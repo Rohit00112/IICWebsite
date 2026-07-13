@@ -226,7 +226,7 @@ function FeatureRow({
       initial={false}
       animate={isVisible ? { opacity: 1, x: 0, y: 0 } : simplifyMotion ? { opacity: 0, y: 14 } : { opacity: 0, x: reverse ? 60 : -60 }}
       transition={{ duration: simplifyMotion ? 0.28 : 0.7, ease: EASE }}
-      className="relative mx-auto w-full max-w-[610px] pb-0 md:pb-8"
+      className={`relative mx-auto w-full max-w-[610px] pb-0 md:pb-8 ${reverse ? 'lg:order-2' : ''}`}
     >
       <div className="relative min-h-[260px] overflow-hidden rounded-[20px] bg-white shadow-[0_12px_30px_rgba(21,35,58,0.1)] md:min-h-[390px] md:shadow-[0_18px_44px_rgba(21,35,58,0.13)]">
         <Image
@@ -247,7 +247,7 @@ function FeatureRow({
       initial={false}
       animate={isVisible ? { opacity: 1, x: 0, y: 0 } : simplifyMotion ? { opacity: 0, y: 14 } : { opacity: 0, x: reverse ? -60 : 60 }}
       transition={{ duration: simplifyMotion ? 0.28 : 0.7, ease: EASE, delay: simplifyMotion ? 0 : 0.12 }}
-      className="flex flex-col justify-center"
+      className={`flex flex-col justify-center ${reverse ? 'lg:order-1' : ''}`}
     >
       <p className="mb-4 text-[11px] font-black uppercase tracking-[0.28em] text-[#55B862]">{eyebrow}</p>
       <h2 className="max-w-[520px] text-[36px] font-black leading-[0.98] tracking-tight text-[#172033] sm:text-[42px] md:text-[54px]">
@@ -269,17 +269,8 @@ function FeatureRow({
 
   return (
     <section ref={rowRef} className="grid items-center gap-8 md:gap-12 lg:grid-cols-2 lg:gap-20">
-      {reverse ? (
-        <>
-          {contentBlock}
-          {imageBlock}
-        </>
-      ) : (
-        <>
-          {imageBlock}
-          {contentBlock}
-        </>
-      )}
+      {imageBlock}
+      {contentBlock}
     </section>
   );
 }

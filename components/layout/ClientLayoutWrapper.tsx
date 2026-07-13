@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useSpring, useMotionValue, useScroll } from "framer-motion";
+import { MotionConfig, motion, useSpring, useMotionValue, useScroll } from "framer-motion";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import Footer from "@/components/layout/Footer";
@@ -10,6 +10,7 @@ import TopBar from "@/components/layout/TopBar";
 import SmoothScroll from "@/components/effects/SmoothScroll";
 import PageTransition from "@/components/layout/PageTransition";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import useIsMobileLike from "@/components/effects/useIsMobileLike";
 
 const FluidBackground = dynamic(() => import("@/components/effects/FluidBackground"), {
   ssr: false,
@@ -45,6 +46,7 @@ export default function ClientLayoutWrapper({
 
   const isAdminPage = pathname?.startsWith('/admin') || pathname === '/login';
   const hasDesktopViewport = useMediaQuery('(min-width: 768px)');
+  const isMobileLike = useIsMobileLike();
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -93,51 +95,52 @@ export default function ClientLayoutWrapper({
   }, [mouseX, mouseY]);
 
   return (
-    <div className={`relative flex flex-col ${isAdminPage ? 'font-sora cursor-default' : 'font-iic md:cursor-none'}`}>
-      {!isAdminPage && (
-        <>
-          {hasDesktopViewport && <DesktopScrollProgress />}
+    <MotionConfig reducedMotion={isMobileLike ? "always" : "user"}>
+      <div className={`relative flex flex-col ${isAdminPage ? 'font-sora cursor-default' : 'font-iic md:cursor-none'}`}>
+        {!isAdminPage && (
+          <>
+            {hasDesktopViewport && <DesktopScrollProgress />}
 
-          <motion.div
-            className="fixed top-0 left-0 w-8 h-8 bg-[#21409A]/20 border border-[#21409A]/40 rounded-full pointer-events-none z-[9999] hidden md:block will-change-transform"
-            animate={{ scale: isHovered ? 1.5 : 1 }}
-            transition={{ type: "spring", stiffness: 520, damping: 34, mass: 0.22 }}
-            style={{
-              x: mouseX,
-              y: mouseY,
-              opacity: isCursorVisible ? 1 : 0,
-            }}
-          />
+            <motion.div
+              className="fixed top-0 left-0 w-8 h-8 bg-[#21409A]/20 border border-[#21409A]/40 rounded-full pointer-events-none z-[9999] hidden md:block will-change-transform"
+              animate={{ scale: isHovered ? 1.5 : 1 }}
+              transition={{ type: "spring", stiffness: 520, damping: 34, mass: 0.22 }}
+              style={{
+                x: mouseX,
+                y: mouseY,
+                opacity: isCursorVisible ? 1 : 0,
+              }}
+            />
 
-          <motion.div
-            className="fixed top-0 left-0 w-2 h-2 bg-[#74C044] rounded-full pointer-events-none z-[9999] hidden md:block will-change-transform"
-            style={{
-              x: mouseX,
-              y: mouseY,
-              opacity: isCursorVisible ? 1 : 0,
-              marginLeft: DOT_OFFSET,
-              marginTop: DOT_OFFSET,
-            }}
-          />
-          {hasDesktopViewport && <FluidBackground />}
-        </>
-      )}
+            <motion.div
+              className="fixed top-0 left-0 w-2 h-2 bg-[#74C044] rounded-full pointer-events-none z-[9999] hidden md:block will-change-transform"
+              style={{
+                x: mouseX,
+                y: mouseY,
+                opacity: isCursorVisible ? 1 : 0,
+                marginLeft: DOT_OFFSET,
+                marginTop: DOT_OFFSET,
+              }}
+            />
+            {hasDesktopViewport && <FluidBackground />}
+          </>
+        )}
 
-      {!isAdminPage ? (
-        <SmoothScroll>
-          <TopBar />
-          <Navbar />
-          <PageTransition>
+        {!isAdminPage ? (
+          <SmoothScroll>
+            <TopBar />
+            <Navbar />
+            <PageTransition>
+              {children}
+            </PageTransition>
+            <Footer />
+          </SmoothScroll>
+        ) : (
+          <div key={pathname} className="flex-grow">
             {children}
-          </PageTransition>
-          <Footer />
-        </SmoothScroll>
-      ) : (
-        <div key={pathname} className="flex-grow">
-          {children}
-        </div>
-      )}
-    </div>
-
+          </div>
+        )}
+      </div>
+    </MotionConfig>
   );
 }

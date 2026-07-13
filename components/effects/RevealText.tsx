@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import useIsMobileLike from './useIsMobileLike';
 
 interface RevealTextProps {
   text: string;
@@ -13,6 +14,11 @@ interface RevealTextProps {
 const RevealText = ({ text, className = '', delay = 0, as: Tag = 'div' }: RevealTextProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0%" });
+  const isMobileLike = useIsMobileLike();
+
+  if (isMobileLike) {
+    return <Tag className={`flex flex-wrap ${className}`}>{text}</Tag>;
+  }
 
   const words = text.split(' ');
 

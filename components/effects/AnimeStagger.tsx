@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useCallback } from 'react';
+import useIsMobileLike from './useIsMobileLike';
 import usePrefersReducedMotion from './usePrefersReducedMotion';
 
 interface AnimeStaggerProps {
@@ -40,6 +41,8 @@ const AnimeStagger = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const isMobileLike = useIsMobileLike();
+  const shouldReduceMotion = prefersReducedMotion || isMobileLike;
 
   const runAnimation = useCallback(async () => {
     const el = containerRef.current;
@@ -48,7 +51,7 @@ const AnimeStagger = ({
     const targets = el.querySelectorAll(selector);
     if (targets.length === 0) return;
 
-    if (prefersReducedMotion) {
+    if (shouldReduceMotion) {
       targets.forEach((t) => {
         (t as HTMLElement).style.opacity = '1';
         (t as HTMLElement).style.transform = 'none';
@@ -76,14 +79,14 @@ const AnimeStagger = ({
         (t as HTMLElement).style.transform = 'none';
       });
     }
-  }, [duration, from, prefersReducedMotion, selector, staggerDelay, translateY, delay]);
+  }, [duration, from, shouldReduceMotion, selector, staggerDelay, translateY, delay]);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
     const targets = el.querySelectorAll(selector);
-    if (prefersReducedMotion) {
+    if (shouldReduceMotion) {
       targets.forEach((t) => {
         (t as HTMLElement).style.opacity = '1';
         (t as HTMLElement).style.transform = 'none';
@@ -110,7 +113,7 @@ const AnimeStagger = ({
     observer.observe(el);
 
     return () => observer.disconnect();
-  }, [once, prefersReducedMotion, runAnimation, selector, translateY, delay]);
+  }, [once, shouldReduceMotion, runAnimation, selector, translateY, delay]);
 
   return (
     <div ref={containerRef} className={className}>
