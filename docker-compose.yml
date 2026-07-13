@@ -13,6 +13,8 @@ services:
       NODE_ENV: production
       PORT: 3000
       HOSTNAME: 0.0.0.0
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-web@iic.edu.np}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-IIC@2026}
     ports:
       - "3000:3000"
     healthcheck:

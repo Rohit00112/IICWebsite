@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const MONGODB_URI = process.env.MONGODB_URI || '';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'web@iic.edu.np').trim().toLowerCase();
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'IIC@2026';
 
 if (!MONGODB_URI) {
   throw new Error('Please define MONGODB_URI before running the seed script.');
@@ -28,7 +29,7 @@ async function seed() {
     await Admin.deleteMany({});
     const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
     await Admin.create({
-      email: 'admin@iic.edu.np',
+      email: ADMIN_EMAIL,
       password: hashedPassword,
       name: 'Itahari International College Administrator'
     });

@@ -74,7 +74,9 @@ proxy.ts              # Edge proxy / middleware helper
    MONGODB_URI=<your-mongodb-uri> ADMIN_PASSWORD=<temporary-admin-password> npx tsx scripts/seed.ts
    ```
 
-   If `ADMIN_PASSWORD` is omitted, the local development fallback is `admin123`.
+   Defaults used when omitted:
+   - `ADMIN_EMAIL=web@iic.edu.np`
+   - `ADMIN_PASSWORD=IIC@2026`
 
 4. Start the dev server:
 
@@ -131,3 +133,9 @@ Configure these protected GitLab CI/CD variables:
 
 The deploy server must have Docker Engine, Docker Compose, and the deploy user's
 public SSH key installed. The application is exposed on port `3000`.
+
+On container startup, `scripts/docker-entrypoint.sh` automatically runs admin
+provisioning before launching the server. If not provided via environment, Docker
+defaults are:
+- `ADMIN_EMAIL=web@iic.edu.np`
+- `ADMIN_PASSWORD=IIC@2026`
