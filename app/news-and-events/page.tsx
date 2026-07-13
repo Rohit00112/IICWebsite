@@ -14,8 +14,8 @@ import {
   buildSchemaGraph,
 } from '@/lib/seo-schema';
 
-const pageTitle = 'IIC News & Events | Itahari International College Updates';
-const pageDescription = 'Read IIC news and events from Itahari International College, including campus stories, student achievements, workshops, admissions updates, and college events in Itahari, Nepal.';
+const pageTitle = 'IIC News, Events & Blogs | Itahari International College';
+const pageDescription = 'Read IIC news, events and blogs, including campus stories, student achievements, workshops, admissions updates and learning insights.';
 const openGraphImage = absoluteAssetUrl('/og/news.png');
 
 export const metadata: Metadata = {

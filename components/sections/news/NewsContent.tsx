@@ -10,7 +10,15 @@ import type { NewsItem, UpcomingEvent, ArchiveEntry } from '@/lib/news';
 import ShareMenu from './ShareMenu';
 import NewsletterSignup from './NewsletterSignup';
 
-const categories = ['All', 'News', 'Events'];
+type NewsCategoryFilter = 'All' | 'News' | 'Events' | 'Blogs';
+
+const categories: NewsCategoryFilter[] = ['All', 'News', 'Events', 'Blogs'];
+const categoryValueMap: Record<NewsCategoryFilter, NewsItem['category'] | 'All'> = {
+  All: 'All',
+  News: 'News',
+  Events: 'Event',
+  Blogs: 'Blog',
+};
 const FALLBACK_IMAGE = '/images/common/tower_block.JPG';
 const ITEMS_PER_PAGE = 4;
 
@@ -62,7 +70,7 @@ interface NewsContentProps {
 }
 
 const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured, upcomingEvents }) => {
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState<NewsCategoryFilter>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -71,9 +79,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
 
   // Filtering Logic
   const filteredItems = newsItems.filter(item => {
-    // Standardize category comparison (handle plural UI vs singular data)
-    let normalizedActive = activeCategory;
-    if (activeCategory === 'Events') normalizedActive = 'Event';
+    const normalizedActive = categoryValueMap[activeCategory];
 
     const normalizedItem = item.category;
     
@@ -84,8 +90,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
   });
 
   // Featured post logic
-  let activeNormalized = activeCategory;
-  if (activeCategory === 'Events') activeNormalized = 'Event';
+  const activeNormalized = categoryValueMap[activeCategory];
   
   const showFeatured = !!featuredPost &&
     (activeCategory === 'All' || featuredPost.category === activeNormalized) &&
@@ -183,17 +188,6 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
                       {featuredPost.description}
                     </p>
                     
-                    <div className="space-y-4 mb-10">
-                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-500">
-                        <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <span>{featuredPost.time}</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-[11px] font-bold text-slate-500">
-                        <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                        <span>{featuredPost.location}</span>
-                      </div>
-                    </div>
-
                     <div className="self-start px-8 py-3.5 bg-[#21409A] text-white rounded-lg font-bold text-xs shadow-lg group-hover:bg-[#21409A] transition-all flex items-center gap-3">
                       {featuredPost.category === 'Event' ? 'View Event Details' : 'Read Full Story'}
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>

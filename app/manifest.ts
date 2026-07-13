@@ -13,15 +13,10 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: 'en-NP',
     icons: [
       {
-        src: '/favicon.ico',
-        sizes: 'any',
-        type: 'image/x-icon',
-      },
-      {
-        src: '/images/common/iic_logo.png',
-        sizes: '450x80',
+        src: '/favicon.png?v=2',
+        sizes: '512x512',
         type: 'image/png',
-      },
+      }
     ],
   };
 }

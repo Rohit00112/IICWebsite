@@ -163,8 +163,10 @@ export const MEDIA_SEARCH_KEYWORDS = [
 export const NEWS_SEARCH_KEYWORDS = [
   'IIC news',
   'IIC events',
+  'IIC blogs',
   'Itahari International College news',
   'Itahari International College events',
+  'Itahari International College blogs',
   'IIC newsroom',
   'IIC campus news',
   'IIC student achievements',
@@ -750,7 +752,7 @@ export function buildNewsItemListNode(items: NewsItem[]): SchemaNode {
     '@id': `${SITE_URL}/news-and-events#news-list`,
     name: 'Latest news and events from Itahari International College',
     description:
-      'A reverse-chronological list of IIC news, campus stories, student achievements, workshops, seminars, admissions updates, and college events.',
+      'A reverse-chronological list of IIC news, blogs, campus stories, student achievements, workshops, seminars, admissions updates, and college events.',
     keywords: NEWS_PAGE_KEYWORDS,
     itemListOrder: 'https://schema.org/ItemListOrderDescending',
     numberOfItems: publishedItems.length,
@@ -786,6 +788,7 @@ export function buildNewsAndEventsCollectionNode(
       { '@id': COLLEGE_ID },
       { '@type': 'Thing', name: 'IIC news' },
       { '@type': 'Thing', name: 'IIC events' },
+      { '@type': 'Thing', name: 'IIC blogs' },
       { '@type': 'Thing', name: 'College events in Itahari' },
       { '@type': 'Thing', name: 'Student achievements at IIC' },
     ],

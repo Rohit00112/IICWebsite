@@ -7,7 +7,7 @@ const NewsSchema = new Schema({
   category: {
     type: String,
     required: [true, 'Please provide a category'],
-    enum: ['News', 'Event'],
+    enum: ['News', 'Event', 'Blog'],
   },
   date: {
     type: String,

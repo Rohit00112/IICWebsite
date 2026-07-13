@@ -19,7 +19,7 @@ export interface NewsAuthor {
 
 export interface NewsItem {
   id: string;
-  category: 'News' | 'Event';
+  category: 'News' | 'Event' | 'Blog';
   date: string;
   time?: string;
   location?: string;
@@ -202,6 +202,7 @@ export async function filterNews(category: string, search: string): Promise<News
   if (category !== 'All') {
     let normalizedCategory = category;
     if (category === 'Events') normalizedCategory = 'Event';
+    if (category === 'Blogs') normalizedCategory = 'Blog';
     query.category = normalizedCategory;
   }
 

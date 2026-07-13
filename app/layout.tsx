@@ -55,6 +55,11 @@ export const metadata: Metadata = {
     telephone: false,
   },
   metadataBase: new URL(SITE_URL),
+  icons: {
+    icon: [{ url: "/favicon.png?v=2", sizes: "512x512", type: "image/png" }],
+    shortcut: ["/favicon.png?v=2"],
+    apple: [{ url: "/favicon.png?v=2", sizes: "512x512", type: "image/png" }],
+  },
   openGraph: {
     title: "Itahari International College | UK Degrees in Itahari",
     description: "Study globally connected IT and Business degrees in Itahari through IIC's partnership with London Metropolitan University.",
