@@ -2,7 +2,7 @@
 
 > Itahari International College (IIC) is a higher education institution in Sundar Haraicha 04, Dulari, Morang, Nepal. IIC delivers UK-awarded IT and Business undergraduate programmes in partnership with London Metropolitan University.
 
-Updated: 2026-07-03
+Updated: 2026-07-13
 
 ## Key Facts
 
@@ -10,20 +10,20 @@ Updated: 2026-07-03
 - Short name: IIC
 - Location: Sundar Haraicha 04, Dulari, Morang, Nepal
 - Main phone: +977 9801003030
-- Website: https://iic-website-wine.vercel.app/
+- Website: https://iic.edu.np/
 - Partner university: London Metropolitan University
 - Programme areas: Information Technology, Computing, Business Administration, Digital Business, Marketing, Cloud Computing, Application Development
 
 ## Important Pages
 
-- [Home](https://iic-website-wine.vercel.app/): Overview of IIC, UK-awarded degrees, student life, scholarships, and admissions.
-- [Courses](https://iic-website-wine.vercel.app/courses): Academic programmes offered by Itahari International College.
-- [Admissions](https://iic-website-wine.vercel.app/admissions): Application guidance, admissions process, and eligibility information.
-- [Scholarship](https://iic-website-wine.vercel.app/scholarship): Scholarship opportunities including merit and achievement-based awards.
-- [About IIC](https://iic-website-wine.vercel.app/about-us): College mission, values, UK partnership, and institutional background.
-- [Life at IIC](https://iic-website-wine.vercel.app/life-at-iic): Campus life, student experiences, and event galleries.
-- [News and Events](https://iic-website-wine.vercel.app/news-and-events): Current announcements and college updates.
-- [Contact](https://iic-website-wine.vercel.app/contact-us): Official contact form, location, and admissions support.
+- [Home](https://iic.edu.np/): Overview of IIC, UK-awarded degrees, student life, scholarships, and admissions.
+- [Courses](https://iic.edu.np/courses): Academic programmes offered by Itahari International College.
+- [Admissions](https://iic.edu.np/admissions): Application guidance, admissions process, and eligibility information.
+- [Scholarship](https://iic.edu.np/scholarship): Scholarship opportunities including merit and achievement-based awards.
+- [About IIC](https://iic.edu.np/about-us): College mission, values, UK partnership, and institutional background.
+- [Life at IIC](https://iic.edu.np/life-at-iic): Campus life, student experiences, and event galleries.
+- [News and Events](https://iic.edu.np/news-and-events): Current announcements and college updates.
+- [Contact](https://iic.edu.np/contact-us): Official contact form, location, and admissions support.
 
 ## Entity Relationships
 
@@ -43,7 +43,7 @@ Updated: 2026-07-03
 
 ## Crawl and Indexing
 
-- Sitemap: https://iic-website-wine.vercel.app/sitemap.xml
-- Robots: https://iic-website-wine.vercel.app/robots.txt
+- Sitemap: https://iic.edu.np/sitemap.xml
+- Robots: https://iic.edu.np/robots.txt
 - Public pages are intended for search and AI crawl access.
 - Admin, login, and API routes are not intended for indexing.

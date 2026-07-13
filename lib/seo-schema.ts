@@ -34,8 +34,7 @@ function normalizeSiteUrl(value: string) {
 
 const configuredSiteHost =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-  'https://iic-website-wine.vercel.app';
+  'https://iic.edu.np';
 
 export const SITE_URL = normalizeSiteUrl(configuredSiteHost);
 
