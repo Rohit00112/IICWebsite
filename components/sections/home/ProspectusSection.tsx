@@ -69,7 +69,7 @@ const alumniStory = {
 };
 
 const ProspectusSection = () => {
-  const brochureUrl = 'https://iic.edu.np/pdf/iic_brochure.pdf';
+  const brochureUrl = '/IIC%20Prospectus.pdf';
   const [formData, setFormData] = React.useState<ProspectusFormData>(INITIAL_PROSPECTUS_FORM);
   const [errors, setErrors] = React.useState<ProspectusErrors>({});
   const [touched, setTouched] = React.useState<ProspectusTouched>({});

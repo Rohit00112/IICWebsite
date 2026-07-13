@@ -13,6 +13,8 @@ import {
 
 const pageDescription = 'Explore AAA and ING postgraduate scholarship opportunities at Itahari International College, including yearwise recipient stories and award archives.';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Scholarships at IIC',
   description: pageDescription,

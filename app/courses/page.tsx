@@ -15,6 +15,8 @@ import {
 
 const pageDescription = 'Explore London Metropolitan University awarded IT and Business programmes at IIC, designed for practical learning and global career readiness.';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'UK Degree Programmes in Itahari | IT & Business',
   description: pageDescription,

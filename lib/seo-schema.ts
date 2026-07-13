@@ -60,13 +60,13 @@ const defaultLogo = '/images/common/iic_logo.png';
 export const COLLEGE_PHONE_DISPLAY = '+977 9801003030';
 export const COLLEGE_PHONE_TEL = '+9779801003030';
 export const COLLEGE_ADDRESS = {
-  streetAddress: 'Sundar Haraicha 04, Dulari',
+  streetAddress: 'Sundarharaicha 04, Dulari',
   addressLocality: 'Dulari',
   addressRegion: 'Morang, Koshi Province',
   postalCode: '56705',
   addressCountry: 'NP',
 };
-export const COLLEGE_ADDRESS_TEXT = 'Sundar Haraicha 04, Dulari, Morang, Nepal';
+export const COLLEGE_ADDRESS_TEXT = 'Sundarharaicha 04, Dulari, Morang, Nepal';
 export const COLLEGE_SOCIAL_PROFILES = [
   'https://www.facebook.com/IICNepal/',
   'https://www.instagram.com/iic_nepal',
