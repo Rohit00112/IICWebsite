@@ -1,34 +1,16 @@
 import bcrypt from 'bcryptjs';
-import mongoose from 'mongoose';
+import { PrismaClient } from '@prisma/client';
 
-const mongoUri = process.env.MONGODB_URI;
+const prisma = new PrismaClient();
 const defaultAdminEmail = 'web@iic.edu.np';
 const defaultAdminPassword = 'IIC@2026';
 const email = (process.env.ADMIN_EMAIL || defaultAdminEmail).trim().toLowerCase();
 const password = process.env.ADMIN_PASSWORD || defaultAdminPassword;
 
-if (!mongoUri) {
-  throw new Error('MONGODB_URI must be configured before provisioning the administrator.');
-}
-
-const adminSchema = new mongoose.Schema(
-  {
-    email: { type: String, required: true, unique: true, lowercase: true },
-    password: { type: String, required: true },
-    name: { type: String, required: true },
-  },
-  { timestamps: true },
-);
-
-const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema);
-
 try {
-  await mongoose.connect(mongoUri, {
-    serverSelectionTimeoutMS: 5000,
-    connectTimeoutMS: 5000,
+  const existingAdmin = await prisma.admin.findUnique({
+    where: { email },
   });
-
-  const existingAdmin = await Admin.exists({ email });
 
   if (existingAdmin) {
     console.log('Administrator already exists; preserving its credentials.');
@@ -36,20 +18,22 @@ try {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     try {
-      await Admin.create({
-        email,
-        password: hashedPassword,
-        name: 'Itahari International College Administrator',
+      await prisma.admin.create({
+        data: {
+          email,
+          password: hashedPassword,
+          name: 'Itahari International College Administrator',
+        },
       });
       console.log('Administrator provisioned.');
     } catch (error) {
-      if (!(error instanceof Error) || !('code' in error) || error.code !== 11000) {
+      if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
+        console.log('Administrator was provisioned by another process.');
+      } else {
         throw error;
       }
-
-      console.log('Administrator was provisioned by another process.');
     }
   }
 } finally {
-  await mongoose.disconnect();
+  await prisma.$disconnect();
 }

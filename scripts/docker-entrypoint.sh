@@ -1,18 +1,25 @@
 #!/bin/sh
 set -eu
 
-attempt=1
 max_attempts=30
 
-until node scripts/provision-admin.mjs; do
-  if [ "$attempt" -ge "$max_attempts" ]; then
-    echo "Administrator provisioning failed after ${max_attempts} attempts." >&2
-    exit 1
-  fi
+retry_until_ready() {
+  description="$1"
+  shift
+  attempt=1
 
-  echo "Waiting for MongoDB before retrying administrator provisioning (${attempt}/${max_attempts})." >&2
-  attempt=$((attempt + 1))
-  sleep 2
-done
+  until "$@"; do
+    if [ "$attempt" -ge "$max_attempts" ]; then
+      echo "${description} failed after ${max_attempts} attempts." >&2
+      exit 1
+    fi
+
+    echo "Waiting for Database before retrying ${description} (${attempt}/${max_attempts})." >&2
+    attempt=$((attempt + 1))
+    sleep 2
+  done
+}
+
+retry_until_ready "administrator provisioning" node scripts/provision-admin.mjs
 
 exec node server.js

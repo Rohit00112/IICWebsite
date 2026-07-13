@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import dbConnect from '../../../../../lib/db';
+import prisma from '../../../../../lib/db';
 import {
   clearTwoFactorChallenge,
   getTwoFactorChallenge,
@@ -8,7 +8,6 @@ import {
 } from '../../../../../lib/auth';
 import { rateLimit } from '../../../../../lib/rate-limit';
 import { consumeSecondFactor } from '../../../../../lib/two-factor';
-import Admin from '../../../../../models/Admin';
 
 const verifySchema = z.object({
   code: z.string().trim().min(6).max(32),
@@ -48,10 +47,9 @@ export async function POST(request: Request) {
       );
     }
 
-    await dbConnect();
-    const admin = await Admin.findById(challenge.adminId).select(
-      '+twoFactorSecret +twoFactorRecoveryCodes +twoFactorLastUsedCounter',
-    );
+    const admin = await prisma.admin.findUnique({
+      where: { id: challenge.adminId },
+    });
 
     if (!admin?.twoFactorEnabled) {
       await clearTwoFactorChallenge();
@@ -61,7 +59,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const verified = await consumeSecondFactor(admin, parsed.data.code);
+    const verified = await consumeSecondFactor(
+      {
+        _id: admin.id,
+        twoFactorSecret: admin.twoFactorSecret,
+        twoFactorRecoveryCodes: admin.twoFactorRecoveryCodes,
+        twoFactorLastUsedCounter: admin.twoFactorLastUsedCounter,
+      },
+      parsed.data.code,
+    );
     if (!verified) {
       return NextResponse.json(
         { error: 'Invalid or already-used verification code.' },
@@ -70,7 +76,7 @@ export async function POST(request: Request) {
     }
 
     await login({
-      id: admin._id.toString(),
+      id: admin.id,
       email: admin.email,
       name: admin.name,
     });

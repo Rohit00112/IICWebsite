@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getSession } from '../../../../../lib/auth';
-import dbConnect from '../../../../../lib/db';
+import prisma from '../../../../../lib/db';
 import { rateLimit } from '../../../../../lib/rate-limit';
 import {
   decryptTwoFactorSecret,
@@ -9,7 +9,6 @@ import {
   hashRecoveryCodes,
   verifyTotp,
 } from '../../../../../lib/two-factor';
-import Admin from '../../../../../models/Admin';
 
 const enableSchema = z.object({
   code: z.string().trim().regex(/^\d{6}$/),
@@ -45,10 +44,9 @@ export async function POST(request: Request) {
       );
     }
 
-    await dbConnect();
-    const admin = await Admin.findById(session.admin.id).select(
-      '+twoFactorPendingSecret',
-    );
+    const admin = await prisma.admin.findUnique({
+      where: { id: session.admin.id },
+    });
 
     if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -77,12 +75,16 @@ export async function POST(request: Request) {
     }
 
     const recoveryCodes = generateRecoveryCodes();
-    admin.twoFactorEnabled = true;
-    admin.twoFactorSecret = admin.twoFactorPendingSecret;
-    admin.twoFactorPendingSecret = undefined;
-    admin.twoFactorRecoveryCodes = hashRecoveryCodes(recoveryCodes);
-    admin.twoFactorLastUsedCounter = -1;
-    await admin.save();
+    await prisma.admin.update({
+      where: { id: admin.id },
+      data: {
+        twoFactorEnabled: true,
+        twoFactorSecret: admin.twoFactorPendingSecret,
+        twoFactorPendingSecret: null,
+        twoFactorRecoveryCodes: hashRecoveryCodes(recoveryCodes),
+        twoFactorLastUsedCounter: -1,
+      },
+    });
 
     return NextResponse.json({
       message: 'Two-factor authentication enabled.',

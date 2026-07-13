@@ -2,10 +2,9 @@ import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getSession } from '../../../../lib/auth';
-import dbConnect from '../../../../lib/db';
+import prisma from '../../../../lib/db';
 import { rateLimit } from '../../../../lib/rate-limit';
 import { consumeSecondFactor } from '../../../../lib/two-factor';
-import Admin from '../../../../models/Admin';
 
 const disableSchema = z.object({
   password: z.string().min(1).max(200),
@@ -43,10 +42,9 @@ export async function DELETE(request: Request) {
       );
     }
 
-    await dbConnect();
-    const admin = await Admin.findById(session.admin.id).select(
-      '+twoFactorSecret +twoFactorRecoveryCodes +twoFactorLastUsedCounter',
-    );
+    const admin = await prisma.admin.findUnique({
+      where: { id: session.admin.id },
+    });
 
     if (!admin?.twoFactorEnabled) {
       return NextResponse.json(
@@ -66,7 +64,15 @@ export async function DELETE(request: Request) {
       );
     }
 
-    const verified = await consumeSecondFactor(admin, parsed.data.code);
+    const verified = await consumeSecondFactor(
+      {
+        _id: admin.id,
+        twoFactorSecret: admin.twoFactorSecret,
+        twoFactorRecoveryCodes: admin.twoFactorRecoveryCodes,
+        twoFactorLastUsedCounter: admin.twoFactorLastUsedCounter,
+      },
+      parsed.data.code,
+    );
     if (!verified) {
       return NextResponse.json(
         { error: 'Password or verification code is invalid.' },
@@ -74,20 +80,16 @@ export async function DELETE(request: Request) {
       );
     }
 
-    await Admin.updateOne(
-      { _id: admin._id },
-      {
-        $set: {
-          twoFactorEnabled: false,
-          twoFactorLastUsedCounter: -1,
-          twoFactorRecoveryCodes: [],
-        },
-        $unset: {
-          twoFactorSecret: '',
-          twoFactorPendingSecret: '',
-        },
+    await prisma.admin.update({
+      where: { id: admin.id },
+      data: {
+        twoFactorEnabled: false,
+        twoFactorLastUsedCounter: -1,
+        twoFactorRecoveryCodes: [],
+        twoFactorSecret: null,
+        twoFactorPendingSecret: null,
       },
-    );
+    });
 
     return NextResponse.json({
       message: 'Two-factor authentication disabled.',

@@ -1,5 +1,6 @@
 import { revalidatePath } from 'next/cache';
-import HomePopup from '../models/HomePopup';
+import prisma from './db';
+import { logExpectedDbFallback } from './db-fallback-log';
 import {
   DEFAULT_HOME_POPUP_ALT,
   DEFAULT_HOME_POPUP_IMAGE,
@@ -21,14 +22,8 @@ const fallbackHomePopup: HomePopupSettings = {
   alt: DEFAULT_HOME_POPUP_ALT,
 };
 
-interface HomePopupDocument {
-  enabled?: boolean;
-  image?: string;
-  alt?: string;
-  updatedAt?: Date;
-}
-
-function mapHomePopup(doc?: HomePopupDocument | null): HomePopupSettings {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mapHomePopup(doc?: any | null): HomePopupSettings {
   if (!doc) return fallbackHomePopup;
 
   return {
@@ -39,26 +34,25 @@ function mapHomePopup(doc?: HomePopupDocument | null): HomePopupSettings {
   };
 }
 
-async function connectToDb() {
-  const { default: dbConnect } = await import('./db');
-  await dbConnect();
-}
-
 async function ensureHomePopupDocument() {
-  await connectToDb();
-
-  const existing = await HomePopup.findOne({ settingKey: HOME_POPUP_KEY });
+  const existing = await prisma.homePopup.findUnique({
+    where: { settingKey: HOME_POPUP_KEY },
+  });
   if (existing) return existing;
 
   try {
-    return await HomePopup.create({
-      settingKey: HOME_POPUP_KEY,
-      enabled: fallbackHomePopup.enabled,
-      image: fallbackHomePopup.image,
-      alt: fallbackHomePopup.alt,
+    return await prisma.homePopup.create({
+      data: {
+        settingKey: HOME_POPUP_KEY,
+        enabled: fallbackHomePopup.enabled,
+        image: fallbackHomePopup.image,
+        alt: fallbackHomePopup.alt,
+      },
     });
   } catch (error) {
-    const racedDocument = await HomePopup.findOne({ settingKey: HOME_POPUP_KEY });
+    const racedDocument = await prisma.homePopup.findUnique({
+      where: { settingKey: HOME_POPUP_KEY },
+    });
 
     if (racedDocument) return racedDocument;
 
@@ -71,7 +65,7 @@ export async function getHomePopupSettings(): Promise<HomePopupSettings> {
     const popup = await ensureHomePopupDocument();
     return mapHomePopup(popup);
   } catch (error) {
-    console.warn('Home popup settings fallback used:', error);
+    logExpectedDbFallback('Home popup settings fallback used:', error);
     return fallbackHomePopup;
   }
 }
@@ -80,26 +74,22 @@ export async function updateHomePopupSettings(
   data: HomePopupInput,
   updatedBy?: string,
 ): Promise<HomePopupSettings> {
-  await connectToDb();
-
-  const popup = await HomePopup.findOneAndUpdate(
-    { settingKey: HOME_POPUP_KEY },
-    {
-      $set: {
-        settingKey: HOME_POPUP_KEY,
-        enabled: data.enabled,
-        image: data.image,
-        alt: data.alt || DEFAULT_HOME_POPUP_ALT,
-        updatedBy,
-      },
+  const popup = await prisma.homePopup.upsert({
+    where: { settingKey: HOME_POPUP_KEY },
+    update: {
+      enabled: data.enabled,
+      image: data.image,
+      alt: data.alt || DEFAULT_HOME_POPUP_ALT,
+      updatedBy,
     },
-    {
-      returnDocument: 'after',
-      upsert: true,
-      runValidators: true,
-      setDefaultsOnInsert: true,
+    create: {
+      settingKey: HOME_POPUP_KEY,
+      enabled: data.enabled,
+      image: data.image,
+      alt: data.alt || DEFAULT_HOME_POPUP_ALT,
+      updatedBy,
     },
-  );
+  });
 
   try {
     revalidatePath('/');

@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id                       String   @id @default(uuid())
+  email                    String   @unique
+  password                 String
+  name                     String
+  twoFactorEnabled         Boolean  @default(false)
+  twoFactorSecret          String?  @db.Text
+  twoFactorPendingSecret   String?  @db.Text
+  twoFactorRecoveryCodes   Json     @default("[]")
+  twoFactorLastUsedCounter Int      @default(-1)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@map("admins")
+}
+
+model Course {
+  id                  String   @id @default(uuid())
+  title               String
+  subtitle            String?
+  slug                String   @unique
+  category            String?
+  duration            String?
+  description         String?  @db.Text
+  image               String?
+  level               String?
+  listing             Json?
+  featured            Boolean  @default(false)
+  overview            String?  @db.LongText
+  details             Json?
+  curriculum          Json?
+  learningOutcomes    Json?
+  careerOpportunities Json?
+  faculty             Json?
+  quote               Json?
+  projects            Json?
+  faqs                Json?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("courses")
+}
+
+model EventGallery {
+  id         String   @id @default(uuid())
+  title      String
+  slug       String   @unique
+  year       Int
+  summary    String   @db.Text
+  coverImage String
+  images     Json     @default("[]")
+  status     String   @default("draft")
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("event_galleries")
+}
+
+model HomePopup {
+  id         String   @id @default(uuid())
+  settingKey String   @unique
+  enabled    Boolean  @default(true)
+  image      String
+  alt        String?  @db.VarChar(140)
+  updatedBy  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("home_popups")
+}
+
+model News {
+  id          String   @id @default(uuid())
+  category    String
+  date        String
+  time        String?
+  location    String?
+  title       String
+  slug        String?  @unique
+  description String   @db.Text
+  content     String   @db.LongText
+  image       String?  @default("")
+  featured    Boolean  @default(false)
+  author      Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("news")
+}
+
+model ScholarshipBatch {
+  id         String   @id @default(uuid())
+  year       Int
+  awardType  String
+  title      String
+  summary    String?  @db.Text
+  groupImage String?
+  status     String   @default("draft")
+  recipients Json     @default("[]")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([year, awardType, createdAt])
+  @@index([status, year])
+  @@map("scholarship_batches")
+}
+
+model Subscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  source    String   @default("news-sidebar")
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subscribers")
+}

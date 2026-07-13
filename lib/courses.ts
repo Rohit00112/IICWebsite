@@ -1,5 +1,4 @@
-import dbConnect from './db';
-import Course from '../models/Course';
+import prisma from './db';
 import { toSafeImageSrc } from './image-source';
 
 export interface CourseItem {
@@ -72,12 +71,6 @@ export interface CourseItem {
   }[];
 }
 
-type CourseDocument = Partial<Omit<CourseItem, 'id'>> & {
-  _id?: unknown;
-  toObject?: (options: Record<string, boolean>) => CourseDocument;
-  learningOutcomes?: unknown[];
-};
-
 import { revalidateTag } from 'next/cache';
 import { sanitizeHtml } from './sanitize';
 
@@ -87,6 +80,11 @@ function safeRevalidateTag(tag: string) {
   } catch (e) {
     console.warn(`revalidateTag(${tag}) skipped:`, e);
   }
+}
+
+function toRecordArray(value: unknown): Record<string, unknown>[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is Record<string, unknown> => typeof item === 'object' && item !== null);
 }
 
 const placeholderPillValues = new Set(['string']);
@@ -120,92 +118,91 @@ function normalizeCourseData(data: Partial<CourseItem>): Partial<CourseItem> {
   };
 }
 
-function mapCourse(doc: CourseDocument): CourseItem {
-  const plain = typeof doc.toObject === 'function'
-    ? doc.toObject({ depopulate: true, virtuals: false, flattenObjectIds: true, versionKey: false })
-    : doc;
-  const slug = plain.slug || '';
-  const description = slug === 'bsc-hons-computing' && plain.description?.trim().toLowerCase() === 'hacked_by_inred'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mapCourse(doc: any): CourseItem {
+  const slug = doc.slug || '';
+  const description = slug === 'bsc-hons-computing' && doc.description?.trim().toLowerCase() === 'hacked_by_inred'
     ? ''
-    : plain.description || '';
-  const d = plain.details || {};
-  const q = plain.quote || {};
-  const listing = plain.listing || {};
+    : doc.description || '';
+  const d = (doc.details as Record<string, string>) || {};
+  const q = (doc.quote as Record<string, string>) || {};
+  const listing = (doc.listing as Record<string, unknown>) || {};
   return {
-    id: String(plain._id ?? ''),
-    title: plain.title || '',
-    subtitle: plain.subtitle || '',
+    id: doc.id,
+    title: doc.title || '',
+    subtitle: doc.subtitle || '',
     slug,
-    category: plain.category || '',
-    duration: plain.duration || d.duration || '',
+    category: doc.category || '',
+    duration: doc.duration || (d.duration as string) || '',
     description,
-    image: toSafeImageSrc(plain.image, '/images/courses/course-hero.JPG'),
-    level: plain.level,
+    image: toSafeImageSrc(doc.image, '/images/courses/course-hero.JPG'),
+    level: doc.level,
     listing: {
-      title: listing.title || '',
-      mnemonic: listing.mnemonic || '',
-      mnemonicImage: toSafeImageSrc(listing.mnemonicImage, ''),
-      displayTitle: listing.displayTitle || '',
-      specialism: listing.specialism || '',
-      category: listing.category || '',
-      description: listing.description || '',
-      image: toSafeImageSrc(listing.image, ''),
-      backgroundColor: listing.backgroundColor || '',
-      modulesLabel: listing.modulesLabel || '',
-      creditsLabel: listing.creditsLabel || '',
+      title: (listing.title as string) || '',
+      mnemonic: (listing.mnemonic as string) || '',
+      mnemonicImage: toSafeImageSrc(listing.mnemonicImage as string, ''),
+      displayTitle: (listing.displayTitle as string) || '',
+      specialism: (listing.specialism as string) || '',
+      category: (listing.category as string) || '',
+      description: (listing.description as string) || '',
+      image: toSafeImageSrc(listing.image as string, ''),
+      backgroundColor: (listing.backgroundColor as string) || '',
+      modulesLabel: (listing.modulesLabel as string) || '',
+      creditsLabel: (listing.creditsLabel as string) || '',
       featuredModules: normalizePillLabels(listing.featuredModules),
       order: typeof listing.order === 'number' ? listing.order : undefined,
     },
-    featured: !!plain.featured,
-    overview: plain.overview || '',
+    featured: !!doc.featured,
+    overview: doc.overview || '',
     details: {
       level: d.level || '',
       duration: d.duration || '',
       intake: d.intake || '',
       awardingBody: d.awardingBody || '',
     },
-    curriculum: (plain.curriculum || []).map((y) => ({
-      title: y.title || '',
-      modules: (y.modules || []).map((m) => ({
-        name: m.name || '',
-        code: m.code || '',
-        description: m.description || '',
-        credits: m.credits || '',
+    curriculum: toRecordArray(doc.curriculum).map((y) => ({
+      title: (y.title as string) || '',
+      modules: toRecordArray(y.modules).map((m) => ({
+        name: (m.name as string) || '',
+        code: (m.code as string) || '',
+        description: (m.description as string) || '',
+        credits: (m.credits as string) || '',
       })),
     })),
-    learningOutcomes: (plain.learningOutcomes || []).map((s) => String(s)),
-    careerOpportunities: (plain.careerOpportunities || []).map((c) => ({
-      title: c.title || '',
-      description: c.description || '',
-      color: c.color || '',
+    learningOutcomes: ((doc.learningOutcomes as unknown[]) || []).map((s: unknown) => String(s)),
+    careerOpportunities: toRecordArray(doc.careerOpportunities).map((c) => ({
+      title: (c.title as string) || '',
+      description: (c.description as string) || '',
+      color: (c.color as string) || '',
     })),
-    faculty: (plain.faculty || []).map((f) => ({
-      name: f.name || '',
-      role: f.role || '',
-      description: f.description || '',
+    faculty: toRecordArray(doc.faculty).map((f) => ({
+      name: (f.name as string) || '',
+      role: (f.role as string) || '',
+      description: (f.description as string) || '',
       image: toSafeImageSrc(f.image, '/images/common/iic_logo.png'),
-      color: f.color || '',
+      color: (f.color as string) || '',
     })),
-    quote: { text: q.text || '', author: q.author || '' },
-    projects: (plain.projects || []).map((p) => ({
-      title: p.title || '',
-      cohort: p.cohort || '',
+    quote: { text: (q.text as string) || '', author: (q.author as string) || '' },
+    projects: toRecordArray(doc.projects).map((p) => ({
+      title: (p.title as string) || '',
+      cohort: (p.cohort as string) || '',
       image: toSafeImageSrc(p.image, '/images/course-details/course-details-hero.webp'),
     })),
-    faqs: (plain.faqs || []).map((f) => ({
-      question: f.question || '',
-      answer: f.answer || '',
+    faqs: toRecordArray(doc.faqs).map((f) => ({
+      question: (f.question as string) || '',
+      answer: (f.answer as string) || '',
     })),
   };
 }
 
 export async function getAllCourses(): Promise<CourseItem[]> {
-  await dbConnect();
-  const courses = await Course.find({}).sort({ createdAt: -1 });
+  const courses = await prisma.course.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
   const mapped = courses.map(mapCourse);
   const seen = new Set<string>();
 
-  const uniqueCourses = mapped.filter((course) => {
+  const uniqueCourses = mapped.filter((course: CourseItem) => {
     const normalizedTitle = (course.listing?.displayTitle || course.title || '').trim().toLowerCase();
     const normalizedSpecialism = (course.listing?.specialism || '').trim().toLowerCase();
     const identityKey = `${normalizedTitle}::${normalizedSpecialism}`;
@@ -215,7 +212,7 @@ export async function getAllCourses(): Promise<CourseItem[]> {
     return true;
   });
 
-  return uniqueCourses.sort((a, b) => {
+  return uniqueCourses.sort((a: CourseItem, b: CourseItem) => {
     const aOrder = a.listing?.order;
     const bOrder = b.listing?.order;
 
@@ -227,15 +224,13 @@ export async function getAllCourses(): Promise<CourseItem[]> {
 }
 
 export async function getCourseBySlug(slug: string): Promise<CourseItem | null> {
-  await dbConnect();
-  const item = await Course.findOne({ slug });
+  const item = await prisma.course.findFirst({ where: { slug } });
   return item ? mapCourse(item) : null;
 }
 
 export async function getCourseById(id: string): Promise<CourseItem | null> {
-  await dbConnect();
   try {
-    const item = await Course.findById(id);
+    const item = await prisma.course.findUnique({ where: { id } });
     return item ? mapCourse(item) : null;
   } catch {
     return null;
@@ -243,36 +238,83 @@ export async function getCourseById(id: string): Promise<CourseItem | null> {
 }
 
 export async function createCourse(data: Partial<CourseItem>): Promise<CourseItem> {
-  await dbConnect();
   const normalizedData = normalizeCourseData(data);
   if (normalizedData.overview) {
     normalizedData.overview = sanitizeHtml(normalizedData.overview);
   }
-  const newItem = await Course.create(normalizedData);
+  const newItem = await prisma.course.create({
+    data: {
+      title: normalizedData.title || '',
+      subtitle: normalizedData.subtitle,
+      slug: normalizedData.slug || '',
+      category: normalizedData.category,
+      duration: normalizedData.duration,
+      description: normalizedData.description,
+      image: normalizedData.image,
+      level: normalizedData.level,
+      listing: normalizedData.listing ? JSON.parse(JSON.stringify(normalizedData.listing)) : undefined,
+      featured: normalizedData.featured ?? false,
+      overview: normalizedData.overview,
+      details: normalizedData.details ? JSON.parse(JSON.stringify(normalizedData.details)) : undefined,
+      curriculum: normalizedData.curriculum ? JSON.parse(JSON.stringify(normalizedData.curriculum)) : undefined,
+      learningOutcomes: normalizedData.learningOutcomes ? JSON.parse(JSON.stringify(normalizedData.learningOutcomes)) : undefined,
+      careerOpportunities: normalizedData.careerOpportunities ? JSON.parse(JSON.stringify(normalizedData.careerOpportunities)) : undefined,
+      faculty: normalizedData.faculty ? JSON.parse(JSON.stringify(normalizedData.faculty)) : undefined,
+      quote: normalizedData.quote ? JSON.parse(JSON.stringify(normalizedData.quote)) : undefined,
+      projects: normalizedData.projects ? JSON.parse(JSON.stringify(normalizedData.projects)) : undefined,
+      faqs: normalizedData.faqs ? JSON.parse(JSON.stringify(normalizedData.faqs)) : undefined,
+    },
+  });
   safeRevalidateTag('courses');
   return mapCourse(newItem);
 }
 
 export async function updateCourse(id: string, data: Partial<CourseItem>): Promise<CourseItem | null> {
-  await dbConnect();
   const normalizedData = normalizeCourseData(data);
   if (normalizedData.overview) {
     normalizedData.overview = sanitizeHtml(normalizedData.overview);
   }
-  const updatedItem = await Course.findByIdAndUpdate(id, normalizedData, {
-    new: true,
-    runValidators: true,
-    // The request payload has already been filtered by Zod. This keeps newly
-    // added fields intact while a development model is being hot-reloaded.
-    strict: false,
-  });
-  safeRevalidateTag('courses');
-  return updatedItem ? mapCourse(updatedItem) : null;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const updatePayload: Record<string, any> = {};
+  if (normalizedData.title !== undefined) updatePayload.title = normalizedData.title;
+  if (normalizedData.subtitle !== undefined) updatePayload.subtitle = normalizedData.subtitle;
+  if (normalizedData.slug !== undefined) updatePayload.slug = normalizedData.slug;
+  if (normalizedData.category !== undefined) updatePayload.category = normalizedData.category;
+  if (normalizedData.duration !== undefined) updatePayload.duration = normalizedData.duration;
+  if (normalizedData.description !== undefined) updatePayload.description = normalizedData.description;
+  if (normalizedData.image !== undefined) updatePayload.image = normalizedData.image;
+  if (normalizedData.level !== undefined) updatePayload.level = normalizedData.level;
+  if (normalizedData.listing !== undefined) updatePayload.listing = JSON.parse(JSON.stringify(normalizedData.listing));
+  if (normalizedData.featured !== undefined) updatePayload.featured = normalizedData.featured;
+  if (normalizedData.overview !== undefined) updatePayload.overview = normalizedData.overview;
+  if (normalizedData.details !== undefined) updatePayload.details = JSON.parse(JSON.stringify(normalizedData.details));
+  if (normalizedData.curriculum !== undefined) updatePayload.curriculum = JSON.parse(JSON.stringify(normalizedData.curriculum));
+  if (normalizedData.learningOutcomes !== undefined) updatePayload.learningOutcomes = JSON.parse(JSON.stringify(normalizedData.learningOutcomes));
+  if (normalizedData.careerOpportunities !== undefined) updatePayload.careerOpportunities = JSON.parse(JSON.stringify(normalizedData.careerOpportunities));
+  if (normalizedData.faculty !== undefined) updatePayload.faculty = JSON.parse(JSON.stringify(normalizedData.faculty));
+  if (normalizedData.quote !== undefined) updatePayload.quote = JSON.parse(JSON.stringify(normalizedData.quote));
+  if (normalizedData.projects !== undefined) updatePayload.projects = JSON.parse(JSON.stringify(normalizedData.projects));
+  if (normalizedData.faqs !== undefined) updatePayload.faqs = JSON.parse(JSON.stringify(normalizedData.faqs));
+
+  try {
+    const updatedItem = await prisma.course.update({
+      where: { id },
+      data: updatePayload,
+    });
+    safeRevalidateTag('courses');
+    return mapCourse(updatedItem);
+  } catch {
+    return null;
+  }
 }
 
 export async function deleteCourse(id: string): Promise<boolean> {
-  await dbConnect();
-  const result = await Course.findByIdAndDelete(id);
-  safeRevalidateTag('courses');
-  return !!result;
+  try {
+    await prisma.course.delete({ where: { id } });
+    safeRevalidateTag('courses');
+    return true;
+  } catch {
+    return false;
+  }
 }

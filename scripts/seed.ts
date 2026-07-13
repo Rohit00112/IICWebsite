@@ -1,37 +1,23 @@
-import mongoose from 'mongoose';
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
-const MONGODB_URI = process.env.MONGODB_URI || '';
+const prisma = new PrismaClient();
 const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || 'web@iic.edu.np').trim().toLowerCase();
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'IIC@2026';
 
-if (!MONGODB_URI) {
-  throw new Error('Please define MONGODB_URI before running the seed script.');
-}
-
 async function seed() {
   try {
-    console.log('Connecting to MongoDB...');
-    await mongoose.connect(MONGODB_URI);
-    console.log('Connected successfully.');
-
-    // Models
-    const AdminSchema = new mongoose.Schema({
-      email: String,
-      password: { type: String },
-      name: String,
-    }, { timestamps: true });
-
-    const Admin = mongoose.models.Admin || mongoose.model('Admin', AdminSchema);
-
-    // Seed Admin
+    console.log('Connecting to database...');
+    // Prisma client auto-connects
     console.log('Clearing Admin DB...');
-    await Admin.deleteMany({});
+    await prisma.admin.deleteMany({});
     const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
-    await Admin.create({
-      email: ADMIN_EMAIL,
-      password: hashedPassword,
-      name: 'Itahari International College Administrator'
+    await prisma.admin.create({
+      data: {
+        email: ADMIN_EMAIL,
+        password: hashedPassword,
+        name: 'Itahari International College Administrator',
+      },
     });
     console.log('Admin user seeded.');
 
@@ -40,6 +26,8 @@ async function seed() {
   } catch (error) {
     console.error('Seeding failed:', error);
     process.exit(1);
+  } finally {
+    await prisma.$disconnect();
   }
 }
 

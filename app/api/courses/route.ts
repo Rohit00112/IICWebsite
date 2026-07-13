@@ -5,6 +5,10 @@ import { ZodError } from 'zod';
 import { rateLimit } from '../../../lib/rate-limit';
 import { getSession } from '../../../lib/auth';
 
+function isDuplicateKeyError(error: unknown): error is { code: string; meta?: { target?: string | string[] } } {
+  return typeof error === 'object' && error !== null && 'code' in error && (error as { code?: unknown }).code === 'P2002';
+}
+
 export async function GET() {
   try {
     const courses = await getAllCourses();
@@ -52,12 +56,14 @@ export async function POST(request: Request) {
         details: error.issues.map(e => ({ path: e.path, message: e.message }))
       }, { status: 400 });
     }
-    console.error('Course creation error:', error);
-    const err = error as { code?: number; keyPattern?: Record<string, unknown>; message?: string };
-    if (err?.code === 11000) {
-      const field = err.keyPattern ? Object.keys(err.keyPattern)[0] : 'field';
+    
+    if (isDuplicateKeyError(error)) {
+      const target = error.meta?.target;
+      const field = typeof target === 'string' ? target : Array.isArray(target) ? target.join(', ') : 'slug';
       return NextResponse.json({ error: `A course with this ${field} already exists.` }, { status: 409 });
     }
-    return NextResponse.json({ error: err?.message || 'Failed to create course' }, { status: 500 });
+    
+    console.error('Course creation error:', error);
+    return NextResponse.json({ error: 'Failed to create course' }, { status: 500 });
   }
 }

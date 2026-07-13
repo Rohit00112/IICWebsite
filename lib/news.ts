@@ -1,5 +1,4 @@
-import dbConnect from './db';
-import News from '../models/News';
+import prisma from './db';
 import { toSafeImageSrc } from './image-source';
 
 // Helper to generate a slug from a title
@@ -32,37 +31,6 @@ export interface NewsItem {
   author?: NewsAuthor;
 }
 
-interface NewsDocument {
-  _id: { toString(): string } | string;
-  category: NewsItem['category'];
-  date: string;
-  time?: string;
-  location?: string;
-  title: string;
-  description: string;
-  content: string;
-  image: string;
-  slug?: string;
-  featured: boolean;
-  author?: Partial<NewsAuthor>;
-}
-
-type NewsQuery = {
-  category?: string;
-  $or?: Array<{
-    title?: { $regex: string; $options: string };
-    description?: { $regex: string; $options: string };
-  }>;
-};
-
-interface ArchiveDocument {
-  _id: {
-    y: number;
-    m: number;
-  };
-  count: number;
-}
-
 import { revalidateTag } from 'next/cache';
 
 function safeRevalidateTag(tag: string) {
@@ -73,12 +41,12 @@ function safeRevalidateTag(tag: string) {
   }
 }
 
-// Helper to convert Mongo document to clean plain object
-function mapNewsItem(doc: NewsDocument): NewsItem {
-  const id = doc._id.toString();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mapNewsItem(doc: any): NewsItem {
+  const authorData = (doc.author as Record<string, string>) || {};
 
   return {
-    id,
+    id: doc.id,
     category: doc.category,
     date: doc.date,
     time: doc.time,
@@ -87,26 +55,26 @@ function mapNewsItem(doc: NewsDocument): NewsItem {
     description: doc.description,
     content: doc.content,
     image: toSafeImageSrc(doc.image, '/images/common/tower_block.JPG'),
-    slug: doc.slug || id,
+    slug: doc.slug || doc.id,
     featured: doc.featured,
     author: {
-      name: doc.author?.name || '',
-      role: doc.author?.role || '',
-      avatar: toSafeImageSrc(doc.author?.avatar)
+      name: authorData.name || '',
+      role: authorData.role || '',
+      avatar: toSafeImageSrc(authorData.avatar),
     },
   };
 }
 
 export async function getAllNews(): Promise<NewsItem[]> {
-  await dbConnect();
-  const news = await News.find({}).sort({ createdAt: -1 });
+  const news = await prisma.news.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
   return news.map(mapNewsItem);
 }
 
 export async function getNewsById(id: string): Promise<NewsItem | null> {
-  await dbConnect();
   try {
-    const item = await News.findById(id);
+    const item = await prisma.news.findUnique({ where: { id } });
     return item ? mapNewsItem(item) : null;
   } catch {
     return null;
@@ -114,16 +82,15 @@ export async function getNewsById(id: string): Promise<NewsItem | null> {
 }
 
 export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
-  await dbConnect();
   try {
     // Try by slug first
-    let item = await News.findOne({ slug });
+    let item = await prisma.news.findFirst({ where: { slug } });
     // Fall back to ID lookup for existing articles without slugs
     if (!item) {
       try {
-        item = await News.findById(slug);
+        item = await prisma.news.findUnique({ where: { id: slug } });
       } catch {
-        // Not a valid ObjectId, that's fine
+        // Not a valid UUID, that's fine
       }
     }
     return item ? mapNewsItem(item) : null;
@@ -133,12 +100,13 @@ export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
 }
 
 export async function getFeaturedNews(): Promise<NewsItem | null> {
-  await dbConnect();
-  const item = await News.findOne({ featured: true });
+  const item = await prisma.news.findFirst({ where: { featured: true } });
   if (item) return mapNewsItem(item);
-  
+
   // Fallback to latest news if no featured one found
-  const latest = await News.findOne({}).sort({ createdAt: -1 });
+  const latest = await prisma.news.findFirst({
+    orderBy: { createdAt: 'desc' },
+  });
   return latest ? mapNewsItem(latest) : null;
 }
 
@@ -150,14 +118,19 @@ async function makeUniqueSlug(base: string, excludeId?: string): Promise<string>
   let n = 2;
   // Append -2, -3, ... until the slug is free
   while (true) {
-    const clash = await News.findOne({ slug, ...(excludeId ? { _id: { $ne: excludeId } } : {}) }).select('_id');
+    const clash = await prisma.news.findFirst({
+      where: {
+        slug,
+        ...(excludeId ? { NOT: { id: excludeId } } : {}),
+      },
+      select: { id: true },
+    });
     if (!clash) return slug;
     slug = `${root}-${n++}`;
   }
 }
 
 export async function createNews(data: Partial<NewsItem>): Promise<NewsItem> {
-  await dbConnect();
   // Auto-generate a unique slug from title if not provided
   if (!data.slug && data.title) {
     data.slug = await makeUniqueSlug(generateSlug(data.title));
@@ -166,13 +139,26 @@ export async function createNews(data: Partial<NewsItem>): Promise<NewsItem> {
   if (data.content) {
     data.content = sanitizeHtml(data.content);
   }
-  const newItem = await News.create(data);
+  const newItem = await prisma.news.create({
+    data: {
+      category: data.category || 'News',
+      date: data.date || '',
+      time: data.time,
+      location: data.location,
+      title: data.title || '',
+      slug: data.slug,
+      description: data.description || '',
+      content: data.content || '',
+      image: data.image ?? '',
+      featured: data.featured ?? false,
+      author: data.author ? JSON.parse(JSON.stringify(data.author)) : undefined,
+    },
+  });
   safeRevalidateTag('news');
   return mapNewsItem(newItem);
 }
 
 export async function updateNews(id: string, data: Partial<NewsItem>): Promise<NewsItem | null> {
-  await dbConnect();
   // Regenerate a unique slug if title changed
   if (data.title && !data.slug) {
     data.slug = await makeUniqueSlug(generateSlug(data.title), id);
@@ -181,41 +167,67 @@ export async function updateNews(id: string, data: Partial<NewsItem>): Promise<N
   if (data.content) {
     data.content = sanitizeHtml(data.content);
   }
-  const updatedItem = await News.findByIdAndUpdate(id, data, { new: true, runValidators: true });
-  safeRevalidateTag('news');
-  return updatedItem ? mapNewsItem(updatedItem) : null;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const updatePayload: Record<string, any> = {};
+  if (data.category !== undefined) updatePayload.category = data.category;
+  if (data.date !== undefined) updatePayload.date = data.date;
+  if (data.time !== undefined) updatePayload.time = data.time;
+  if (data.location !== undefined) updatePayload.location = data.location;
+  if (data.title !== undefined) updatePayload.title = data.title;
+  if (data.slug !== undefined) updatePayload.slug = data.slug;
+  if (data.description !== undefined) updatePayload.description = data.description;
+  if (data.content !== undefined) updatePayload.content = data.content;
+  if (data.image !== undefined) updatePayload.image = data.image;
+  if (data.featured !== undefined) updatePayload.featured = data.featured;
+  if (data.author !== undefined) updatePayload.author = JSON.parse(JSON.stringify(data.author));
+
+  try {
+    const updatedItem = await prisma.news.update({
+      where: { id },
+      data: updatePayload,
+    });
+    safeRevalidateTag('news');
+    return mapNewsItem(updatedItem);
+  } catch {
+    return null;
+  }
 }
 
 export async function deleteNews(id: string): Promise<boolean> {
-  await dbConnect();
-  const result = await News.findByIdAndDelete(id);
-  safeRevalidateTag('news');
-  return !!result;
+  try {
+    await prisma.news.delete({ where: { id } });
+    safeRevalidateTag('news');
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export async function filterNews(category: string, search: string): Promise<NewsItem[]> {
-  await dbConnect();
-  
-  const query: NewsQuery = {};
-  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const where: any = {};
+
   // Category mapping
   if (category !== 'All') {
     let normalizedCategory = category;
     if (category === 'Events') normalizedCategory = 'Event';
     if (category === 'Blogs') normalizedCategory = 'Blog';
-    query.category = normalizedCategory;
+    where.category = normalizedCategory;
   }
 
   // Search logic
   if (search) {
-    const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    query.$or = [
-      { title: { $regex: escapedSearch, $options: 'i' } },
-      { description: { $regex: escapedSearch, $options: 'i' } }
+    where.OR = [
+      { title: { contains: search } },
+      { description: { contains: search } },
     ];
   }
 
-  const news = await News.find(query).sort({ createdAt: -1 });
+  const news = await prisma.news.findMany({
+    where,
+    orderBy: { createdAt: 'desc' },
+  });
   return news.map(mapNewsItem);
 }
 
@@ -230,23 +242,38 @@ export interface UpcomingEvent {
   date: string;
 }
 
+type UpcomingEventRecord = {
+  id: string;
+  slug: string | null;
+  title: string;
+  time: string | null;
+  date: string;
+};
+
 export async function getUpcomingEvents(limit = 4): Promise<UpcomingEvent[]> {
-  await dbConnect();
   const now = new Date();
-  const events = await News.find({ category: 'Event' });
+  const events: UpcomingEventRecord[] = await prisma.news.findMany({
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      time: true,
+      date: true,
+    },
+    where: { category: 'Event' },
+  });
   const monthShort = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   return events
-    .map((doc: NewsDocument) => {
+    .map((doc) => {
       const d = new Date(doc.date);
-      const id = doc._id.toString();
       return {
         raw: d,
         item: {
-          id,
-          slug: doc.slug || id,
+          id: doc.id,
+          slug: doc.slug || doc.id,
           title: doc.title,
-          time: doc.time,
+          time: doc.time ?? undefined,
           date: doc.date,
           day: String(d.getDate()).padStart(2, '0'),
           month: monthShort[d.getMonth()] || '',
@@ -268,40 +295,52 @@ export interface ArchiveEntry {
 }
 
 export async function getNewsArchive(limit = 6): Promise<ArchiveEntry[]> {
-  await dbConnect();
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December',
   ];
-  const docs = await News.aggregate<ArchiveDocument>([
-    {
-      $group: {
-        _id: {
-          y: { $year: '$createdAt' },
-          m: { $month: '$createdAt' },
-        },
-        count: { $sum: 1 },
-      },
-    },
-    { $sort: { '_id.y': -1, '_id.m': -1 } },
-    { $limit: limit },
-  ]);
-  return docs.map((d) => ({
-    monthIndex: d._id.m - 1,
-    year: d._id.y,
-    month: `${monthNames[d._id.m - 1]} ${d._id.y}`,
-    count: d.count,
-  }));
+
+  const news = await prisma.news.findMany({
+    select: { createdAt: true },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  // Group by year/month in JS (replaces MongoDB aggregate)
+  const buckets = new Map<string, { y: number; m: number; count: number }>();
+
+  for (const item of news) {
+    const d = item.createdAt;
+    const y = d.getFullYear();
+    const m = d.getMonth() + 1; // 1-indexed
+    const key = `${y}-${m}`;
+    const bucket = buckets.get(key);
+    if (bucket) {
+      bucket.count++;
+    } else {
+      buckets.set(key, { y, m, count: 1 });
+    }
+  }
+
+  return [...buckets.values()]
+    .sort((a, b) => b.y - a.y || b.m - a.m)
+    .slice(0, limit)
+    .map((d) => ({
+      monthIndex: d.m - 1,
+      year: d.y,
+      month: `${monthNames[d.m - 1]} ${d.y}`,
+      count: d.count,
+    }));
 }
 
 export async function getRelatedNews(category: string, currentId: string, limit = 3): Promise<NewsItem[]> {
-  await dbConnect();
-  const news = await News.find({
-    category,
-    _id: { $ne: currentId }
-  })
-  .sort({ createdAt: -1 })
-  .limit(limit);
-  
+  const news = await prisma.news.findMany({
+    where: {
+      category,
+      NOT: { id: currentId },
+    },
+    orderBy: { createdAt: 'desc' },
+    take: limit,
+  });
+
   return news.map(mapNewsItem);
 }

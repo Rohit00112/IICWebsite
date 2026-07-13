@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '../../../lib/db';
-import Subscriber from '../../../models/Subscriber';
+import prisma from '../../../lib/db';
 import { rateLimit } from '../../../lib/rate-limit';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,12 +30,13 @@ export async function POST(request: Request) {
   }
 
   try {
-    await dbConnect();
-    const existing = await Subscriber.findOne({ email });
+    const existing = await prisma.subscriber.findUnique({ where: { email } });
     if (existing) {
       if (!existing.active) {
-        existing.active = true;
-        await existing.save();
+        await prisma.subscriber.update({
+          where: { id: existing.id },
+          data: { active: true },
+        });
         return NextResponse.json({ message: 'Subscription reactivated.' });
       }
       return NextResponse.json(
@@ -44,7 +44,12 @@ export async function POST(request: Request) {
         { status: 200 }
       );
     }
-    await Subscriber.create({ email, source: body.source || 'news-sidebar' });
+    await prisma.subscriber.create({
+      data: {
+        email,
+        source: body.source || 'news-sidebar',
+      },
+    });
     return NextResponse.json({ message: 'Subscribed successfully.' }, { status: 201 });
   } catch (err) {
     console.error('[subscribe] failed', err);

@@ -4,8 +4,8 @@ import { getSession } from '@/lib/auth';
 import { createEventGallery, getPublishedEventGalleries } from '@/lib/event-galleries';
 import { eventGallerySchema } from '@/lib/validations/event-gallery';
 
-function isDuplicateKeyError(error: unknown): error is { code: number } {
-  return typeof error === 'object' && error !== null && 'code' in error && (error as { code?: unknown }).code === 11000;
+function isDuplicateKeyError(error: unknown): boolean {
+  return typeof error === 'object' && error !== null && 'code' in error && (error as { code?: unknown }).code === 'P2002';
 }
 
 export async function GET() {

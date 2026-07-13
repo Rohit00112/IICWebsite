@@ -1,25 +1,37 @@
 import React from 'react';
-
-import News from '../../models/News';
-import Course from '../../models/Course';
-import dbConnect from '../../lib/db';
 import Link from 'next/link';
 import NextImage from 'next/image';
+import prisma from '../../lib/db';
 import { toSafeImageSrc } from '../../lib/image-source';
 
 export const dynamic = 'force-dynamic';
 
+type LatestNewsItem = {
+  id: string;
+  image: string | null;
+  title: string;
+  date: string;
+  category: string;
+};
 
 const AdminDashboard = async () => {
-  await dbConnect();
-  
   const [newsCount, courseCount, featuredNewsCount] = await Promise.all([
-    News.countDocuments(),
-    Course.countDocuments(),
-    News.countDocuments({ featured: true })
+    prisma.news.count(),
+    prisma.course.count(),
+    prisma.news.count({ where: { featured: true } }),
   ]);
 
-  const latestNews = await News.find().sort({ createdAt: -1 }).limit(5);
+  const latestNews: LatestNewsItem[] = await prisma.news.findMany({
+    select: {
+      id: true,
+      image: true,
+      title: true,
+      date: true,
+      category: true,
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 5,
+  });
 
   return (
     <div className="space-y-12">
@@ -76,7 +88,7 @@ const AdminDashboard = async () => {
               const imageSrc = toSafeImageSrc(item.image, '/images/common/tower_block.JPG');
 
               return (
-                <div key={item._id.toString()} className={`p-6 flex items-center gap-6 ${idx !== latestNews.length - 1 ? 'border-b border-gray-50' : ''}`}>
+                <div key={item.id} className={`p-6 flex items-center gap-6 ${idx !== latestNews.length - 1 ? 'border-b border-gray-50' : ''}`}>
                   <div className="w-16 h-12 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0 relative">
                     {imageSrc && <NextImage src={imageSrc} alt="" fill sizes="64px" className="object-cover" />}
                   </div>
@@ -85,7 +97,7 @@ const AdminDashboard = async () => {
                     <p className="text-xs text-gray-400 font-medium">{item.date} • {item.category}</p>
                   </div>
                   <Link 
-                    href={`/admin/news/${item._id}`}
+                    href={`/admin/news/${item.id}`}
                     className="px-4 py-2 bg-gray-50 text-gray-400 text-xs font-bold rounded-lg hover:bg-[#21409A] hover:text-white"
                   >
                     Edit

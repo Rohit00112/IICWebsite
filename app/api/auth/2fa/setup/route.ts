@@ -3,13 +3,12 @@ import { NextResponse } from 'next/server';
 import QRCode from 'qrcode';
 import { z } from 'zod';
 import { getSession } from '../../../../../lib/auth';
-import dbConnect from '../../../../../lib/db';
+import prisma from '../../../../../lib/db';
 import { rateLimit } from '../../../../../lib/rate-limit';
 import {
   createTwoFactorEnrollment,
   encryptTwoFactorSecret,
 } from '../../../../../lib/two-factor';
-import Admin from '../../../../../models/Admin';
 
 const setupSchema = z.object({
   password: z.string().min(1).max(200),
@@ -45,8 +44,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await dbConnect();
-    const admin = await Admin.findById(session.admin.id);
+    const admin = await prisma.admin.findUnique({ where: { id: session.admin.id } });
     if (!admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -70,8 +68,12 @@ export async function POST(request: Request) {
     }
 
     const enrollment = createTwoFactorEnrollment(admin.email);
-    admin.twoFactorPendingSecret = encryptTwoFactorSecret(enrollment.secret);
-    await admin.save();
+    await prisma.admin.update({
+      where: { id: admin.id },
+      data: {
+        twoFactorPendingSecret: encryptTwoFactorSecret(enrollment.secret),
+      },
+    });
 
     const qrCodeDataUrl = await QRCode.toDataURL(enrollment.uri, {
       errorCorrectionLevel: 'M',

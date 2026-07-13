@@ -2,6 +2,7 @@ import React from 'react';
 import NewsHero from '../../components/sections/news/NewsHero';
 import NewsContent from '../../components/sections/news/NewsContent';
 import { getAllNews, getFeaturedNews, getUpcomingEvents, getNewsArchive } from '../../lib/news';
+import { logExpectedDbFallback } from '../../lib/db-fallback-log';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import JsonLd from '@/components/common/JsonLd';
@@ -73,7 +74,7 @@ const NewsPage = async () => {
       getNewsArchive(6),
     ]);
   } catch (err) {
-    console.error('[news] DB unavailable, rendering empty state:', err);
+    logExpectedDbFallback('[news] DB unavailable, rendering empty state:', err);
   }
 
   const breadcrumbs = [

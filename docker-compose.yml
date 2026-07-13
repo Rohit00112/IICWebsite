@@ -1,29 +1,69 @@
 services:
+  migrate:
+    container_name: iic-migrate
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dependencies
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: mysql://iic_user:iic_password@db:3306/iic_website
+    command: ["sh", "-c", "npx prisma db push --skip-generate"]
+    restart: "no"
+
   iic:
     container_name: iic-website
     build:
       context: .
       dockerfile: Dockerfile
-      secrets:
-        - app_env
     restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
     env_file:
-      - .env.production
+      - path: .env.production
+        required: false
     environment:
       NODE_ENV: production
       PORT: 3000
       HOSTNAME: 0.0.0.0
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      JWT_SECRET: ${JWT_SECRET:-development-only-jwt-secret}
+      TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY:-development-only-two-factor-key}
       ADMIN_EMAIL: ${ADMIN_EMAIL:-web@iic.edu.np}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-IIC@2026}
+      DATABASE_URL: mysql://iic_user:iic_password@db:3306/iic_website
     ports:
       - "3000:3000"
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3000/"]
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 30s
 
-secrets:
-  app_env:
-    file: .env.production
+  db:
+    image: mariadb:11.4
+    container_name: iic-mysql
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: iic_website
+      MARIADB_USER: iic_user
+      MARIADB_PASSWORD: iic_password
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "127.0.0.1", "-u", "iic_user", "-piic_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:

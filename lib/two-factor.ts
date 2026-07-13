@@ -8,15 +8,15 @@ import {
   timingSafeEqual,
 } from 'crypto';
 import * as OTPAuth from 'otpauth';
-import Admin from '../models/Admin';
+import prisma from './db';
 
 const issuer = 'Itahari International College';
 const recoveryAlphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
 interface AdminSecondFactor {
   _id: { toString(): string };
-  twoFactorSecret?: string;
-  twoFactorRecoveryCodes?: string[];
+  twoFactorSecret?: string | null;
+  twoFactorRecoveryCodes?: unknown; // since it could be JSON
   twoFactorLastUsedCounter?: number;
 }
 
@@ -148,34 +148,40 @@ export async function consumeSecondFactor(
   const counter = verifyTotp(secret, code);
 
   if (counter !== null) {
-    const result = await Admin.updateOne(
-      {
-        _id: admin._id,
+    const result = await prisma.admin.updateMany({
+      where: {
+        id: admin._id.toString(),
         twoFactorEnabled: true,
-        $or: [
-          { twoFactorLastUsedCounter: { $lt: counter } },
-          { twoFactorLastUsedCounter: { $exists: false } },
-        ],
+        twoFactorLastUsedCounter: { lt: counter },
       },
-      { $set: { twoFactorLastUsedCounter: counter } },
-    );
+      data: {
+        twoFactorLastUsedCounter: counter,
+      },
+    });
 
-    return result.modifiedCount === 1;
+    return result.count === 1;
   }
 
-  const matchingHash = admin.twoFactorRecoveryCodes?.find((hash) =>
+  const recoveryCodes = Array.isArray(admin.twoFactorRecoveryCodes)
+    ? (admin.twoFactorRecoveryCodes as string[])
+    : [];
+
+  const matchingHash = recoveryCodes.find((hash) =>
     recoveryCodeMatches(code, hash),
   );
   if (!matchingHash) return false;
 
-  const result = await Admin.updateOne(
-    {
-      _id: admin._id,
-      twoFactorEnabled: true,
-      twoFactorRecoveryCodes: matchingHash,
-    },
-    { $pull: { twoFactorRecoveryCodes: matchingHash } },
-  );
+  const newCodes = recoveryCodes.filter((hash) => hash !== matchingHash);
 
-  return result.modifiedCount === 1;
+  const result = await prisma.admin.updateMany({
+    where: {
+      id: admin._id.toString(),
+      twoFactorEnabled: true,
+    },
+    data: {
+      twoFactorRecoveryCodes: newCodes,
+    },
+  });
+
+  return result.count === 1;
 }

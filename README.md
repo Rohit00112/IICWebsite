@@ -110,7 +110,31 @@ This project pins **Next.js 16.2** with React 19. APIs, file conventions, and so
 
 ## Deployment
 
-Deployable to any Node 20+ host (Vercel, Fly, self-hosted). Set `MONGODB_URI`, `JWT_SECRET`, `TWO_FACTOR_ENCRYPTION_KEY`, and `NEXT_PUBLIC_SITE_URL` in the platform's environment variables.
+Deployable to any Node 20+ host. Set `DATABASE_URL`, `JWT_SECRET`, `TWO_FACTOR_ENCRYPTION_KEY`, and `NEXT_PUBLIC_SITE_URL` in the platform's environment variables.
+
+### Docker Compose
+
+Run the full app and database stack locally with:
+
+```bash
+docker compose up --build
+```
+
+What this stack does:
+
+- Starts a MariaDB service that Prisma uses through the existing `mysql` provider.
+- Builds the Next.js app as a standalone container.
+- On startup, the app container runs `prisma db push --skip-generate`, provisions the default admin, and then starts the server.
+
+Optional runtime configuration can live in `.env.production`. If that file is absent, local Docker defaults are used for:
+
+- `NEXT_PUBLIC_SITE_URL=http://localhost:3000`
+- `JWT_SECRET=development-only-jwt-secret`
+- `TWO_FACTOR_ENCRYPTION_KEY=development-only-two-factor-key`
+- `ADMIN_EMAIL=web@iic.edu.np`
+- `ADMIN_PASSWORD=IIC@2026`
+
+For production, override those defaults with real secrets.
 
 ### GitLab CI/CD
 
@@ -121,7 +145,7 @@ Configure these protected GitLab CI/CD variables:
 
 - `SSH_PRIVATE_KEY`: File-type variable containing the deploy user's private key.
 - `SSH_KNOWN_HOSTS`: File-type variable containing the server's trusted host key.
-- `MONGODB_URI`
+- `DATABASE_URL`
 - `JWT_SECRET`
 - `TWO_FACTOR_ENCRYPTION_KEY`
 - `CLMS_API_URL`

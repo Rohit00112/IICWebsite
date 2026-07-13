@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import dbConnect from '../../../../lib/db';
-import Admin from '../../../../models/Admin';
+import prisma from '../../../../lib/db';
 import {
   clearTwoFactorChallenge,
   createTwoFactorChallenge,
@@ -29,14 +28,13 @@ export async function POST(request: Request) {
 
   try {
     await clearTwoFactorChallenge();
-    await dbConnect();
     const parsed = loginSchema.safeParse(await request.json());
     if (!parsed.success) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
     const { email, password } = parsed.data;
-    const admin = await Admin.findOne({ email }).select('+twoFactorSecret');
+    const admin = await prisma.admin.findUnique({ where: { email } });
 
     if (!admin) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
@@ -57,12 +55,12 @@ export async function POST(request: Request) {
         );
       }
 
-      await createTwoFactorChallenge(admin._id.toString());
+      await createTwoFactorChallenge(admin.id);
       return NextResponse.json({ requiresTwoFactor: true });
     }
 
     await login({
-      id: admin._id.toString(),
+      id: admin.id,
       email: admin.email,
       name: admin.name,
     });

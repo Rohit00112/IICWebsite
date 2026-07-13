@@ -5,6 +5,10 @@ import { ZodError } from 'zod';
 import { rateLimit } from '../../../lib/rate-limit';
 import { getSession } from '../../../lib/auth';
 
+function isDuplicateKeyError(error: unknown): boolean {
+  return typeof error === 'object' && error !== null && 'code' in error && (error as { code?: unknown }).code === 'P2002';
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const category = searchParams.get('category') || 'All';
@@ -51,7 +55,7 @@ export async function POST(request: Request) {
         details: error.issues.map(e => ({ path: e.path, message: e.message }))
       }, { status: 400 });
     }
-    if (error && typeof error === 'object' && (error as { code?: number }).code === 11000) {
+    if (isDuplicateKeyError(error)) {
       return NextResponse.json({ error: 'An article with this title already exists. Try a slightly different title.' }, { status: 409 });
     }
     console.error('POST /api/news error:', error);

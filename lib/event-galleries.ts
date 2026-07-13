@@ -1,6 +1,6 @@
 import { revalidateTag } from 'next/cache';
-import dbConnect from './db';
-import EventGallery from '../models/EventGallery';
+import { logExpectedDbFallback } from './db-fallback-log';
+import prisma from './db';
 import { toSafeImageSrc } from './image-source';
 
 export type EventGalleryStatus = 'draft' | 'published';
@@ -24,11 +24,6 @@ export interface EventGalleryArchive {
   summary: string;
   galleries: EventGalleryItem[];
 }
-
-type EventGalleryDocument = Partial<Omit<EventGalleryItem, 'id'>> & {
-  _id?: unknown;
-  toObject?: (options: Record<string, boolean>) => EventGalleryDocument;
-};
 
 const defaultGalleries: EventGalleryItem[] = [
   {
@@ -145,21 +140,20 @@ function getGallerySlug(data: Partial<EventGalleryItem>) {
   return customSlug || generateSlug(`${data.title || ''}-${data.year || ''}`);
 }
 
-function mapEventGallery(doc: EventGalleryDocument): EventGalleryItem {
-  const plain = typeof doc.toObject === 'function'
-    ? doc.toObject({ depopulate: true, virtuals: false, flattenObjectIds: true, versionKey: false })
-    : doc;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mapEventGallery(doc: any): EventGalleryItem {
+  const images = Array.isArray(doc.images) ? doc.images : [];
 
   return {
-    id: String(plain._id ?? ''),
-    title: plain.title || '',
-    slug: plain.slug || '',
-    year: typeof plain.year === 'number' ? plain.year : new Date().getFullYear(),
-    summary: plain.summary || '',
-    coverImage: toSafeImageSrc(plain.coverImage, '/images/lifestyle/lifestyle-hero.JPG'),
-    images: (plain.images || []).map((image) => toSafeImageSrc(image)).filter(Boolean),
-    status: plain.status === 'published' ? 'published' : 'draft',
-    sortOrder: typeof plain.sortOrder === 'number' ? plain.sortOrder : 0,
+    id: doc.id,
+    title: doc.title || '',
+    slug: doc.slug || '',
+    year: typeof doc.year === 'number' ? doc.year : new Date().getFullYear(),
+    summary: doc.summary || '',
+    coverImage: toSafeImageSrc(doc.coverImage, '/images/lifestyle/lifestyle-hero.JPG'),
+    images: images.map((image: string) => toSafeImageSrc(image)).filter(Boolean),
+    status: doc.status === 'published' ? 'published' : 'draft',
+    sortOrder: typeof doc.sortOrder === 'number' ? doc.sortOrder : 0,
   };
 }
 
@@ -210,8 +204,9 @@ function safeRevalidateTag(tag: string) {
 }
 
 export async function getAllEventGalleries(): Promise<EventGalleryItem[]> {
-  await dbConnect();
-  const galleries = await EventGallery.find({}).sort({ year: -1, sortOrder: 1, createdAt: -1 });
+  const galleries = await prisma.eventGallery.findMany({
+    orderBy: [{ year: 'desc' }, { sortOrder: 'asc' }, { createdAt: 'desc' }],
+  });
   return galleries.map(mapEventGallery);
 }
 
@@ -221,7 +216,7 @@ export async function getPublishedEventGalleries(): Promise<EventGalleryItem[]> 
   try {
     galleries = await getAllEventGalleries();
   } catch (error) {
-    console.error('[event-galleries] DB unavailable, rendering default galleries:', error);
+    logExpectedDbFallback('[event-galleries] DB unavailable, rendering default galleries:', error);
     return getDefaultPublishedGalleries();
   }
 
@@ -243,9 +238,8 @@ export async function getPublishedEventGalleryArchives(): Promise<EventGalleryAr
 }
 
 export async function getEventGalleryById(id: string): Promise<EventGalleryItem | null> {
-  await dbConnect();
   try {
-    const gallery = await EventGallery.findById(id);
+    const gallery = await prisma.eventGallery.findUnique({ where: { id } });
     return gallery ? mapEventGallery(gallery) : null;
   } catch {
     return null;
@@ -254,11 +248,12 @@ export async function getEventGalleryById(id: string): Promise<EventGalleryItem 
 
 export async function getPublishedEventGalleryBySlug(slug: string): Promise<EventGalleryItem | null> {
   try {
-    await dbConnect();
-    const gallery = await EventGallery.findOne({ slug, status: 'published' });
+    const gallery = await prisma.eventGallery.findFirst({
+      where: { slug, status: 'published' },
+    });
     if (gallery) return mapEventGallery(gallery);
   } catch (error) {
-    console.error('[event-galleries] DB unavailable, rendering default gallery by slug:', error);
+    logExpectedDbFallback('[event-galleries] DB unavailable, rendering default gallery by slug:', error);
   }
 
   return defaultGalleries.find((item) => item.slug === slug) || null;
@@ -270,26 +265,54 @@ export async function getPublishedEventGalleryArchiveBySlug(slug: string): Promi
 }
 
 export async function createEventGallery(data: Partial<EventGalleryItem>): Promise<EventGalleryItem> {
-  await dbConnect();
-  const gallery = await EventGallery.create({
-    ...data,
-    slug: getGallerySlug(data),
+  const gallery = await prisma.eventGallery.create({
+    data: {
+      title: data.title || '',
+      slug: getGallerySlug(data),
+      year: data.year || new Date().getFullYear(),
+      summary: data.summary || '',
+      coverImage: data.coverImage || '',
+      images: data.images ? JSON.parse(JSON.stringify(data.images)) : [],
+      status: data.status || 'draft',
+      sortOrder: data.sortOrder ?? 0,
+    },
   });
   safeRevalidateTag('event-galleries');
   return mapEventGallery(gallery);
 }
 
 export async function updateEventGallery(id: string, data: Partial<EventGalleryItem>): Promise<EventGalleryItem | null> {
-  await dbConnect();
   const update = data.slug ? { ...data, slug: getGallerySlug(data) } : data;
-  const gallery = await EventGallery.findByIdAndUpdate(id, update, { new: true, runValidators: true });
-  safeRevalidateTag('event-galleries');
-  return gallery ? mapEventGallery(gallery) : null;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const updatePayload: Record<string, any> = {};
+  if (update.title !== undefined) updatePayload.title = update.title;
+  if (update.slug !== undefined) updatePayload.slug = update.slug;
+  if (update.year !== undefined) updatePayload.year = update.year;
+  if (update.summary !== undefined) updatePayload.summary = update.summary;
+  if (update.coverImage !== undefined) updatePayload.coverImage = update.coverImage;
+  if (update.images !== undefined) updatePayload.images = JSON.parse(JSON.stringify(update.images));
+  if (update.status !== undefined) updatePayload.status = update.status;
+  if (update.sortOrder !== undefined) updatePayload.sortOrder = update.sortOrder;
+
+  try {
+    const gallery = await prisma.eventGallery.update({
+      where: { id },
+      data: updatePayload,
+    });
+    safeRevalidateTag('event-galleries');
+    return mapEventGallery(gallery);
+  } catch {
+    return null;
+  }
 }
 
 export async function deleteEventGallery(id: string): Promise<boolean> {
-  await dbConnect();
-  const result = await EventGallery.findByIdAndDelete(id);
-  safeRevalidateTag('event-galleries');
-  return Boolean(result);
+  try {
+    await prisma.eventGallery.delete({ where: { id } });
+    safeRevalidateTag('event-galleries');
+    return true;
+  } catch {
+    return false;
+  }
 }

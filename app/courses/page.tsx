@@ -3,6 +3,7 @@ import CoursesList from '@/components/sections/courses/CoursesList';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/common/BreadcrumbSchema';
 import { getAllCourses } from '@/lib/courses';
+import { logExpectedDbFallback } from '@/lib/db-fallback-log';
 import JsonLd from '@/components/common/JsonLd';
 import {
   absoluteAssetUrl,
@@ -47,7 +48,7 @@ export default async function CoursesPage() {
   try {
     courses = await getAllCourses();
   } catch (err) {
-    console.error('[courses] DB unavailable, rendering default course cards:', err);
+    logExpectedDbFallback('[courses] DB unavailable, rendering default course cards:', err);
   }
 
   const breadcrumbs = [
