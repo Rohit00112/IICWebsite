@@ -8,7 +8,6 @@ import AnimeStagger from '../../effects/AnimeStagger';
 import Tilt from '../../effects/Tilt';
 import type { NewsItem, UpcomingEvent, ArchiveEntry } from '@/lib/news';
 import ShareMenu from './ShareMenu';
-import NewsletterSignup from './NewsletterSignup';
 
 type NewsCategoryFilter = 'All' | 'News' | 'Events' | 'Blogs';
 
@@ -34,34 +33,6 @@ const formatMonthYear = (value: string) => {
   }).format(parsedDate);
 };
 
-type UpcomingEventGroup = {
-  key: string;
-  month: string;
-  year: string;
-  events: UpcomingEvent[];
-};
-
-const groupUpcomingEventsByMonth = (events: UpcomingEvent[]) => (
-  events.reduce<UpcomingEventGroup[]>((groups, event) => {
-    const key = `${event.year}-${event.month}`;
-    const existingGroup = groups.find((group) => group.key === key);
-
-    if (existingGroup) {
-      existingGroup.events.push(event);
-      return groups;
-    }
-
-    groups.push({
-      key,
-      month: event.month,
-      year: event.year,
-      events: [event],
-    });
-
-    return groups;
-  }, [])
-);
-
 interface NewsContentProps {
   initialNews: NewsItem[];
   initialFeatured: NewsItem | null;
@@ -69,13 +40,12 @@ interface NewsContentProps {
   archive: ArchiveEntry[];
 }
 
-const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured, upcomingEvents }) => {
+const NewsContent: React.FC<NewsContentProps> = ({ initialNews }) => {
   const [activeCategory, setActiveCategory] = useState<NewsCategoryFilter>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
-  const featuredPost = initialFeatured;
-  const newsItems = initialNews.filter(item => !item.featured);
+  const newsItems = initialNews;
 
   // Filtering Logic
   const filteredItems = newsItems.filter(item => {
@@ -89,21 +59,12 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
     return matchesCategory && matchesSearch;
   });
 
-  // Featured post logic
-  const activeNormalized = categoryValueMap[activeCategory];
-  
-  const showFeatured = !!featuredPost &&
-    (activeCategory === 'All' || featuredPost.category === activeNormalized) &&
-    (searchQuery === '' || featuredPost.title.toLowerCase().includes(searchQuery.toLowerCase()));
-
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
   const safeCurrentPage = Math.min(currentPage, totalPages);
   const paginatedItems = filteredItems.slice(
     (safeCurrentPage - 1) * ITEMS_PER_PAGE,
     safeCurrentPage * ITEMS_PER_PAGE,
   );
-  const upcomingEventGroups = groupUpcomingEventsByMonth(upcomingEvents);
-
   return (
     <section className="pb-20 md:pb-24 bg-[#F8FAFC]">
       <div className="max-w-7xl mx-auto px-6">
@@ -146,60 +107,10 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          
-          {/* Main Content Area */}
-          <div className="lg:col-span-8 space-y-10">
-            
-            {/* Featured Post Card */}
-            {showFeatured && featuredPost && (
-              <Link href={`/news-and-events/${featuredPost.slug}`} className="block mb-10">
-                <motion.div 
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  className="group bg-white rounded-[24px] overflow-hidden border border-gray-100 flex flex-col md:flex-row shadow-sm hover:shadow-md transition-all duration-500 cursor-pointer"
-                >
-                  <div className="md:w-[45%] relative h-72 md:h-auto overflow-hidden">
-                    <div className="absolute top-6 left-6 z-10">
-                      <span className="px-4 py-1.5 bg-[#21409A] text-white text-[9px] font-bold tracking-wider rounded-full shadow-lg">
-                        {featuredPost.category}
-                      </span>
-                    </div>
-                    <Image
-                      src={featuredPost.image || FALLBACK_IMAGE}
-                      alt={featuredPost.title}
-                      fill
-                      priority
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 40vw, 600px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  </div>
-                  <div className="md:w-[55%] p-10 md:p-14 flex flex-col justify-center">
-                    <div className="flex items-center gap-2 text-slate-500 text-[11px] font-bold mb-4">
-                      <svg className="w-4 h-4 text-[#21409A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                      <span>{formatMonthYear(featuredPost.date)}</span>
-                    </div>
-                    <h3 className="text-3xl md:text-[38px] font-black text-[#1a1a1a] mb-6 font-iic leading-tight tracking-tight group-hover:text-[#21409A] transition-colors">
-                      {featuredPost.title}
-                    </h3>
-                    <p className="text-slate-700 mb-10 leading-relaxed text-[15px] font-medium">
-                      {featuredPost.description}
-                    </p>
-                    
-                    <div className="self-start px-8 py-3.5 bg-[#21409A] text-white rounded-lg font-bold text-xs shadow-lg group-hover:bg-[#21409A] transition-all flex items-center gap-3">
-                      {featuredPost.category === 'Event' ? 'View Event Details' : 'Read Full Story'}
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                    </div>
-                  </div>
-                </motion.div>
-              </Link>
-            )}
-
-            {/* Sub-News Grid */}
+        <div className="space-y-10">
+            {/* News Grid */}
             <AnimeStagger
-              className="grid grid-cols-1 md:grid-cols-2 gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
               selector=".news-card-wrapper"
               staggerDelay={100}
               translateY={30}
@@ -307,89 +218,7 @@ const NewsContent: React.FC<NewsContentProps> = ({ initialNews, initialFeatured,
               </div>
             )}
           </div>
-
-          {/* Sidebar */}
-          <AnimeStagger
-            className="lg:col-span-4 space-y-8"
-            selector=":scope > div"
-            staggerDelay={120}
-            translateY={28}
-            duration={760}
-          >
-            
-            {/* Upcoming Events */}
-            <div className="bg-white p-7 sm:p-8 md:p-10 rounded-[24px] border-[2px] border-[#74C044] shadow-sm">
-              <div className="mb-9 flex items-start justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EEF4FB] text-[#21409A]">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 002 2v12a2 2 0 002 2z" /></svg>
-                  </div>
-                  <div>
-                    <h5 className="text-xl font-bold text-[#1a1a1a] font-iic tracking-tight">Upcoming Events</h5>
-                    <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">Month view</p>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveCategory('Events');
-                    setCurrentPage(1);
-                  }}
-                  className="mt-2 shrink-0 text-[11px] tracking-wider font-bold text-slate-400 hover:text-[#74C044] transition-colors"
-                >
-                  View All
-                </button>
-              </div>
-
-              {upcomingEvents.length === 0 ? (
-                <p className="text-sm text-slate-500 font-medium">No events scheduled. Check back soon.</p>
-              ) : (
-                <div className="space-y-7">
-                  {upcomingEventGroups.map((group) => (
-                    <div key={group.key}>
-                      <div className="mb-4 flex items-center gap-3">
-                        <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl bg-[#21409A] text-white shadow-sm shadow-[#21409A]/10">
-                          <span className="text-[10px] font-black leading-none tracking-[0.14em]">{group.month}</span>
-                          <span className="mt-1 text-[10px] font-bold leading-none text-white/70">{group.year}</span>
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-[11px] font-black uppercase tracking-[0.22em] text-[#74C044]">{group.month} {group.year}</p>
-                          <p className="mt-1 text-xs font-bold text-slate-400">
-                            {group.events.length === 1 ? '1 event' : `${group.events.length} events`}
-                          </p>
-                        </div>
-                        <div className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent" />
-                      </div>
-
-                      <div className="relative ml-6 space-y-3 border-l border-slate-200 pl-5">
-                        {group.events.map((event) => (
-                          <Link
-                            key={event.id}
-                            href={`/news-and-events/${event.slug}`}
-                            className="group relative flex items-center gap-3 rounded-xl py-3 pl-1 pr-3 transition-colors hover:bg-[#F5F9F2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C044]/45"
-                          >
-                            <span className="absolute -left-[26px] top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 border-white bg-[#74C044] shadow-[0_0_0_3px_rgba(116,192,68,0.18)]" />
-                            <div className="min-w-0 flex-1">
-                              <h6 className="text-[14px] font-bold text-[#1a1a1a] leading-tight transition-colors group-hover:text-[#21409A] line-clamp-2">{event.title}</h6>
-                            </div>
-                            <svg className="h-4 w-4 shrink-0 text-slate-300 transition-all group-hover:translate-x-1 group-hover:text-[#74C044]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <NewsletterSignup />
-
-          </AnimeStagger>
-
         </div>
-      </div>
     </section>
   );
 };

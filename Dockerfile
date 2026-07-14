@@ -3,8 +3,6 @@
 FROM node:20-alpine AS dependencies
 WORKDIR /app
 
-ENV DATABASE_URL=mysql://iic_user:iic_password@127.0.0.1:3306/iic_website
-
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
 RUN npm ci && npx prisma generate
@@ -13,11 +11,17 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV NEXT_PUBLIC_SITE_URL=http://localhost:3000
-ENV DATABASE_URL=mysql://iic_user:iic_password@127.0.0.1:3306/iic_website
-ENV JWT_SECRET=development-only-jwt-secret
-ENV TWO_FACTOR_ENCRYPTION_KEY=development-only-two-factor-key
-ENV SUPPRESS_EXPECTED_DB_FALLBACK_LOGS=1
+ARG NEXT_PUBLIC_SITE_URL
+ARG DATABASE_URL
+ARG JWT_SECRET
+ARG TWO_FACTOR_ENCRYPTION_KEY
+ARG SUPPRESS_EXPECTED_DB_FALLBACK_LOGS=1
+
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+ENV DATABASE_URL=${DATABASE_URL}
+ENV JWT_SECRET=${JWT_SECRET}
+ENV TWO_FACTOR_ENCRYPTION_KEY=${TWO_FACTOR_ENCRYPTION_KEY}
+ENV SUPPRESS_EXPECTED_DB_FALLBACK_LOGS=${SUPPRESS_EXPECTED_DB_FALLBACK_LOGS}
 
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .

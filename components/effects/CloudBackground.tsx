@@ -201,14 +201,6 @@ const CloudBackground = ({ className = "fixed inset-0 -z-10 overflow-hidden poin
     { delay: -33, duration: 34, top: '63%', left: '0', scale: 0.78, reverse: false },
   ], []);
 
-  if (isMobileLike) {
-    return (
-      <div className={className}>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#D4E2F7] via-[#E8F0FB] to-transparent" />
-      </div>
-    );
-  }
-
   return (
     <div className={className}>
       <style>

@@ -66,7 +66,7 @@ export const COLLEGE_ADDRESS = {
   postalCode: '56705',
   addressCountry: 'NP',
 };
-export const COLLEGE_ADDRESS_TEXT = 'Sundar Haraicha 04, Dulari, Morang, Nepal';
+export const COLLEGE_ADDRESS_TEXT = 'Sundarharaicha 04, Dulari, Morang, Nepal';
 export const COLLEGE_SOCIAL_PROFILES = [
   'https://www.facebook.com/IICNepal/',
   'https://www.instagram.com/iic_nepal',

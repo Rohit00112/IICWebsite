@@ -15,6 +15,8 @@ import {
   buildSchemaGraph,
 } from '@/lib/seo-schema';
 
+export const dynamic = 'force-dynamic';
+
 const pageTitle = 'IIC News, Events & Blogs | Itahari International College';
 const pageDescription = 'Read IIC news, events and blogs, including campus stories, student achievements, workshops, admissions updates and learning insights.';
 const openGraphImage = absoluteAssetUrl('/og/news.png');

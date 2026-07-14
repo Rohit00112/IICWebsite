@@ -36,7 +36,7 @@ const AdmissionsSidebar = ({ isSubmitted = false }: AdmissionsSidebarProps) => {
   const [openAccordion, setOpenAccordion] = useState<string | null>('requirements');
 
   const resources = [
-    { name: 'Download College Brochure', icon: <BookIcon />, gated: true, href: 'https://iic.edu.np/pdf/iic_brochure.pdf' },
+    { name: 'Download College Brochure', icon: <BookIcon />, gated: true, href: '/IIC Prospectus.pdf' },
   ];
 
   const sidebarLinks = [

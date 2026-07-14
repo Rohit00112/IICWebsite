@@ -14,6 +14,8 @@ import {
   COURSES_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
+export const dynamic = 'force-dynamic';
+
 const pageDescription = 'Explore London Metropolitan University awarded IT and Business programmes at IIC, designed for practical learning and global career readiness.';
 
 export const metadata: Metadata = {

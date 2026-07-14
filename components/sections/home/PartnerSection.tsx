@@ -51,14 +51,14 @@ const PartnerSection = () => {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.5 }}
-            className="relative h-[88px] w-full max-w-[500px] overflow-hidden sm:h-[136px] md:h-[150px] md:max-w-[540px] md:justify-self-end"
+            className="relative h-[140px] w-full max-w-[480px] overflow-hidden sm:h-[150px] sm:max-w-[500px] md:h-[150px] md:max-w-[540px] md:justify-self-end"
           >
             <Image
               src="/images/home/lmu brand 2.png"
               alt="London Metropolitan University Official Logo"
               fill
               sizes="(max-width: 768px) min(100vw - 32px, 500px), 540px"
-              className="object-cover object-[50%_34%]"
+              className="object-contain object-center sm:object-cover sm:object-[50%_34%]"
             />
           </motion.div>
           <div className="hidden h-24 w-[1.5px] bg-gray-300 md:block"></div>

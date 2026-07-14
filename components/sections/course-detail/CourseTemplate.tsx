@@ -272,7 +272,7 @@ const CourseDetailPage = ({ course, relatedCourses }: { course: CourseData, rela
   }, [course.overview, course.title]);
 
   const admissionsHref = `/admissions?program=${encodeURIComponent(course.title)}`;
-  const brochureHref = 'https://iic.edu.np/pdf/iic_brochure.pdf';
+  const brochureHref = '/IIC Prospectus.pdf';
 
   return (
     <main className="bg-white">

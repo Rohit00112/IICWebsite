@@ -11,6 +11,8 @@ import {
   SCHOLARSHIPS_PAGE_KEYWORDS,
 } from '@/lib/seo-schema';
 
+export const dynamic = 'force-dynamic';
+
 const pageDescription = 'Explore AAA and ING postgraduate scholarship opportunities at Itahari International College, including yearwise recipient stories and award archives.';
 
 export const metadata: Metadata = {

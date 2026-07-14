@@ -4,7 +4,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Magnetic from '../../effects/Magnetic';
-import AnimeReveal from '../../effects/AnimeReveal';
 import AnimeStagger from '../../effects/AnimeStagger';
 import type { NewsItem } from '@/lib/news';
 
@@ -138,29 +137,6 @@ const NewsDetailContent: React.FC<NewsDetailContentProps> = ({ item }) => {
                       </div>
                     </div>
                   )}
-                </div>
-              </div>
-            </Tilt>
-
-            {/* Newsletter Signup */}
-            <Tilt strength={4}>
-              <div className="bg-[#DDE5F0] p-10 rounded-[40px] shadow-sm">
-                <AnimeReveal
-                  as="h5"
-                  text="Stay Updated"
-                  className="text-xl font-bold font-iic mb-4 text-[#1a1a1a]"
-                  staggerFrom="first"
-                />
-                <p className="text-gray-600 text-[14px] mb-8 leading-relaxed font-medium">Never miss an update. Join our newsletter to get the latest Itahari International College news.</p>
-                <div className="space-y-4">
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="w-full bg-[#E8EEF5] border-none rounded-xl py-4 px-5 outline-none focus:ring-2 focus:ring-[#21409A]/10 transition-all text-sm placeholder:text-gray-400"
-                  />
-                  <button className="w-full py-4 bg-[#21409A] text-white font-bold rounded-xl text-sm hover:shadow-xl transition-all">
-                    Subscribe Now
-                  </button>
                 </div>
               </div>
             </Tilt>

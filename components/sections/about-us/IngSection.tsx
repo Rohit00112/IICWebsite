@@ -11,8 +11,8 @@ const IngSection = () => {
       <div className="mx-auto max-w-[1680px] px-4 md:px-6">
         {/* Top Header */}
         <div className="flex flex-col items-center justify-center mb-10 md:mb-16 text-center">
-          <div className="relative w-56 h-24 md:w-72 md:h-32">
-            <Image src="/images/about/ing.png" alt="ING Logo" fill sizes="(max-width: 768px) 224px, 288px" className="object-contain" />
+          <div className="relative w-24 h-8 md:w-72 md:h-32">
+            <Image src="/images/about/ing.png" alt="ING Logo" fill sizes="(max-width: 768px) 96px, 288px" className="object-contain" />
           </div>
         </div>
 

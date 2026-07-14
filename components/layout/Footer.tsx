@@ -169,7 +169,7 @@ const Footer = () => {
               <li className="flex items-start gap-4" itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
                 <svg className="w-6 h-6 text-[#74C044] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 <span className="text-white/60 text-base leading-relaxed font-iic" aria-label={COLLEGE_ADDRESS_TEXT}>
-                  <span itemProp="streetAddress">Sundar Haraicha 04, Dulari</span>, <span itemProp="addressRegion">Morang</span>, <span itemProp="addressCountry">Nepal</span>
+                  <span itemProp="streetAddress">Sundarharaicha 04, Dulari</span>, <span itemProp="addressRegion">Morang</span>, <span itemProp="addressCountry">Nepal</span>
                   <meta itemProp="addressLocality" content="Dulari" />
                   <meta itemProp="postalCode" content="56705" />
                 </span>
