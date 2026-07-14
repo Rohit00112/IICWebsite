@@ -10,6 +10,11 @@ RUN npm ci && npx prisma generate
 FROM node:20-alpine AS builder
 WORKDIR /app
 
+ARG NEXT_PUBLIC_SITE_URL=http://localhost:3000
+ARG DATABASE_URL=mysql://iic_user:iic_password@127.0.0.1:3306/iic_website
+ARG JWT_SECRET=development-only-jwt-secret
+ARG TWO_FACTOR_ENCRYPTION_KEY=development-only-two-factor-key
+
 ENV NEXT_TELEMETRY_DISABLED=1
 ARG NEXT_PUBLIC_SITE_URL
 ARG DATABASE_URL
