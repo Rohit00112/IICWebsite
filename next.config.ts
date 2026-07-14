@@ -68,6 +68,16 @@ const nextConfig: NextConfig = {
         destination: '/life-at-iic/events/:slug',
         statusCode: 301,
       },
+      {
+        source: '/our-courses',
+        destination: '/courses',
+        statusCode: 301,
+      },
+      {
+        source: '/apply-now',
+        destination: '/contact-us',
+        statusCode: 301,
+      }
     ];
   },
   async headers() {
