@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { EventGalleryArchive, EventGalleryItem } from '@/lib/event-galleries';
@@ -101,7 +102,7 @@ export default function EventGalleryPage({ gallery }: { gallery: EventGalleryArc
         })}
       </div>
 
-      {activePhoto && (
+      {activePhoto && typeof document !== 'undefined' && createPortal(
         <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/90 p-4" role="dialog" aria-modal="true" aria-label={`${activePhoto.label} photo viewer`}>
           <button type="button" onClick={() => setActivePhoto(null)} className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-md bg-white/10 text-white hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white" aria-label="Close photo viewer" title="Close photo viewer">
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m6 6 12 12M18 6 6 18" /></svg>
@@ -119,7 +120,8 @@ export default function EventGalleryPage({ gallery }: { gallery: EventGalleryArc
               <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 6 6 6-6 6" /></svg>
             </button>
           )}
-        </div>
+        </div>,
+        document.body
       )}
     </main>
   );
