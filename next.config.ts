@@ -77,6 +77,11 @@ const nextConfig: NextConfig = {
         source: '/apply-now',
         destination: '/contact-us',
         statusCode: 301,
+      },
+      {
+        source: '/post/:slug',
+        destination: '/news-and-events/:slug',
+        statusCode: 301,
       }
     ];
   },
