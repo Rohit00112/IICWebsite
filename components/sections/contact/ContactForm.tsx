@@ -311,7 +311,7 @@ const ContactForm = () => {
                       key={channel.name}
                       className={`${channel.cardClass} ${isPrimary ? 'sm:col-span-2 p-6' : 'p-5'} h-full rounded-[24px] border group transition-all`}
                     >
-                      <div className={`flex h-full ${isPrimary ? 'items-start gap-5' : 'flex-col gap-4'}`}>
+                      <div className={`flex h-full ${isPrimary ? 'items-start gap-5' : 'flex-row items-start gap-4 sm:flex-col'}`}>
                         <div className={`${isPrimary ? 'w-12 h-12' : 'w-11 h-11'} ${channel.iconClass} rounded-xl flex items-center justify-center text-white shrink-0`}>
                           <svg
                             className={isPrimary ? 'w-6 h-6' : 'w-5 h-5'}
@@ -328,7 +328,7 @@ const ContactForm = () => {
                         </div>
                         <div className="flex min-w-0 flex-1 flex-col">
                           <h3 className={`${isPrimary ? 'text-xl' : 'text-base'} font-bold text-[#1a1a1a] mb-2 font-iic leading-tight`}>{channel.name}</h3>
-                          <p className={`${isPrimary ? 'text-sm' : 'text-xs line-clamp-2'} text-gray-400 mb-4 leading-relaxed font-medium`}>{channel.description}</p>
+                          <p className={`${isPrimary ? 'text-sm' : 'text-xs sm:line-clamp-2'} text-gray-400 mb-4 leading-relaxed font-medium`}>{channel.description}</p>
                           <a
                             href={channel.href}
                             target="_blank"

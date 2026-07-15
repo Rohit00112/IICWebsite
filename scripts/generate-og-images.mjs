@@ -17,7 +17,7 @@ const cards = [
   { filename: 'news.png', source: 'public/images/common/seminar.webp', eyebrow: 'IIC NEWSROOM', lines: ['News & Events', 'from IIC'], position: 'centre' },
   { filename: 'student-life.png', source: 'public/images/lifestyle/lifestyle-hero.JPG', eyebrow: 'STUDENT EXPERIENCE', lines: ['Life at Itahari', 'International College'], position: 'centre' },
   { filename: 'infrastructure.png', source: 'public/images/our-infrastructure/infra.png', eyebrow: 'CAMPUS FACILITIES', lines: ['Infrastructure', 'Built for Learning'], position: 'centre' },
-  { filename: 'industry-exposure.png', source: 'public/images/industry-exposure/exposure-banner.JPG', eyebrow: 'CAREER READINESS', lines: ['Industry Exposure &', 'Placement Support'], position: 'attention' },
+  { filename: 'industry-exposure.png', source: 'public/images/industry-exposure/exposure-banner.jpg', eyebrow: 'CAREER READINESS', lines: ['Industry Exposure &', 'Placement Support'], position: 'attention' },
   { filename: 'alumni.png', source: 'public/images/alumini/graduate.jpg', eyebrow: 'GRADUATE COMMUNITY', lines: ['IIC Alumni Network &', 'Graduate Stories'], position: 'centre' },
   { filename: 'research.png', source: 'public/images/rmc/hero.png', eyebrow: 'ACADEMIC RESEARCH', lines: ['Research Management', 'Committee'], position: 'centre' },
   { filename: 'contact.png', source: 'public/images/common/tower_block.JPG', eyebrow: 'CONTACT IIC', lines: ['Admissions, Visits', '& Directions'], position: 'centre' },

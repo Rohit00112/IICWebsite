@@ -243,7 +243,7 @@ export default function IndustryExposurePage() {
       <section className="relative overflow-hidden bg-[#071633]">
         <div className="absolute inset-0">
           <Image
-            src="/images/industry-exposure/exposure-banner.JPG"
+            src="/images/industry-exposure/exposure-banner.jpg"
             alt="IIC students preparing for industry-focused careers"
             fill
             priority

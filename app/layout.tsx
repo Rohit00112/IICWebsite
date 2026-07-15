@@ -56,9 +56,12 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(SITE_URL),
   icons: {
-    icon: [{ url: "/favicon.png?v=2", sizes: "512x512", type: "image/png" }],
-    shortcut: ["/favicon.png?v=2"],
-    apple: [{ url: "/favicon.png?v=2", sizes: "512x512", type: "image/png" }],
+    icon: [
+      { url: "/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/favicon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    shortcut: ["/favicon-48.png"],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     title: "Itahari International College | UK Degrees in Itahari",
