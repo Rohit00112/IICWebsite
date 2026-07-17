@@ -45,6 +45,8 @@ export default function ClientLayoutWrapper({
   const pathname = usePathname();
 
   const isAdminPage = pathname?.startsWith('/admin') || pathname === '/login';
+  // Brochure links page renders standalone (no global navbar/footer/cursor).
+  const isBarePage = pathname === '/links';
   const hasDesktopViewport = useMediaQuery('(min-width: 768px)');
   const isMobileLike = useIsMobileLike();
 
@@ -96,8 +98,8 @@ export default function ClientLayoutWrapper({
 
   return (
     <MotionConfig reducedMotion={isMobileLike ? "always" : "user"}>
-      <div className={`relative flex flex-col ${isAdminPage ? 'font-sora cursor-default' : 'font-iic md:cursor-none'}`}>
-        {!isAdminPage && (
+      <div className={`relative flex flex-col ${isAdminPage || isBarePage ? 'font-sora cursor-default' : 'font-iic md:cursor-none'}`}>
+        {!isAdminPage && !isBarePage && (
           <>
             {hasDesktopViewport && <DesktopScrollProgress />}
 
@@ -126,7 +128,11 @@ export default function ClientLayoutWrapper({
           </>
         )}
 
-        {!isAdminPage ? (
+        {isAdminPage || isBarePage ? (
+          <div key={pathname} className="flex-grow">
+            {children}
+          </div>
+        ) : (
           <SmoothScroll>
             <TopBar />
             <Navbar />
@@ -135,10 +141,6 @@ export default function ClientLayoutWrapper({
             </PageTransition>
             <Footer />
           </SmoothScroll>
-        ) : (
-          <div key={pathname} className="flex-grow">
-            {children}
-          </div>
         )}
       </div>
     </MotionConfig>
