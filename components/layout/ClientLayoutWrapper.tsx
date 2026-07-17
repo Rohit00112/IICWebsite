@@ -46,7 +46,7 @@ export default function ClientLayoutWrapper({
 
   const isAdminPage = pathname?.startsWith('/admin') || pathname === '/login';
   // Brochure links page renders standalone (no global navbar/footer/cursor).
-  const isBarePage = pathname === '/links';
+  const isBarePage = pathname === '/link-hub';
   const hasDesktopViewport = useMediaQuery('(min-width: 768px)');
   const isMobileLike = useIsMobileLike();
 

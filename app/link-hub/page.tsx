@@ -6,7 +6,7 @@ import LinksPageContent from '@/components/sections/LinksPageContent';
 export const metadata: Metadata = {
   title: 'Itahari International College',
   description: 'Quick links to Itahari International College — website, socials, and programmes.',
-  alternates: { canonical: '/links' },
+  alternates: { canonical: '/link-hub' },
   robots: {
     index: false,
     follow: false,

@@ -109,7 +109,7 @@ export default function LinksPageContent() {
       {/* Hero + link cards */}
       <section className="relative">
         {/* Painted sky scene with building */}
-        <div className="relative h-[78vh] max-h-[900px] min-h-[560px] w-full overflow-hidden">
+        <div className="relative h-[46vh] min-h-[340px] sm:h-[78vh] sm:max-h-[900px] sm:min-h-[560px] w-full overflow-hidden">
           {/* Sky gradient */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#5CB6E8] via-[#8FD0F0] to-[#DCF1FB]" />
 
@@ -126,11 +126,11 @@ export default function LinksPageContent() {
             priority
             quality={100}
             sizes="100vw"
-            className="scale-[1.25] translate-y-[14%] object-cover object-[center_100%]"
+            className="scale-[1.3] translate-y-[38%] object-cover ![object-position:center_5%] sm:scale-[1.25] sm:translate-y-[14%] sm:![object-position:center_100%]"
           />
 
-          {/* Logo (top-right empty space) */}
-          <div className="absolute left-[66%] top-6 z-10 flex -translate-x-1/2 items-center sm:top-12">
+          {/* Logo (centered on mobile, top-right on desktop) */}
+          <div className="absolute left-1/2 top-4 z-10 flex -translate-x-1/2 items-center sm:left-[66%] sm:top-12">
             <Image
               src="/images/common/iic_logo.png"
               alt="Itahari International College"
@@ -142,27 +142,65 @@ export default function LinksPageContent() {
           </div>
         </div>
 
-        {/* Blue band — cards blend into it (same blue, rounded top, seamless) */}
-        <div style={{ backgroundColor: CARD_BLUE }} className="relative z-10 -mt-12 pt-12 sm:-mt-24 sm:pt-24">
-          <div className="mx-auto grid max-w-6xl grid-cols-4 gap-3 px-3 pb-14 sm:gap-6 sm:px-6 sm:pb-20">
-            {linkCards.map((card) => (
-              <div key={card.label} className="flex flex-col items-center">
-                <div
-                  style={{ backgroundColor: CARD_BLUE }}
-                  className="-mt-36 flex w-full flex-col items-center rounded-t-[28px] px-2 pb-6 pt-10 text-white sm:-mt-72 sm:px-4 sm:pb-8 sm:pt-20"
-                >
-                  <span className="text-white">{card.icon}</span>
-                  <span className="mt-4 text-base font-medium sm:mt-6 sm:text-2xl">{card.label}</span>
+        {/* Blue band — desktop cards blend into it (original overlap design) */}
+        <div
+          style={{ backgroundColor: CARD_BLUE }}
+          className="relative z-10 hidden sm:block rounded-t-none -mt-24 pt-24"
+        >
+          <div className="mx-auto max-w-6xl px-6 pb-20">
+            <div className="grid grid-cols-4 gap-6">
+              {linkCards.map((card) => (
+                <div key={card.label} className="flex flex-col items-center">
+                  <div
+                    style={{ backgroundColor: CARD_BLUE }}
+                    className="-mt-72 flex w-full flex-col items-center rounded-t-[28px] px-4 pb-8 pt-20 text-white"
+                  >
+                    <span className="text-white">{card.icon}</span>
+                    <span className="mt-6 text-2xl font-medium">{card.label}</span>
+                  </div>
+                  <Link
+                    href={card.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`mt-8 inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium shadow-sm transition-transform hover:scale-[1.03] active:scale-95 ${card.label === 'iic.edu.np'
+                      ? 'bg-white text-[#171717]'
+                      : 'border border-white/80 bg-transparent text-white'
+                      }`}
+                  >
+                    {card.cta}
+                    {ArrowIcon}
+                  </Link>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Blue band — mobile cards (original overlap under hero) */}
+        <div
+          style={{ backgroundColor: CARD_BLUE }}
+          className="relative z-10 block sm:hidden -mt-6 rounded-t-[32px] pt-12"
+        >
+          <div className="flex flex-col items-center gap-14 px-6 pb-16 pt-4">
+            {linkCards.map((card) => (
+              <div key={card.label} className="flex flex-col items-center text-center">
+                {/* Icon */}
+                <span className="text-white">{card.icon}</span>
+
+                {/* Label */}
+                <span className="mt-4 text-lg font-semibold tracking-wide text-white">
+                  {card.label}
+                </span>
+
+                {/* Button/Link */}
                 <Link
                   href={card.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`mt-6 inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-xs font-medium shadow-sm transition-transform hover:scale-[1.03] active:scale-95 sm:mt-8 sm:gap-2 sm:px-7 sm:py-3 sm:text-sm ${
-                    card.label === 'iic.edu.np'
-                      ? 'bg-white text-[#171717]'
-                      : 'border border-white/80 bg-transparent text-white'
-                  }`}
+                  className={`mt-5 inline-flex items-center gap-1.5 rounded-full px-8 py-3 text-sm font-semibold shadow-md transition-transform hover:scale-[1.03] active:scale-95 ${card.label === 'iic.edu.np'
+                    ? 'bg-white text-[#4C9BCF]'
+                    : 'border border-white/80 bg-transparent text-white'
+                    }`}
                 >
                   {card.cta}
                   {ArrowIcon}
@@ -184,13 +222,13 @@ export default function LinksPageContent() {
           {/* BIT */}
           <Link
             href="/bsc-hons-computing"
-            className="group relative flex h-[250px] items-center text-white transition-transform hover:scale-[1.01]"
+            className="group relative flex h-[220px] sm:h-[250px] items-center text-white transition-transform hover:scale-[1.01]"
           >
             {/* Background block with sharp corners */}
             <div className="absolute inset-0 bg-[#0F74AC]" />
-            
+
             {/* Student image overflowing top and bottom */}
-            <div className="absolute bottom-[-32px] left-2 h-[300px] w-[50%] z-20 pointer-events-none">
+            <div className="absolute bottom-[-24px] sm:bottom-[-32px] left-2 h-[250px] sm:h-[300px] w-[42%] sm:w-[50%] z-20 pointer-events-none">
               <Image
                 src="/images/home/course1.png"
                 alt="Bachelor in Information Technology student"
@@ -202,21 +240,21 @@ export default function LinksPageContent() {
             </div>
 
             {/* Chevron pointing right in the top-right corner */}
-            <span className="absolute right-6 top-6 text-white opacity-80 group-hover:opacity-100 transition-opacity">
+            <span className="absolute right-5 top-5 sm:right-6 sm:top-6 text-white opacity-80 group-hover:opacity-100 transition-opacity">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </span>
 
             {/* Content right-aligned */}
-            <div className="relative z-10 ml-auto mr-8 flex flex-col justify-between h-full pt-14 pb-8 text-right max-w-[55%]">
+            <div className="relative z-10 ml-auto mr-5 sm:mr-8 flex flex-col justify-between h-full pt-12 sm:pt-14 pb-6 sm:pb-8 text-right max-w-[56%] sm:max-w-[55%]">
               <div>
-                <p className="text-sm font-light text-white/90">Bachelor in</p>
-                <p className="text-3xl font-extrabold leading-tight tracking-wide mt-1 sm:text-4xl">
+                <p className="text-xs sm:text-sm font-light text-white/90">Bachelor in</p>
+                <p className="text-2xl font-extrabold leading-tight tracking-wide mt-1 sm:text-4xl">
                   Information Technology
                 </p>
               </div>
-              <p className="text-xs text-white/80 font-medium">BSc (Hons) Computing</p>
+              <p className="text-[11px] sm:text-xs text-white/80 font-medium">BSc (Hons) Computing</p>
             </div>
           </Link>
 
@@ -224,13 +262,13 @@ export default function LinksPageContent() {
           <button
             type="button"
             onClick={() => setShowBBAPopup(true)}
-            className="group relative flex h-[250px] items-center text-white transition-transform hover:scale-[1.01] w-full text-left focus:outline-none"
+            className="group relative flex h-[240px] sm:h-[250px] items-center text-white transition-transform hover:scale-[1.01] w-full text-left focus:outline-none"
           >
             {/* Background block with sharp corners */}
             <div className="absolute inset-0 bg-[#00BCD4]" />
 
             {/* Student image overflowing top and bottom */}
-            <div className="absolute bottom-[-32px] right-2 h-[300px] w-[50%] z-20 pointer-events-none">
+            <div className="absolute bottom-[-24px] sm:bottom-[-32px] right-0 sm:right-2 h-[240px] sm:h-[300px] w-[40%] sm:w-[50%] z-20 pointer-events-none">
               <Image
                 src="/images/home/course2.png"
                 alt="BBA student"
@@ -242,33 +280,33 @@ export default function LinksPageContent() {
             </div>
 
             {/* Chevron pointing right in the top-left corner */}
-            <span className="absolute left-6 top-6 text-white opacity-80 group-hover:opacity-100 transition-opacity">
+            <span className="absolute left-5 top-5 sm:left-6 sm:top-6 text-white opacity-80 group-hover:opacity-100 transition-opacity">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </span>
 
             {/* Content left-aligned */}
-            <div className="relative z-10 mr-auto ml-8 flex flex-col justify-between h-full pt-14 pb-8 text-left max-w-[55%]">
+            <div className="relative z-10 mr-auto ml-5 sm:ml-8 flex flex-col justify-between h-full pt-12 sm:pt-14 pb-6 sm:pb-8 text-left max-w-[62%] sm:max-w-[55%]">
               <div>
-                <p className="text-4xl font-extrabold tracking-wide sm:text-5xl">BBA</p>
-                <p className="mt-3 text-xs font-semibold tracking-wide text-white/90">Specialisation</p>
-                <ul className="mt-1.5 space-y-1 text-xs text-white/95">
+                <p className="text-3xl font-extrabold tracking-wide sm:text-5xl">BBA</p>
+                <p className="mt-2 sm:mt-3 text-[11px] sm:text-xs font-semibold tracking-wide text-white/90">Specialisation</p>
+                <ul className="mt-1.5 space-y-1 text-[11px] sm:text-xs text-white/95">
                   <li className="flex items-center gap-1.5">
-                    <span className="h-1 w-1 rounded-full bg-white inline-block"></span>
+                    <span className="h-1 w-1 rounded-full bg-white inline-block shrink-0"></span>
                     <span>International Business</span>
                   </li>
                   <li className="flex items-center gap-1.5">
-                    <span className="h-1 w-1 rounded-full bg-white inline-block"></span>
+                    <span className="h-1 w-1 rounded-full bg-white inline-block shrink-0"></span>
                     <span>Digital Business Management</span>
                   </li>
                   <li className="flex items-center gap-1.5">
-                    <span className="h-1 w-1 rounded-full bg-white inline-block"></span>
+                    <span className="h-1 w-1 rounded-full bg-white inline-block shrink-0"></span>
                     <span>Advertising &amp; Marketing</span>
                   </li>
                 </ul>
               </div>
-              <p className="text-xs text-white/80 font-medium">BA (Hons) Business Administration</p>
+              <p className="text-[11px] sm:text-xs text-white/80 font-medium">BA (Hons) Business Administration</p>
             </div>
           </button>
         </div>
